@@ -1,0 +1,112 @@
+#home_wrap {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 1; /* Header 아래에 위치 */
+}
+
+.home_main_img > img {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: auto;
+    z-index: -100;
+}
+
+.home_section1 {
+    background-color: rgba(200, 200, 200, 0.1);
+    height: 100vh;
+    font-family: 'yg-jalnan';
+    color: white;
+    font-size: 3.0em;
+}
+
+.home_section1 > div {
+    /* margin: 0 auto; */
+    line-height: 100vh;
+    text-align: center;
+}
+
+.home_section2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F7F7F7;
+    height: 700px;
+}
+
+.home_section2 > div > img {
+    width: 470px;
+    height: 630px;
+    margin-right: 100px;
+    /* margin-left: 370px;
+    margin-top: 35px;
+    margin-bottom: 35px; */
+}
+
+.home_section2_content > div {
+    font-family: 'yg-jalnan';
+}
+
+.home_section2_content > div:nth-child(1){
+    height: 50px;
+    line-height: 50px;
+}
+
+.home_section2_content > div:nth-child(2){
+    height: 200px;
+    line-height: 200px;
+}
+
+.home_section2_content > button {
+    height: 30px;
+    width: 120px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 5px;
+    font-family: 'yg-jalnan';
+}
+
+.home_section3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF;
+    height: 540px;
+}
+
+.home_section3 > div > img {
+    width: 650px;
+    height: 470px;
+    margin-left: 100px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.home_section3_content > div {
+    font-family: 'yg-jalnan';
+}
+
+.home_section3_content > div:nth-child(1){
+    height: 50px;
+    line-height: 50px;
+}
+
+.home_section3_content > div:nth-child(2){
+    height: 200px;
+    line-height: 200px;
+}
+
+.home_section3_content > button {
+    height: 30px;
+    width: 160px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 5px;
+    font-family: 'yg-jalnan';
+}
+
+.home_section4 {
+    background-color: #F7F7F7;
+    height: 700px;
+}
