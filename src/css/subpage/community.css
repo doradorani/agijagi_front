@@ -1,0 +1,30 @@
+.community_main_img {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.flex {
+    display: flex;
+}
+
+.community_flex {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 100px 0px 100px;
+}
+
+.community_flex > div {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.adv_img_notice_right {
+    width: 200px;
+    object-fit: cover;
+}
+
+.emotion_btn {
+    width: 30px;
+    height: 30px;
+}
