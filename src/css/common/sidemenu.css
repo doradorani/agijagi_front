@@ -1,0 +1,19 @@
+.bcmdjH {
+    height: calc(100vh-88px);
+    min-width: 288px;
+    overflow-y: scroll;
+    position: sticky;
+    top: 24px;
+    width: 288px;
+}
+
+.fnCVSl {
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0);
+    cursor: pointer;
+    display: flex;
+    height: 56px;
+    padding-left: 24px;
+    padding-right: 16px;
+}

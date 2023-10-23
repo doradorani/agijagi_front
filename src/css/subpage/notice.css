@@ -1,0 +1,17 @@
+.notice_main_img {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.notice_flex {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 100px 0px 100px;
+}
+
+.notice_flex > div {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+

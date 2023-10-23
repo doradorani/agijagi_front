@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './Header';
-import Home from './Home';
-import Diary from './Diary';
-import Community from './Community';
-import Notice from './Notice';
-import Footer from './Footer';
+import Header from './jsx/Header';
+import Home from './jsx/Home';
+import Diary from './jsx/subpages/Diary';
+import Community from './jsx/subpages/Community';
+import Notice from './jsx/subpages/Notice';
+import Footer from './jsx/Footer';
 
 function App() {
   return (
