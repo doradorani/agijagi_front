@@ -25,6 +25,12 @@ const Notice = () => {
                     <div>
                         <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg"/>
                     </div>
+                    <div>
+                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg"/>
+                    </div>
+                    <div>
+                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg"/>
+                    </div>
                 </div>
             </div>
     </div>

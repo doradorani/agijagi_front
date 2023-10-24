@@ -42,6 +42,62 @@ const NoticeTable = () => {
                         <td>1</td>
                         <td>5</td>
                     </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>제목1111111111</td>
+                        <td>관리자1</td>
+                        <td>2023-10-19</td>
+                        <td>0</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>제목2222222222222</td>
+                        <td>관리자2</td>
+                        <td>2023-10-20</td>
+                        <td>4</td>
+                        <td>32</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>제목3333333333333333</td>
+                        <td>관리자3</td>
+                        <td>2023-10-22</td>
+                        <td>1</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>제목1111111111</td>
+                        <td>관리자1</td>
+                        <td>2023-10-19</td>
+                        <td>0</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>제목2222222222222</td>
+                        <td>관리자2</td>
+                        <td>2023-10-20</td>
+                        <td>4</td>
+                        <td>32</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>제목3333333333333333</td>
+                        <td>관리자3</td>
+                        <td>2023-10-22</td>
+                        <td>1</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>제목1111111111</td>
+                        <td>관리자1</td>
+                        <td>2023-10-19</td>
+                        <td>0</td>
+                        <td>10</td>
+                    </tr>
                 </tbody>
             </table>
 
