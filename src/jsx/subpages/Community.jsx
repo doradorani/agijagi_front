@@ -4,6 +4,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '../../css/subpage/community.css'
 import Post from "./community/Post";
 import SideMenu from "./SideMenu";
+import LoadingPostCard from "./community/LoadingPostCard";
 
 const Community = () => {
     const [selectedFiles, setSelectedFiles] = useState([]);
@@ -104,11 +105,12 @@ const Community = () => {
             </div>
             <div className="community_flex">
                 <SideMenu/>
-                <div>
+                <div className="post_section">
                     <div>전체</div>
                     <Post/>
                     <Post/>
                     <Post/>
+                    <LoadingPostCard/>
                     <div class="modal fade" id="modal_for_post_img" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                             <div class="modal-content">

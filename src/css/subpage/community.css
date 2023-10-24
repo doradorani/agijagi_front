@@ -161,3 +161,7 @@
     position: sticky;         
     top: 100px; 
 }
+
+.post_section {
+    margin-bottom: 45px;
+}
