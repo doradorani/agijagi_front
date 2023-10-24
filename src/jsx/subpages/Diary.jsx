@@ -1,51 +1,87 @@
-import React from "react";
-import '../../css/subpage/diary.css'
-// import '../../css/subpage/diaryBook.css'
+import React from 'react';
+import $ from 'jquery';
+import 'turn.js';
+import Turn from '../../js/subpage/Turn.js';
+import '../../css/subpage/diary.css';
+
+const options = {
+    width: 800,
+    height: 600,
+    autoCenter: true,
+    display: 'double',
+    acceleration: true,
+    elevation: 50,
+    gradients: !$.isTouch,
+    when: {
+        turned: function (e, page) {
+            console.log('Current view: ', $(this).turn('view'));
+        },
+    },
+};
+
+// const pages = [
+//     '/test_imgs/diary_imgs/아기1.jpg',
+//     '/test_imgs/diary_imgs/아기2.jpg',
+//     '/test_imgs/diary_imgs/아기3.jpg',
+//     '/test_imgs/diary_imgs/아기4.jpg',
+//     '/test_imgs/diary_imgs/아기1.jpg',
+//     '/test_imgs/diary_imgs/아기2.jpg',
+//     '/test_imgs/diary_imgs/아기3.jpg',
+//     '/test_imgs/diary_imgs/아기4.jpg',
+// ];
+
+const pages = [
+    {
+        image: '/test_imgs/diary_imgs/아기1.jpg',
+        text: 'Page 1 text goes here.',
+    },
+    {
+        image: '/test_imgs/diary_imgs/아기2.jpg',
+        text: 'Page 2 text goes here.',
+    },
+    {
+        image: '/test_imgs/diary_imgs/아기1.jpg',
+        text: 'Page 3 text goes here.',
+    },
+    {
+        image: '/test_imgs/diary_imgs/아기2.jpg',
+        text: 'Page 4 text goes here.',
+    },
+    {
+        image: '/test_imgs/diary_imgs/아기1.jpg',
+        text: 'Page 5 text goes here.',
+    },
+    {
+        image: '/test_imgs/diary_imgs/아기2.jpg',
+        text: 'Page 6 text goes here.',
+    },
+    // Add more pages with image and text
+];
 
 const Diary = () => {
     return (
         <div className="diary_wrap">
             <div>
-                <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg"/>
+                <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg" />
             </div>
-            {/* <div className="component">
-                <ul className="align">
-                    <li>
-                        <figure className='book'>
-                        <ul className='hardcover_front'>
-                            <li>
-                            <img src="/test_imgs/diary_imgs/diary3.jpg" alt="" width="100%" height="100%" />
-                            </li>
-                            <li></li>
-                        </ul>        
-                        <ul className='page'>
-                            <li></li>
-                            <li>
-                            <a className="btn" href="#">Download</a>
-                            </li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                        </ul>        
-                        <ul className='hardcover_back'>
-                            <li></li>
-                            <li></li>
-                        </ul>
-                        <ul className='book_spine'>
-                            <li></li>
-                            <li></li>
-                        </ul>
-                            <figcaption>
-                                <h1>Responsive Web Design</h1>
-                                <span>By Ethan Marcotte</span>
-                                <p>From mobile browsers to netbooks and tablets, users are visiting your sites from an increasing array of devices and browsers. Are your designs ready?...</p>
-                            </figcaption>
-                        </figure>
-                    </li>  
-                </ul>  
-            </div> */}
+            <div className="area_for_diary_detail">
+                {/* <Turn options={options} className="magazine">
+                    {pages.map((page, index) => (
+                        <div key={index} className="page">
+                            <img src={page} alt="" />
+                        </div>
+                    ))}
+                </Turn> */}
+                <Turn options={options} className="magazine">
+                    {pages.map((page, index) => (
+                        <div key={index} className="page">
+                            <img className="diary_img_in_page" src={page.image} alt="" />
+                            <p>{page.text}</p>
+                        </div>
+                    ))}
+                </Turn>
+            </div>
         </div>
     );
 };
-
 export default Diary;
