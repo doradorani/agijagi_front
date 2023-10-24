@@ -18,18 +18,6 @@ const options = {
         },
     },
 };
-
-// const pages = [
-//     '/test_imgs/diary_imgs/아기1.jpg',
-//     '/test_imgs/diary_imgs/아기2.jpg',
-//     '/test_imgs/diary_imgs/아기3.jpg',
-//     '/test_imgs/diary_imgs/아기4.jpg',
-//     '/test_imgs/diary_imgs/아기1.jpg',
-//     '/test_imgs/diary_imgs/아기2.jpg',
-//     '/test_imgs/diary_imgs/아기3.jpg',
-//     '/test_imgs/diary_imgs/아기4.jpg',
-// ];
-
 const pages = [
     {
         image: '/test_imgs/diary_imgs/아기1.jpg',
@@ -65,13 +53,6 @@ const Diary = () => {
                 <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg" />
             </div>
             <div className="area_for_diary_detail">
-                {/* <Turn options={options} className="magazine">
-                    {pages.map((page, index) => (
-                        <div key={index} className="page">
-                            <img src={page} alt="" />
-                        </div>
-                    ))}
-                </Turn> */}
                 <Turn options={options} className="magazine">
                     {pages.map((page, index) => (
                         <div key={index} className="page">

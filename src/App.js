@@ -8,6 +8,7 @@ import Community from './jsx/subpages/Community';
 import Notice from './jsx/subpages/Notice';
 import Footer from './jsx/Footer';
 import Calendar from './jsx/subpages/Calender';
+import DetailPost from './jsx/subpages/community/DetailPost';
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />}></Route>
                     <Route path="/diary" element={<Diary />}></Route>
+                    <Route path="/detail" element={<DetailPost />}></Route>
                     <Route path="/calendar" element={<Calendar />}></Route>
                     <Route path="/community" element={<Community />}></Route>
                     <Route path="/notice" element={<Notice />}></Route>

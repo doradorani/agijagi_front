@@ -1,5 +1,7 @@
 import React from "react";
 import '../../css/common/sidemenu.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const SideMenu = () => {
     return (
@@ -29,7 +31,7 @@ const SideMenu = () => {
             <div class="jcMbpr"></div>
             <div class="iSzXjg">
                 <div class="fwMqfj"></div>
-                <button
+                {/* <button
                 type="button"
                 class="gSbZJZ"
                 >
@@ -51,7 +53,10 @@ const SideMenu = () => {
                 <div class="knaMOB">
                     새 글 작성
                 </div>
-                </button>
+                </button> */}
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_for_post_img">
+                        새 글 작성하기
+                    </button>
             </div>
             <div class="iVSuAL"></div>
             <div>
