@@ -1,0 +1,21 @@
+.diary_main_img {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.calendar {
+    margin: 15px auto;
+}
+.calendar > div {
+    position: relative;
+    left: 30%;
+}
+
+/* .fc-day-sun a {
+    color: red;
+}
+
+.fc-day-sat a {
+    color: blue;
+} */
