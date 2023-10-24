@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/common/common.css';
-import '../css/common/Footer.css';
+import '../css/common/footer.css';
 
 const Footer = () => {
     return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/common/common.css';
-import '../css/Home.css';
+import '../css/home.css';
 
 const Home = () => {
     return (

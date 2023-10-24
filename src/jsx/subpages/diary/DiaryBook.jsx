@@ -17,7 +17,7 @@ const DiaryBook = () => {
                         <ul className='page book_ul'>
                             <li></li>
                             <li>
-                                <Link className="diarybook_btn" to='/diarybook_detail'>
+                                <Link className="diarybook_btn" to='/diary/diarybook_detail'>
                                     보러가기
                                 </Link>
                             </li>

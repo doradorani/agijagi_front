@@ -194,8 +194,9 @@ const Community = () => {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div className="tag_for_sticky">
                     <div>
+                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg"/>
                         <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg"/>
                     </div>
                 </div>
