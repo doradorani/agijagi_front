@@ -7,26 +7,57 @@ import Diary from './jsx/subpages/Diary';
 import Community from './jsx/subpages/Community';
 import Notice from './jsx/subpages/Notice';
 import Footer from './jsx/Footer';
-import Calendar from './jsx/subpages/Calender';
 import DetailPost from './jsx/subpages/community/DetailPost';
+import DiaryBook from './jsx/subpages/diary/DiaryBook';
+import DiaryBookDetail from './jsx/subpages/diary/DiaryBookDetail';
 
 function App() {
-    return (
-        <>
-            <BrowserRouter>
-                <Header />
-                <Routes>
-                    <Route path="/" element={<Home />}></Route>
-                    <Route path="/diary" element={<Diary />}></Route>
-                    <Route path="/detail" element={<DetailPost />}></Route>
-                    <Route path="/calendar" element={<Calendar />}></Route>
-                    <Route path="/community" element={<Community />}></Route>
-                    <Route path="/notice" element={<Notice />}></Route>
-                </Routes>
-                <Footer />
-            </BrowserRouter>
-        </>
-    );
+  return (
+    <>
+      <BrowserRouter>
+        <Header/>
+        <Routes>
+          <Route
+            path='/'
+            element={
+              <Home/>
+            }>
+          </Route>
+          <Route
+            path='/diary'
+            element={
+              <Diary/>
+            }>
+             <Route
+              path='/diarybook_detail'
+              element={
+                <DiaryBookDetail/>
+              }>
+            </Route>
+          </Route>
+          <Route
+            path='/community'
+            element={
+              <Community/>
+            }>
+          </Route>
+          <Route
+            path='/detail'
+            element={
+              <DetailPost/>
+            }>
+          </Route>
+          <Route
+            path='/notice'
+            element={
+              <Notice/>
+            }>
+          </Route>
+        </Routes>
+        <Footer/>
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;

@@ -153,3 +153,11 @@
     margin-right: 70px;
     margin-bottom: 10px;
 }
+
+.tag_for_sticky {
+    position: sticky;
+    width: 20%;         
+    height: 650px; 
+    position: sticky;         
+    top: 100px; 
+}

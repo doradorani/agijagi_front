@@ -1,10 +1,15 @@
 .bcmdjH {
-    height: calc(100vh-88px);
-    min-width: 288px;
-    overflow-y: scroll;
     position: sticky;
-    top: 24px;
-    width: 288px;
+    /* height: calc(100vh-88px);
+    min-width: 288px; */
+    /* overflow-y: scroll; */
+    /* top: 24px;
+    width: 288px; */
+    width: 20%;         
+    height: 650px; 
+    /* //--> sticky가 적용될 요소는 꼭 height값이 있어야 함          */
+    position: sticky;         
+    top: 100px; 
 }
 
 .fnCVSl {
