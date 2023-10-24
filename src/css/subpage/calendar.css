@@ -3,19 +3,22 @@
     max-height: 500px;
     object-fit: cover;
 }
+.fc-h-event {
+    background-color: blueviolet;
+    border: 1px solid blueviolet;
+}
 
 .calendar {
     margin: 15px auto;
+    width: 100%;
+    float: right;
 }
 .calendar > div {
     position: relative;
     left: 30%;
 }
 
-/* .fc-day-sun a {
-    color: red;
+.calendar_second_wrap {
+    display: flex;
+    justify-content: center;
 }
-
-.fc-day-sat a {
-    color: blue;
-} */

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
@@ -7,7 +7,6 @@ const Container = styled.div`
     width: 90vw;
     max-width: 900px;
 `;
-
 // 최근 기록 중 10개나 20개 정도의 데이터를 받아서 default로 띄우기
 
 const data = {
@@ -49,6 +48,12 @@ const data = {
 };
 
 const Graph = () => {
+    const [isOn, setisOn] = useState(false);
+
+    const toggleHandler = () => {
+        // isOn의 상태를 변경하는 메소드를 구현
+        setisOn(!isOn);
+    };
     return (
         <div className="diary_wrap">
             <div>
