@@ -57,3 +57,10 @@ img.logo_img {
     color: black;
     text-decoration: none;
 }
+
+/* 로그인 버튼 부분 스타일 */
+.login_btn_main_page {
+    position: fixed;
+    top: 25px;
+    right: 5%;
+}

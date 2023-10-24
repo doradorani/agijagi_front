@@ -20,6 +20,12 @@ const Header = () => {
                     <Link to="/community">육아 커뮤니티</Link>
                     <Link to="/notice">공지사항</Link>
                 </div>
+                <div className='login_btn_main_page'>
+                    <Link>
+                    {/* <Link to="/login"> */}
+                        <button type="button" class="btn btn-outline-dark">로그인</button>
+                    </Link>
+                </div>
             </div>
         </header>
     );

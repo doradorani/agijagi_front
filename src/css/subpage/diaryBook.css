@@ -1,7 +1,7 @@
-::before,
+/* ::before,
 ::after {
 	content: "";
-}
+} */
 
 .book_ul {
 	padding: 0;

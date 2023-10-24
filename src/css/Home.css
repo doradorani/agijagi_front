@@ -3,6 +3,7 @@
     padding: 0;
     position: relative;
     z-index: 1; /* Header 아래에 위치 */
+    overflow-y: hidden;
 }
 
 .home_main_img > img {
