@@ -7,6 +7,7 @@ import Diary from './jsx/subpages/Diary';
 import Community from './jsx/subpages/Community';
 import Notice from './jsx/subpages/Notice';
 import Footer from './jsx/Footer';
+import DetailPost from './jsx/subpages/community/DetailPost';
 
 function App() {
   return (
@@ -30,6 +31,12 @@ function App() {
             path='/community'
             element={
               <Community/>
+            }>
+          </Route>
+          <Route
+            path='/detail'
+            element={
+              <DetailPost/>
             }>
           </Route>
           <Route
