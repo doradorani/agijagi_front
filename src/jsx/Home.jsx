@@ -1,8 +1,7 @@
-import React from "react";
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/common/common.css';
-import '../css/home.css';
-
+import '../css/Home.css';
 
 const Home = () => {
     return (
@@ -18,39 +17,25 @@ const Home = () => {
             </div>
             <div className="home_section2">
                 <div className="home_section2_img">
-                    <img src="/test_imgs/diary_imgs/diary1.jpg" />    
+                    <img src="/test_imgs/diary_imgs/diary1.jpg" />
                 </div>
                 <div className="home_section2_content">
-                    <div>
-                        Lorem ipsum dolor sit amet 
-                    </div>
-                    <div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing
-                    </div>
-                    <button>
-                        일기 작성하기
-                    </button>
+                    <div>Lorem ipsum dolor sit amet</div>
+                    <div>Lorem ipsum dolor sit amet consectetur adipisicing</div>
+                    <button>일기 작성하기</button>
                 </div>
             </div>
             <div className="home_section3">
                 <div className="home_section3_content">
-                    <div>
-                        Lorem ipsum dolor sit amet 
-                    </div>
-                    <div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing
-                    </div>
-                    <button>
-                        커뮤니티 구경하기
-                    </button>
+                    <div>Lorem ipsum dolor sit amet</div>
+                    <div>Lorem ipsum dolor sit amet consectetur adipisicing</div>
+                    <button>커뮤니티 구경하기</button>
                 </div>
                 <div className="home_section3_img">
-                    <img src="/test_imgs/sns_imgs/baby_commu.jpg" />    
+                    <img src="/test_imgs/sns_imgs/baby_commu.jpg" />
                 </div>
             </div>
-            <div className="home_section4">
-
-            </div>
+            <div className="home_section4"></div>
         </div>
     );
 };
