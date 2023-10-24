@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import '../../../css/subpage/calendar.css';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
-import '../../css/subpage/calender.css';
 
 class Calendar extends Component {
     constructor(props) {
@@ -19,7 +19,6 @@ class Calendar extends Component {
                     <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg" />
                 </div>
                 <div className="calendar_second_wrap">
-                    <div>testetsetsetset</div>
                     <div className="calendar" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr' }}>
                         <FullCalendar
                             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -37,7 +36,6 @@ class Calendar extends Component {
                             ]}
                         />
                     </div>
-                    <div>testeteset</div>
                 </div>
             </div>
         );
