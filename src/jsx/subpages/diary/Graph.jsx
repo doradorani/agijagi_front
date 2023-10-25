@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
+import SideMenu from '../SideMenu';
+import '../../../css/subpage/graph.css';
 
 const Container = styled.div`
     width: 90vw;
@@ -59,14 +61,17 @@ const Graph = () => {
             <div>
                 <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg" />
             </div>
-            <div>
-                <div>
-                    <p>우리 아이 성장 기록</p>
-                </div>
-                <div className="area_for_graph_detail">
-                    <Container>
-                        <Line type="line" data={data} />
-                    </Container>
+            <div className="diary_second_wrap">
+                <SideMenu />
+                <div className="diary_section">
+                    <div>
+                        <p>우리 아이 성장 기록</p>
+                    </div>
+                    <div className="area_for_graph_detail">
+                        <Container>
+                            <Line type="line" data={data} />
+                        </Container>
+                    </div>
                 </div>
             </div>
         </div>

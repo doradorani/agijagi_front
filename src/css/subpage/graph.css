@@ -1,0 +1,5 @@
+.diary_second_wrap {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px auto;
+}

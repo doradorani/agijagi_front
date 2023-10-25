@@ -10,15 +10,17 @@
 
 .calendar {
     margin: 15px auto;
-    width: 100%;
-    float: right;
 }
-.calendar > div {
-    position: relative;
-    left: 30%;
+.calendar_second_wrap {
+    width: 100%;
 }
 
-.calendar_second_wrap {
+.calendar > div {
+    position: relative;
+    left: 20%;
+}
+
+.calendar_section {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
