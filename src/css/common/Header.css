@@ -1,10 +1,3 @@
-/* @font-face {
-    font-family: 'yg-jalnan';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-} */
-
 #header_wrap {
   position: fixed;
   top: 0;
@@ -17,14 +10,33 @@
   background-color: white;
 }
 
+#header_wrap_login {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    left: 0;
+    right: 0;
+    height: 85px;
+    display: flex;
+    z-index: 1050;
+    background-color: white;
+  }
+
 div.logo_wrap {
     margin-top: 5px;
     margin-left: 30px;
     font-family: 'yg-jalnan';
     font-size: 2.0em;
-    color: red;
     display: flex;
     align-items: center;
+}
+
+div.logo_wrap_login {
+    position: fixed;
+    top: 9px;
+    left: 42%;
+    font-family: 'yg-jalnan';
+    font-size: 2.0em;
 }
 
 div.logo_wrap a {
@@ -62,5 +74,17 @@ img.logo_img {
 .login_btn_main_page {
     position: fixed;
     top: 25px;
-    right: 5%;
+    right: 2%;
+}
+
+.login_btn {
+    background-color: #eff0f3 ;
+    /* color: #455eef; */
+    font-weight: bold;
+}
+
+.login_btn:hover {
+    background-color: #E4E5E8 ;
+    /* color: #425AE5; */
+    color: #000;
 }
