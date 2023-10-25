@@ -162,36 +162,36 @@ const Community = () => {
                     <div class="modal fade" id="modal_for_post_text" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
                             <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">새 게시물 작성하기</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div className="flex_for_profile_new_post">
-                                <div className="flex_new_post">
-                                    <div className="profile_img_new_post">
-                                        <img src="/test_imgs/logo/full_logo.jpg"/>
-                                    </div>
-                                    <div className="profile_info_new_post">
-                                        <div className="profile_name_new_post">hee_hee</div>
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">새 게시물 작성하기</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div className="flex_for_profile_new_post">
+                                    <div className="flex_new_post">
+                                        <div className="profile_img_new_post">
+                                            <img src="/test_imgs/logo/full_logo.jpg"/>
+                                        </div>
+                                        <div className="profile_info_new_post">
+                                            <div className="profile_name_new_post">hee_hee</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-body mx-auto">
-                                <textarea 
-                                    className="upload_text" 
-                                    placeholder="게시물의 내용을 작성해주세요."
-                                    onChange={handleTextChange}
-                                ></textarea>
-                            </div>
-                            <sup className="byte_for_upload">(<span id="nowByte">{byteCount}</span>/2200bytes)</sup>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_for_post_img">
-                                    이전
-                                </button>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_for_post_text">
-                                    공유하기
-                                </button>
-                            </div>
+                                <div class="modal-body mx-auto">
+                                    <textarea 
+                                        className="upload_text" 
+                                        placeholder="게시물의 내용을 작성해주세요."
+                                        onChange={handleTextChange}
+                                    ></textarea>
+                                </div>
+                                <sup className="byte_for_upload">(<span id="nowByte">{byteCount}</span>/2200bytes)</sup>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_for_post_img">
+                                        이전
+                                    </button>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_for_post_text">
+                                        공유하기
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
