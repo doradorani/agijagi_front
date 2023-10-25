@@ -1,11 +1,15 @@
 .product_list {
-    margin: 15px 25%;
+    margin: 15px auto;
 }
 
 .product_list {
     display: flex;
     flex-direction: column;
-    width: 1024px;
+}
+
+.co-buying_list_second_wrap {
+    display: flex;
+    justify-content: space-around;
 }
 
 .order_select_container {
@@ -21,6 +25,9 @@
     display: flex;
     width: 37%;
     justify-content: space-evenly;
+}
+.order_select_option {
+    cursor: pointer;
 }
 
 .order_select_selectbox {
@@ -40,6 +47,7 @@
     width: 100%;
     height: 180px;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .product_wrap_row {
@@ -60,6 +68,7 @@
 }
 .product_order_card_title {
     margin-bottom: 3px;
+    cursor: pointer;
 }
 
 .product_order_card_subtext_text {
