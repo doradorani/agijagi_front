@@ -24,6 +24,9 @@ const LoadingPostCard = () => {
                 <span class="placeholder col-4"></span>
                 <span class="placeholder col-6"></span>
                 <span class="placeholder col-8"></span>
+                <div class="spinner-grow" style={{width: '3rem', height: '3rem'}} role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
                 </p>
             </div>
             </div>

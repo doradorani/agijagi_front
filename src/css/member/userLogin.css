@@ -1,0 +1,37 @@
+.user_login_wrap {
+    margin: 140px auto;
+    width: 450px;
+}
+
+.kakao_login_box {
+    width: 450px;
+    background-color: #FFEB3B;
+    border-radius: 5px;
+    display: flex;
+}
+
+.user_login_title {
+    height: 80px;
+    font-size: 2.0em;
+}
+
+.user_login_img > img {
+    width: 50px;
+    height: 50px;
+}
+
+.user_login_text_box {
+    color: #3E2723;
+    margin: 13px auto;
+}
+
+.link_to_sign_up {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.kakao_login_box_btn {
+    border: none;
+    background-color: none;
+    border-radius: 5px;
+}

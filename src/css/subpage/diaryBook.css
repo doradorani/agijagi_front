@@ -1,8 +1,3 @@
-/* ::before,
-::after {
-	content: "";
-} */
-
 .book_ul {
 	padding: 0;
 	list-style: none;
