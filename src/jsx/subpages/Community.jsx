@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import '../../css/subpage/community.css'
-import Post from "./community/Post";
-import SideMenu from "./SideMenu";
-import LoadingPostCard from "./community/LoadingPostCard";
-import CoBuyingList from "./co-buying/CoBuyingList";
+import '../../css/subpage/community.css';
+import Post from './community/Post';
+import SideMenu from './SideMenu';
+import LoadingPostCard from './community/LoadingPostCard';
+import CoBuyingList from './co-buying/CoBuyingList';
+import MyPosts from './community/MyPosts';
 
-const Community = ({selectedMenu, selectedSideMenu, setSelectedSideMenu}) => {
+const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
-    const [fileInfo, setFileInfo] = useState("");
+    const [fileInfo, setFileInfo] = useState('');
     const [previewImage, setPreviewImage] = useState(null);
     const [byteCount, setByteCount] = useState(0);
 
@@ -18,58 +19,57 @@ const Community = ({selectedMenu, selectedSideMenu, setSelectedSideMenu}) => {
     if (selectedSideMenu === 1) {
         communityContents = (
             <>
-                <div>
-                    전체
+                <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
+                    <img src="/test_imgs/png/아기여워.png" style={{ width: '55px', marginRight: '15px' }} />
+                    <div style={{ fontSize: '40px', marginRight: '15px' }}>아 ~ 기여워</div>
+                    <div style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}>
+                        &#62;&nbsp;전체 게시글
+                    </div>
                 </div>
-                <Post/>
-                <Post/>
-                <Post/>
-                <LoadingPostCard/>
+                <Post />
+                <Post />
+                <Post />
+                <LoadingPostCard />
             </>
-        )
+        );
     } else if (selectedSideMenu === 2) {
         communityContents = (
-            <></>
-        )
+            <>
+                <MyPosts />
+            </>
+        );
     } else if (selectedSideMenu === 3) {
-        communityContents = (
-            <CoBuyingList />
-        )
+        communityContents = <CoBuyingList />;
     } else if (selectedSideMenu === 4) {
-        communityContents = (
-            <></>
-        )
+        communityContents = <></>;
     } else if (selectedSideMenu === 5) {
-        communityContents = (
-            <></>
-        )
+        communityContents = <></>;
     }
-
 
     const handleFileChange = (e) => {
         const maxFiles = 5;
         const maxFileSize = 25600000;
         const files = e.target.files;
         const newSelectedFiles = [];
-        let fileInfoText = "";
+        let fileInfoText = '';
 
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             // 사진 첨부 최대 개수 설정
             if (newSelectedFiles.length >= maxFiles) {
                 alert(`사진은 최대 ${maxFiles}개까지 첨부할 수 있습니다.`);
-                e.target.value = "";
+                e.target.value = '';
                 setSelectedFiles([]);
-                setFileInfo("");
+                setFileInfo('');
                 setPreviewImage(null);
                 return;
             }
             // 사진 첨부 최대 용량 설정
             if (file.size > maxFileSize) {
                 alert(`파일 크기는 ${formatBytes(maxFileSize)}를 초과할 수 없습니다.`);
-                e.target.value = "";
+                e.target.value = '';
                 setSelectedFiles([]);
-                setFileInfo("");
+                setFileInfo('');
                 setPreviewImage(null);
                 return;
             }
@@ -110,8 +110,8 @@ const Community = ({selectedMenu, selectedSideMenu, setSelectedSideMenu}) => {
 
     const deleteFiles = () => {
         setSelectedFiles([]);
-        document.getElementById("fileInput").value = "";
-        setFileInfo("");
+        document.getElementById('fileInput').value = '';
+        setFileInfo('');
         setPreviewImage(null);
     };
 
@@ -135,34 +135,52 @@ const Community = ({selectedMenu, selectedSideMenu, setSelectedSideMenu}) => {
     return (
         <div className="community_wrap">
             <div>
-                <img className="community_main_img" src="/test_imgs/community_imgs/community_main.jpg"/>
+                <img className="community_main_img" src="/test_imgs/community_imgs/community_main.jpg" />
             </div>
             <div className="community_flex">
-                <SideMenu
-                    selectedMenu={2}
-                    setSelectedSideMenu={setSelectedSideMenu}
-                />
-                <div className="post_section">
-                    {communityContents}
-                    
-                    {/* Modal START */}
-                    <div class="modal fade" id="modal_for_post_img" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">새 게시물 작성하기</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <SideMenu selectedMenu={2} setSelectedSideMenu={setSelectedSideMenu} />
+                <div className="post_section">{communityContents}</div>
+                <div className="tag_for_sticky">
+                    <div>
+                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                    </div>
+                </div>
+                {/* Modal START */}
+                <div
+                    className="modal fade yg_font"
+                    id="modal_for_post_img"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                >
+                    <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">
+                                    새 게시물 작성하기
+                                </h1>
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                ></button>
                             </div>
-                            <div class="modal-body mx-auto modap_img_contents">
-                                {previewImage 
-                                    ? (<img className="uploaded_preview_img" src={previewImage} alt="Selected" width="450px" />)
-                                    : ( 
-                                        <div>
-                                            <img src="/test_imgs/png/picture.png" class="" width='225px'/>
-                                                <div>사진을 여기에 끌어다 놓으세요</div>
-                                        </div>
-                                    )
-                                }
+                            <div className="modal-body mx-auto modap_img_contents">
+                                {previewImage ? (
+                                    <img
+                                        className="uploaded_preview_img"
+                                        src={previewImage}
+                                        alt="Selected"
+                                        width="450px"
+                                    />
+                                ) : (
+                                    <div>
+                                        <img src="/test_imgs/png/picture.png" class="" width="225px" />
+                                        <div>사진을 여기에 끌어다 놓으세요</div>
+                                    </div>
+                                )}
                             </div>
                             {/* 첨부파일 관련 태그 START */}
                             <div className="for_upload_file">
@@ -171,76 +189,99 @@ const Community = ({selectedMenu, selectedSideMenu, setSelectedSideMenu}) => {
                                     name="files"
                                     id="fileInput"
                                     multiple
-                                    style={{ display: "none" }}
+                                    style={{ display: 'none' }}
                                     accept="image/*,
                                             video/*"
                                     onChange={handleFileChange}
                                 />
                             </div>
                             <label htmlFor="fileInput" className="upload_img_btn">
-                                    <figure>
-                                        <img src="/test_imgs/png/upload.png" width={'30px'}/>
-                                        <p>사진 선택</p>
-                                    </figure>
-                                </label>
-                                <input className="deleteBtn" type="button" value="삭제" onClick={deleteFiles} />
+                                <figure>
+                                    <img src="/test_imgs/png/upload.png" width={'30px'} />
+                                    <p>사진 선택</p>
+                                </figure>
+                            </label>
+                            <input className="deleteBtn" type="button" value="삭제" onClick={deleteFiles} />
                             {/* 첨부파일 관련 태그 END */}
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">이전</button>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_for_post_text">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    이전
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modal_for_post_text"
+                                >
                                     다음
                                 </button>
                             </div>
-                            </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="modal_for_post_text" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">새 게시물 작성하기</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div className="flex_for_profile_new_post">
-                                    <div className="flex_new_post">
-                                        <div className="profile_img_new_post">
-                                            <img src="/test_imgs/logo/full_logo.jpg"/>
-                                        </div>
-                                        <div className="profile_info_new_post">
-                                            <div className="profile_name_new_post">hee_hee</div>
-                                        </div>
+                </div>
+                <div
+                    className="modal fade yg_font"
+                    id="modal_for_post_text"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                >
+                    <div className="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">
+                                    새 게시물 작성하기
+                                </h1>
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                ></button>
+                            </div>
+                            <div className="flex_for_profile_new_post">
+                                <div className="flex_new_post">
+                                    <div className="profile_img_new_post">
+                                        <img src="/test_imgs/logo/full_logo.jpg" />
+                                    </div>
+                                    <div className="profile_info_new_post">
+                                        <div className="profile_name_new_post">hee_hee</div>
                                     </div>
                                 </div>
-                                <div class="modal-body mx-auto">
-                                    <textarea 
-                                        className="upload_text" 
-                                        placeholder="게시물의 내용을 작성해주세요."
-                                        onChange={handleTextChange}
-                                    ></textarea>
-                                </div>
-                                <sup className="byte_for_upload">(<span id="nowByte">{byteCount}</span>/2200bytes)</sup>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_for_post_img">
-                                        이전
-                                    </button>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal_for_post_text">
-                                        공유하기
-                                    </button>
-                                </div>
+                            </div>
+                            <div className="modal-body mx-auto">
+                                <textarea
+                                    className="upload_text"
+                                    placeholder="게시물의 내용을 작성해주세요."
+                                    onChange={handleTextChange}
+                                ></textarea>
+                            </div>
+                            <sup className="byte_for_upload">
+                                (<span id="nowByte">{byteCount}</span>/2200bytes)
+                            </sup>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modal_for_post_img"
+                                >
+                                    이전
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modal_for_post_text"
+                                >
+                                    공유하기
+                                </button>
                             </div>
                         </div>
                     </div>
-                    {/* Modal END */}
                 </div>
-                <div className="tag_for_sticky">
-                    <div>
-                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg"/>
-                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg"/>
-                    </div>
-                </div>
+                {/* Modal END */}
             </div>
-            
-
         </div>
     );
 };

@@ -1,13 +1,13 @@
 .diary_main_img {
     width: 100%;
-    max-height: 500px;
+    max-height: 400px;
     object-fit: cover;
 }
 
 .diary_flex {
     display: flex;
     justify-content: space-between;
-    margin: 50px 100px 0px 100px;
+    margin: 50px 80px 0px 80px;
 }
 
 .magazine {
