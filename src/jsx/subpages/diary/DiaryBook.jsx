@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../../css/subpage/diaryBook.css';
 
-const DiaryBook = () => {
+const DiaryBook = ({setSelectedDiary}) => {
     return (
-        <div className="component">
+        <div className="component yg_font">
             <ul className="align book_ul">
                 <li>
                     <figure className="book">
@@ -17,7 +17,10 @@ const DiaryBook = () => {
                         <ul className="page book_ul">
                             <li></li>
                             <li>
-                                <Link className="diarybook_btn" to="/diary/diarybook_detail">
+                                {/* <Link className="diarybook_btn" to="/diarybook_detail" onClick={()=>setSelectedDiary(1)}>
+                                    보러가기
+                                </Link> */}
+                                <Link className="diarybook_btn" onClick={()=>setSelectedDiary(1)}>
                                     보러가기
                                 </Link>
                             </li>
@@ -30,6 +33,11 @@ const DiaryBook = () => {
                             <li></li>
                             <li></li>
                         </ul>
+                        <figcaption>
+                            <h2>수민이 육아일기</h2>
+                            <span>세환 ♥ 영주</span>
+                            <p>The web is an ever-changing medium whose scope, application, audience and platform continue to grow on a daily basis. </p>
+                        </figcaption>
                     </figure>
                 </li>
             </ul>

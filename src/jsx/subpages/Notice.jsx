@@ -1,10 +1,9 @@
 import React from "react";
 import SideMenu from "./SideMenu";
 import NoticeTable from "./noticeboard/NoticeTable";
-
 import "../../css/subpage/notice.css";
 
-const Notice = () => {
+const Notice = ({selectedMenu}) => {
   return (
     <div className="notice_wrap">
         <div>
@@ -14,7 +13,9 @@ const Notice = () => {
             />
         </div>
             <div className="notice_flex">
-                <SideMenu/>
+                <SideMenu
+                    selectedMenu={3}
+                />
                 <div>
                     <div>공지사항</div>
                     <div>
@@ -22,9 +23,6 @@ const Notice = () => {
                     </div>
                 </div>
                 <div>
-                    <div>
-                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg"/>
-                    </div>
                     <div>
                         <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg"/>
                     </div>

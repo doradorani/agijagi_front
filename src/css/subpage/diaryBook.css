@@ -1,6 +1,16 @@
+.component {
+    margin: 50px 120px;
+    width: 500px;
+}
+
+.component ul,
+.component div {
+    display: inline;
+}
+
 .book_ul {
     padding: 0;
-    list-style: none;
+    /* list-style: none; */
 }
 
 a {
@@ -30,8 +40,8 @@ a {
     text-align: center;
 }
 
-.align > li {
-    width: 500px;
+.align > li:nth-child(1) {
+    width: 300px;
     display: inline-block;
     margin: 30px 20px 30px 30px;
     padding: 0 0 0 60px;
@@ -400,4 +410,28 @@ Table of Contents
 .book:hover > .page li:nth-child(5) {
     transform: rotateY(-140deg);
     transition-duration: 1.2s;
+}
+
+figcaption {
+	padding-left: 40px;
+	text-align: left;
+	position: absolute;
+	top: 0%;
+	left: 160px;
+	width: 310px;
+}
+
+figcaption h1 {
+	margin: 0;
+}
+
+figcaption span {
+	color: #16a085;
+	padding: 0.6em 0 1em 0;
+	display: block;
+}
+
+figcaption p {
+	color: #63707d;
+	line-height: 1.3;
 }
