@@ -6,9 +6,6 @@ const CoBuyingList = () => {
     return (
         <>
             <div className="co-buying_list_wrap">
-                <div>
-                    <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg" />
-                </div>
                 <div className="co-buying_list_second_wrap">
                     <SideMenu />
                     <div className="product_list">
