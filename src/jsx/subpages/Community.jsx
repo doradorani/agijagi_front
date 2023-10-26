@@ -7,7 +7,7 @@ import SideMenu from "./SideMenu";
 import LoadingPostCard from "./community/LoadingPostCard";
 import CoBuyingList from "./co-buying/CoBuyingList";
 
-const Community = ({selectedMenu, selectedSideMenu}) => {
+const Community = ({selectedMenu, selectedSideMenu, setSelectedSideMenu}) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [fileInfo, setFileInfo] = useState("");
     const [previewImage, setPreviewImage] = useState(null);
@@ -140,6 +140,7 @@ const Community = ({selectedMenu, selectedSideMenu}) => {
             <div className="community_flex">
                 <SideMenu
                     selectedMenu={2}
+                    setSelectedSideMenu={setSelectedSideMenu}
                 />
                 <div className="post_section">
                     {communityContents}

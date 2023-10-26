@@ -10,9 +10,9 @@ const LoadingPostCard = () => {
                 <div class="spinner-grow" style={{width: '3rem', height: '3rem'}} role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-                <div class="spinner-border" role="status">
+                {/* <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
-                </div>
+                </div> */}
             </div>
             <div class="card-body">
                 <h5 class="card-title placeholder-glow">
