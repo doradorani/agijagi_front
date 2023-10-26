@@ -6,7 +6,6 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
 import { Link } from 'react-router-dom';
-import SideMenu from '../SideMenu.jsx';
 
 const ToggleContainer = styled.div`
     position: relative;
@@ -82,7 +81,7 @@ const Calendar = () => {
                         )}
                     </div> */}
                     <div className="calendar_second_wrap">
-                        <div className="calendar" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr' }}>
+                        <div className="calendar">
                             <FullCalendar
                                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                                 initialView={'dayGridMonth'}
@@ -91,10 +90,11 @@ const Calendar = () => {
                                     center: 'title',
                                     end: 'prev,next',
                                 }}
+                                eventMinWidth={'10vh'}
                                 height={'85vh'}
                                 dateClick={dateClick}
                                 events={[
-                                    { title: '하품을 했다', date: '2023-10-11' },
+                                    { title: '하품을 했다', date: '2023-10-11', description: '하품' },
                                     { title: '집가고 싶다', date: '2023-10-13' },
                                 ]}
                             />
