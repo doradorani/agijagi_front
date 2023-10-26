@@ -14,6 +14,7 @@ import DetailPost from './jsx/subpages/community/DetailPost';
 import DiaryBook from './jsx/subpages/diary/DiaryBook';
 import DiaryBookDetail from './jsx/subpages/diary/DiaryBookDetail';
 import Graph from './jsx/subpages/diary/Graph';
+import Note from './jsx/subpages/diary/Note';
 import Calendar from './jsx/subpages/diary/Calendar';
 import CoBuyingList from './jsx/subpages/co-buying/CoBuyingList';
 import CoBuyingDetail from './jsx/subpages/co-buying/CoBuyingDetail';
@@ -30,45 +31,43 @@ function App() {
     return (
         <>
             <BrowserRouter>
-                <Header 
+                <Header
                     isLoggedIn={isLoggedIn}
                     setSelectedMenu={setSelectedMenu}
                     setselectedSideMenu={setSelectedSideMenu}
                 />
                 <Routes>
                     <Route path="/" element={<Home />}></Route>
-                    <Route path="/user_login" 
-                           element={
-                           <UserLogin 
-                                isLoggedIn={isLoggedIn}
-                           />}>
-                    </Route>
+                    <Route path="/user_login" element={<UserLogin isLoggedIn={isLoggedIn} />}></Route>
                     <Route path="/user_sign_up" element={<UserSignUp />}></Route>
-                    <Route path="/diary" 
-                           element={
-                           <Diary 
+                    <Route
+                        path="/diary"
+                        element={
+                            <Diary
                                 selectedMenu={selectedMenu}
                                 selectedSideMenu={selectedSideMenu}
                                 setSelectedSideMenu={setSelectedSideMenu}
-                           />}></Route>
+                            />
+                        }
+                    ></Route>
                     <Route path="/diarybook_detail" element={<DiaryBookDetail />}></Route>
                     <Route path="/graph" element={<Graph />}></Route>
+                    <Route path="/note" element={<Note />}></Route>
                     <Route path="/calendar" element={<Calendar />}></Route>
-                    <Route path="/community" 
-                           element={
-                           <Community 
+                    <Route
+                        path="/community"
+                        element={
+                            <Community
                                 selectedMenu={selectedMenu}
                                 selectedSideMenu={selectedSideMenu}
                                 setSelectedSideMenu={setSelectedSideMenu}
-                           />}></Route>
+                            />
+                        }
+                    ></Route>
                     <Route path="/detail" element={<DetailPost />}></Route>
                     <Route path="/co-buying_list" element={<CoBuyingList />}></Route>
                     <Route path="/co-buying_detail" element={<CoBuyingDetail />}></Route>
-                    <Route path="/notice" 
-                           element={
-                           <Notice 
-                                selectedMenu={selectedMenu}
-                           />}></Route>
+                    <Route path="/notice" element={<Notice selectedMenu={selectedMenu} />}></Route>
                 </Routes>
                 <Footer />
             </BrowserRouter>
