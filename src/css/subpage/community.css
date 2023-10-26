@@ -1,6 +1,6 @@
 .community_main_img {
     width: 100%;
-    max-height: 500px;
+    max-height: 400px;
     object-fit: cover;
 }
 
@@ -11,7 +11,7 @@
 .community_flex {
     display: flex;
     justify-content: space-between;
-    margin: 50px 100px 0px 100px;
+    margin: 50px 80px 0px 80px;
 }
 
 .community_flex > div {
@@ -54,18 +54,18 @@
 }
 
 .upload_img_btn figure img {
-    -webkit-transition: .5s ease-in-out;
-	transition: .5s ease-in-out;
+    -webkit-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
 }
 
 .upload_img_btn figure:hover img {
-	margin-top: -160px;
-	-webkit-transition: .5s ease-in-out;
-	transition: .5s ease-in-out;
+    margin-top: -160px;
+    -webkit-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
 }
 
 .upload_img_btn figure:hover > p {
-    opacity:1
+    opacity: 1;
 }
 
 /* .upload_img_parents {
@@ -77,22 +77,22 @@
     position: absolute;
     bottom: 80px;
     right: 20px;
-    background:gray; 
-    width:20px; 
+    background: gray;
+    width: 20px;
     /* transition:0.5s all */
 }
 
 .upload_img_btn figure > p {
-    display:block; 
+    display: block;
     position: absolute;
     bottom: 80px;
     right: 20px;
-    font-size:18px;
-    color:#fff; 
-    background:gray; 
-    width:20px; 
-    opacity:0; 
-    transition:0.5s all
+    font-size: 18px;
+    color: #fff;
+    background: gray;
+    width: 20px;
+    opacity: 0;
+    transition: 0.5s all;
 }
 
 .deleteBtn {
@@ -156,12 +156,13 @@
 
 .tag_for_sticky {
     position: sticky;
-    width: 20%;         
-    height: 650px; 
-    position: sticky;         
-    top: 100px; 
+    width: 15%;
+    height: 650px;
+    position: sticky;
+    top: 100px;
 }
 
 .post_section {
+    width: 800px;
     margin-bottom: 45px;
 }

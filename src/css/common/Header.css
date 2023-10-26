@@ -1,13 +1,13 @@
 #header_wrap {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  left: 0;
-  right: 0;
-  height: 85px;
-  display: flex;
-  z-index: 1050;
-  background-color: white;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    left: 0;
+    right: 0;
+    height: 65px;
+    display: flex;
+    z-index: 1050;
+    background-color: white;
 }
 
 #header_wrap_login {
@@ -16,17 +16,17 @@
     width: 100%;
     left: 0;
     right: 0;
-    height: 85px;
+    height: 65px;
     display: flex;
     z-index: 1050;
     background-color: white;
-  }
+}
 
 div.logo_wrap {
-    margin-top: 5px;
+    /* margin-top: 5px; */
     margin-left: 30px;
     font-family: 'yg-jalnan';
-    font-size: 2.0em;
+    font-size: 2em;
     display: flex;
     align-items: center;
 }
@@ -36,7 +36,7 @@ div.logo_wrap_login {
     top: 9px;
     left: 42%;
     font-family: 'yg-jalnan';
-    font-size: 2.0em;
+    font-size: 2em;
 }
 
 div.logo_wrap a {
@@ -44,14 +44,14 @@ div.logo_wrap a {
 }
 
 img.logo_img {
-    width: 50px;
+    width: 40px;
     margin-right: 10px;
 }
 
 /* 네비게이션 부분 스타일 */
 .nav_bar {
     position: fixed;
-    top: 25px;
+    top: 15px;
     left: 35%;
     display: flex; /* 네비게이션 링크를 가로로 나열하기 위한 Flexbox 설정 */
     justify-content: center; /* 네비게이션 링크를 가로 중앙 정렬 */
@@ -59,7 +59,7 @@ img.logo_img {
     font-family: 'yg-jalnan';
     font-size: 1.5em;
 }
-  
+
 .nav_bar a {
     color: black;
     text-decoration: none;
@@ -73,18 +73,18 @@ img.logo_img {
 /* 로그인 버튼 부분 스타일 */
 .login_btn_main_page {
     position: fixed;
-    top: 25px;
+    top: 14px;
     right: 2%;
 }
 
 .login_btn {
-    background-color: #eff0f3 ;
+    background-color: #eff0f3;
     /* color: #455eef; */
     font-weight: bold;
 }
 
 .login_btn:hover {
-    background-color: #E4E5E8 ;
+    background-color: #e4e5e8;
     /* color: #425AE5; */
     color: #000;
 }

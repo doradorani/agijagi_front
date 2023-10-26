@@ -52,28 +52,48 @@ const pages = [
     // Add more pages with image and text
 ];
 
-const DiaryBookDetail = ({setSelectedDiary}) => {
+const DiaryBookDetail = ({ setSelectedDiary }) => {
     return (
         <>
-            <div onClick={()=>setSelectedDiary(0)}>
-                뒤로가기
-            </div>
-            <div>
-                수민이 육아일기
+            <div className="flex" style={{ justifyContent: 'space-between' }}>
+                <div className="yg_font" style={{ fontSize: '40px' }}>
+                    수민이 육아일기
+                </div>
+                <div
+                    className="yg_font"
+                    style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '10px', cursor: 'pointer' }}
+                    onClick={() => setSelectedDiary(0)}
+                >
+                    &#60;&nbsp;뒤로가기
+                </div>
             </div>
             <div className="area_for_diary_detail">
                 <Turn options={options} className="magazine">
                     {pages.map((page, index) => (
                         <div key={index} className="detail_page">
-                            <img className="diary_img_in_page" src={page.image} alt="" />
+                            <img
+                                className="diary_img_in_page"
+                                src={page.image}
+                                style={{
+                                    width: '350px',
+                                    height: '350px',
+                                    margin: '25px auto 10px',
+                                    objectFit: 'cover',
+                                }}
+                                alt=""
+                            />
                             <h3>{page.title}</h3>
-                            <p>{page.text}</p>
+                            {/* <p>{page.text}</p> */}
+                            <p>
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet hic excepturi temporibus
+                                doloremque nihil? Harum assumenda quos aut voluptatum blanditiis maiores eveniet!
+                                Repudiandae deserunt deleniti maxime ipsum, laudantium alias non?
+                            </p>
                         </div>
                     ))}
                 </Turn>
             </div>
         </>
-        
     );
 };
 export default DiaryBookDetail;
