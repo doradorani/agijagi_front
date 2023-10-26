@@ -24,8 +24,18 @@
 
 .home_section1 > div {
     /* margin: 0 auto; */
+    padding-top: 260px;
     line-height: 100vh;
     text-align: center;
+}
+
+.main_home_subtitle > p {
+    line-height: 80px;
+}
+
+.main_home_subtitle > p:nth-child(2) {
+    margin-top: 55px;
+    font-size: 3.0em;
 }
 
 .home_section2 {

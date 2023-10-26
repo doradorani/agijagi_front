@@ -65,11 +65,7 @@ const Calendar = () => {
     return (
         <div>
             <div className="calendar_wrap">
-                <div>
-                    <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg" />
-                </div>
                 <div className="calendar_section">
-                    <SideMenu />
                     {/* <div className="toggle">
                         <ToggleContainer onClick={toggleHandler}>
                             <div className={`toggle-container ${isOn ? 'toggle--checked' : null}`} />

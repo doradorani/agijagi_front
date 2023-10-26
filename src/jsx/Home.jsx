@@ -2,6 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/common/common.css';
 import '../css/home.css';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     return (
@@ -12,7 +13,7 @@ const Home = () => {
             <div className="home_section1">
                 <div className="main_home_subtitle">
                     <p>자녀의 소중한 순간을 기록해 주세요</p>
-                    {/* <p>아기자기</p> */}
+                    <p>아기자기</p>
                 </div>
             </div>
             <div className="home_section2">
@@ -22,14 +23,18 @@ const Home = () => {
                 <div className="home_section2_content">
                     <div>Lorem ipsum dolor sit amet</div>
                     <div>Lorem ipsum dolor sit amet consectetur adipisicing</div>
+                    <Link to="/diary">
                     <button>일기 작성하기</button>
+                    </Link>
                 </div>
             </div>
             <div className="home_section3">
                 <div className="home_section3_content">
                     <div>Lorem ipsum dolor sit amet</div>
                     <div>Lorem ipsum dolor sit amet consectetur adipisicing</div>
+                    <Link to="/community">
                     <button>커뮤니티 구경하기</button>
+                    </Link>
                 </div>
                 <div className="home_section3_img">
                     <img src="/test_imgs/sns_imgs/baby_commu.jpg" />

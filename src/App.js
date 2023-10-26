@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './jsx/Header';
 import Home from './jsx/Home';
 import UserLogin from './jsx/Member/UserLogin';
@@ -20,12 +20,20 @@ import CoBuyingDetail from './jsx/subpages/co-buying/CoBuyingDetail';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [selectedMenu, setSelectedMenu] = useState(0);
+    const [selectedSideMenu, setSelectedSideMenu] = useState(1);
+
+    // useEffect(()=>{
+    //     console.log("selected", selectedSideMenu )
+    // },[selectedSideMenu])
 
     return (
         <>
             <BrowserRouter>
                 <Header 
                     isLoggedIn={isLoggedIn}
+                    setSelectedMenu={setSelectedMenu}
+                    setselectedSideMenu={setSelectedSideMenu}
                 />
                 <Routes>
                     <Route path="/" element={<Home />}></Route>
@@ -36,15 +44,31 @@ function App() {
                            />}>
                     </Route>
                     <Route path="/user_sign_up" element={<UserSignUp />}></Route>
-                    <Route path="/diary" element={<Diary />}></Route>
+                    <Route path="/diary" 
+                           element={
+                           <Diary 
+                                selectedMenu={selectedMenu}
+                                selectedSideMenu={selectedSideMenu}
+                                setSelectedSideMenu={setSelectedSideMenu}
+                           />}></Route>
                     <Route path="/diarybook_detail" element={<DiaryBookDetail />}></Route>
                     <Route path="/graph" element={<Graph />}></Route>
                     <Route path="/calendar" element={<Calendar />}></Route>
-                    <Route path="/community" element={<Community />}></Route>
+                    <Route path="/community" 
+                           element={
+                           <Community 
+                                selectedMenu={selectedMenu}
+                                selectedSideMenu={selectedSideMenu}
+                                setSelectedSideMenu={setSelectedSideMenu}
+                           />}></Route>
+                    <Route path="/detail" element={<DetailPost />}></Route>
                     <Route path="/co-buying_list" element={<CoBuyingList />}></Route>
                     <Route path="/co-buying_detail" element={<CoBuyingDetail />}></Route>
-                    <Route path="/detail" element={<DetailPost />}></Route>
-                    <Route path="/notice" element={<Notice />}></Route>
+                    <Route path="/notice" 
+                           element={
+                           <Notice 
+                                selectedMenu={selectedMenu}
+                           />}></Route>
                 </Routes>
                 <Footer />
             </BrowserRouter>

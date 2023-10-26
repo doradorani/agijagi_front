@@ -52,19 +52,28 @@ const pages = [
     // Add more pages with image and text
 ];
 
-const DiaryBookDetail = () => {
+const DiaryBookDetail = ({setSelectedDiary}) => {
     return (
-        <div className="area_for_diary_detail">
-            <Turn options={options} className="magazine">
-                {pages.map((page, index) => (
-                    <div key={index} className="detail_page">
-                        <img className="diary_img_in_page" src={page.image} alt="" />
-                        <h3>{page.title}</h3>
-                        <p>{page.text}</p>
-                    </div>
-                ))}
-            </Turn>
-        </div>
+        <>
+            <div onClick={()=>setSelectedDiary(0)}>
+                뒤로가기
+            </div>
+            <div>
+                수민이 육아일기
+            </div>
+            <div className="area_for_diary_detail">
+                <Turn options={options} className="magazine">
+                    {pages.map((page, index) => (
+                        <div key={index} className="detail_page">
+                            <img className="diary_img_in_page" src={page.image} alt="" />
+                            <h3>{page.title}</h3>
+                            <p>{page.text}</p>
+                        </div>
+                    ))}
+                </Turn>
+            </div>
+        </>
+        
     );
 };
 export default DiaryBookDetail;

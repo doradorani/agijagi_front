@@ -205,3 +205,8 @@
     min-width: 640px;
     font-size: 1.15em;
 }
+
+.division_line {
+    margin-left: 20px;
+    width: 640px;
+}

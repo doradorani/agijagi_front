@@ -5,12 +5,46 @@ import '../../css/subpage/community.css'
 import Post from "./community/Post";
 import SideMenu from "./SideMenu";
 import LoadingPostCard from "./community/LoadingPostCard";
+import CoBuyingList from "./co-buying/CoBuyingList";
 
-const Community = () => {
+const Community = ({selectedMenu, selectedSideMenu}) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [fileInfo, setFileInfo] = useState("");
     const [previewImage, setPreviewImage] = useState(null);
     const [byteCount, setByteCount] = useState(0);
+
+    let communityContents;
+
+    if (selectedSideMenu === 1) {
+        communityContents = (
+            <>
+                <div>
+                    전체
+                </div>
+                <Post/>
+                <Post/>
+                <Post/>
+                <LoadingPostCard/>
+            </>
+        )
+    } else if (selectedSideMenu === 2) {
+        communityContents = (
+            <></>
+        )
+    } else if (selectedSideMenu === 3) {
+        communityContents = (
+            <CoBuyingList />
+        )
+    } else if (selectedSideMenu === 4) {
+        communityContents = (
+            <></>
+        )
+    } else if (selectedSideMenu === 5) {
+        communityContents = (
+            <></>
+        )
+    }
+
 
     const handleFileChange = (e) => {
         const maxFiles = 5;
@@ -104,13 +138,13 @@ const Community = () => {
                 <img className="community_main_img" src="/test_imgs/community_imgs/community_main.jpg"/>
             </div>
             <div className="community_flex">
-                <SideMenu/>
+                <SideMenu
+                    selectedMenu={2}
+                />
                 <div className="post_section">
-                    <div>전체</div>
-                    <Post/>
-                    <Post/>
-                    <Post/>
-                    <LoadingPostCard/>
+                    {communityContents}
+                    
+                    {/* Modal START */}
                     <div class="modal fade" id="modal_for_post_img" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
                             <div class="modal-content">
@@ -195,6 +229,7 @@ const Community = () => {
                             </div>
                         </div>
                     </div>
+                    {/* Modal END */}
                 </div>
                 <div className="tag_for_sticky">
                     <div>
