@@ -1,0 +1,70 @@
+.admin_container {
+    min-height: 85vh;
+}
+
+#admin_header_wrap {
+    margin-top: 20px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    /* align-items: center; */
+    text-align: center;
+    gap: 30px;
+}
+
+div.admin_logo_container {
+    font-family: 'yg-jalnan';
+    font-size: 1.5em;
+}
+
+#admin_header_wrap a {
+    text-decoration: none;
+}
+#admin_header_wrap a:hover {
+    text-decoration: none;
+}
+
+img.logo_img {
+    width: 40px;
+}
+
+.admin_nav_bar {
+    /* top: 15px; */
+    /* left: 35%; */
+    display: flex; /* 네비게이션 링크를 가로로 나열하기 위한 Flexbox 설정 */
+    flex-direction: column;
+    gap: 50px;
+    /* align-items: center; */
+    font-family: 'yg-jalnan';
+    font-size: 1em;
+}
+
+.nav_bar a {
+    color: black;
+    text-decoration: none;
+}
+
+.nav_bar a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+/* 로그인 버튼 부분 스타일 */
+.member_btn_page {
+    top: 14px;
+    right: 2%;
+}
+
+.login_btn {
+    background-color: #eff0f3;
+    /* color: #455eef; */
+    font-weight: bold;
+}
+
+.login_btn:hover {
+    background-color: #e4e5e8;
+    /* color: #425AE5; */
+    color: #000;
+}
