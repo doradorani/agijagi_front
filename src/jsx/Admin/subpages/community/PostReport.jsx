@@ -1,9 +1,11 @@
 import React from 'react';
 import '../../../../css/admin/community/postreport.css';
+import AdminSidbar from '../../AdminSidebar';
 
-const PostReport = () => {
+const PostReport = ({ setSelectedSideMenu }) => {
     return (
-        <>
+        <div className="flex">
+            <AdminSidbar selectedMenu={4} setSelectedSideMenu={setSelectedSideMenu} />
             <div className="admin_post_report_wrap">
                 <div className="admin_post_report_second_wrap">
                     <table className="post_report table table-striped table-hover">
@@ -171,7 +173,7 @@ const PostReport = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
