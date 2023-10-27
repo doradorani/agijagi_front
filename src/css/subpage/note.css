@@ -79,13 +79,13 @@
     text-align: right;
 }
 
-.note_submit_button > input {
+.note_submit_button > a > input {
     background-color: #ff4898;
     opacity: 0.8;
     border: 1px solid #ff4898;
 }
 
-.note_submit_button > input:hover {
+.note_submit_button > a > input:hover {
     background-color: #ff4898;
     border: 1px solid #ff4898;
     color: #000;

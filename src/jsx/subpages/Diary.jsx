@@ -56,7 +56,7 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
     } else if (selectedSideMenu === 3) {
         diaryContents = <div></div>;
     } else if (selectedSideMenu === 4) {
-        // diaryContents = <Graph />;
+        // diaryContents = <Note />;
         diaryContents = (
             <>
                 <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
@@ -66,7 +66,20 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                         &#62;&nbsp;수첩
                     </div> */}
                 </div>
-                <Note />
+                <Graph setSelectedSideMenu={setSelectedSideMenu} />
+            </>
+        );
+    } else if (selectedSideMenu === 5) {
+        diaryContents = (
+            <>
+                <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
+                    <img src="/test_imgs/png/diary1.png" style={{ width: '55px', marginRight: '15px' }} />
+                    <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 수첩</div>
+                    {/* <div style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}>
+                        &#62;&nbsp;수첩
+                    </div> */}
+                </div>
+                <Note setSelectedSideMenu={setSelectedSideMenu} />
             </>
         );
     }

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../../css/subpage/note.css';
+import { Link } from 'react-router-dom';
 
-const Note = () => {
+const Note = ({ setSelectedSideMenu }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [byteCount, setByteCount] = useState(0);
 
@@ -90,7 +91,14 @@ const Note = () => {
                                 </sup>
                             </div>
                             <div className="note_submit_button">
-                                <input type="submit" value={'등록'} className="btn btn-primary" />
+                                <Link
+                                    to="/diary"
+                                    onClick={() => {
+                                        setSelectedSideMenu(4);
+                                    }}
+                                >
+                                    <input type="submit" value={'등록'} className="btn btn-primary" />
+                                </Link>
                             </div>
                         </div>
                     </div>
