@@ -14,6 +14,8 @@
 
 .order_select_container {
     display: flex;
+    width: 127px;
+    justify-content: space-between;
 }
 
 .product_filter_container {
@@ -23,15 +25,22 @@
 
 .order_select_option_contianer {
     display: flex;
-    width: 37%;
-    justify-content: space-evenly;
 }
+
+.order_select_option {
+    margin: 0 3px;
+}
+
 .order_select_option {
     cursor: pointer;
 }
 
 .order_select_selectbox {
     height: 25px;
+}
+
+.product_list {
+    width: 800px;
 }
 
 .product_wrap_row {

@@ -4,10 +4,11 @@ import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import SideMenu from '../SideMenu';
 import '../../../css/subpage/graph.css';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     width: 90vw;
-    max-width: 900px;
+    max-width: 800px;
 `;
 // 최근 기록 중 10개나 20개 정도의 데이터를 받아서 default로 띄우기
 
@@ -49,7 +50,7 @@ const data = {
     ],
 };
 
-const Graph = () => {
+const Graph = ({ setSelectedSideMenu }) => {
     const [isOn, setisOn] = useState(false);
 
     const toggleHandler = () => {
@@ -59,10 +60,19 @@ const Graph = () => {
     return (
         <div className="diary_wrap">
             <div className="diary_second_wrap">
-                <SideMenu />
                 <div className="diary_section">
-                    <div>
+                    <div className="diary_section_header flex">
                         <p>우리 아이 성장 기록</p>
+                        <div className="go_to_write_health_note">
+                            <Link
+                                to="/diary"
+                                onClick={() => {
+                                    setSelectedSideMenu(5);
+                                }}
+                            >
+                                <input type="button" value="오늘의 건강 기록 작성" className="btn btn-primary" />
+                            </Link>
+                        </div>
                     </div>
                     <div className="area_for_graph_detail">
                         <Container>

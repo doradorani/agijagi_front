@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../../css/subpage/cobuyinglist.css';
 import SideMenu from '../SideMenu';
+import { Link } from 'react-router-dom';
 
 const CoBuyingList = () => {
     return (
@@ -32,7 +33,9 @@ const CoBuyingList = () => {
                             <div className="product_order_card">
                                 <div className="product_order_card_thumbnail">
                                     <div className="product_img">
-                                        <img src="/test_imgs/diary_imgs/diary4.jpg" alt="" />
+                                        <Link to={'/co-buying_detail'}>
+                                            <img src="/test_imgs/diary_imgs/diary4.jpg" alt="" />
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="product_order_card_content_container">

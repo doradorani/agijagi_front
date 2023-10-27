@@ -7,7 +7,7 @@ const CoBuyingDetail = () => {
         <>
             <div className="co-buying_detail_wrap">
                 <div>
-                    <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg" />
+                    <img className="diary_main_img" src="/test_imgs/community_imgs/community_main.jpg" />
                 </div>
                 <div className="co-buying_detail_second_wrap">
                     <SideMenu />

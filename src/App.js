@@ -18,6 +18,7 @@ import Note from './jsx/subpages/diary/Note';
 import Calendar from './jsx/subpages/diary/Calendar';
 import CoBuyingList from './jsx/subpages/co-buying/CoBuyingList';
 import CoBuyingDetail from './jsx/subpages/co-buying/CoBuyingDetail';
+import ScrollToTop from './jsx/ScrollToTop';
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,10 +32,11 @@ function App() {
     return (
         <>
             <BrowserRouter>
+                <ScrollToTop />
                 <Header
                     isLoggedIn={isLoggedIn}
                     setSelectedMenu={setSelectedMenu}
-                    setselectedSideMenu={setSelectedSideMenu}
+                    setSelectedSideMenu={setSelectedSideMenu}
                 />
                 <Routes>
                     <Route path="/" element={<Home />}></Route>
