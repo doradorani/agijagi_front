@@ -13,7 +13,7 @@ const AdminHeader = ({ setSelectedMenu }) => {
                     <div id="admin_header_wrap">
                         <div className="admin_logo_container">
                             <Link to="/admin">
-                                <img className="logo_img" src="/test_imgs/logo/logo.png" />
+                                <img className="admin_logo_img" src="/test_imgs/logo/logo.png" />
                                 아기자기
                             </Link>
                         </div>
@@ -37,11 +37,11 @@ const AdminHeader = ({ setSelectedMenu }) => {
                                 공동구매 상품 관리
                             </Link>
                         </div>
-                        <div className="member_btn_page">
+                        <div className="admin_btn_page">
                             <Link to="/admin_modify">
                                 <input
                                     type="button"
-                                    className="btn btn-outline-dark"
+                                    className="btn btn-outline-dark admin_btn"
                                     style={{ border: 'none' }}
                                     value={'회원 수정'}
                                     onClick={() => {
@@ -52,7 +52,7 @@ const AdminHeader = ({ setSelectedMenu }) => {
                             <Link to="/admin_logout">
                                 <input
                                     type="button"
-                                    className="btn btn-outline-dark"
+                                    className="btn btn-outline-dark admin_btn"
                                     style={{ border: 'none' }}
                                     value={'로그아웃'}
                                     onClick={() => {
