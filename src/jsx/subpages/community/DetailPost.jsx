@@ -48,7 +48,7 @@ const DetailPost = ({ setSelectedPost }) => {
                 </div>
                 <div className="emotion_btns flex">
                     <div className="flex">
-                        <a className="flex">
+                        <a className="flex none_underline">
                             <div>
                                 <img className="emotion_btn" src="/test_imgs/png/heart.png" />
                             </div>
@@ -56,7 +56,7 @@ const DetailPost = ({ setSelectedPost }) => {
                         </a>
                     </div>
                     <div className="flex">
-                        <a className="flex">
+                        <a className="flex none_underline">
                             <div>
                                 <img className="emotion_btn" src="/test_imgs/png/like.png" />
                             </div>
@@ -64,7 +64,7 @@ const DetailPost = ({ setSelectedPost }) => {
                         </a>
                     </div>
                     <div className="flex">
-                        <a className="flex">
+                        <a className="flex none_underline">
                             <div>
                                 <img className="emotion_btn" src="/test_imgs/png/sad.png" />
                             </div>
@@ -227,7 +227,7 @@ const DetailPost = ({ setSelectedPost }) => {
             <div
                 class="modal fade"
                 id="modal_for_change_reply"
-                tabindex="-1"
+                tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
             >

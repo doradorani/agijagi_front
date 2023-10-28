@@ -22,46 +22,75 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
         if (selectedPost === 0) {
             communityContents = (
                 <>
-                    <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
-                        <img src="/test_imgs/png/아기여워.png" style={{ width: '55px', marginRight: '15px' }} />
-                        <div style={{ fontSize: '40px', marginRight: '15px' }}>아 ~ 기여워</div>
-                        <div
-                            style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}
-                        >
-                            &#62;&nbsp;전체 게시글
+                    <div className="post_section">
+                        <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
+                            <img src="/test_imgs/png/아기여워.png" style={{ width: '55px', marginRight: '15px' }} />
+                            <div style={{ fontSize: '40px', marginRight: '15px' }}>아 ~ 기여워</div>
+                            <div
+                                style={{
+                                    fontSize: '20px',
+                                    display: 'flex',
+                                    alignItems: 'flex-end',
+                                    marginBottom: '10px',
+                                }}
+                            >
+                                &#62;&nbsp;전체 게시글
+                            </div>
+                        </div>
+                        <Post setSelectedPost={setSelectedPost} />
+                        <Post setSelectedPost={setSelectedPost} />
+                        <Post setSelectedPost={setSelectedPost} />
+                        <LoadingPostCard />
+                    </div>
+                    <div className="tag_for_sticky">
+                        <div>
+                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
                         </div>
                     </div>
-                    <Post setSelectedPost={setSelectedPost} />
-                    <Post setSelectedPost={setSelectedPost} />
-                    <Post setSelectedPost={setSelectedPost} />
-                    <LoadingPostCard />
                 </>
             );
         } else if (selectedPost === 1) {
             communityContents = (
                 <>
-                    <div className="flex" style={{ justifyContent: 'space-between' }}>
-                        <div
-                            className="yg_font"
-                            style={{
-                                display: 'flex',
-                                alignItems: 'flex-start',
-                                margin: '15px 0px 10px 25px',
-                                cursor: 'pointer',
-                            }}
-                            onClick={() => setSelectedPost(0)}
-                        >
-                            &#60;&nbsp;뒤로가기
+                    <div className="post_section">
+                        <div className="flex" style={{ justifyContent: 'space-between' }}>
+                            <div
+                                className="yg_font"
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'flex-start',
+                                    margin: '15px 0px 10px 25px',
+                                    cursor: 'pointer',
+                                }}
+                                onClick={() => setSelectedPost(0)}
+                            >
+                                &#60;&nbsp;뒤로가기
+                            </div>
+                        </div>
+                        <DetailPost setSelectedPost={setSelectedPost} />
+                    </div>
+                    <div className="tag_for_sticky">
+                        <div>
+                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
                         </div>
                     </div>
-                    <DetailPost setSelectedPost={setSelectedPost} />
                 </>
             );
         }
     } else if (selectedSideMenu === 2) {
         communityContents = (
             <>
-                <MyPosts />
+                <div className="post_section">
+                    <MyPosts />
+                </div>
+                <div className="tag_for_sticky">
+                    <div>
+                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                    </div>
+                </div>
             </>
         );
     } else if (selectedSideMenu === 3) {
@@ -165,18 +194,12 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
             </div>
             <div className="community_flex">
                 <SideMenu selectedMenu={2} setSelectedSideMenu={setSelectedSideMenu} />
-                <div className="post_section">{communityContents}</div>
-                <div className="tag_for_sticky">
-                    <div>
-                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                    </div>
-                </div>
+                {communityContents}
                 {/* Modal START */}
                 <div
                     className="modal fade yg_font"
                     id="modal_for_post_img"
-                    tabindex="-1"
+                    tabIndex="-1"
                     aria-labelledby="exampleModalLabel"
                     aria-hidden="true"
                 >
@@ -222,9 +245,13 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                                 />
                             </div>
                             <label htmlFor="fileInput" className="upload_img_btn">
-                                <figure>
-                                    <img src="/test_imgs/png/upload.png" width={'30px'} />
-                                    <p>사진 선택</p>
+                                <figure className="moving_btn_for_img_wrap">
+                                    <img
+                                        className="moving_btn_for_img"
+                                        src="/test_imgs/png/upload.png"
+                                        width={'30px'}
+                                    />
+                                    <p className="select_image_btn">사진 선택</p>
                                 </figure>
                             </label>
                             <input className="deleteBtn" type="button" value="삭제" onClick={deleteFiles} />
@@ -248,7 +275,7 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                 <div
                     className="modal fade yg_font"
                     id="modal_for_post_text"
-                    tabindex="-1"
+                    tabIndex="-1"
                     aria-labelledby="exampleModalLabel"
                     aria-hidden="true"
                 >

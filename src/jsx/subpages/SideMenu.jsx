@@ -59,6 +59,9 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice }) => {
                     아기자기 쇼핑하기
                 </div>
                 <div>
+                    <div className="side_menu_sub_btn" onClick={() => setSelectedSideMenu(6)}>
+                        - 전체 상품
+                    </div>
                     <div className="side_menu_sub_btn" onClick={() => setSelectedSideMenu(3)}>
                         - 진행 중인 상품
                     </div>

@@ -57,6 +57,10 @@
     color: #68686b;
 }
 
+.none_underline:hover {
+    text-decoration: none;
+}
+
 .post_main_img > img {
     margin-left: 20px;
     margin-right: 20px;

@@ -56,7 +56,7 @@ const Post = ({ setSelectedPost }) => {
                     consectetur quia totam. Doloribus ratione consectetur magni distinctio in, officiis nesciunt, sunt
                     recusandae cumque maxime deleniti optio.
                 </div>
-                <Link onClick={() => setSelectedPost(1)}>
+                <Link className="none_underline" onClick={() => setSelectedPost(1)}>
                     <div className="for_detail">자세히 보기</div>
                 </Link>
                 <div className="post_main_img">
@@ -69,7 +69,7 @@ const Post = ({ setSelectedPost }) => {
                 </div>
                 <div className="emotion_btns flex">
                     <div className="flex">
-                        <a className="flex">
+                        <a className="flex none_underline">
                             <div>
                                 <img className="emotion_btn" src="/test_imgs/png/heart.png" />
                             </div>
@@ -77,7 +77,7 @@ const Post = ({ setSelectedPost }) => {
                         </a>
                     </div>
                     <div className="flex">
-                        <a className="flex">
+                        <a className="flex none_underline">
                             <div>
                                 <img className="emotion_btn" src="/test_imgs/png/like.png" />
                             </div>
@@ -85,7 +85,7 @@ const Post = ({ setSelectedPost }) => {
                         </a>
                     </div>
                     <div className="flex">
-                        <a className="flex">
+                        <a className="flex none_underline">
                             <div>
                                 <img className="emotion_btn" src="/test_imgs/png/sad.png" />
                             </div>
@@ -93,14 +93,16 @@ const Post = ({ setSelectedPost }) => {
                         </a>
                     </div>
                 </div>
-                <Link onClick={() => setSelectedPost(1)}>
-                    <div className="reply_cnt">댓글 5개</div>
-                </Link>
+                <div className="reply_cnt">
+                    <Link className="none_underline" onClick={() => setSelectedPost(1)}>
+                        댓글 5개
+                    </Link>
+                </div>
                 {/* 모달 START */}
                 <div
                     class="modal fade"
                     id="modal_for_post_detail"
-                    tabindex="-1"
+                    tabIndex="-1"
                     aria-labelledby="exampleModalLabel"
                     aria-hidden="true"
                 >
@@ -136,7 +138,7 @@ const Post = ({ setSelectedPost }) => {
                 <div
                     class="modal fade"
                     id="modal_for_post_declaration"
-                    tabindex="-1"
+                    tabIndex="-1"
                     aria-labelledby="exampleModalLabel"
                     aria-hidden="true"
                 >

@@ -1,18 +1,20 @@
 .user_login_wrap {
-    margin: 140px auto;
+    margin: 0px auto;
+    padding-top: 250px;
     width: 450px;
+    height: 100vh;
 }
 
 .kakao_login_box {
     width: 450px;
-    background-color: #FFEB3B;
+    background-color: #ffeb3b;
     border-radius: 5px;
     display: flex;
 }
 
 .user_login_title {
     height: 80px;
-    font-size: 2.0em;
+    font-size: 2em;
 }
 
 .user_login_img > img {
@@ -21,7 +23,7 @@
 }
 
 .user_login_text_box {
-    color: #3E2723;
+    color: #3e2723;
     margin: 13px auto;
 }
 
