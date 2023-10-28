@@ -7,31 +7,57 @@ import SideMenu from './SideMenu';
 import LoadingPostCard from './community/LoadingPostCard';
 import CoBuyingList from './co-buying/CoBuyingList';
 import MyPosts from './community/MyPosts';
+import DetailPost from './community/DetailPost';
 
 const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [fileInfo, setFileInfo] = useState('');
     const [previewImage, setPreviewImage] = useState(null);
     const [byteCount, setByteCount] = useState(0);
+    const [selectedPost, setSelectedPost] = useState(0);
 
     let communityContents;
 
     if (selectedSideMenu === 1) {
-        communityContents = (
-            <>
-                <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
-                    <img src="/test_imgs/png/아기여워.png" style={{ width: '55px', marginRight: '15px' }} />
-                    <div style={{ fontSize: '40px', marginRight: '15px' }}>아 ~ 기여워</div>
-                    <div style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}>
-                        &#62;&nbsp;전체 게시글
+        if (selectedPost === 0) {
+            communityContents = (
+                <>
+                    <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
+                        <img src="/test_imgs/png/아기여워.png" style={{ width: '55px', marginRight: '15px' }} />
+                        <div style={{ fontSize: '40px', marginRight: '15px' }}>아 ~ 기여워</div>
+                        <div
+                            style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}
+                        >
+                            &#62;&nbsp;전체 게시글
+                        </div>
                     </div>
-                </div>
-                <Post />
-                <Post />
-                <Post />
-                <LoadingPostCard />
-            </>
-        );
+                    <Post setSelectedPost={setSelectedPost} />
+                    <Post setSelectedPost={setSelectedPost} />
+                    <Post setSelectedPost={setSelectedPost} />
+                    <LoadingPostCard />
+                </>
+            );
+        } else if (selectedPost === 1) {
+            communityContents = (
+                <>
+                    <div className="flex" style={{ justifyContent: 'space-between' }}>
+                        <div
+                            className="yg_font"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                margin: '15px 0px 10px 25px',
+                                cursor: 'pointer',
+                            }}
+                            onClick={() => setSelectedPost(0)}
+                        >
+                            &#60;&nbsp;뒤로가기
+                        </div>
+                    </div>
+                    <DetailPost setSelectedPost={setSelectedPost} />
+                </>
+            );
+        }
     } else if (selectedSideMenu === 2) {
         communityContents = (
             <>
@@ -162,7 +188,7 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                                 </h1>
                                 <button
                                     type="button"
-                                    class="btn-close"
+                                    className="btn-close"
                                     data-bs-dismiss="modal"
                                     aria-label="Close"
                                 ></button>
@@ -177,7 +203,7 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                                     />
                                 ) : (
                                     <div>
-                                        <img src="/test_imgs/png/picture.png" class="" width="225px" />
+                                        <img src="/test_imgs/png/picture.png" className="" width="225px" />
                                         <div>사진을 여기에 끌어다 놓으세요</div>
                                     </div>
                                 )}
@@ -203,13 +229,13 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                             </label>
                             <input className="deleteBtn" type="button" value="삭제" onClick={deleteFiles} />
                             {/* 첨부파일 관련 태그 END */}
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                                     이전
                                 </button>
                                 <button
                                     type="button"
-                                    class="btn btn-primary"
+                                    className="btn btn-primary"
                                     data-bs-toggle="modal"
                                     data-bs-target="#modal_for_post_text"
                                 >

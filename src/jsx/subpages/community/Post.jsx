@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../../css/subpage/post.css';
 
-const Post = () => {
+const Post = ({ setSelectedPost }) => {
     const [byteCount, setByteCount] = useState(0);
 
     const handleTextChange = (e) => {
@@ -56,7 +56,7 @@ const Post = () => {
                     consectetur quia totam. Doloribus ratione consectetur magni distinctio in, officiis nesciunt, sunt
                     recusandae cumque maxime deleniti optio.
                 </div>
-                <Link to="/detail">
+                <Link onClick={() => setSelectedPost(1)}>
                     <div className="for_detail">자세히 보기</div>
                 </Link>
                 <div className="post_main_img">
@@ -93,7 +93,7 @@ const Post = () => {
                         </a>
                     </div>
                 </div>
-                <Link to="/detail">
+                <Link onClick={() => setSelectedPost(1)}>
                     <div className="reply_cnt">댓글 5개</div>
                 </Link>
                 {/* 모달 START */}

@@ -4,10 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/common/common.css';
 import '../css/common/header.css';
 
-const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu }) => {
+const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedNotice }) => {
     const headerMenuClickHandler = (headerMenuIndex) => {
         setSelectedMenu(headerMenuIndex);
         setSelectedSideMenu(1);
+        setSelectedNotice(0);
     };
 
     return (

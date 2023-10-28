@@ -24,6 +24,7 @@ function User() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState(0);
     const [selectedSideMenu, setSelectedSideMenu] = useState(1);
+    const [selectedNotice, setSelectedNotice] = useState(0);
 
     // useEffect(()=>{
     //     console.log("selected", selectedSideMenu )
@@ -67,7 +68,18 @@ function User() {
                 <Route path="/detail" element={<DetailPost />}></Route>
                 <Route path="/co-buying_list" element={<CoBuyingList />}></Route>
                 <Route path="/co-buying_detail" element={<CoBuyingDetail />}></Route>
-                <Route path="/notice" element={<Notice selectedMenu={selectedMenu} />}></Route>
+                <Route
+                    path="/notice"
+                    element={
+                        <Notice
+                            selectedMenu={selectedMenu}
+                            selectedSideMenu={selectedSideMenu}
+                            setSelectedSideMenu={setSelectedSideMenu}
+                            selectedNotice={selectedNotice}
+                            setSelectedNotice={setSelectedNotice}
+                        />
+                    }
+                ></Route>
             </Routes>
             <Footer />
         </>
