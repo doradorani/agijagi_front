@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/common/common.css';
 import '../../css/common/adminheader.css';
@@ -12,19 +12,24 @@ const AdminHeader = ({ setSelectedMenu }) => {
                 <header>
                     <div id="admin_header_wrap">
                         <div className="admin_logo_container">
-                            <Link to="/admin">
+                            <Link to="/admin" className="flex">
                                 <img className="admin_logo_img" src="/test_imgs/logo/logo.png" />
-                                아기자기
+                                <span style={{ marginLeft: '10px' }}>아기자기</span>
+                                <span style={{ marginLeft: '5px', paddingTop: '15px', fontSize: '0.6em' }}>admin</span>
                             </Link>
                         </div>
-                        <div className="admin_nav_bar">
-                            <Link to="/admin/user_suspended" onClick={() => setSelectedMenu(1)}>
+                        {/* <div className="admin_nav_bar">
+                            <NavLink
+                                to="/admin/user_suspended/"
+                                activeStyle={{ color: '#fff' }}
+                                onClick={() => setSelectedMenu(1)}
+                            >
                                 유저 관리
-                            </Link>
-                            <Link to="/admin/admin_authorization" onClick={() => setSelectedMenu(2)}>
+                            </NavLink>
+                            <Link to="/admin/admin_authorization/" onClick={() => setSelectedMenu(2)}>
                                 관리자 승인
                             </Link>
-                            <Link to="/admin/admin_post" onClick={() => setSelectedMenu(3)}>
+                            <Link to="/admin/admin_post/" onClick={() => setSelectedMenu(3)}>
                                 공지사항
                             </Link>
                             <Link to="/admin/post_report" onClick={() => setSelectedMenu(4)}>
@@ -36,14 +41,14 @@ const AdminHeader = ({ setSelectedMenu }) => {
                             <Link to="/admin/co-buying_list" onClick={() => setSelectedMenu(6)}>
                                 공동구매 상품 관리
                             </Link>
-                        </div>
+                        </div> */}
                         <div className="admin_btn_page">
                             <Link to="/admin_modify">
                                 <input
                                     type="button"
                                     className="btn btn-outline-dark admin_btn"
                                     style={{ border: 'none' }}
-                                    value={'회원 수정'}
+                                    value="회원 수정"
                                     onClick={() => {
                                         setSelectedMenu(7);
                                     }}
@@ -54,7 +59,7 @@ const AdminHeader = ({ setSelectedMenu }) => {
                                     type="button"
                                     className="btn btn-outline-dark admin_btn"
                                     style={{ border: 'none' }}
-                                    value={'로그아웃'}
+                                    value="로그아웃"
                                     onClick={() => {
                                         setSelectedMenu(7);
                                     }}

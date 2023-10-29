@@ -16,7 +16,7 @@ const AdminSignUp = () => {
                     <div className="admin_login_title yg_font">회원가입</div>
                     <div className="form-floating mb-2">
                         <input
-                            type="email"
+                            type="text"
                             className="form-control custom_floating_label"
                             id="floatingInput"
                             placeholder="name@example.com"
@@ -34,7 +34,7 @@ const AdminSignUp = () => {
                     </div>
                     <div className="form-floating mb-2" style={{ marginBottom: '10px', paddingBottom: '0px' }}>
                         <input
-                            type="password"
+                            type="text"
                             className="form-control custom_floating_label"
                             id="floatingPassword"
                             placeholder="Password"
@@ -43,17 +43,17 @@ const AdminSignUp = () => {
                     </div>
                     <div className="form-floating mb-2" style={{ marginBottom: '10px', paddingBottom: '0px' }}>
                         <input
-                            type="password"
+                            type="email"
                             className="form-control custom_floating_label"
                             id="floatingPassword"
                             placeholder="Password"
                         />
                         <label for="floatingPassword">Email Address*</label>
                     </div>
-                    <div className="form-floating mb-3" style={{ marginBottom: '10px', paddingBottom: '0px' }}>
+                    <div className="form-floating mb-3 " style={{ marginBottom: '10px', paddingBottom: '0px' }}>
                         <input
-                            type="password"
-                            className="form-control custom_floating_label"
+                            type="number"
+                            className="form-control custom_floating_label sign_up_phone"
                             id="floatingPassword"
                             placeholder="Password"
                         />

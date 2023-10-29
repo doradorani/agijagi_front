@@ -6,7 +6,6 @@ const AdminCoBuyingList = ({ setSelectedSideMenu }) => {
     return (
         <>
             <div className="flex">
-                <AdminSidbar selectedMenu={6} setSelectedSideMenu={setSelectedSideMenu} />
                 <div className="admin_co-buying_wrap" style={{ margin: '50px auto 0' }}>
                     <div className="admin_co-buying_second_wrap">
                         <CoBuyingList />

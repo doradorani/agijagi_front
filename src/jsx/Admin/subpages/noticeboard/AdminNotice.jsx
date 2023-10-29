@@ -7,7 +7,6 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
         <>
             {' '}
             <div className="flex">
-                <AdminSidbar selectedMenu={3} setSelectedSideMenu={setSelectedSideMenu} />
                 <div className="admin_notice_wrap" style={{ margin: '50px auto 0' }}>
                     <div className="admin_notice_second_wrap">
                         <NoticeTable />

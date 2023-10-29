@@ -54,3 +54,8 @@ body::-webkit-scrollbar-track {
 .btn {
     font-family: 'yg-jalnan';
 }
+
+.btn:focus {
+    font-family: 'yg-jalnan';
+    box-shadow: none;
+}

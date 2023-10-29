@@ -87,3 +87,13 @@
     border-radius: 0px;
     border-bottom: 3px solid #95c1eb;
 }
+
+.sign_up_phone {
+    -webkit-appearance: none;
+}
+
+input.sign_up_phone::-webkit-outer-spin-button,
+input.sign_up_phone::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
