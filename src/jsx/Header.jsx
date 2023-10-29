@@ -22,17 +22,29 @@ const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedN
                                 아기자기
                             </Link>
                         </div>
-                        <div className="nav_bar">
-                            <Link to="/">홈</Link>
-                            <Link to="/diary" onClick={() => headerMenuClickHandler(1)}>
-                                육아 기록
-                            </Link>
-                            <Link to="/community" onClick={() => headerMenuClickHandler(2)}>
-                                육아 커뮤니티
-                            </Link>
-                            <Link to="/notice" onClick={() => headerMenuClickHandler(3)}>
-                                공지사항
-                            </Link>
+                        <div className="nav_bar row columns">
+                            <ul className="menu *align-center *expanded text-center SMN_effect-14">
+                                <li>
+                                    <Link to="/" onClick={() => headerMenuClickHandler(0)}>
+                                        홈
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/diary" onClick={() => headerMenuClickHandler(1)}>
+                                        육아 기록
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/community" onClick={() => headerMenuClickHandler(2)}>
+                                        육아 커뮤니티
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/notice" onClick={() => headerMenuClickHandler(3)}>
+                                        공지사항
+                                    </Link>
+                                </li>
+                            </ul>
                         </div>
                         <div className="login_btn_main_page">
                             <Link to="/user_login">

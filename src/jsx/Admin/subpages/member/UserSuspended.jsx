@@ -2,10 +2,13 @@ import React from 'react';
 import '../../../../css/admin/member/admin_authorization.css';
 import AdminSidbar from '../../AdminSidebar';
 
-const AdminAuthorization = ({ setSelectedSideMenu }) => {
+const UserSuspended = ({ selectedMenu }) => {
     return (
         <div className="flex">
-            <AdminSidbar selectedMenu={1} setSelectedSideMenu={setSelectedSideMenu} />
+            {/* <AdminSidbar
+                selectedMenu={1}
+                // setSelectedSideMenu={setSelectedSideMenu}
+            /> */}
             <div className="admin_authorization_wrap">
                 <div className="admin_authorization_second_wrap">
                     <table className="admin_authorization table table-striped table-hover">
@@ -26,7 +29,7 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
                                 <td>1</td>
                                 <td>김장훈</td>
                                 <td>jandebug</td>
-                                <td>jandebug@gmail.com</td>
+                                <td>testtesttest@gmail.com</td>
                                 <td>010-1115-7894</td>
                                 <td>2023-10-27</td>
                                 <td>2023-10-28</td>
@@ -119,4 +122,4 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
     );
 };
 
-export default AdminAuthorization;
+export default UserSuspended;

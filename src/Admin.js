@@ -20,10 +20,10 @@ function Admin() {
     return (
         <>
             <ScrollToTop />
-            <div className="admin_container">
+            {/* <div className="admin_container">
                 <AdminHeader setSelectedMenu={setSelectedMenu} />
                 <Routes>
-                    {/* <Route path="/" element={<AdminLogin />}></Route> */}
+                    <Route path="/" element={<AdminLogin />}></Route>
                     <Route
                         path="/user_suspended"
                         element={<UserSuspended setSelectedSideMenu={setSelectedSideMenu} />}
@@ -50,7 +50,7 @@ function Admin() {
                         element={<AdminCoBuyingList setSelectedSideMenu={setSelectedSideMenu} />}
                     ></Route>
                 </Routes>
-            </div>
+            </div> */}
             <Footer />
         </>
     );

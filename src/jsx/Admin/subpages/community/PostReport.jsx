@@ -5,7 +5,6 @@ import AdminSidbar from '../../AdminSidebar';
 const PostReport = ({ setSelectedSideMenu }) => {
     return (
         <div className="flex">
-            <AdminSidbar selectedMenu={4} setSelectedSideMenu={setSelectedSideMenu} />
             <div className="admin_post_report_wrap">
                 <div className="admin_post_report_second_wrap">
                     <table className="post_report table table-striped table-hover">
