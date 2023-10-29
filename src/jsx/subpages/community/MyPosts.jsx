@@ -176,7 +176,7 @@ const MyPosts = () => {
             <div
                 class="modal fade"
                 id="modal_for_profile_setting"
-                tabindex="-1"
+                tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
             >

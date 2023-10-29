@@ -17,7 +17,12 @@ ul {
 }
 
 li {
-    list-style: none;    
+    list-style: none;
+}
+
+.none_underline:hover {
+    text-decoration: none;
+    cursor: pointer;
 }
 
 @font-face {
@@ -28,18 +33,18 @@ li {
 }
 
 body::-webkit-scrollbar {
-    width: 10px;  /* 스크롤바의 너비 */
+    width: 10px; /* 스크롤바의 너비 */
 }
 
 body::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
-    background: #D7D4CD; /* 스크롤바의 색상 */
-    
+    background: #d7d4cd; /* 스크롤바의 색상 */
+
     border-radius: 10px;
 }
 
 body::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+    background: rgba(33, 122, 244, 0.1); /*스크롤바 뒷 배경 색상*/
 }
 
 .yg_font {
