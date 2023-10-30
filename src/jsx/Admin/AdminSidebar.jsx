@@ -3,13 +3,25 @@ import '../../css/common/adminSidebar.css';
 import { Link } from 'react-router-dom';
 
 const AdminSidbar = ({ setSelectedMenu }) => {
-    // const [isCollapsed, setIsCollapsed] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(true);
 
-    // const toggleSidebar = () => {
-    //     setIsCollapsed(!isCollapsed);
-    // };
+    const toggleSidebar = () => {
+        setIsCollapsed(!isCollapsed);
+    };
 
-    // let menuContent;
+    // let sidebarContent;
+
+    // const sidebarContent = isCollapsed ? (
+    //     <>
+    //         <img src="./filter01.png" />
+    //         &nbsp; 필터 숨기기
+    //     </>
+    // ) : (
+    //     <>
+    //         <img src="./filter01.png" />
+    //         필터
+    //     </>
+    // );
 
     // if (selectedMenu === 1) {
     //     menuContent = (
@@ -70,7 +82,7 @@ const AdminSidbar = ({ setSelectedMenu }) => {
     // }
 
     return (
-        <div className="admin_side_menu_wrap yg_font" style={{ backgroundColor: '#eff0f3', width: '270px' }}>
+        <div className="admin_side_menu_wrap yg_font" style={{ backgroundColor: '#eff0f3' }}>
             <nav className="navbar" style={{ paddingBottom: '0px' }}>
                 <div className="container-fluid ">
                     <button
@@ -276,7 +288,7 @@ const AdminSidbar = ({ setSelectedMenu }) => {
                                 <button
                                     className="navbar-toggler flex"
                                     type="button"
-                                    style={{ border: 'none', width: '245px' }}
+                                    style={{ border: 'none', width: '245px', display: 'flex', alignItems: 'flex-end' }}
                                 >
                                     <span className="navbar-toggler1-icon" style={{ marginLeft: '15px' }}>
                                         <img src="/test_imgs/svg/chevron_right.svg" style={{ width: '30px' }} />
