@@ -36,6 +36,7 @@ function User() {
                 isLoggedIn={isLoggedIn}
                 setSelectedMenu={setSelectedMenu}
                 setSelectedSideMenu={setSelectedSideMenu}
+                setSelectedNotice={setSelectedNotice}
             />
             <Routes>
                 <Route path="/" element={<Home />}></Route>
