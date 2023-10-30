@@ -5,7 +5,9 @@
     /* overflow-y: scroll; */
     /* top: 24px;
     width: 288px; */
-    width: 20%;
+    min-width: 270px;
+    max-width: 70px;
+    /* width: 20%; */
     /*sticky가 적용될 요소는 꼭 height값이 있어야 함*/
     height: 90vh;
     top: 80px;

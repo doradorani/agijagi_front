@@ -43,6 +43,10 @@ div.logo_wrap a {
     text-decoration: none;
 }
 
+div.logo_wrap a:hover {
+    color: #2c3e50;
+}
+
 img.logo_img {
     width: 40px;
     margin-right: 10px;
@@ -139,13 +143,47 @@ img.logo_img {
     pointer-events: none;
 }
 
-.SMN_effect-14 a:hover:before,
-.SMN_effect-14 a:focus:before {
+.SMN_effect-14 a:hover:before {
     color: #0056b3;
     text-shadow: 10px 0 #0056b3, -10px 0 #0056b3;
 }
 
-.SMN_effect-14 a:hover,
-.SMN_effect-14 a:focus {
+.SMN_effect-14 a:hover {
+    color: #0056b3;
+}
+
+.after_login_btn_main_page {
+    position: fixed;
+    top: 8px;
+    right: 2%;
+}
+
+.after_login_btn_main_page > div > a:hover {
+    text-decoration: none;
+}
+
+.after_login_btn_main_page > div > a > span {
+    margin-right: 15px;
+}
+
+.header_user_profile_img {
+    width: 50px;
+    border-radius: 100%;
+}
+
+.profile_dropdown_menu_ul {
+    inset: 0px auto auto -15px;
+}
+
+.profile_dropdown_menu_li {
+    padding: 10px;
+    /* color: #0056b3; */
+}
+
+.profile_dropdown_menu_li:hover {
+    background-color: #c8e5fe;
+}
+
+.profile_dropdown_menu_li:active {
     color: #0056b3;
 }

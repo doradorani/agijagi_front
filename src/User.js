@@ -19,6 +19,7 @@ import Calendar from './jsx/subpages/diary/Calendar';
 import CoBuyingList from './jsx/subpages/co-buying/CoBuyingList';
 import CoBuyingDetail from './jsx/subpages/co-buying/CoBuyingDetail';
 import ScrollToTop from './jsx/ScrollToTop';
+import UserModifyInfo from './jsx/Member/UserModifyInfo';
 
 function User() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -39,9 +40,10 @@ function User() {
                 setSelectedNotice={setSelectedNotice}
             />
             <Routes>
-                <Route path="/" element={<Home />}></Route>
+                <Route path="/*" element={<Home />}></Route>
                 <Route path="/user_login" element={<UserLogin isLoggedIn={isLoggedIn} />}></Route>
-                <Route path="/user_sign_up" element={<UserSignUp />}></Route>
+                {/* <Route path="/user_sign_up" element={<UserSignUp />}></Route> */}
+                <Route path="/user_modify_info" element={<UserModifyInfo />}></Route>
                 <Route
                     path="/diary"
                     element={
@@ -66,7 +68,7 @@ function User() {
                         />
                     }
                 ></Route>
-                <Route path="/detail" element={<DetailPost />}></Route>
+                <Route path="/post_detail" element={<DetailPost />}></Route>
                 <Route path="/co-buying_list" element={<CoBuyingList />}></Route>
                 <Route path="/co-buying_detail" element={<CoBuyingDetail />}></Route>
                 <Route

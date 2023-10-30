@@ -31,6 +31,10 @@
     text-decoration: none;
 }
 
+.admin_logo_container a:hover {
+    color: #2c3e50;
+}
+
 .admin_header_logo_flex {
     display: flex;
     flex-direction: column;
