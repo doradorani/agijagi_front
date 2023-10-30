@@ -16,7 +16,7 @@ const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedN
             {isLoggedIn === false && (
                 <header>
                     <div id="header_wrap">
-                        <div className="logo_wrap">
+                        <div classNameName="logo_wrap">
                             <Link to="/">
                                 <img className="logo_img" src="/test_imgs/logo/logo.png" />
                                 아기자기
