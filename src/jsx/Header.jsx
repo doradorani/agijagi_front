@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/common/common.css';
@@ -59,18 +59,95 @@ const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedN
                     </div>
                 </header>
             )}
-            {/* Login Page Header START*/}
+            {/* After Login Page Header START*/}
             {isLoggedIn === true && (
                 <header>
-                    <div id="header_wrap_login">
-                        <Link to="/">
-                            <div className="logo_wrap_login">
+                    <div id="header_wrap">
+                        <div className="logo_wrap">
+                            <Link to="/">
                                 <img className="logo_img" src="/test_imgs/logo/logo.png" />
-                                <span>아기자기</span>
+                                아기자기
+                            </Link>
+                        </div>
+                        <div className="nav_bar row columns">
+                            <ul className="menu *align-center *expanded text-center SMN_effect-14">
+                                <li>
+                                    <Link to="/" onClick={() => headerMenuClickHandler(0)}>
+                                        홈
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/diary" onClick={() => headerMenuClickHandler(1)}>
+                                        육아 기록
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/community" onClick={() => headerMenuClickHandler(2)}>
+                                        육아 커뮤니티
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/notice" onClick={() => headerMenuClickHandler(3)}>
+                                        공지사항
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="after_login_btn_main_page yg_font">
+                            <div data-bs-toggle="dropdown" aria-expanded="false">
+                                <a href="#none">
+                                    <span>사용자 님</span>
+                                    <img className="header_user_profile_img" src="/test_imgs/png/profile.png" />
+                                </a>
                             </div>
-                        </Link>
+                            <ul
+                                className="dropdown-menu"
+                                style={{
+                                    textAlign: 'center',
+                                }}
+                            >
+                                <li>
+                                    <Link
+                                        to="/user_modify_info"
+                                        className="dropdown-item profile_dropdown_menu_li"
+                                        href="#none1"
+                                    >
+                                        회원 정보 조회 및 수정
+                                    </Link>
+                                </li>
+                                <li>
+                                    <a className="dropdown-item profile_dropdown_menu_li" href="#none2">
+                                        좋아요한 게시물
+                                    </a>
+                                </li>
+                                <li>
+                                    <a className="dropdown-item profile_dropdown_menu_li" href="#none3">
+                                        좋아요한 상품
+                                    </a>
+                                </li>
+                                <li>
+                                    <a className="dropdown-item profile_dropdown_menu_li" href="#none4">
+                                        구매 상품 조회
+                                    </a>
+                                </li>
+                                <li>
+                                    <a className="dropdown-item profile_dropdown_menu_li" href="#none5">
+                                        로그아웃
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </header>
+            )}
+            {/* After Login Page Header END*/}
+
+            {/* Login Page Header START */}
+            {/* {isLoggedIn === false && (
+                <header>
+                    <div id="header_wrap_login">
                         <div className="login_btn_main_page">
-                            <Link to="/user_login" style={{ marginRight: '15px' }}>
+                            <Link to="/user_login" style={{ marginRight: '0px' }}>
                                 <button
                                     type="button"
                                     className="btn btn-outline-dark login_btn"
@@ -79,15 +156,10 @@ const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedN
                                     로그인
                                 </button>
                             </Link>
-                            <Link to="/user_sign_up">
-                                <button type="button" className="btn btn-outline-dark" style={{ border: 'none' }}>
-                                    회원가입
-                                </button>
-                            </Link>
                         </div>
                     </div>
                 </header>
-            )}
+            )} */}
             {/* Login Page Header END*/}
         </>
     );
