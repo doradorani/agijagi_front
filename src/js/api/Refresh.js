@@ -3,7 +3,7 @@ import token_config from "./config/token_config";
 import axios from "axios";
 import {AxiosRequestConfig} from "axios";
 
-const Refresh = async (config : AxiosRequestConfig) => {
+const Refresh = async (config : AxiosRequestConfig, formData) => {
 
     const server = token_config.server;
     let accessTokenExpired = token_config.tokenExpired;
@@ -19,6 +19,7 @@ const Refresh = async (config : AxiosRequestConfig) => {
         }
     }
 
+    config.data = formData;
     config.headers["Authorization"] = `Bearer ${token_config.tokenName}`;
     return config;
 };

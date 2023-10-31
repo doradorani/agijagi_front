@@ -6,14 +6,15 @@ import token_config from "./config/token_config";
 import moment from "moment/moment";
 import userLogin_config from "./config/userLogin_config";
 
-export function useValidationUser(url) {
+export function useValidationUser(url, formData) {
 
     const tokenDispatch = useDispatch();
+
     const navigate = useNavigate();
 
     return async () => {
         try {
-            const response = await TokenApi.post(url);
+            const response = await TokenApi.post(url, formData);
             tokenDispatch(tokenAction.setTokenName(token_config.tokenName));
             tokenDispatch(tokenAction.setTokenExpired(moment().add(10, 'seconds').format("yyyy-MM-DD HH:mm:ss")));
             return response.data; // 데이터 반환
