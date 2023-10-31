@@ -3,6 +3,9 @@ import token_config from "../../js/api/config/token_config";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {persistor} from "../../index";
+import {tokenAction} from "../../js/api/redux_store/slice/tokenSlice";
+import moment from "moment";
+import {useDispatch} from "react-redux";
 
 const UserSignUp = () => {
 
@@ -10,6 +13,7 @@ const UserSignUp = () => {
     const tokenName = token_config.tokenName;
     const server = token_config.server;
     const navigate = useNavigate();
+    const tokenDispatch = useDispatch();
 
     const handleClick = async () => {
         const confirmLogout = window.confirm('정말 로그아웃 하시겠습니까?');
@@ -17,7 +21,8 @@ const UserSignUp = () => {
         if (confirmLogout) {
             try {
                 await axios.post(`${server}/user/logOut`);
-                await persistor.purge();
+                tokenDispatch(tokenAction.setTokenName(""));
+                tokenDispatch(tokenAction.setTokenExpired(""));
                 navigate("/");
 
             } catch (error) {
@@ -32,7 +37,8 @@ const UserSignUp = () => {
         if (confirmSignOut) {
             try {
                 await axios.post(`${server}/user/signOut`);
-                await persistor.purge();
+                tokenDispatch(tokenAction.setTokenName(""));
+                tokenDispatch(tokenAction.setTokenExpired(""));
                 navigate("/");
 
             } catch (error) {

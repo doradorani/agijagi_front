@@ -3,20 +3,23 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/common/common.css';
 import '../css/common/header.css';
+import {useValidationUser} from "../js/api/ValidationApi";
 
 const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedNotice }) => {
-    const headerMenuClickHandler = (headerMenuIndex) => {
+    const headerMenuClickHandler = (headerMenuIndex, path) => {
+
         setSelectedMenu(headerMenuIndex);
         setSelectedSideMenu(1);
         setSelectedNotice(0);
     };
+
 
     return (
         <>
             {isLoggedIn === false && (
                 <header>
                     <div id="header_wrap">
-                        <div classNameName="logo_wrap">
+                        <div className="logo_wrap">
                             <Link to="/">
                                 <img className="logo_img" src="/test_imgs/logo/logo.png" />
                                 아기자기
@@ -30,7 +33,7 @@ const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedN
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/diary" onClick={() => headerMenuClickHandler(1)}>
+                                    <Link to="/diary" onClick={() => headerMenuClickHandler(1, '/diary')}>
                                         육아 기록
                                     </Link>
                                 </li>

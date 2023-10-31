@@ -1,6 +1,6 @@
 import axios from "axios";
 import {Refresh} from "./Refresh";
-import token_config from "../config/token_config";
+import token_config from "./config/token_config";
 
 const TokenApi = axios.create({
     //baseURL: 'http://localhost:8088',
