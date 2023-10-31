@@ -3,18 +3,12 @@ import 'turn.js';
 import '../../css/subpage/diary.css';
 import DiaryBook from './diary/DiaryBook.jsx';
 import DiaryBookDetail from './diary/DiaryBookDetail';
-import { Route } from 'react-router';
 import SideMenu from './SideMenu';
 import Calendar from './diary/Calendar';
 import Graph from './diary/Graph';
 import Note from './diary/Note';
 import {useValidationUser} from "../../js/api/ValidationApi";
 import {useDispatch} from "react-redux";
-import {tokenAction} from "../../js/api/redux_store/slice/tokenSlice";
-import token_config from "../../js/api/config/token_config";
-import {useNavigate} from "react-router-dom";
-import moment from "moment";
-import userLogin_config from "../../js/api/config/userLogin_config";
 import {userStateAction} from "../../js/api/redux_store/slice/userLoginSlice";
 
 const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
@@ -24,15 +18,19 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
 
     //======검증 및 데이터 불러오기//======검증 및 데이터 불러오기//
     //ui에는 {diaryData ? <div>{diaryData.id}</div> : null} => 삼항 연산자로 데이터 호출하세요.
+
     const [diaryData, setDiaryData] = useState();
     const userLoginDispatch = useDispatch();
     const validationUser = useValidationUser('/user/validate');
+
     useEffect(() => {
+
         async function getDiary() {
             try {
                 const response = await validationUser();
                 setDiaryData(response);
             } catch (error) {
+                console.log('에러');
                 userLoginDispatch(userStateAction.setState(false));
             }
         }

@@ -7,7 +7,7 @@ const TokenApi = axios.create({
     baseURL: token_config.server,
     timeout: 10000,
     // params: {},
-    headers: { "Content-Type": "application/json" }
+    // headers: { "Content-Type": "application/json" }
 });
 
 TokenApi.interceptors.request.use(Refresh);
