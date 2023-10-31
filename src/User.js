@@ -25,6 +25,8 @@ function User() {
     const [selectedMenu, setSelectedMenu] = useState(0);
     const [selectedSideMenu, setSelectedSideMenu] = useState(1);
     const [selectedNotice, setSelectedNotice] = useState(0);
+    const [selectedUserLoginBtn, setSelectedUserLoginBtn] = useState(false);
+    const [previewImage, setPreviewImage] = useState(null);
 
     // useEffect(()=>{
     //     console.log("selected", selectedSideMenu )
@@ -36,10 +38,15 @@ function User() {
                 setSelectedMenu={setSelectedMenu}
                 setSelectedSideMenu={setSelectedSideMenu}
                 setSelectedNotice={setSelectedNotice}
+                selectedUserLoginBtn={selectedUserLoginBtn}
+                setSelectedUserLoginBtn={setSelectedUserLoginBtn}
             />
             <Routes>
-                <Route path="/*" element={<Home />}></Route>
-                <Route path="/user_login" element={<UserLogin />}></Route>
+                <Route path="/*" element={<Home setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}></Route>
+                <Route
+                    path="/user_login"
+                    element={<UserLogin setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}
+                ></Route>
                 {/* <Route path="/user_sign_up" element={<UserSignUp />}></Route> */}
                 <Route path="/user_modify_info" element={<UserModifyInfo />}></Route>
                 <Route
@@ -63,6 +70,8 @@ function User() {
                             selectedMenu={selectedMenu}
                             selectedSideMenu={selectedSideMenu}
                             setSelectedSideMenu={setSelectedSideMenu}
+                            previewImage={previewImage}
+                            setPreviewImage={setPreviewImage}
                         />
                     }
                 ></Route>

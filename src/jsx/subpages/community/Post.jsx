@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../../css/subpage/post.css';
 
-const Post = ({ setSelectedPost }) => {
+const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
     const [byteCount, setByteCount] = useState(0);
 
     const handleTextChange = (e) => {

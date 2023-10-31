@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../css/member/userLogin.css';
-import {KAKAO_AUTH_URL} from '../../js/api/OAuth';
+import { KAKAO_AUTH_URL } from '../../js/api/OAuth';
+import { Link } from 'react-router-dom';
 
-const UserLogin = () => {
+const UserLogin = ({ setSelectedUserLoginBtn }) => {
+    useEffect(() => {
+        setSelectedUserLoginBtn(true);
+    }, []);
+
     return (
         <div className="user_login_wrap">
-            <div className="logo_wrap_admin_login yg_font">
-                <img className="logo_img" src="/test_imgs/logo/logo.png" />
-                <div>아기자기</div>
-            </div>
+            <Link className="logo_wrap_user_login_link" to="/">
+                <div className="logo_wrap_user_login yg_font" onClick={() => setSelectedUserLoginBtn(false)}>
+                    <img className="logo_img" src="/test_imgs/logo/logo.png" />
+                    <div>아기자기</div>
+                </div>
+            </Link>
             <div className="user_login_title yg_font">로그인</div>
             <button className="kakao_login_box_btn">
                 <div className="kakao_login_box">

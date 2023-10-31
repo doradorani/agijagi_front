@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/common/common.css';
 import '../css/home.css';
 import { Link } from 'react-router-dom';
 
-const Home = () => {
+const Home = ({ setSelectedUserLoginBtn }) => {
+    useEffect(() => {
+        setSelectedUserLoginBtn(false);
+    }, []);
+
     return (
         <div id="home_wrap">
             <div className="home_main_img">
@@ -24,7 +28,7 @@ const Home = () => {
                     <div>Lorem ipsum dolor sit amet</div>
                     <div>Lorem ipsum dolor sit amet consectetur adipisicing</div>
                     <Link to="/diary">
-                    <button>일기 작성하기</button>
+                        <button>일기 작성하기</button>
                     </Link>
                 </div>
             </div>
@@ -33,7 +37,7 @@ const Home = () => {
                     <div>Lorem ipsum dolor sit amet</div>
                     <div>Lorem ipsum dolor sit amet consectetur adipisicing</div>
                     <Link to="/community">
-                    <button>커뮤니티 구경하기</button>
+                        <button>커뮤니티 구경하기</button>
                     </Link>
                 </div>
                 <div className="home_section3_img">

@@ -1,18 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/common/common.css';
 import '../css/common/header.css';
-import {useValidationUser} from "../js/api/ValidationApi";
-import isUserLogin from "../js/api/config/userLogin_config";
-import token_config from "../js/api/config/token_config";
-import {useDispatch} from "react-redux";
-import axios from "axios";
-import {tokenAction} from "../js/api/redux_store/slice/tokenSlice";
-import {userStateAction} from "../js/api/redux_store/slice/userLoginSlice";
+import { useValidationUser } from '../js/api/ValidationApi';
+import isUserLogin from '../js/api/config/userLogin_config';
+import token_config from '../js/api/config/token_config';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { tokenAction } from '../js/api/redux_store/slice/tokenSlice';
+import { userStateAction } from '../js/api/redux_store/slice/userLoginSlice';
 
-const Header = ({ setSelectedMenu, setSelectedSideMenu, setSelectedNotice }) => {
-
+const Header = ({
+    setSelectedMenu,
+    setSelectedSideMenu,
+    setSelectedNotice,
+    selectedUserLoginBtn,
+    setSelectedUserLoginBtn,
+}) => {
     const tokenName = token_config.tokenName;
     const server = token_config.server;
     const navigate = useNavigate();
@@ -20,7 +25,6 @@ const Header = ({ setSelectedMenu, setSelectedSideMenu, setSelectedNotice }) => 
     const userLoginDispatch = useDispatch();
 
     const headerMenuClickHandler = (headerMenuIndex) => {
-
         setSelectedMenu(headerMenuIndex);
         setSelectedSideMenu(1);
         setSelectedNotice(0);
@@ -32,12 +36,11 @@ const Header = ({ setSelectedMenu, setSelectedSideMenu, setSelectedNotice }) => 
         if (confirmLogout) {
             try {
                 await axios.post(`${server}/user/logOut`);
-                tokenDispatch(tokenAction.setTokenName(""));
-                tokenDispatch(tokenAction.setTokenExpired(""));
+                tokenDispatch(tokenAction.setTokenName(''));
+                tokenDispatch(tokenAction.setTokenExpired(''));
                 userLoginDispatch(userStateAction.setState(false));
                 alert('로그아웃에 성공하였습니다.');
-                navigate("/");
-
+                navigate('/');
             } catch (error) {
                 console.log('에러 : ' + error);
             }
@@ -46,7 +49,27 @@ const Header = ({ setSelectedMenu, setSelectedSideMenu, setSelectedNotice }) => 
 
     return (
         <>
-            {isUserLogin.state === false && (
+            {isUserLogin.state === false && selectedUserLoginBtn === true && (
+                // Login Page Header START
+                <header>
+                    <div id="header_wrap_login">
+                        <div className="login_btn_main_page">
+                            <Link to="/user_login" style={{ marginRight: '0px' }}>
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-dark login_btn"
+                                    style={{ border: 'none' }}
+                                >
+                                    로그인
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+                </header>
+                // Login Page Header END
+            )}
+
+            {isUserLogin.state === false && selectedUserLoginBtn === false && (
                 <header>
                     <div id="header_wrap">
                         <div className="logo_wrap">
@@ -81,7 +104,12 @@ const Header = ({ setSelectedMenu, setSelectedSideMenu, setSelectedNotice }) => 
                         </div>
                         <div className="login_btn_main_page">
                             <Link to="/user_login">
-                                <button type="button" className="btn btn-outline-dark" style={{ border: 'none' }}>
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-dark"
+                                    style={{ border: 'none' }}
+                                    onClick={() => setSelectedUserLoginBtn(true)}
+                                >
                                     로그인
                                 </button>
                             </Link>
@@ -161,7 +189,11 @@ const Header = ({ setSelectedMenu, setSelectedSideMenu, setSelectedNotice }) => 
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="dropdown-item profile_dropdown_menu_li" href="#none5" onClick={() => logOutHandler()}>
+                                    <a
+                                        className="dropdown-item profile_dropdown_menu_li"
+                                        href="#none5"
+                                        onClick={() => logOutHandler()}
+                                    >
                                         로그아웃
                                     </a>
                                 </li>

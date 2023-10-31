@@ -3,38 +3,43 @@ import '../../css/common/adminSidebar.css';
 import { Link } from 'react-router-dom';
 import { relative } from 'path';
 
-const AdminSidbar = ({ setSelectedMenu }) => {
-    const [isCollapsed, setIsCollapsed] = useState(true);
+const AdminSidbar = () => {
+    const [isSidebarCollapsed, setisSidebarCollapsed] = useState(true);
 
     const toggleSidebar = () => {
-        setIsCollapsed(!isCollapsed);
+        setisSidebarCollapsed(!isSidebarCollapsed);
     };
 
     return (
         <div
-            className={`admin_side_menu_wrap yg_font ${isCollapsed ? 'admin_side_open' : 'admin_side_collapsed'}`}
-            style={{ backgroundColor: '#eff0f3', position: 'relative' }}
+            className={`admin_side_menu_wrap yg_font ${
+                isSidebarCollapsed ? 'admin_side_open' : 'admin_side_collapsed'
+            }`}
+            style={{ backgroundColor: '#eff0f3', position: 'absolute' }}
         >
             <nav className="navbar" style={{ paddingBottom: '0px' }}>
                 <div className="container-fluid ">
                     <button
                         className="navbar-toggler flex"
                         type="button"
-                        // data-bs-toggle="collapse"
-                        // data-bs-target="#navbarToggleExternalContent1"
-                        // aria-expanded="false"
-                        style={{ border: 'none' }}
+                        style={{ border: 'none', width: '250px' }}
                         onClick={() => toggleSidebar()}
                     >
-                        <span className="navbar-toggler1-icon">
-                            <img src="/test_imgs/png/down-arrow.png" style={{ width: '30px' }} />
+                        <span
+                            className={`navbar-toggler1-icon ${
+                                isSidebarCollapsed ? 'admin_side_open' : 'admin_side_collapsed'
+                            }`}
+                        >
+                            <img
+                                className="collapse_arrow"
+                                src="/test_imgs/png/down-arrow.png"
+                                style={{ width: '30px' }}
+                            />
                         </span>
-                        <div style={{ marginLeft: '15px', lineHeight: '30px' }}>전체 항목 펼쳐보기</div>
+                        <div style={{ marginLeft: '15px', lineHeight: '30px' }}>메뉴 접어두기</div>
                     </button>
                 </div>
             </nav>
-            {/* <div className={`collapse ${isCollapsed ? 'show' : ''}`} id="navbarToggleExternalContent1"> */}
-            {/* <div className="collapse" id="navbarToggleExternalContent1"> */}
             <nav className="navbar" style={{ marginTop: '0px', paddingTop: '0px' }}>
                 <div className="container-fluid">
                     <Link to="user_suspended" className="link_btn_admin_sidebar">
@@ -45,32 +50,32 @@ const AdminSidbar = ({ setSelectedMenu }) => {
                             data-bs-target="#navbarToggleExternalContent2"
                             aria-expanded="false"
                             style={{ border: 'none', width: '245px' }}
-                            onClick={() => {
-                                setSelectedMenu(1);
-                            }}
                         >
-                            <span className="navbar-toggler1-icon">
+                            <span
+                                className={`navbar-toggler1-icon ${
+                                    isSidebarCollapsed ? 'admin_side_open' : 'admin_side_collapsed'
+                                }`}
+                            >
                                 <img src="/test_imgs/svg/group.svg" style={{ width: '30px' }} />
                             </span>
                             <div style={{ marginLeft: '15px', lineHeight: '30px' }}>유저 관리</div>
                         </button>
                     </Link>
-                    <Link
-                        to="admin_authorization"
-                        className="link_btn_admin_sidebar"
-                        style={{ transition: '0.5s ease-in-out' }}
-                    >
+                    <Link to="admin_authorization" className="link_btn_admin_sidebar">
                         <button
-                            className={`navbar-toggler flex ${isCollapsed ? '' : 'admin_side_list_collapsed'}`}
-                            // className="navbar-toggler flex ${isCollapsed ? 'admin_side_open' : 'admin_side_collapsed'}"
+                            className="navbar-toggler flex"
                             type="button"
                             data-bs-toggle="collapse"
                             data-bs-target="#navbarToggleExternalContent3"
+                            role="button"
                             aria-expanded="false"
                             style={{ border: 'none', width: '245px' }}
-                            onClick={() => setSelectedMenu(1)}
                         >
-                            <span className="navbar-toggler1-icon">
+                            <span
+                                className={`navbar-toggler1-icon ${
+                                    isSidebarCollapsed ? 'admin_side_open' : 'admin_side_collapsed'
+                                }`}
+                            >
                                 <img src="/test_imgs/svg/approval.svg" style={{ width: '30px' }} />
                             </span>
                             <div style={{ marginLeft: '15px', lineHeight: '30px' }}>관리자 승인</div>
@@ -111,7 +116,11 @@ const AdminSidbar = ({ setSelectedMenu }) => {
                             aria-expanded="false"
                             style={{ border: 'none', width: '245px' }}
                         >
-                            <span className="navbar-toggler1-icon">
+                            <span
+                                className={`navbar-toggler1-icon ${
+                                    isSidebarCollapsed ? 'admin_side_open' : 'admin_side_collapsed'
+                                }`}
+                            >
                                 <img src="/test_imgs/svg/notice.svg" style={{ width: '30px' }} />
                             </span>
                             <div style={{ marginLeft: '15px', lineHeight: '30px' }}>공지사항</div>
@@ -152,7 +161,11 @@ const AdminSidbar = ({ setSelectedMenu }) => {
                             aria-expanded="false"
                             style={{ border: 'none', width: '245px' }}
                         >
-                            <span className="navbar-toggler1-icon">
+                            <span
+                                className={`navbar-toggler1-icon ${
+                                    isSidebarCollapsed ? 'admin_side_open' : 'admin_side_collapsed'
+                                }`}
+                            >
                                 <img src="/test_imgs/svg/report.svg" style={{ width: '30px' }} />
                             </span>
                             <div style={{ marginLeft: '15px', lineHeight: '30px' }}>신고 처리</div>
@@ -193,7 +206,11 @@ const AdminSidbar = ({ setSelectedMenu }) => {
                             aria-expanded="false"
                             style={{ border: 'none', width: '245px' }}
                         >
-                            <span className="navbar-toggler1-icon">
+                            <span
+                                className={`navbar-toggler1-icon ${
+                                    isSidebarCollapsed ? 'admin_side_open' : 'admin_side_collapsed'
+                                }`}
+                            >
                                 <img src="/test_imgs/svg/shopping_cart.svg" style={{ width: '30px' }} />
                                 {/* <img src="/test_imgs/svg/shopping_bag.svg" style={{ width: '30px' }} /> */}
                             </span>

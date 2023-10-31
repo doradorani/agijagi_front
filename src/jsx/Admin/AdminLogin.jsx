@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 const AdminLogin = () => {
     return (
         <div className="admin_login_wrap">
-            {/* <img src="/test_imgs/baby_imgs/baby10.jpg " /> */}
-            {/* <div className="admin_login_background"></div> */}
-            <div className="input_admin_info_box_wrap">
+            <img src="/test_imgs/baby_imgs/baby10.jpg " />
+            <div className="admin_login_background"></div>
+            <div className="input_admin_info_box_wrap" style={{ marginTop: '150px' }}>
                 <div className="input_admin_info_box">
                     <div className="logo_wrap_admin_login yg_font">
                         <img className="logo_img" src="/test_imgs/logo/logo.png" />
