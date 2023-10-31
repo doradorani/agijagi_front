@@ -22,7 +22,6 @@ import ScrollToTop from './jsx/ScrollToTop';
 import UserModifyInfo from './jsx/Member/UserModifyInfo';
 
 function User() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState(0);
     const [selectedSideMenu, setSelectedSideMenu] = useState(1);
     const [selectedNotice, setSelectedNotice] = useState(0);
@@ -34,14 +33,13 @@ function User() {
     return (
         <>
             <Header
-                isLoggedIn={isLoggedIn}
                 setSelectedMenu={setSelectedMenu}
                 setSelectedSideMenu={setSelectedSideMenu}
                 setSelectedNotice={setSelectedNotice}
             />
             <Routes>
                 <Route path="/*" element={<Home />}></Route>
-                <Route path="/user_login" element={<UserLogin isLoggedIn={isLoggedIn} />}></Route>
+                <Route path="/user_login" element={<UserLogin />}></Route>
                 {/* <Route path="/user_sign_up" element={<UserSignUp />}></Route> */}
                 <Route path="/user_modify_info" element={<UserModifyInfo />}></Route>
                 <Route

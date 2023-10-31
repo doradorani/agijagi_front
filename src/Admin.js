@@ -11,7 +11,6 @@ import AdminNoticeList from './jsx/Admin/subpages/noticeboard/AdminNotice';
 import CommentReport from './jsx/Admin/subpages/community/CommentReport';
 
 function Admin() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState(1);
     const [selectedSideMenu, setSelectedSideMenu] = useState(1);
 

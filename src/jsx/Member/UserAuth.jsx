@@ -1,7 +1,4 @@
 import React from 'react';
-import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import token_config from "../../js/api/config/token_config";
 import {useKakaoLogin} from "../../js/api/LoginApi";
 
 const UserAuth = (props) => {

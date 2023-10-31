@@ -14,6 +14,8 @@ import {tokenAction} from "../../js/api/redux_store/slice/tokenSlice";
 import token_config from "../../js/api/config/token_config";
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
+import userLogin_config from "../../js/api/config/userLogin_config";
+import {userStateAction} from "../../js/api/redux_store/slice/userLoginSlice";
 
 const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
     const [selectedDiary, setSelectedDiary] = useState(0);
@@ -23,6 +25,7 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
     //======검증 및 데이터 불러오기//======검증 및 데이터 불러오기//
     //ui에는 {diaryData ? <div>{diaryData.id}</div> : null} => 삼항 연산자로 데이터 호출하세요.
     const [diaryData, setDiaryData] = useState();
+    const userLoginDispatch = useDispatch();
     const validationUser = useValidationUser('/user/validate');
     useEffect(() => {
         async function getDiary() {
@@ -30,7 +33,7 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                 const response = await validationUser();
                 setDiaryData(response);
             } catch (error) {
-                console.error("Error from useValidationUser:", error);
+                userLoginDispatch(userStateAction.setState(false));
             }
         }
         getDiary();

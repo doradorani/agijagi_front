@@ -1,14 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../../css/member/userLogin.css';
-import token_config from '../../js/api/config/token_config';
-import { useDispatch } from 'react-redux';
-import { tokenAction } from '../../js/api/redux_store/slice/tokenSlice';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import moment from 'moment';
-import { KAKAO_AUTH_URL } from '../../js/api/OAuth';
+import {KAKAO_AUTH_URL} from '../../js/api/OAuth';
 
-const UserLogin = ({ isLoggedIn }) => {
+const UserLogin = () => {
     return (
         <div className="user_login_wrap">
             <div className="logo_wrap_admin_login yg_font">
