@@ -18,19 +18,19 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
 
     //======검증 및 데이터 불러오기//======검증 및 데이터 불러오기//
     //ui에는 {diaryData ? <div>{diaryData.id}</div> : null} => 삼항 연산자로 데이터 호출하세요.
-    let formData = new FormData();
-    formData.append('id', 'test');
-    formData.append('email', 'test@naver.com');
 
     const [diaryData, setDiaryData] = useState();
     const userLoginDispatch = useDispatch();
-    const validationUser = useValidationUser('/user/validate', formData);
+    const validationUser = useValidationUser('/user/validate');
+
     useEffect(() => {
+
         async function getDiary() {
             try {
                 const response = await validationUser();
                 setDiaryData(response);
             } catch (error) {
+                console.log('에러');
                 userLoginDispatch(userStateAction.setState(false));
             }
         }

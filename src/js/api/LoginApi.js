@@ -23,8 +23,7 @@ export function useKakaoLogin(code) {
 
                 tokenDispatch(tokenAction.setTokenName(response.data.accessToken));
                 tokenDispatch(tokenAction.setTokenExpired(moment().add(10, 'seconds').format("yyyy-MM-DD HH:mm:ss")));
-                //userLoginDispatch(userStateAction.setState(true));
-                userLogin_config.state = true;
+                userLoginDispatch(userStateAction.setState(true));
 
                 if (response.data.newUser > 0) {
                     alert('회원가입!!');
