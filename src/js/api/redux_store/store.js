@@ -1,17 +1,21 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import tokenReducer from './slice/tokenSlice'
 import {persistReducer} from "redux-persist";
 import storage from 'redux-persist/lib/storage';
+
+import tokenReducer from './slice/tokenSlice'
+import userStateReducer from './slice/userLoginSlice'
 
 
 const reducers = combineReducers({
     token : tokenReducer,
+    userLogin : userStateReducer,
 })
 
 const persistConfig = {
     key: 'root',
     storage,                        //storage에 redux 상태값을 저장함
-    whitelist : ['token']           //persist 시킬 리듀서들을 넣어주기
+    //persist 시킬 리듀서들을 넣어주기
+    whitelist : ['token', 'userLogin']
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers);

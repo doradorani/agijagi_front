@@ -1,22 +1,52 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/common/common.css';
 import '../css/common/header.css';
 import {useValidationUser} from "../js/api/ValidationApi";
+import isUserLogin from "../js/api/config/userLogin_config";
+import token_config from "../js/api/config/token_config";
+import {useDispatch} from "react-redux";
+import axios from "axios";
+import {tokenAction} from "../js/api/redux_store/slice/tokenSlice";
+import {userStateAction} from "../js/api/redux_store/slice/userLoginSlice";
 
-const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedNotice }) => {
-    const headerMenuClickHandler = (headerMenuIndex, path) => {
+const Header = ({ setSelectedMenu, setSelectedSideMenu, setSelectedNotice }) => {
+
+    const tokenName = token_config.tokenName;
+    const server = token_config.server;
+    const navigate = useNavigate();
+    const tokenDispatch = useDispatch();
+    const userLoginDispatch = useDispatch();
+
+    const headerMenuClickHandler = (headerMenuIndex) => {
 
         setSelectedMenu(headerMenuIndex);
         setSelectedSideMenu(1);
         setSelectedNotice(0);
     };
 
+    const logOutHandler = async () => {
+        const confirmLogout = window.confirm('정말 로그아웃 하시겠습니까?');
+
+        if (confirmLogout) {
+            try {
+                await axios.post(`${server}/user/logOut`);
+                tokenDispatch(tokenAction.setTokenName(""));
+                tokenDispatch(tokenAction.setTokenExpired(""));
+                userLoginDispatch(userStateAction.setState(false));
+                alert('로그아웃에 성공하였습니다.');
+                navigate("/");
+
+            } catch (error) {
+                console.log('에러 : ' + error);
+            }
+        }
+    };
 
     return (
         <>
-            {isLoggedIn === true && (
+            {isUserLogin.state === false && (
                 <header>
                     <div id="header_wrap">
                         <div className="logo_wrap">
@@ -33,7 +63,7 @@ const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedN
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to="/diary" onClick={() => headerMenuClickHandler(1, '/diary')}>
+                                    <Link to="/diary" onClick={() => headerMenuClickHandler(1)}>
                                         육아 기록
                                     </Link>
                                 </li>
@@ -60,7 +90,7 @@ const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedN
                 </header>
             )}
             {/* After Login Page Header START*/}
-            {isLoggedIn === false && (
+            {isUserLogin.state === true && (
                 <header>
                     <div id="header_wrap">
                         <div className="logo_wrap">
@@ -131,7 +161,7 @@ const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedN
                                     </a>
                                 </li>
                                 <li>
-                                    <a className="dropdown-item profile_dropdown_menu_li" href="#none5">
+                                    <a className="dropdown-item profile_dropdown_menu_li" href="#none5" onClick={() => logOutHandler()}>
                                         로그아웃
                                     </a>
                                 </li>
