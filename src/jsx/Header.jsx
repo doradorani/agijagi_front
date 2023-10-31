@@ -16,7 +16,7 @@ const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedN
 
     return (
         <>
-            {isLoggedIn === false && (
+            {isLoggedIn === true && (
                 <header>
                     <div id="header_wrap">
                         <div className="logo_wrap">
@@ -60,7 +60,7 @@ const Header = ({ isLoggedIn, setSelectedMenu, setSelectedSideMenu, setSelectedN
                 </header>
             )}
             {/* After Login Page Header START*/}
-            {isLoggedIn === true && (
+            {isLoggedIn === false && (
                 <header>
                     <div id="header_wrap">
                         <div className="logo_wrap">
