@@ -1,5 +1,5 @@
 import moment from "moment";
-import token_config from "../config/token_config";
+import token_config from "./config/token_config";
 import axios from "axios";
 import {AxiosRequestConfig} from "axios";
 

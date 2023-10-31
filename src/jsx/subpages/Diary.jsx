@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import 'turn.js';
 import '../../css/subpage/diary.css';
 import DiaryBook from './diary/DiaryBook.jsx';
@@ -8,11 +8,36 @@ import SideMenu from './SideMenu';
 import Calendar from './diary/Calendar';
 import Graph from './diary/Graph';
 import Note from './diary/Note';
+import {useValidationUser} from "../../js/api/ValidationApi";
+import {useDispatch} from "react-redux";
+import {tokenAction} from "../../js/api/redux_store/slice/tokenSlice";
+import token_config from "../../js/api/config/token_config";
+import {useNavigate} from "react-router-dom";
+import moment from "moment";
 
 const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
     const [selectedDiary, setSelectedDiary] = useState(0);
     console.log('selectedSideMenu', selectedSideMenu);
     let diaryContents;
+
+    //======검증 및 데이터 불러오기//======검증 및 데이터 불러오기//
+    //ui에는 {diaryData ? <div>{diaryData.id}</div> : null} => 삼항 연산자로 데이터 호출하세요.
+    const [diaryData, setDiaryData] = useState();
+    const validationUser = useValidationUser('/user/validate');
+    useEffect(() => {
+        async function getDiary() {
+            try {
+                const response = await validationUser();
+                setDiaryData(response);
+            } catch (error) {
+                console.error("Error from useValidationUser:", error);
+            }
+        }
+        getDiary();
+    }, []);
+    //======================================//
+
+
 
     if (selectedSideMenu === 1) {
         if (selectedDiary === 0) {
@@ -25,6 +50,7 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                             style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}
                         >
                             &#62;&nbsp;일기
+
                         </div>
                     </div>
                     <DiaryBook setSelectedDiary={setSelectedDiary} />
@@ -84,6 +110,7 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
         );
     }
 
+
     return (
         <div className="diary_wrap">
             <div>
@@ -93,6 +120,7 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                 <SideMenu selectedMenu={1} setSelectedSideMenu={setSelectedSideMenu} />
                 <div className="post_section">
                     {diaryContents}
+
                     {/* <DiaryBook
                         setSelectedDiary={setSelectedDiary}
                     />
