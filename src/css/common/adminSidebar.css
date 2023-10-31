@@ -6,21 +6,51 @@
     /* top: 24px;
     width: 288px; */
     min-width: 270px;
-    max-width: 70px;
+    max-width: 270px;
     /* width: 20%; */
     /*sticky가 적용될 요소는 꼭 height값이 있어야 함*/
     height: 90vh;
-    top: 80px;
+    /* top: 80px; */
+    transition: 0.5s ease-in-out;
+}
+
+.admin_side_open {
+    left: 0px;
+}
+
+.admin_side_list_open {
+}
+
+.admin_side_collapsed {
+    left: -220px;
+    transition: 0.5s ease-in-out;
+}
+
+.admin_side_collapsed:hover {
+    left: 0px;
+    transition: 0.5s ease-in-out;
+}
+
+.admin_side_list_collapsed > span {
+    position: relative;
+    left: 207px;
+    transition: 0.5s ease-in-out;
+}
+
+.admin_side_list_collapsed > div {
+    position: relative;
+    left: -270px;
+    transition: 0.5s ease-in-out;
 }
 
 .collapse {
-    max-width: 0;
+    max-width: 270px;
     transition: max-width 0.3s ease;
     overflow: hidden;
 }
 
 .collapse.show {
-    max-width: 100%;
+    max-width: 0;
     transition: max-width 0.3s ease;
 }
 

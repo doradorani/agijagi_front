@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/common/common.css';
 import '../../css/common/adminheader.css';
 
 const AdminHeader = ({ setSelectedMenu }) => {
+    // const [isAdminSidebarOpen, setisAdminSidebarOpen] = useState(false);
+
     return (
         <>
             {/* Admin Page Header START*/}

@@ -51,7 +51,7 @@ const MyPosts = () => {
                         <span className="background_for_posts"></span>
                     </div>
                 </Link>
-                <Link to="/detail">
+                <Link to="/post_detail">
                     <div className="my_posts_post_main_img">
                         <img src="/test_imgs/diary_imgs/diary2.jpg" />
                         <div>
