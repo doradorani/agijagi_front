@@ -53,46 +53,47 @@
     max-width: 450px;
 }
 
-.upload_img_btn figure img {
-    -webkit-transition: 0.5s ease-in-out;
-    transition: 0.5s ease-in-out;
+.upload_img_btn figure {
+    position: relative;
+    top: 30px;
 }
 
-.upload_img_btn figure:hover img {
-    margin-top: -160px;
+.upload_img_btn:hover figure {
+    position: relative;
+    top: 0px;
+    background-color: #ffd9df;
     -webkit-transition: 0.5s ease-in-out;
-    transition: 0.5s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
-.upload_img_btn figure:hover > p {
+.upload_img_btn:hover p {
     opacity: 1;
 }
 
-/* .upload_img_parents {
+.upload_img_btn figure {
     position: relative;
-} */
-
-.upload_img_btn figure > img {
-    /* display:block;  */
-    position: absolute;
-    bottom: 80px;
-    right: 20px;
-    background: gray;
-    width: 20px;
-    /* transition:0.5s all */
+    background: #fff;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.upload_img_btn figure > p {
-    display: block;
-    position: absolute;
-    bottom: 80px;
-    right: 20px;
+.upload_img_btn p {
+    position: relative;
+    top: 0px;
+    text-align: center;
     font-size: 18px;
     color: #fff;
-    background: gray;
-    width: 20px;
+    background: #fe7a89;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
     opacity: 0;
     transition: 0.5s all;
+    border-radius: 15px;
 }
 
 .deleteBtn {

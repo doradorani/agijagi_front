@@ -7,7 +7,7 @@ const AdminSignUp = () => {
         <div className="admin_login_wrap">
             <img src="/test_imgs/baby_imgs/baby10.jpg " />
             <div className="admin_login_background"></div>
-            <div className="input_admin_info_box_wrap_for_signup">
+            <div className="input_admin_info_box_wrap_for_signup" style={{ marginTop: '40px' }}>
                 <div className="input_admin_info_box_for_signup">
                     <div className="logo_wrap_admin_login yg_font">
                         <img className="logo_img" src="/test_imgs/logo/logo.png" />

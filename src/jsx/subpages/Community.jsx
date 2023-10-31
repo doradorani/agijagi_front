@@ -9,10 +9,9 @@ import CoBuyingList from './co-buying/CoBuyingList';
 import MyPosts from './community/MyPosts';
 import DetailPost from './community/DetailPost';
 
-const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
+const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previewImage, setPreviewImage }) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [fileInfo, setFileInfo] = useState('');
-    const [previewImage, setPreviewImage] = useState(null);
     const [byteCount, setByteCount] = useState(0);
     const [selectedPost, setSelectedPost] = useState(0);
 
@@ -37,9 +36,21 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                                 &#62;&nbsp;전체 게시글
                             </div>
                         </div>
-                        <Post setSelectedPost={setSelectedPost} />
-                        <Post setSelectedPost={setSelectedPost} />
-                        <Post setSelectedPost={setSelectedPost} />
+                        <Post
+                            setSelectedPost={setSelectedPost}
+                            previewImage={previewImage}
+                            setPreviewImage={setPreviewImage}
+                        />
+                        <Post
+                            setSelectedPost={setSelectedPost}
+                            previewImage={previewImage}
+                            setPreviewImage={setPreviewImage}
+                        />
+                        <Post
+                            setSelectedPost={setSelectedPost}
+                            previewImage={previewImage}
+                            setPreviewImage={setPreviewImage}
+                        />
                         <LoadingPostCard />
                     </div>
                     <div className="tag_for_sticky">
@@ -193,7 +204,12 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                 <img className="community_main_img" src="/test_imgs/community_imgs/community_main.jpg" />
             </div>
             <div className="community_flex">
-                <SideMenu selectedMenu={2} setSelectedSideMenu={setSelectedSideMenu} />
+                <SideMenu
+                    selectedMenu={2}
+                    setSelectedSideMenu={setSelectedSideMenu}
+                    previewImage={previewImage}
+                    setPreviewImage={setPreviewImage}
+                />
                 {communityContents}
                 {/* Modal START */}
                 <div
@@ -216,7 +232,10 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                                     aria-label="Close"
                                 ></button>
                             </div>
-                            <div className="modal-body mx-auto modap_img_contents">
+                            <div
+                                className="modal-body mx-auto modap_img_contents"
+                                style={{ width: '650px', position: 'relative' }}
+                            >
                                 {previewImage ? (
                                     <img
                                         className="uploaded_preview_img"
@@ -230,9 +249,43 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                                         <div>사진을 여기에 끌어다 놓으세요</div>
                                     </div>
                                 )}
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    aria-label="Close"
+                                    onClick={deleteFiles}
+                                    style={{ position: 'absolute', top: '10px', right: '13px' }}
+                                ></button>
+                                <div className="for_upload_file">
+                                    <input
+                                        type="file"
+                                        name="files"
+                                        id="fileInput"
+                                        multiple
+                                        style={{ display: 'none' }}
+                                        accept="image/*,
+                                            video/*"
+                                        onChange={handleFileChange}
+                                    />
+                                </div>
+                                <label
+                                    htmlFor="fileInput"
+                                    className="upload_img_btn"
+                                    style={{ position: 'absolute', bottom: '0px', right: '20px' }}
+                                >
+                                    <figure className="moving_btn_for_img_wrap" style={{ margin: '5px auto' }}>
+                                        <img
+                                            className="moving_btn_for_img"
+                                            src="/test_imgs/png/upload.png"
+                                            style={{ width: '45px' }}
+                                        />
+                                    </figure>
+                                    <p className="select_image_btn">사진 선택</p>
+                                </label>
                             </div>
+
                             {/* 첨부파일 관련 태그 START */}
-                            <div className="for_upload_file">
+                            {/* <div className="for_upload_file">
                                 <input
                                     type="file"
                                     name="files"
@@ -253,10 +306,11 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                                     />
                                     <p className="select_image_btn">사진 선택</p>
                                 </figure>
-                            </label>
-                            <input className="deleteBtn" type="button" value="삭제" onClick={deleteFiles} />
+                            </label> */}
+
+                            {/* <input className="deleteBtn" type="button" value="삭제" onClick={deleteFiles} /> */}
                             {/* 첨부파일 관련 태그 END */}
-                            <div className="modal-footer">
+                            <div className="modal-footer flex" style={{ justifyContent: 'space-between' }}>
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                                     이전
                                 </button>
@@ -312,10 +366,10 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                             <sup className="byte_for_upload">
                                 (<span id="nowByte">{byteCount}</span>/2200bytes)
                             </sup>
-                            <div className="modal-footer">
+                            <div className="modal-footer flex" style={{ justifyContent: 'space-between' }}>
                                 <button
                                     type="button"
-                                    className="btn btn-primary"
+                                    className="btn btn-secondary"
                                     data-bs-toggle="modal"
                                     data-bs-target="#modal_for_post_img"
                                 >

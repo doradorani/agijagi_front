@@ -3,7 +3,7 @@ import '../../css/common/sidemenu.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice }) => {
+const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, setPreviewImage }) => {
     let menuContent;
 
     const sideMenuNoticeClickHandler = (index) => {
@@ -50,7 +50,12 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice }) => {
                         - 내 게시글
                     </div>
                 </div>
-                <div className="side_menu_btn" data-bs-toggle="modal" data-bs-target="#modal_for_post_img">
+                <div
+                    className="side_menu_btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal_for_post_img"
+                    onClick={() => setPreviewImage(null)}
+                >
                     <img src="/test_imgs/png/pencil_logo.png" style={{ width: '45px', marginRight: '15px' }} />새 글
                     작성하기
                 </div>

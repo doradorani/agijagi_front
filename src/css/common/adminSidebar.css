@@ -1,39 +1,56 @@
 .admin_side_menu_wrap {
-    /* position: sticky; */
-    /* height: calc(100vh-88px);
-    min-width: 288px; */
-    /* overflow-y: scroll; */
-    /* top: 24px;
-    width: 288px; */
     min-width: 270px;
     max-width: 270px;
-    /* width: 20%; */
-    /*sticky가 적용될 요소는 꼭 height값이 있어야 함*/
     height: 90vh;
-    /* top: 80px; */
     transition: 0.5s ease-in-out;
 }
 
-.admin_side_open {
+div.admin_side_open {
     left: 0px;
 }
 
-.admin_side_list_open {
+span.admin_side_open > .collapse_arrow {
+    rotate: 90deg;
+    transition: 0.5s ease-in-out;
+}
+
+span.admin_side_open > img {
+    transition: 0.5s ease-in-out;
+}
+
+span.admin_side_collapsed {
+    position: relative;
+    left: 260px;
+    transition: 0.5s ease-in-out;
+}
+div.admin_side_collapsed:hover span.admin_side_collapsed {
+    position: relative;
+    left: 200px;
+    transition: 0.5s ease-in-out;
+}
+
+span.admin_side_collapsed > .collapse_arrow {
+    rotate: 270deg;
+    transition: 0.5s ease-in-out;
+}
+
+span.admin_side_collapsed > img {
+    transition: 0.5s ease-in-out;
 }
 
 .admin_side_collapsed {
-    left: -220px;
+    left: -269px;
     transition: 0.5s ease-in-out;
 }
 
 .admin_side_collapsed:hover {
-    left: 0px;
+    left: -200px;
     transition: 0.5s ease-in-out;
 }
 
 .admin_side_list_collapsed > span {
     position: relative;
-    left: 207px;
+    left: -220px;
     transition: 0.5s ease-in-out;
 }
 
@@ -50,7 +67,7 @@
 }
 
 .collapse.show {
-    max-width: 0;
+    max-width: 270px;
     transition: max-width 0.3s ease;
 }
 
@@ -64,7 +81,6 @@
 }
 
 .navbar-toggler:focus {
-    background-color: #e7e8eb;
     box-shadow: none;
 }
 

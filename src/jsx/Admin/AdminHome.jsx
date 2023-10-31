@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Route, Routes } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router';
 import AdminHeader from './AdminHeader';
 import AdminSidbar from './AdminSidebar';
 import UserSuspended from './subpages/member/UserSuspended';
@@ -11,9 +11,24 @@ import AdminCoBuyingList from './subpages/co-buying/AdminCo-BuyingList';
 import ScrollToTop from '../ScrollToTop';
 import Footer from '../Footer';
 import AdminLogin from './AdminLogin';
+import { useValidationUser } from '../../js/api/ValidationApi';
 
 const AdminHome = () => {
-    const [selectedMenu, setSelectedMenu] = useState(1);
+    const [adminData, setAdminData] = useState();
+    const navigate = useNavigate();
+    const validationUser = useValidationUser('/admin/home');
+    useEffect(() => {
+        async function getDiary() {
+            try {
+                const response = await validationUser();
+                setAdminData(response);
+            } catch (error) {
+                navigate('/admin/sign_in');
+            }
+        }
+        getDiary();
+    }, []);
+    //======================================//
 
     return (
         <>
@@ -21,7 +36,7 @@ const AdminHome = () => {
             <AdminHeader />
             {/* <AdminHeader setSelectedMenu={setSelectedMenu} /> */}
             <div className="admin_container flex">
-                <AdminSidbar setSelectedMenu={setSelectedMenu} />
+                <AdminSidbar />
                 <div className="admin_content_section_wrap" style={{ width: '100%' }}>
                     <Routes>
                         {/* <Route path="/user_suspended" element={<UserSuspended selectedMenu={selectedMenu} />}></Route> */}
