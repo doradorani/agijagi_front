@@ -1,13 +1,13 @@
-import axios from "axios";
-import {Refresh} from "./Refresh";
-import token_config from "./config/token_config";
+import axios from 'axios';
+import { Refresh } from './Refresh';
+import token_config from './config/token_config';
 
 const TokenApi = axios.create({
     //baseURL: 'http://localhost:8088',
     baseURL: token_config.server,
     timeout: 10000,
     // params: {},
-    // headers: { "Content-Type": "application/json" }
+    headers: { 'Content-Type': 'application/json' },
 });
 
 TokenApi.interceptors.request.use(Refresh);

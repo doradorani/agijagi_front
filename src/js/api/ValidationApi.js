@@ -1,42 +1,40 @@
-import TokenApi from "./TokenApi";
-import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import {tokenAction} from "./redux_store/slice/tokenSlice";
-import token_config from "./config/token_config";
-import moment from "moment/moment";
-import userLogin_config from "./config/userLogin_config";
+import TokenApi from './TokenApi';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { tokenAction } from './redux_store/slice/tokenSlice';
+import token_config from './config/token_config';
+import moment from 'moment/moment';
+import userLogin_config from './config/userLogin_config';
 
-export function useValidationUser(url) {
-
+export function useValidationUser(url, formData) {
     const tokenDispatch = useDispatch();
 
     const navigate = useNavigate();
 
     return async () => {
         try {
-            const response = await TokenApi.post(url);
+            const response = await TokenApi.post(url, formData);
             tokenDispatch(tokenAction.setTokenName(token_config.tokenName));
-            tokenDispatch(tokenAction.setTokenExpired(moment().add(10, 'seconds').format("yyyy-MM-DD HH:mm:ss")));
+            tokenDispatch(tokenAction.setTokenExpired(moment().add(2, 'hours').format('yyyy-MM-DD HH:mm:ss')));
             return response.data; // 데이터 반환
         } catch (error) {
             if (error.response.status === 401) {
-                alert("올바르지 않은 토큰입니다.");
+                alert('올바르지 않은 토큰입니다.');
                 navigate('/');
                 throw error;
             } else if (error.response.status === 403) {
-                alert("관리자만 사용할 수 있습니다.");
+                alert('관리자만 사용할 수 있습니다.');
                 navigate('/');
                 throw error;
             } else {
                 // 다른 오류 처리
-                console.error("Error:", error);
+                console.error('Error:', error);
                 navigate('/');
                 throw error;
             }
         }
     };
 }
-
 
 // import TokenApi from "./TokenApi";
 // import {tokenAction} from "./redux_store/slice/tokenSlice";
