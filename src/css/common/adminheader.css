@@ -1,5 +1,6 @@
 .admin_container {
     min-height: 85vh;
+    display: flex;
 }
 
 #admin_header_wrap {

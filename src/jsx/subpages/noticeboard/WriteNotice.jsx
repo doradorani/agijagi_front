@@ -5,7 +5,12 @@ import QuillEditor from './QuillEditor';
 const WriteNotice = () => {
     return (
         <>
-            <div className="detail_notice_wrap">
+            <div className="detail_notice_wrap ">
+                <div className="admin_page_menu_title_wrap" style={{ marginLeft: '20px', marginBottom: '20px' }}>
+                    <img src="/test_imgs/svg/pencil.svg" />
+                    <div className="admin_page_menu_title yg_font ">공지사항</div>
+                    <div className="yg_font admin_page_menu_sub_title"> &#62; 작성하기</div>
+                </div>
                 <div className="detail_notice_content_wrap">
                     <div className="write_notice_content_box">
                         <div className="">
@@ -42,10 +47,10 @@ const WriteNotice = () => {
                 </div>
                 <div className="d-md-flex justify-content-md-end">
                     <button type="button" className="btn btn-light ">
-                        목록보기
+                        게시하기
                     </button>
                 </div>
-                <div className="prev_next_notice_box">
+                {/* <div className="prev_next_notice_box">
                     <div className="next_notice_box flex" style={{ justifyContent: 'space-between' }}>
                         <div className="flex">
                             <div className="prev_next_notice_box_head">다음 글</div>
@@ -72,7 +77,7 @@ const WriteNotice = () => {
                             <div>2023-10-26</div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </>
     );

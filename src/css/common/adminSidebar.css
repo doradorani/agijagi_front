@@ -1,12 +1,12 @@
 .admin_side_menu_wrap {
-    min-width: 270px;
-    max-width: 270px;
-    height: 90vh;
+    min-height: 90vh;
     transition: 0.5s ease-in-out;
+    position: relative; /* 추가: 상대 위치 지정 */
 }
 
 div.admin_side_open {
     left: 0px;
+    width: 270px;
 }
 
 span.admin_side_open > .collapse_arrow {
@@ -23,6 +23,7 @@ span.admin_side_collapsed {
     left: 260px;
     transition: 0.5s ease-in-out;
 }
+
 div.admin_side_collapsed:hover span.admin_side_collapsed {
     position: relative;
     left: 200px;
@@ -38,25 +39,14 @@ span.admin_side_collapsed > img {
     transition: 0.5s ease-in-out;
 }
 
-.admin_side_collapsed {
+div.admin_side_collapsed {
+    width: 60px;
     left: -269px;
     transition: 0.5s ease-in-out;
 }
 
 .admin_side_collapsed:hover {
     left: -200px;
-    transition: 0.5s ease-in-out;
-}
-
-.admin_side_list_collapsed > span {
-    position: relative;
-    left: -220px;
-    transition: 0.5s ease-in-out;
-}
-
-.admin_side_list_collapsed > div {
-    position: relative;
-    left: -270px;
     transition: 0.5s ease-in-out;
 }
 
@@ -86,4 +76,20 @@ span.admin_side_collapsed > img {
 
 .link_btn_admin_sidebar:hover {
     text-decoration: none;
+}
+
+.admin_content_section_wrap {
+    width: 100%;
+    flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
+    padding: 20px;
+    transition: all 0.5s;
+    overflow: hidden; /* 내용이 넘칠 경우 스크롤바 표시 */
+}
+
+.admin_side_nonfold {
+    display: block;
+}
+
+.admin_side_fold {
+    display: none;
 }
