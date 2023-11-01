@@ -4,10 +4,18 @@ import AdminSidbar from '../../AdminSidebar';
 
 const PostReport = ({ setSelectedSideMenu }) => {
     return (
-        <div className="flex">
-            <div className="admin_post_report_wrap">
-                <div className="admin_post_report_second_wrap">
-                    <table className="post_report table table-striped table-hover">
+        <>
+            <div className="admin_authorization_wrap">
+                <div className="admin_page_menu_title_wrap">
+                    <img src="/test_imgs/svg/report.svg" />
+                    <div className="admin_page_menu_title yg_font ">신고 처리</div>
+                    <div className="yg_font admin_page_menu_sub_title"> &#62; 신고된 게시물</div>
+                </div>
+                <div className="admin_authorization_second_wrap">
+                    <table
+                        className="admin_authorization table table-striped table-hover"
+                        style={{ marginTop: '15px' }}
+                    >
                         <thead>
                             <tr>
                                 <th>번호</th>
@@ -121,7 +129,7 @@ const PostReport = ({ setSelectedSideMenu }) => {
                             </tr>
                         </tbody>
                     </table>
-                    <div aria-label="Page navigation example">
+                    <div aria-label="Page navigation example" style={{ marginTop: '10px' }}>
                         <ul class="pagination justify-content-center">
                             <li class="page-item">
                                 <a class="page-link" href="#" aria-label="Previous">
@@ -172,7 +180,7 @@ const PostReport = ({ setSelectedSideMenu }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
