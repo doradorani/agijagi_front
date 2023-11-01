@@ -1,11 +1,42 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import {Link, NavLink, useNavigate} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../css/common/common.css';
 import '../../css/common/adminheader.css';
+import axios from "axios";
+import {tokenAction} from "../../js/api/redux_store/slice/tokenSlice";
+import {userStateAction} from "../../js/api/redux_store/slice/userLoginSlice";
+import {useDispatch} from "react-redux";
+import token_config from "../../js/api/config/token_config";
+import adminToken_config from "../../js/api/config/adminToken_config";
+import {adminTokenAction} from "../../js/api/redux_store/slice/adminTokenSlice";
 
 const AdminHeader = ({ setSelectedMenu }) => {
     // const [isAdminSidebarOpen, setisAdminSidebarOpen] = useState(false);
+
+    const adminTokenName = adminToken_config.tokenName;
+    const server = adminToken_config.server;
+    const navigate = useNavigate();
+    const adminLoginDispatch = useDispatch();
+    const adminTokenDispatch = useDispatch();
+
+    const adminLogOut = async () => {
+        const confirmLogout = window.confirm('정말 로그아웃 하시겠습니까?');
+
+        if (confirmLogout) {
+            try {
+                await axios.post(`${server}/admin/logOut`);
+                adminTokenDispatch(adminTokenAction.setAdminTokenName(''));
+                adminTokenDispatch(adminTokenAction.setAdminTokenExpired(''));
+                adminLoginDispatch(userStateAction.setState(false));
+                alert('로그아웃에 성공하였습니다.');
+                navigate('/admin/sign_in');
+            } catch (error) {
+                console.log('에러 : ' + error);
+            }
+        }
+    };
+
 
     return (
         <>
@@ -56,17 +87,16 @@ const AdminHeader = ({ setSelectedMenu }) => {
                                     }}
                                 />
                             </Link>
-                            <Link to="/admin_logout">
-                                <input
-                                    type="button"
-                                    className="btn btn-outline-dark admin_btn"
-                                    style={{ border: 'none' }}
-                                    value="로그아웃"
-                                    onClick={() => {
-                                        setSelectedMenu(7);
-                                    }}
-                                />
-                            </Link>
+
+                            <input
+                                type="button"
+                                className="btn btn-outline-dark admin_btn"
+                                style={{ border: 'none' }}
+                                value="로그아웃"
+                                onClick={() => {
+                                    adminLogOut();
+                                }}
+                            />
                         </div>
                     </div>
                 </header>

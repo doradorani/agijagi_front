@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Routes, useNavigate } from 'react-router';
+import React, {useEffect, useState} from 'react';
+import {Route, Routes, useNavigate} from 'react-router';
 import AdminHeader from './AdminHeader';
 import AdminSidbar from './AdminSidebar';
 import UserSuspended from './subpages/member/UserSuspended';
@@ -9,18 +9,17 @@ import PostReport from './subpages/community/PostReport';
 import CommentReport from './subpages/community/CommentReport';
 import AdminCoBuyingList from './subpages/co-buying/AdminCo-BuyingList';
 import ScrollToTop from '../ScrollToTop';
-import Footer from '../Footer';
-import AdminLogin from './AdminLogin';
-import { useValidationUser } from '../../js/api/ValidationApi';
+import {useValidationAdmin} from "../../js/api/admin/ValidationAdminApi";
 
 const AdminHome = () => {
     const [adminData, setAdminData] = useState();
     const navigate = useNavigate();
-    const validationUser = useValidationUser('/admin/home');
+    const validationAdmin = useValidationAdmin('/admin/home');
     useEffect(() => {
         async function getDiary() {
             try {
-                const response = await validationUser();
+
+                const response = await validationAdmin();
                 setAdminData(response);
             } catch (error) {
                 navigate('/admin/sign_in');
