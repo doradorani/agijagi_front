@@ -1,18 +1,18 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    adminState : false,
+    adminState: false,
 };
 
 const adminLoginSlice = createSlice({
     name: 'adminLogin',
     initialState,
     reducers: {
-        setState: (state, action) => {
+        setAdminState: (state, action) => {
             state.adminState = action.payload;
         },
     },
 });
 
-export const userStateAction = adminLoginSlice.actions;
+export const adminStateAction = adminLoginSlice.actions;
 export default adminLoginSlice.reducer;

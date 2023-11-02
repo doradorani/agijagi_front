@@ -1,8 +1,8 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    tokenName : '',
-    tokenExpired : '',
+    adminTokenName: '',
+    adminTokenExpired: '',
 };
 
 const adminTokenSlice = createSlice({
@@ -10,11 +10,11 @@ const adminTokenSlice = createSlice({
     initialState,
     reducers: {
         setAdminTokenName: (state, action) => {
-            state.tokenName = action.payload;
+            state.adminTokenName = action.payload;
         },
-        setAdminTokenExpired : (state, action) => {
-            state.tokenExpired = action.payload;
-        }
+        setAdminTokenExpired: (state, action) => {
+            state.adminTokenExpired = action.payload;
+        },
     },
 });
 

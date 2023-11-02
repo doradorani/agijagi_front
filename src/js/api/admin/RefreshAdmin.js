@@ -5,13 +5,13 @@ import { AxiosRequestConfig } from 'axios';
 
 const RefreshAdmin = async (config: AxiosRequestConfig, formData) => {
     const server = adminToken_config.server;
-    let adminAccessTokenExpired = adminToken_config.tokenExpired;
+    let adminAccessTokenExpired = adminToken_config.adminTokenExpired;
 
     //토큰 만료 시,
     if (moment(adminAccessTokenExpired).diff(moment()) < 0) {
         try {
             const res = await axios.post(`${server}/admin/newToken`);
-            adminToken_config.tokenName = res.data.accessToken;
+            adminToken_config.adminTokenName = res.data.accessToken;
         } catch (error) {
             console.log(error);
         }
@@ -19,7 +19,7 @@ const RefreshAdmin = async (config: AxiosRequestConfig, formData) => {
     config.data = formData;
     config.headers = config.headers ?? {};
     config.headers['Content-Type'] = 'multipart/form-data';
-    config.headers.Authorization = `Bearer ${adminToken_config.tokenName}`;
+    config.headers.Authorization = `Bearer ${adminToken_config.adminTokenName}`;
     return config;
 };
 
