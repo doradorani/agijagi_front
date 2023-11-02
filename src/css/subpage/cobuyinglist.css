@@ -84,3 +84,7 @@
 .emerald {
     color: green;
 }
+
+.shopping_search_bar:focus {
+    outline: none;
+}

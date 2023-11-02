@@ -15,6 +15,7 @@ import WriteNotice from '../subpages/noticeboard/WriteNotice';
 import { useValidationAdmin } from '../../js/api/admin/ValidationAdminApi';
 
 import '../../css/common/adminCommon.css';
+import RegistProduct from './subpages/co-buying/RegistProduct';
 
 const AdminHome = () => {
     const [adminData, setAdminData] = useState();
@@ -50,6 +51,7 @@ const AdminHome = () => {
                         <Route path="/post_report" element={<PostReport />}></Route>
                         <Route path="/comment_report" element={<CommentReport />}></Route>
                         <Route path="/co-buying_list" element={<AdminCoBuyingList />}></Route>
+                        <Route path="/regist_product" element={<RegistProduct />}></Route>
                     </Routes>
                 </div>
             </div>

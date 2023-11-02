@@ -305,6 +305,23 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                                 </div>
                             </button>
                         </Link>
+                        <Link to="regist_product" className="link_btn_admin_sidebar">
+                            <button
+                                className="navbar-toggler flex"
+                                type="button"
+                                style={{ border: 'none', width: '245px', display: 'flex', alignItems: 'flex-end' }}
+                            >
+                                <span className="navbar-toggler1-icon" style={{ marginLeft: '15px' }}>
+                                    <img src="/test_imgs/svg/chevron_right.svg" style={{ width: '30px' }} />
+                                </span>
+                                <div
+                                    className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
+                                    style={{ marginLeft: '15px', lineHeight: '30px' }}
+                                >
+                                    제품 등록
+                                </div>
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </nav>
