@@ -55,22 +55,6 @@ const Children = ({ setSelectedDiary, setDiaryData, userLoginDispatch }) => {
         setImg(e[0]);
     };
 
-    // useEffect(() => {
-    //     const validationUser = useValidationUser('/diary/childInfo', formData);
-    //     async function getDiary() {
-    //         try {
-    //             const response = await validationUser();
-    //             setDiaryData(response);
-    //         } catch (error) {
-    //             userLoginDispatch(userStateAction.setState(false));
-    //         }
-    //     }
-    //     getDiary();
-    //     if (formData != null) {
-    //         setSelectedDiary(0);
-    //     }
-    // }, [formData]);
-
     return (
         <>
             <div className="children_wrap">

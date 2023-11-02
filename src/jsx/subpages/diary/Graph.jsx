@@ -50,7 +50,7 @@ const data = {
     ],
 };
 
-const Graph = ({ setSelectedSideMenu }) => {
+const Graph = ({ setSelectedDiary }) => {
     const [isOn, setisOn] = useState(false);
 
     const toggleHandler = () => {
@@ -67,7 +67,7 @@ const Graph = ({ setSelectedSideMenu }) => {
                             <Link
                                 to="/diary"
                                 onClick={() => {
-                                    setSelectedSideMenu(5);
+                                    setSelectedDiary(1);
                                 }}
                             >
                                 <input type="button" value="오늘의 건강 기록 작성" className="btn btn-primary" />

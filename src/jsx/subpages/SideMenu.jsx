@@ -3,12 +3,17 @@ import '../../css/common/sidemenu.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, setPreviewImage }) => {
+const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, setPreviewImage, setSelectedDiary }) => {
     let menuContent;
 
     const sideMenuNoticeClickHandler = (index) => {
         setSelectedSideMenu(index);
         setSelectedNotice(0);
+    };
+
+    const selectDiaryCliclHandler = (index1, index2) => {
+        setSelectedSideMenu(index1);
+        setSelectedDiary(index2);
     };
 
     if (selectedMenu === 1) {
@@ -19,17 +24,21 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, setPre
                     육아 일기
                 </div>
                 <div>
-                    <div className="side_menu_sub_btn" onClick={() => setSelectedSideMenu(1)}>
+                    <div className="side_menu_sub_btn" onClick={() => selectDiaryCliclHandler(1, 0)}>
                         - 일기
                     </div>
-                    <div className="side_menu_sub_btn" onClick={() => setSelectedSideMenu(2)}>
+                    <div className="side_menu_sub_btn" onClick={() => selectDiaryCliclHandler(2)}>
                         - 달력
                     </div>
-                    <div className="side_menu_sub_btn" onClick={() => setSelectedSideMenu(3)}>
+                    <div className="side_menu_sub_btn" onClick={() => selectDiaryCliclHandler(3)}>
                         - 앨범
                     </div>
                 </div>
-                <div className="side_menu_btn" style={{ marginTop: '15px' }} onClick={() => setSelectedSideMenu(4)}>
+                <div
+                    className="side_menu_btn"
+                    style={{ marginTop: '15px' }}
+                    onClick={() => selectDiaryCliclHandler(4, 0)}
+                >
                     <img src="/test_imgs/png/diary1.png" style={{ width: '45px', marginRight: '15px' }} />
                     육아 수첩
                 </div>

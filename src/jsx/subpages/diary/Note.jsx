@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../../../css/subpage/note.css';
 import { Link } from 'react-router-dom';
 
-const Note = ({ setSelectedSideMenu }) => {
+const Note = ({ setSelectedDiary }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [byteCount, setByteCount] = useState(0);
 
@@ -94,7 +94,7 @@ const Note = ({ setSelectedSideMenu }) => {
                                 <Link
                                     to="/diary"
                                     onClick={() => {
-                                        setSelectedSideMenu(4);
+                                        setSelectedDiary(0);
                                     }}
                                 >
                                     <input type="submit" value={'등록'} className="btn btn-primary" />
