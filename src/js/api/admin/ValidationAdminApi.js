@@ -5,17 +5,30 @@ import { tokenAction } from '../redux_store/slice/tokenSlice';
 import adminToken_config from '../config/adminToken_config';
 import moment from 'moment/moment';
 
-export function useValidationAdmin(url, formData) {
+export function useValidationAdmin(method, url, formData) {
 
     const tokenDispatch = useDispatch();
     const navigate = useNavigate();
 
     return async () => {
         try {
+            let response;
 
-            console.log('ValidationAdminApi');
+            // HTTP 메소드에 따라 다른 Axios 메서드를 호출
+            if (method === 'post') {
+                response = await AdminTokenApi.post(url, formData);
+            } else if (method === 'delete') {
+                response = await AdminTokenApi.delete(url);
+            } else if (method === 'get') {
+                response = await AdminTokenApi.get(url);
+            } else if (method === 'put') {
+                response = await AdminTokenApi.put(url, formData);
+            } else {
+                throw new Error('올바르지 않은 HTTP 메소드');
+            }
 
-            const response = await AdminTokenApi.post(url, formData);
+            //const response = await AdminTokenApi.post(url, formData);
+
             tokenDispatch(tokenAction.setTokenName(adminToken_config.tokenName));
             tokenDispatch(tokenAction.setTokenExpired(moment().add(20, 'seconds').format('yyyy-MM-DD HH:mm:ss')));
             return response.data; // 데이터 반환
