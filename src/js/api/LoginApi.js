@@ -22,7 +22,7 @@ export function useKakaoLogin(code) {
                 const response = await axios.post(`${server}/kakao/login?code=${code}`);
 
                 tokenDispatch(tokenAction.setTokenName(response.data.accessToken));
-                tokenDispatch(tokenAction.setTokenExpired(moment().add(10, 'seconds').format("yyyy-MM-DD HH:mm:ss")));
+                tokenDispatch(tokenAction.setTokenExpired(moment().add(20, 'seconds').format("yyyy-MM-DD HH:mm:ss")));
                 userLoginDispatch(userStateAction.setState(true));
 
                 if (response.data.newUser > 0) {

@@ -1,13 +1,12 @@
 import AdminTokenApi from './AdminTokenApi';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { tokenAction } from '../redux_store/slice/tokenSlice';
 import adminToken_config from '../config/adminToken_config';
 import moment from 'moment/moment';
+import { adminTokenAction } from '../redux_store/slice/adminTokenSlice';
 
 export function useValidationAdmin(method, url, formData) {
-
-    const tokenDispatch = useDispatch();
+    const adminTokenDispatch = useDispatch();
     const navigate = useNavigate();
 
     return async () => {
@@ -29,10 +28,14 @@ export function useValidationAdmin(method, url, formData) {
 
             //const response = await AdminTokenApi.post(url, formData);
 
-            tokenDispatch(tokenAction.setTokenName(adminToken_config.tokenName));
-            tokenDispatch(tokenAction.setTokenExpired(moment().add(20, 'seconds').format('yyyy-MM-DD HH:mm:ss')));
+            adminTokenDispatch(adminTokenAction.setAdminTokenName(adminToken_config.adminTokenName));
+            adminTokenDispatch(
+                adminTokenAction.setAdminTokenExpired(moment().add(20, 'seconds').format('yyyy-MM-DD HH:mm:ss'))
+            );
             return response.data; // 데이터 반환
         } catch (error) {
+            console.log('error ==> ' + error);
+
             if (error.response.status === 401) {
                 alert('관리자 로그인을 부탁드립니다.');
                 navigate('/admin/sign_in');
