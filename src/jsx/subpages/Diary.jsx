@@ -13,8 +13,7 @@ import { userStateAction } from '../../js/api/redux_store/slice/userLoginSlice';
 import { Link } from 'react-router-dom';
 import Children from './diary/Children';
 
-const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
-    const [selectedDiary, setSelectedDiary] = useState(0);
+const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
     console.log('selectedSideMenu', selectedSideMenu);
     let diaryContents;
 
@@ -22,8 +21,10 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
     //ui에는 {diaryData ? <div>{diaryData.id}</div> : null} => 삼항 연산자로 데이터 호출하세요.
 
     const [diaryData, setDiaryData] = useState();
+
+    const [selectedDiary, setSelectedDiary] = useState(0);
     const userLoginDispatch = useDispatch();
-    const validationUser = useValidationUser('/user/validate', null);
+    const validationUser = useValidationUser('post', '/user/validate', null);
 
     useEffect(() => {
         async function getDiary() {
@@ -64,8 +65,7 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                             </Link>
                         </div>
                     </div>
-                    <DiaryBook setSelectedDiary={setSelectedDiary} />
-                    <DiaryBook setSelectedDiary={setSelectedDiary} />
+                    <div></div>
                 </>
             );
         } else if (selectedDiary === 1) {
@@ -114,29 +114,30 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
     } else if (selectedSideMenu === 3) {
         diaryContents = <div></div>;
     } else if (selectedSideMenu === 4) {
-        // diaryContents = <Note />;
-        diaryContents = (
-            <>
-                <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
-                    <img src="/test_imgs/png/diary1.png" style={{ width: '55px', marginRight: '15px' }} />
-                    <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 수첩</div>
-                    {/* <div style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}>
-                        &#62;&nbsp;수첩
-                    </div> */}
-                </div>
-                <Graph setSelectedSideMenu={setSelectedSideMenu} />
-            </>
-        );
-    } else if (selectedSideMenu === 5) {
-        diaryContents = (
-            <>
-                <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
-                    <img src="/test_imgs/png/diary1.png" style={{ width: '55px', marginRight: '15px' }} />
-                    <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 수첩</div>
-                </div>
-                <Note setSelectedSideMenu={setSelectedSideMenu} />
-            </>
-        );
+        if (selectedDiary === 0) {
+            diaryContents = (
+                <>
+                    <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
+                        <img src="/test_imgs/png/diary1.png" style={{ width: '55px', marginRight: '15px' }} />
+                        <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 수첩</div>
+                        {/* <div style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}>
+                            &#62;&nbsp;수첩
+                        </div> */}
+                    </div>
+                    <Graph setSelectedDiary={setSelectedDiary} />
+                </>
+            );
+        } else if (selectedDiary === 1) {
+            diaryContents = (
+                <>
+                    <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
+                        <img src="/test_imgs/png/diary1.png" style={{ width: '55px', marginRight: '15px' }} />
+                        <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 수첩</div>
+                    </div>
+                    <Note setSelectedDiary={setSelectedDiary} />
+                </>
+            );
+        }
     }
 
     return (
@@ -145,7 +146,11 @@ const Diary = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu }) => {
                 <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg" />
             </div>
             <div className="diary_flex">
-                <SideMenu selectedMenu={1} setSelectedSideMenu={setSelectedSideMenu} />
+                <SideMenu
+                    selectedMenu={1}
+                    setSelectedSideMenu={setSelectedSideMenu}
+                    setSelectedDiary={setSelectedDiary}
+                />
                 <div className="post_section">{diaryContents}</div>
                 <div>
                     <div>
