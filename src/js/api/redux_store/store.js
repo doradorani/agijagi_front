@@ -1,38 +1,33 @@
-import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import {persistReducer} from "redux-persist";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import tokenReducer from './slice/tokenSlice'
-import adminTokenReducer from './slice/adminTokenSlice'
-import userStateReducer from './slice/userLoginSlice'
-import adminStateReducer from './slice/adminLoginSlice'
-
+import adminTokenReducer from './slice/adminTokenSlice';
+import adminStateReducer from './slice/adminLoginSlice';
+import tokenReducer from './slice/tokenSlice';
+import userStateReducer from './slice/userLoginSlice';
+import userInfoReducer from './slice/userInfoSlice';
 
 const reducers = combineReducers({
-    token : tokenReducer,
-    adminToken : adminTokenReducer,
-    userLogin : userStateReducer,
-    adminLogin : adminStateReducer,
-})
+    token: tokenReducer,
+    userLogin: userStateReducer,
+    userInfo: userInfoReducer,
+    adminToken: adminTokenReducer,
+    adminLogin: adminStateReducer,
+});
 
 const persistConfig = {
     key: 'root',
-    storage,                        //storage에 redux 상태값을 저장함
+    storage, //storage에 redux 상태값을 저장함
     //persist 시킬 리듀서들을 넣어주기
-    whitelist : ['token', 'adminToken', 'userLogin', 'adminLogin']
-}
+    whitelist: ['token', 'adminToken', 'userLogin', 'adminLogin', 'userInfo'],
+};
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-    reducer : persistedReducer,
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: false, //직렬화 안하겠다 설정
         }),
-})
-
-
-
-
-
-
+});
