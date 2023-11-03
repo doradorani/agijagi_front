@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import axios from 'axios';
 
-const Children = ({ setSelectedDiary, setDiaryData, userLoginDispatch }) => {
+const Children = ({ setUrl, setSelectedDiary, setIsLoading }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [name, setName] = useState('');
     const [img, setImg] = useState(null);
@@ -34,16 +34,18 @@ const Children = ({ setSelectedDiary, setDiaryData, userLoginDispatch }) => {
         }
 
         try {
+            setIsLoading(true);
             // POST 요청을 보내는 부분
             axios
                 .post(`${server}/diary/childInfo`, formData, {
                     headers: { 'Content-Type': `multipart/form-data` },
                 })
                 .then((res) => {
-                    console.log(res);
+                    if (res.data.data == 1) {
+                        setSelectedDiary(0);
+                        setUrl('/diary/childrenInfo');
+                    }
                 });
-
-            setSelectedDiary(0);
 
             // 성공 시 리다이렉트 또는 다른 작업 수행
         } catch (error) {

@@ -21,23 +21,30 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
     //ui에는 {diaryData ? <div>{diaryData.id}</div> : null} => 삼항 연산자로 데이터 호출하세요.
 
     const [diaryData, setDiaryData] = useState();
-
+    const [url, setUrl] = useState('/diary/childrenInfo');
+    const [method, setMethod] = useState('get');
     const [selectedDiary, setSelectedDiary] = useState(0);
     const userLoginDispatch = useDispatch();
     const validationUser = useValidationUser('post', '/user/validate', null);
+    const getDiaryData = useValidationUser(method, url);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        async function getDiary() {
+        const getDiary = async () => {
             try {
-                const response = await validationUser();
-                setDiaryData(response);
+                setIsLoading(true);
+                const validationResponse = await validationUser();
+                const diaryResponse = await getDiaryData();
+                setDiaryData(diaryResponse.data);
             } catch (error) {
                 console.log('에러');
                 userLoginDispatch(userStateAction.setState(false));
+            } finally {
+                setIsLoading(false);
             }
-        }
+        };
         getDiary();
-    }, [selectedDiary, selectedSideMenu]);
+    }, [url, method, selectedDiary, selectedDiary, selectedSideMenu]);
     //======================================//
 
     if (selectedSideMenu === 1) {
@@ -58,14 +65,29 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                             <Link
                                 to="/diary"
                                 onClick={() => {
-                                    setSelectedDiary(3);
+                                    setSelectedDiary(2);
                                 }}
                             >
                                 <input type="button" value="아이 등록" className="btn btn-primary" />
                             </Link>
                         </div>
                     </div>
-                    <div></div>
+                    <div>
+                        {isLoading ? (
+                            <div>로딩중.....</div>
+                        ) : (
+                            (Array.isArray(diaryData) ? diaryData : []).map((idx) => (
+                                <DiaryBook
+                                    img={idx.img}
+                                    name={idx.name}
+                                    no={idx.no}
+                                    setUrl={setUrl}
+                                    selectedSideMenu={selectedSideMenu}
+                                    selectedDiary={selectedDiary}
+                                />
+                            ))
+                        )}
+                    </div>
                 </>
             );
         } else if (selectedDiary === 1) {
@@ -75,8 +97,6 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                 </>
             );
         } else if (selectedDiary === 2) {
-            diaryContents = <DiaryBookDetail setSelectedDiary={setSelectedDiary} />;
-        } else if (selectedDiary === 3) {
             diaryContents = (
                 <>
                     <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
@@ -89,11 +109,7 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                         </div>
                     </div>
                     <div className="add_child_container">
-                        <Children
-                            setSelectedDiary={setSelectedDiary}
-                            setDiaryData={setDiaryData}
-                            userLoginDispatch={userLoginDispatch}
-                        />
+                        <Children setUrl={setUrl} setSelectedDiary={setSelectedDiary} setIsLoading={setIsLoading} />
                     </div>
                 </>
             );

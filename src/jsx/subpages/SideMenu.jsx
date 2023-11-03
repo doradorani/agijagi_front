@@ -27,10 +27,10 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, setPre
                     <div className="side_menu_sub_btn" onClick={() => selectDiaryCliclHandler(1, 0)}>
                         - 일기
                     </div>
-                    <div className="side_menu_sub_btn" onClick={() => selectDiaryCliclHandler(2)}>
+                    <div className="side_menu_sub_btn" onClick={() => selectDiaryCliclHandler(2, '/user/validate')}>
                         - 달력
                     </div>
-                    <div className="side_menu_sub_btn" onClick={() => selectDiaryCliclHandler(3)}>
+                    <div className="side_menu_sub_btn" onClick={() => selectDiaryCliclHandler(3, '/user/validate')}>
                         - 앨범
                     </div>
                 </div>
