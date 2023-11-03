@@ -2,7 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../../css/subpage/diaryBook.css';
 
-const DiaryBook = ({ setSelectedDiary, img, name, setUrl }) => {
+const DiaryBook = ({ setSelectedDiary, img, name, no, setUrl }) => {
+    const clickHandler = () => {
+        setUrl('/diary/dailyDiary/' + no);
+        setSelectedDiary(1);
+    };
+
     return (
         <div className="component yg_font">
             <ul className="align book_ul">
@@ -20,7 +25,7 @@ const DiaryBook = ({ setSelectedDiary, img, name, setUrl }) => {
                                 {/* <Link className="diarybook_btn" to="/diarybook_detail" onClick={()=>setSelectedDiary(1)}>
                                     보러가기
                                 </Link> */}
-                                <Link className="diarybook_btn" onClick={() => setSelectedDiary(1)}>
+                                <Link className="diarybook_btn" onClick={clickHandler}>
                                     보러가기
                                 </Link>
                             </li>

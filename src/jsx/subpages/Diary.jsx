@@ -14,7 +14,6 @@ import { Link } from 'react-router-dom';
 import Children from './diary/Children';
 
 const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
-    console.log('selectedSideMenu', selectedSideMenu);
     let diaryContents;
 
     //======검증 및 데이터 불러오기//======검증 및 데이터 불러오기//
@@ -29,11 +28,14 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
     const getDiaryData = useValidationUser(method, url);
     const [isLoading, setIsLoading] = useState(false);
 
+    console.log(diaryData);
+
     useEffect(() => {
+        setDiaryData(null);
         const getDiary = async () => {
             try {
                 setIsLoading(true);
-                const validationResponse = await validationUser();
+                const validateResponse = await validationUser();
                 const diaryResponse = await getDiaryData();
                 setDiaryData(diaryResponse.data);
             } catch (error) {
@@ -76,14 +78,14 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                         {isLoading ? (
                             <div>로딩중.....</div>
                         ) : (
-                            (Array.isArray(diaryData) ? diaryData : []).map((idx) => (
+                            (diaryData !== null && Array.isArray(diaryData) ? diaryData : []).map((idx) => (
                                 <DiaryBook
+                                    key={idx}
                                     img={idx.img}
                                     name={idx.name}
                                     no={idx.no}
                                     setUrl={setUrl}
-                                    selectedSideMenu={selectedSideMenu}
-                                    selectedDiary={selectedDiary}
+                                    setSelectedDiary={setSelectedDiary}
                                 />
                             ))
                         )}
@@ -93,7 +95,16 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
         } else if (selectedDiary === 1) {
             diaryContents = (
                 <>
-                    <DiaryBookDetail setSelectedDiary={setSelectedDiary} />
+                    {isLoading ? (
+                        <div>로딩중.....</div>
+                    ) : (
+                        <DiaryBookDetail
+                            setSelectedDiary={setSelectedDiary}
+                            diaryData={diaryData}
+                            setDiaryData={setDiaryData}
+                            setUrl={setUrl}
+                        />
+                    )}
                 </>
             );
         } else if (selectedDiary === 2) {
