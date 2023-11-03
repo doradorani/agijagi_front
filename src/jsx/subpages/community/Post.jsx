@@ -1,14 +1,32 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import '../../../css/subpage/post.css';
 
 const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
     const [byteCount, setByteCount] = useState(0);
+    const [postReportReason, setPostReportReason] = useState('');
+    // 추후에 postURL 각 포스트 주소값으로 직접 할당해야함
+    const postURL = window.location.href;
+
+    const copyPostURL = () => {
+        alert(`해당 링크가 복사되었습니다.\n LINK:${postURL}`);
+    };
 
     const handleTextChange = (e) => {
         const text = e.target.value;
         // 함수 호출하여 바이트 수 계산
+        setPostReportReason(text);
         fn_checkByte(text);
+
+        console.log(postReportReason);
+    };
+
+    const removePostReportReason = () => {
+        console.log('removePostReportReason CALLED!!');
+        setPostReportReason('');
+
+        console.log(postReportReason);
     };
 
     // 바이트 수 체크 함수
@@ -41,7 +59,7 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                         </div>
                     </div>
                     <Link>
-                        <div>
+                        <div onClick={removePostReportReason}>
                             <img
                                 src="/test_imgs/png/more.png"
                                 style={{ width: '20px', height: '60px', objectFit: 'contain' }}
@@ -100,16 +118,16 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                 </div>
                 {/* 모달 START */}
                 <div
-                    class="modal fade"
+                    className="modal fade"
                     id="modal_for_post_detail"
                     tabIndex="-1"
                     aria-labelledby="exampleModalLabel"
                     aria-hidden="true"
                 >
-                    <div class="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
-                        <div class="modal-content">
+                    <div className="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
+                        <div className="modal-content">
                             <div
-                                class="modal-body mx-auto"
+                                className="modal-body mx-auto"
                                 style={{ width: '450px', textAlign: 'center', fontWeight: 'bold' }}
                             >
                                 <div
@@ -124,8 +142,10 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                                     <div>게시물로 이동</div>
                                 </a>
                                 <hr />
-                                <a href="/post_link_copy">
-                                    <div>링크 복사</div>
+                                <a onClick={copyPostURL}>
+                                    <CopyToClipboard text={postURL}>
+                                        <div>링크 복사</div>
+                                    </CopyToClipboard>
                                 </a>
                                 <hr />
                                 <div data-bs-dismiss="modal" aria-label="Close">
@@ -136,47 +156,48 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                     </div>
                 </div>
                 <div
-                    class="modal fade"
+                    className="modal fade"
                     id="modal_for_post_declaration"
                     tabIndex="-1"
                     aria-labelledby="exampleModalLabel"
                     aria-hidden="true"
                 >
-                    <div class="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    <div className="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">
                                     신고사유 작성하기
                                 </h1>
                                 <button
                                     type="button"
-                                    class="btn-close"
+                                    className="btn-close"
                                     data-bs-dismiss="modal"
                                     aria-label="Close"
                                 ></button>
                             </div>
-                            <div class="modal-body mx-auto">
+                            <div className="modal-body mx-auto">
                                 <textarea
                                     className="upload_text"
                                     placeholder="게시물의 신고사유를 작성해주세요."
                                     style={{ width: '400px' }}
                                     onChange={handleTextChange}
+                                    value={postReportReason}
                                 ></textarea>
                             </div>
                             <sup className="byte_for_upload" style={{ marginRight: '25px' }}>
                                 (<span id="nowByte">{byteCount}</span>/2200bytes)
                             </sup>
-                            <div class="modal-footer">
+                            <div className="modal-footer">
                                 <button
                                     type="button"
-                                    class="btn btn-primary"
+                                    className="btn btn-primary"
                                     data-bs-toggle="modal"
                                     data-bs-target="#modal_for_post_detail"
                                 >
                                     이전
                                 </button>
-                                <button type="submit" class="btn btn-primary">
-                                    공유하기
+                                <button type="submit" className="btn btn-primary">
+                                    제출하기
                                 </button>
                             </div>
                         </div>

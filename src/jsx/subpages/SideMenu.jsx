@@ -3,7 +3,14 @@ import '../../css/common/sidemenu.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, setPreviewImage, setSelectedDiary }) => {
+const SideMenu = ({
+    selectedMenu,
+    setSelectedSideMenu,
+    setSelectedNotice,
+    // setPreviewImage,
+    setSelectedDiary,
+    deleteAllContent,
+}) => {
     let menuContent;
 
     const sideMenuNoticeClickHandler = (index) => {
@@ -63,7 +70,8 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, setPre
                     className="side_menu_btn"
                     data-bs-toggle="modal"
                     data-bs-target="#modal_for_post_img"
-                    onClick={() => setPreviewImage(null)}
+                    // onClick={() => setPreviewImage(null)}
+                    onClick={deleteAllContent}
                 >
                     <img src="/test_imgs/png/pencil_logo.png" style={{ width: '45px', marginRight: '15px' }} />새 글
                     작성하기
