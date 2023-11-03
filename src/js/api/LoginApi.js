@@ -1,12 +1,12 @@
-import {useEffect} from "react";
-import token_config from "./config/token_config";
-import axios from "axios";
-import {tokenAction} from "./redux_store/slice/tokenSlice";
-import moment from "moment";
-import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import {userStateAction} from "./redux_store/slice/userLoginSlice";
-import userLogin_config from "./config/userLogin_config";
+import { useEffect } from 'react';
+import token_config from './config/token_config';
+import axios from 'axios';
+import { tokenAction } from './redux_store/slice/tokenSlice';
+import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { userStateAction } from './redux_store/slice/userLoginSlice';
+import userLogin_config from './config/userLogin_config';
 
 export function useKakaoLogin(code) {
     const tokenDispatch = useDispatch();
@@ -17,12 +17,11 @@ export function useKakaoLogin(code) {
         const server = token_config.server;
 
         const kakaoLogin = async () => {
-
             try {
                 const response = await axios.post(`${server}/kakao/login?code=${code}`);
 
                 tokenDispatch(tokenAction.setTokenName(response.data.accessToken));
-                tokenDispatch(tokenAction.setTokenExpired(moment().add(20, 'seconds').format("yyyy-MM-DD HH:mm:ss")));
+                tokenDispatch(tokenAction.setTokenExpired(moment().add(2, 'hours').format('yyyy-MM-DD HH:mm:ss')));
                 userLoginDispatch(userStateAction.setState(true));
 
                 if (response.data.newUser > 0) {
@@ -31,11 +30,11 @@ export function useKakaoLogin(code) {
                     alert('기존 회원');
                 }
 
-                navigate("/");
+                navigate('/');
             } catch (error) {
-                console.error("Kakao login error:", error);
+                console.error('Kakao login error:', error);
             }
-        }
+        };
 
         kakaoLogin();
     }, [code, tokenDispatch, navigate]);
