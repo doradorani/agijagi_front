@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../../css/subpage/noticetable.css';
+import { useValidationUser } from '../../../js/api/ValidationApi';
 
 const NoticeTable = ({ setSelectedNotice }) => {
+    const [noticeTableData, setNoticeTableData] = useState();
+
+    useEffect(() => {
+        async function getNoticeTable() {
+            try {
+                const response = await getNoticeTable();
+                setNoticeTableData(response);
+                console.log(response);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        getNoticeTable();
+    }, []);
+
     return (
         <div style={{ width: '800px' }}>
             <table className="table table-striped table-hover " style={{ fontSize: '0.9em' }}>
@@ -148,38 +164,38 @@ const NoticeTable = ({ setSelectedNotice }) => {
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                    <li className="page-item">
-                        <a className="page-link" href="#">
+                    <li className="">
+                        <a className="page-link notice_table_page_focus" href="#">
                             1
                         </a>
                     </li>
                     <li className="page-item">
-                        <a className="page-link" href="#">
+                        <a className="page-link notice_table_page_focus" href="#">
                             2
                         </a>
                     </li>
                     <li className="page-item">
-                        <a className="page-link" href="#">
+                        <a className="page-link notice_table_page_focus" href="#">
                             3
                         </a>
                     </li>
                     <li className="page-item">
-                        <a className="page-link" href="#">
+                        <a className="page-link notice_table_page_focus" href="#">
                             4
                         </a>
                     </li>
                     <li className="page-item">
-                        <a className="page-link" href="#">
+                        <a className="page-link notice_table_page_focus" href="#">
                             5
                         </a>
                     </li>
                     <li className="page-item">
-                        <a className="page-link" href="#">
+                        <a className="page-link notice_table_page_focus" href="#">
                             6
                         </a>
                     </li>
                     <li className="page-item">
-                        <a className="page-link" href="#">
+                        <a className="page-link notice_table_page_focus" href="#">
                             7
                         </a>
                     </li>

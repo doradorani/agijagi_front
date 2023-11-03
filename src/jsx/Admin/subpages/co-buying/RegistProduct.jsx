@@ -153,8 +153,8 @@ const RegistProduct = () => {
                                 ))
                             ) : (
                                 <label
-                                    htmlFor="imageInput"
-                                    className="flex mb-4"
+                                    htmlFor="imageInput "
+                                    className="flex mb-4 upload upload_img_label"
                                     style={{
                                         width: '500px',
                                         height: '400px',

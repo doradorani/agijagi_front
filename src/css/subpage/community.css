@@ -167,3 +167,8 @@
     width: 800px;
     margin-bottom: 45px;
 }
+
+.upload_img_label:hover,
+.upload_img_btn:hover {
+    cursor: pointer;
+}

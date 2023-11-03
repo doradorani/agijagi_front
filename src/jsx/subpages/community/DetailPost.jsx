@@ -225,16 +225,16 @@ const DetailPost = ({ setSelectedPost }) => {
             </div>
             {/* 모달 START */}
             <div
-                class="modal fade"
+                className="modal fade"
                 id="modal_for_change_reply"
                 tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
             >
-                <div class="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
+                <div className="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
+                    <div className="modal-content">
                         <div
-                            class="modal-body mx-auto"
+                            className="modal-body mx-auto"
                             style={{ width: '450px', textAlign: 'center', fontWeight: 'bold' }}
                         >
                             <a href="/detail">

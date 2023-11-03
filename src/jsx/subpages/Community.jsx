@@ -11,6 +11,7 @@ import DetailPost from './community/DetailPost';
 
 const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previewImage, setPreviewImage }) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
+    const [uploadText, setUploadText] = useState('');
     const [fileInfo, setFileInfo] = useState('');
     const [byteCount, setByteCount] = useState(0);
     const [selectedPost, setSelectedPost] = useState(0);
@@ -121,12 +122,13 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
 
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
+
             // 사진 첨부 최대 개수 설정
             if (newSelectedFiles.length >= maxFiles) {
                 alert(`사진은 최대 ${maxFiles}개까지 첨부할 수 있습니다.`);
                 e.target.value = '';
                 setSelectedFiles([]);
-                setFileInfo('');
+                // setFileInfo('');
                 setPreviewImage(null);
                 return;
             }
@@ -135,12 +137,13 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                 alert(`파일 크기는 ${formatBytes(maxFileSize)}를 초과할 수 없습니다.`);
                 e.target.value = '';
                 setSelectedFiles([]);
-                setFileInfo('');
+                // setFileInfo('');
                 setPreviewImage(null);
                 return;
             }
 
             newSelectedFiles.push(file);
+
             const fileName = file.name;
             const fileSize = formatBytes(file.size);
 
@@ -151,7 +154,6 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
             };
             reader.readAsDataURL(file);
         }
-
         setSelectedFiles(newSelectedFiles);
         setFileInfo(fileInfoText);
     };
@@ -160,6 +162,7 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
         const text = e.target.value;
         // 함수 호출하여 바이트 수 계산
         fn_checkByte(text);
+        setUploadText(text);
     };
 
     const formatBytes = (bytes, decimals = 2) => {
@@ -181,6 +184,11 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
         setPreviewImage(null);
     };
 
+    const deleteAllContent = () => {
+        setSelectedFiles([]);
+        setUploadText('');
+    };
+
     // 바이트 수 체크 함수
     const fn_checkByte = (text) => {
         const maxByte = 2200;
@@ -198,6 +206,85 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
         setByteCount(totalByte);
     };
 
+    const removeFile = (index) => {
+        const newFiles = [...selectedFiles];
+        newFiles.splice(index, 1);
+        setSelectedFiles(newFiles);
+    };
+
+    const renderImageInput = () => {
+        if (selectedFiles.length === 0) {
+            return (
+                <label
+                    className="upload_img_label flex"
+                    htmlFor="fileInput"
+                    style={{ alignItems: 'center', flexDirection: 'column' }}
+                >
+                    <img src="/test_imgs/png/picture.png" className="" width="225px" />
+                    <div style={{ marginTop: '10px', fontSize: '1.2em' }}>사진을 선택해주세요</div>
+                </label>
+            );
+        }
+        return (
+            <div
+                id="carouselExample"
+                className="carousel slide"
+                data-bs-ride="carousel"
+                style={{ width: '400px', height: '450px', objectFit: 'cover' }}
+            >
+                <div className="carousel-inner" style={{ width: '400px', height: '450px', objectFit: 'cover' }}>
+                    {selectedFiles.map((file, index) => (
+                        <div
+                            key={index}
+                            className={`carousel-item ${index === 0 ? 'active' : ''}`}
+                            style={{
+                                width: '400px',
+                                height: '450px',
+                                objectFit: 'cover',
+                                position: 'relative',
+                            }}
+                        >
+                            <img
+                                src={URL.createObjectURL(file)}
+                                className="d-block w-100 uploaded_preview_img"
+                                alt={`Image ${index + 1}`}
+                                style={{
+                                    width: '400px',
+                                    height: '400px',
+                                    objectFit: 'cover',
+                                    position: 'absolute',
+                                    top: '50px',
+                                }}
+                            />
+                            <button
+                                type="button"
+                                className="btn btn-outline-secondary remove-file-btn"
+                                aria-label="Close"
+                                onClick={() => removeFile(index)}
+                                style={{
+                                    width: '150px',
+                                    position: 'absolute',
+                                    top: '5px',
+                                    right: '125px',
+                                }}
+                            >
+                                해당 사진만 삭제
+                            </button>
+                        </div>
+                    ))}
+                </div>
+                <a className="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Previous</span>
+                </a>
+                <a className="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Next</span>
+                </a>
+            </div>
+        );
+    };
+
     return (
         <div className="community_wrap">
             <div>
@@ -209,6 +296,7 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                     setSelectedSideMenu={setSelectedSideMenu}
                     previewImage={previewImage}
                     setPreviewImage={setPreviewImage}
+                    deleteAllContent={deleteAllContent}
                 />
                 {communityContents}
                 {/* Modal START */}
@@ -230,25 +318,14 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                                     className="btn-close"
                                     data-bs-dismiss="modal"
                                     aria-label="Close"
+                                    onClick={deleteFiles}
                                 ></button>
                             </div>
                             <div
                                 className="modal-body mx-auto modap_img_contents"
-                                style={{ width: '650px', position: 'relative' }}
+                                style={{ width: '650px', height: '485px', position: 'relative' }}
                             >
-                                {previewImage ? (
-                                    <img
-                                        className="uploaded_preview_img"
-                                        src={previewImage}
-                                        alt="Selected"
-                                        width="450px"
-                                    />
-                                ) : (
-                                    <div>
-                                        <img src="/test_imgs/png/picture.png" className="" width="225px" />
-                                        <div>사진을 여기에 끌어다 놓으세요</div>
-                                    </div>
-                                )}
+                                {renderImageInput()}
                                 <button
                                     type="button"
                                     className="btn-close"
@@ -263,15 +340,14 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                                         id="fileInput"
                                         multiple
                                         style={{ display: 'none' }}
-                                        accept="image/*,
-                                            video/*"
+                                        accept="image/*"
                                         onChange={handleFileChange}
                                     />
                                 </div>
                                 <label
                                     htmlFor="fileInput"
                                     className="upload_img_btn"
-                                    style={{ position: 'absolute', bottom: '0px', right: '20px' }}
+                                    style={{ position: 'absolute', bottom: '0px', right: '12px' }}
                                 >
                                     <figure className="moving_btn_for_img_wrap" style={{ margin: '5px auto' }}>
                                         <img
@@ -283,33 +359,6 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                                     <p className="select_image_btn">사진 선택</p>
                                 </label>
                             </div>
-
-                            {/* 첨부파일 관련 태그 START */}
-                            {/* <div className="for_upload_file">
-                                <input
-                                    type="file"
-                                    name="files"
-                                    id="fileInput"
-                                    multiple
-                                    style={{ display: 'none' }}
-                                    accept="image/*,
-                                            video/*"
-                                    onChange={handleFileChange}
-                                />
-                            </div>
-                            <label htmlFor="fileInput" className="upload_img_btn">
-                                <figure className="moving_btn_for_img_wrap">
-                                    <img
-                                        className="moving_btn_for_img"
-                                        src="/test_imgs/png/upload.png"
-                                        width={'30px'}
-                                    />
-                                    <p className="select_image_btn">사진 선택</p>
-                                </figure>
-                            </label> */}
-
-                            {/* <input className="deleteBtn" type="button" value="삭제" onClick={deleteFiles} /> */}
-                            {/* 첨부파일 관련 태그 END */}
                             <div className="modal-footer flex" style={{ justifyContent: 'space-between' }}>
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                                     이전
@@ -361,6 +410,7 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                                     className="upload_text"
                                     placeholder="게시물의 내용을 작성해주세요."
                                     onChange={handleTextChange}
+                                    value={uploadText}
                                 ></textarea>
                             </div>
                             <sup className="byte_for_upload">

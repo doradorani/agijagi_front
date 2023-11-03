@@ -1,8 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import NoticeTable from '../../../subpages/noticeboard/NoticeTable';
 import AdminSidbar from '../../AdminSidebar';
+import axios from 'axios';
+import token_config from '../../../../js/api/config/token_config';
+import { useValidationAdmin } from '../../../../js/api/admin/ValidationAdminApi';
+import { useDispatch } from 'react-redux';
+import { adminStateAction } from '../../../../js/api/redux_store/slice/adminLoginSlice';
 
 const AdminNoticeList = ({ setSelectedSideMenu }) => {
+    const [noticeTable, setNoticeTable] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [perPage] = useState(10);
+    const [isLoading, setIsLoading] = useState(false);
+    // 관리자 로그인 상태 검증 관련 state
+    const server = token_config.server;
+    const adminLoginDispatch = useDispatch();
+    const validationAdmin = useValidationAdmin('get', '/notice/noticeTable/' + currentPage + '/' + perPage, null);
+
+    useEffect(() => {
+        // 서버에서 공지사항 데이터 가져오는 함수
+        const getNoticeTable = async () => {
+            try {
+                setIsLoading(true);
+                // 관리자 로그인 상태 검증
+                const validateAdminResponse = await validationAdmin();
+                // const response = await axios.get(`${server}/notice/noticeTable/${currentPage}/${perPage}`);
+                // 서버에서 가져온 공지사항 데이터 set
+                setNoticeTable(validateAdminResponse.data.noticeDtos);
+                setTotalPages(validateAdminResponse.data.totalPages);
+
+                console.log(validateAdminResponse.data);
+                console.log(noticeTable);
+                console.log(totalPages);
+            } catch (error) {
+                console.error('Error fetching notices:', error);
+                adminLoginDispatch(adminStateAction.setState(false));
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        getNoticeTable();
+    }, [currentPage, perPage]);
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
+    };
+
     return (
         <>
             <div className="admin_authorization_wrap">
@@ -19,125 +65,56 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                         <thead>
                             <tr>
                                 <th>번호</th>
+                                {/* <th style={{ width: '35%' }}>제목</th> */}
                                 <th>제목</th>
                                 <th>작성자</th>
                                 <th>첨부파일</th>
                                 <th>조회수</th>
                                 <th>작성일</th>
-                                <th>수정일자</th>
+                                <th>수정일</th>
+                                <th>게시물 수정</th>
+                                <th>삭제여부</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td style={{ textAlign: 'left' }}>
-                                    <a href="#none">제목1111111111</a>
-                                </td>
-                                <td>관리자1</td>
-                                <td>2</td>
-                                <td>30</td>
-                                <td>2023-10-27</td>
-                                <td>2023-10-28</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td style={{ textAlign: 'left' }}>
-                                    <a href="#none">제목1111111111</a>
-                                </td>
-                                <td>관리자1</td>
-                                <td>2</td>
-                                <td>30</td>
-                                <td>2023-10-27</td>
-                                <td>2023-10-28</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td style={{ textAlign: 'left' }}>
-                                    <a href="#none">제목1111111111</a>
-                                </td>
-                                <td>관리자1</td>
-                                <td>2</td>
-                                <td>30</td>
-                                <td>2023-10-27</td>
-                                <td>2023-10-28</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td style={{ textAlign: 'left' }}>
-                                    <a href="#none">제목1111111111</a>
-                                </td>
-                                <td>관리자1</td>
-                                <td>2</td>
-                                <td>30</td>
-                                <td>2023-10-27</td>
-                                <td>2023-10-28</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td style={{ textAlign: 'left' }}>
-                                    <a href="#none">제목1111111111</a>
-                                </td>
-                                <td>관리자1</td>
-                                <td>2</td>
-                                <td>30</td>
-                                <td>2023-10-27</td>
-                                <td>2023-10-28</td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td style={{ textAlign: 'left' }}>
-                                    <a href="#none">제목1111111111</a>
-                                </td>
-                                <td>관리자1</td>
-                                <td>2</td>
-                                <td>30</td>
-                                <td>2023-10-27</td>
-                                <td>2023-10-28</td>
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td style={{ textAlign: 'left' }}>
-                                    <a href="#none">제목1111111111</a>
-                                </td>
-                                <td>관리자1</td>
-                                <td>2</td>
-                                <td>30</td>
-                                <td>2023-10-27</td>
-                                <td>2023-10-28</td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td style={{ textAlign: 'left' }}>
-                                    <a href="#none">제목1111111111</a>
-                                </td>
-                                <td>관리자1</td>
-                                <td>2</td>
-                                <td>30</td>
-                                <td>2023-10-27</td>
-                                <td>2023-10-28</td>
-                            </tr>
-                            <tr>
-                                <td>9</td>
-                                <td style={{ textAlign: 'left' }}>
-                                    <a href="#none">제목1111111111</a>
-                                </td>
-                                <td>관리자1</td>
-                                <td>2</td>
-                                <td>30</td>
-                                <td>2023-10-27</td>
-                                <td>2023-10-28</td>
-                            </tr>
-                            <tr>
-                                <td>10</td>
-                                <td style={{ textAlign: 'left' }}>
-                                    <a href="#none">제목1111111111</a>
-                                </td>
-                                <td>관리자1</td>
-                                <td>2</td>
-                                <td>30</td>
-                                <td>2023-10-27</td>
-                                <td>2023-10-28</td>
-                            </tr>
+                            {isLoading ? (
+                                <div>로딩중.....</div>
+                            ) : (
+                                (Array.isArray(noticeTable) ? noticeTable : []).map((notice) => (
+                                    <tr key={notice.no}>
+                                        <td>{notice.no}</td>
+                                        <td style={{ textAlign: 'left' }}>
+                                            <a href="#none">{notice.title}</a>
+                                        </td>
+                                        <td>{notice.admin_no}</td>
+                                        <td>{notice.admin_no}</td>
+                                        <td>{notice.hit}</td>
+                                        <td>{notice.reg_date}</td>
+                                        <td>{notice.mod_date}</td>
+                                        <td
+                                            style={{
+                                                padding: '0px',
+                                                paddingTop: '4px',
+                                            }}
+                                        >
+                                            <button
+                                                type="button"
+                                                class="btn btn-light"
+                                                style={{
+                                                    fontFamily: 'malgun gothic',
+                                                    margin: '0',
+                                                    padding: '3px 7px ',
+                                                }}
+                                            >
+                                                수정하기
+                                            </button>
+                                        </td>
+                                        <td style={{ textAlign: 'center' }}>
+                                            <a>{notice.status}</a>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                     <div aria-label="Page navigation example" style={{ marginTop: '10px' }}>
