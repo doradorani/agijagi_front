@@ -6,8 +6,6 @@ const AdminTokenApi = axios.create({
     //baseURL: 'http://localhost:8088',
     baseURL: adminToken_config.server,
     timeout: 10000,
-    // params: {},
-    headers: { 'Content-Type': 'application/json' },
 });
 
 AdminTokenApi.interceptors.request.use(RefreshAdmin);

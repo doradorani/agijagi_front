@@ -1,9 +1,8 @@
 import moment from 'moment';
 import adminToken_config from '../config/adminToken_config';
 import axios from 'axios';
-import { AxiosRequestConfig } from 'axios';
 
-const RefreshAdmin = async (config: AxiosRequestConfig, formData) => {
+const RefreshAdmin = async (config, formData) => {
     const server = adminToken_config.server;
     let adminAccessTokenExpired = adminToken_config.adminTokenExpired;
 
@@ -16,9 +15,7 @@ const RefreshAdmin = async (config: AxiosRequestConfig, formData) => {
             console.log(error);
         }
     }
-    config.data = formData;
-    config.headers = config.headers ?? {};
-    config.headers['Content-Type'] = 'multipart/form-data';
+
     config.headers.Authorization = `Bearer ${adminToken_config.adminTokenName}`;
     return config;
 };

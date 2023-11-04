@@ -1,9 +1,8 @@
 import moment from 'moment';
 import token_config from './config/token_config';
 import axios from 'axios';
-import { AxiosRequestConfig } from 'axios';
 
-const Refresh = async (config: AxiosRequestConfig, formData) => {
+const Refresh = async (config) => {
     const server = token_config.server;
     let accessTokenExpired = token_config.tokenExpired;
 
@@ -16,10 +15,11 @@ const Refresh = async (config: AxiosRequestConfig, formData) => {
             console.log(error);
         }
     }
-    config.data = formData;
-    config.headers = config.headers ?? {};
-    config.headers['Content-Type'] = 'multipart/form-data';
+
     config.headers.Authorization = `Bearer ${token_config.tokenName}`;
+
+    console.log(config);
+
     return config;
 };
 
