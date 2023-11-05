@@ -12,6 +12,8 @@ import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../js/api/redux_store/slice/userLoginSlice';
 import { Link } from 'react-router-dom';
 import Children from './diary/Children';
+import ChildrenModifyInfo from './diary/ChildrenModifyInfo.jsx';
+import DiaryPost from './diary/DiaryPost.jsx';
 
 const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
     let diaryContents;
@@ -24,6 +26,8 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
     const getDiaryData = useValidationUser(methodUrl.mehtod, methodUrl.url, diaryFormData);
     const [isLoading, setIsLoading] = useState(false);
     const [refreshData, setRefreshData] = useState(false);
+
+    console.log(selectedSideMenu, selectedDiary);
 
     const diaryHeader = (select) => {
         return (
@@ -44,9 +48,13 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
             setIsLoading(true);
             try {
                 const validateResponse = await validationUser();
-                const diaryResponse = await getDiaryData();
-                console.log(methodUrl.url);
-                setDiaryData(diaryResponse.data);
+                try {
+                    const diaryResponse = await getDiaryData();
+                    setDiaryData(diaryResponse.data);
+                } catch (error) {
+                    console.log('데이터 패칭에러');
+                    console.log(error);
+                }
             } catch (error) {
                 console.log('검증 에러');
                 userLoginDispatch(userStateAction.setState(false));
@@ -114,7 +122,7 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                 </>
             );
         } else if (selectedDiary === 2) {
-            //일기 작성
+            //자녀등록
             diaryContents = (
                 <>
                     {diaryHeader('일기')}
@@ -131,20 +139,39 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                 </>
             );
         } else if (selectedDiary === 3) {
-            //자녀등록
+            //일기 작성
             diaryContents = (
                 <>
                     {diaryHeader('일기')}
-                    <div className="add_child_container">
-                        <Children
+                    <div className="add_diary_container">
+                        <DiaryPost
                             setMethodUrl={setMethodUrl}
                             setSelectedDiary={setSelectedDiary}
-                            setIsLoading={setIsLoading}
                             setDiaryFormData={setDiaryFormData}
+                            setDiaryData={setDiaryData}
                         />
                     </div>
                 </>
             );
+        } else if (selectedDiary === 4) {
+            //자녀수정
+            diaryContents = (
+                <>
+                    {diaryHeader('일기')}
+                    <div className="add_child_container">
+                        {diaryData !== null && (
+                            <ChildrenModifyInfo
+                                setMethodUrl={setMethodUrl}
+                                setSelectedDiary={setSelectedDiary}
+                                setIsLoading={setIsLoading}
+                                setDiaryFormData={setDiaryFormData}
+                                diaryData={diaryData}
+                            />
+                        )}
+                    </div>
+                </>
+            );
+        } else if (selectedDiary === 5) {
         }
     } else if (selectedSideMenu === 2) {
         //calendar
@@ -196,6 +223,7 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                     selectedMenu={1}
                     setSelectedSideMenu={setSelectedSideMenu}
                     setSelectedDiary={setSelectedDiary}
+                    setMethodUrl={setMethodUrl}
                 />
                 <div className="post_section">{diaryContents}</div>
                 <div>

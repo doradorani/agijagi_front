@@ -7,7 +7,7 @@ const SideMenu = ({
     selectedMenu,
     setSelectedSideMenu,
     setSelectedNotice,
-    // setPreviewImage,
+    setMethodUrl,
     setSelectedDiary,
     deleteAllContent,
 }) => {
@@ -18,33 +18,37 @@ const SideMenu = ({
         setSelectedNotice(0);
     };
 
-    const selectDiaryCliclHandler = (index1, index2) => {
+    const selectDiaryClicklHandler = (index1, url) => {
+        setMethodUrl('get', url);
         setSelectedSideMenu(index1);
-        setSelectedDiary(index2);
+        setSelectedDiary(0);
     };
 
     if (selectedMenu === 1) {
         menuContent = (
             <div>
-                <div className="side_menu_btn" onClick={() => setSelectedSideMenu(1)}>
+                <div className="side_menu_btn" onClick={() => selectDiaryClicklHandler(1, '/diary/childrenInfo')}>
                     <img src="/test_imgs/png/diary3.png" style={{ width: '45px', marginRight: '15px' }} />
                     육아 일기
                 </div>
                 <div>
-                    <div className="side_menu_sub_btn" onClick={() => selectDiaryCliclHandler(1, 0)}>
+                    <div
+                        className="side_menu_sub_btn"
+                        onClick={() => selectDiaryClicklHandler(1, '/diary/childrenInfo')}
+                    >
                         - 일기
                     </div>
-                    <div className="side_menu_sub_btn" onClick={() => selectDiaryCliclHandler(2, '/user/validate')}>
+                    <div className="side_menu_sub_btn" onClick={() => selectDiaryClicklHandler(2, '/user/validate')}>
                         - 달력
                     </div>
-                    <div className="side_menu_sub_btn" onClick={() => selectDiaryCliclHandler(3, '/user/validate')}>
+                    <div className="side_menu_sub_btn" onClick={() => selectDiaryClicklHandler(3, '/user/validate')}>
                         - 앨범
                     </div>
                 </div>
                 <div
                     className="side_menu_btn"
                     style={{ marginTop: '15px' }}
-                    onClick={() => selectDiaryCliclHandler(4, 0)}
+                    onClick={() => selectDiaryClicklHandler(4, '/user/validate')}
                 >
                     <img src="/test_imgs/png/diary1.png" style={{ width: '45px', marginRight: '15px' }} />
                     육아 수첩

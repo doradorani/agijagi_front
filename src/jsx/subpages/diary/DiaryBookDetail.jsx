@@ -25,6 +25,15 @@ const DiaryBookDetail = ({ setMethodUrl, setSelectedDiary, setDiaryData, diaryDa
         setSelectedDiary(0);
         setMethodUrl({ mehtod: 'get', url: '/diary/childrenInfo' });
     };
+    const clickDiaryWriteHandler = () => {
+        setSelectedDiary(5);
+    };
+    const clickDiaryModifyHandler = () => {
+        setSelectedDiary(5);
+    };
+    const clickDiaryDeleteHandler = (cd_no, no) => {
+        setMethodUrl({ mehtod: 'delete', url: '/diary/dailyDiary/' + cd_no + '/' + no });
+    };
 
     return (
         <>
@@ -60,6 +69,17 @@ const DiaryBookDetail = ({ setMethodUrl, setSelectedDiary, setDiaryData, diaryDa
                                 />
                                 <h3>{idx.title}</h3>
                                 <p>{idx.content}</p>
+                                <div className="diary_detail_btn flex">
+                                    <div className="diary_modify_detail_bnt" onClick={clickDiaryModifyHandler}>
+                                        수정
+                                    </div>
+                                    <div
+                                        className="diary_delete_detail_bnt"
+                                        onClick={() => clickDiaryDeleteHandler(idx.cd_no, idx.no)}
+                                    >
+                                        삭제
+                                    </div>
+                                </div>
                             </div>
                         ))}
                     </Turn>
@@ -69,9 +89,9 @@ const DiaryBookDetail = ({ setMethodUrl, setSelectedDiary, setDiaryData, diaryDa
                 <div
                     className="write_button"
                     style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '10px', cursor: 'pointer' }}
-                    onClick={clickHandler}
+                    onClick={clickDiaryWriteHandler}
                 >
-                    &#60;&nbsp;뒤로가기
+                    &#60;&nbsp;일기 쓰기
                 </div>
             </div>
         </>
