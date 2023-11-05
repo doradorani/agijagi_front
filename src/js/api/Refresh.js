@@ -2,7 +2,7 @@ import moment from 'moment';
 import token_config from './config/token_config';
 import axios from 'axios';
 
-const Refresh = async (config) => {
+const Refresh = async (config: AxiosRequestConfig) => {
     const server = token_config.server;
     let accessTokenExpired = token_config.tokenExpired;
 
@@ -15,10 +15,7 @@ const Refresh = async (config) => {
             console.log(error);
         }
     }
-
     config.headers.Authorization = `Bearer ${token_config.tokenName}`;
-
-    console.log(config);
 
     return config;
 };

@@ -1,57 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../../../css/subpage/children.css';
 import ReactDatePicker from 'react-datepicker';
 import { Link } from 'react-router-dom';
-import token_config from '../../../js/api/config/token_config';
-import { useValidationUser } from '../../../js/api/ValidationApi';
-import { useDispatch } from 'react-redux';
-import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
-import axios from 'axios';
+import { useEffect } from 'react';
 
-const Children = ({ setUrl, setSelectedDiary, setIsLoading }) => {
+const Children = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, setRefreshData }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [name, setName] = useState('');
     const [img, setImg] = useState(null);
+    const [isFirstUpdateDone, setIsFirstUpdateDone] = useState(false);
 
     let formData = new FormData();
 
     let data;
-    const server = token_config.server;
 
     const handleSubmit = async (event) => {
         data = {
             name: name,
             birth_date: selectedDate.getFullYear() + '-' + (selectedDate.getMonth() + 1) + '-' + selectedDate.getDate(),
         };
-        if (img !== null) {
-            formData.append('file', img);
-            formData.append(
-                'data',
-                new Blob([JSON.stringify(data)], {
-                    type: 'application/json',
-                })
-            );
-        }
+        formData.append('file', img);
+        formData.append(
+            'data',
+            new Blob([JSON.stringify(data)], {
+                type: 'application/json',
+            })
+        );
 
         try {
-            setIsLoading(true);
-            // POST 요청을 보내는 부분
-            axios
-                .post(`${server}/diary/childInfo`, formData, {
-                    headers: { 'Content-Type': `multipart/form-data` },
-                })
-                .then((res) => {
-                    if (res.data.data == 1) {
-                        setSelectedDiary(0);
-                        setUrl('/diary/childrenInfo');
-                    }
-                });
-
-            // 성공 시 리다이렉트 또는 다른 작업 수행
+            setDiaryFormData(formData);
+            setMethodUrl({ mehtod: 'post', url: '/diary/childInfo' });
+            setIsFirstUpdateDone(true);
+            setRefreshData((prev) => !prev);
         } catch (error) {
             console.error('에러:', error);
         }
     };
+
+    useEffect(() => {
+        if (isFirstUpdateDone) {
+            setMethodUrl({ method: 'get', url: '/diary/childrenInfo' });
+            setSelectedDiary(0);
+            setIsFirstUpdateDone(false);
+        }
+    }, [isFirstUpdateDone]);
 
     const handleChange = (e) => {
         setImg(e[0]);
