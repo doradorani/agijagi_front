@@ -15,53 +15,57 @@ import Children from './diary/Children';
 
 const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
     let diaryContents;
-
-    //======검증 및 데이터 불러오기//======검증 및 데이터 불러오기//
-    //ui에는 {diaryData ? <div>{diaryData.id}</div> : null} => 삼항 연산자로 데이터 호출하세요.
-
     const [diaryData, setDiaryData] = useState();
-    const [url, setUrl] = useState('/diary/childrenInfo');
-    const [method, setMethod] = useState('get');
+    const [methodUrl, setMethodUrl] = useState({ mehtod: 'get', url: '/diary/childrenInfo' });
     const [selectedDiary, setSelectedDiary] = useState(0);
     const userLoginDispatch = useDispatch();
     const validationUser = useValidationUser('post', '/user/validate', null);
-    const getDiaryData = useValidationUser(method, url);
+    const [diaryFormData, setDiaryFormData] = useState(new FormData());
+    const getDiaryData = useValidationUser(methodUrl.mehtod, methodUrl.url, diaryFormData);
     const [isLoading, setIsLoading] = useState(false);
+    const [refreshData, setRefreshData] = useState(false);
 
-    console.log(diaryData);
-
+    const diaryHeader = (select) => {
+        return (
+            <>
+                <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
+                    <img src="/test_imgs/png/diary3.png" style={{ width: '55px', marginRight: '15px' }} />
+                    <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 일기</div>
+                    <div style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}>
+                        &#62;&nbsp;{select}
+                    </div>
+                </div>
+            </>
+        );
+    };
     useEffect(() => {
         setDiaryData(null);
         const getDiary = async () => {
+            setIsLoading(true);
             try {
-                setIsLoading(true);
                 const validateResponse = await validationUser();
                 const diaryResponse = await getDiaryData();
+                console.log(methodUrl.url);
                 setDiaryData(diaryResponse.data);
             } catch (error) {
-                console.log('에러');
+                console.log('검증 에러');
                 userLoginDispatch(userStateAction.setState(false));
             } finally {
                 setIsLoading(false);
             }
         };
         getDiary();
-    }, [url, method, selectedDiary, selectedDiary, selectedSideMenu]);
+        console.log(diaryData);
+    }, [methodUrl, selectedDiary, selectedSideMenu, refreshData]);
     //======================================//
+    useEffect(() => {});
 
     if (selectedSideMenu === 1) {
         if (selectedDiary === 0) {
+            //초기 화면
             diaryContents = (
                 <>
-                    <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
-                        <img src="/test_imgs/png/diary3.png" style={{ width: '55px', marginRight: '15px' }} />
-                        <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 일기</div>
-                        <div
-                            style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}
-                        >
-                            &#62;&nbsp;일기
-                        </div>
-                    </div>
+                    {diaryHeader('일기')}
                     <div>
                         <div className="go_to_add_child">
                             <Link
@@ -84,7 +88,7 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                                     img={idx.img}
                                     name={idx.name}
                                     no={idx.no}
-                                    setUrl={setUrl}
+                                    setMethodUrl={setMethodUrl}
                                     setSelectedDiary={setSelectedDiary}
                                 />
                             ))
@@ -93,8 +97,10 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                 </>
             );
         } else if (selectedDiary === 1) {
+            //다이어리 detail
             diaryContents = (
                 <>
+                    {diaryHeader('일기')}
                     {isLoading ? (
                         <div>로딩중.....</div>
                     ) : (
@@ -102,46 +108,58 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                             setSelectedDiary={setSelectedDiary}
                             diaryData={diaryData}
                             setDiaryData={setDiaryData}
-                            setUrl={setUrl}
+                            setMethodUrl={setMethodUrl}
                         />
                     )}
                 </>
             );
         } else if (selectedDiary === 2) {
+            //일기 작성
             diaryContents = (
                 <>
-                    <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
-                        <img src="/test_imgs/png/diary3.png" style={{ width: '55px', marginRight: '15px' }} />
-                        <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 일기</div>
-                        <div
-                            style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}
-                        >
-                            &#62;&nbsp;일기
-                        </div>
+                    {diaryHeader('일기')}
+                    <div className="add_diary_container">
+                        <Children
+                            setMethodUrl={setMethodUrl}
+                            setSelectedDiary={setSelectedDiary}
+                            setIsLoading={setIsLoading}
+                            setDiaryFormData={setDiaryFormData}
+                            setDiaryData={setDiaryData}
+                            setRefreshData={setRefreshData}
+                        />
                     </div>
+                </>
+            );
+        } else if (selectedDiary === 3) {
+            //자녀등록
+            diaryContents = (
+                <>
+                    {diaryHeader('일기')}
                     <div className="add_child_container">
-                        <Children setUrl={setUrl} setSelectedDiary={setSelectedDiary} setIsLoading={setIsLoading} />
+                        <Children
+                            setMethodUrl={setMethodUrl}
+                            setSelectedDiary={setSelectedDiary}
+                            setIsLoading={setIsLoading}
+                            setDiaryFormData={setDiaryFormData}
+                        />
                     </div>
                 </>
             );
         }
     } else if (selectedSideMenu === 2) {
+        //calendar
         diaryContents = (
             <>
-                <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
-                    <img src="/test_imgs/png/diary3.png" style={{ width: '55px', marginRight: '15px' }} />
-                    <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 일기</div>
-                    <div style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}>
-                        &#62;&nbsp;달력
-                    </div>
-                </div>
+                {diaryHeader('달력')}
                 <Calendar setSelectedDiary={setSelectedDiary} />
             </>
         );
     } else if (selectedSideMenu === 3) {
+        //앨범
         diaryContents = <div></div>;
     } else if (selectedSideMenu === 4) {
         if (selectedDiary === 0) {
+            //그래프
             diaryContents = (
                 <>
                     <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
@@ -155,6 +173,7 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                 </>
             );
         } else if (selectedDiary === 1) {
+            //건강정보 등록
             diaryContents = (
                 <>
                     <div className=" flex yg_font" style={{ marginBottom: '30px' }}>

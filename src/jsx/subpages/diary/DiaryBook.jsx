@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../../css/subpage/diaryBook.css';
 
-const DiaryBook = ({ setSelectedDiary, img, name, no, setUrl }) => {
+const DiaryBook = ({ setSelectedDiary, img, name, no, setMethodUrl }) => {
     const clickHandler = () => {
-        setUrl('/diary/dailyDiary/' + no);
+        setMethodUrl({ mehtod: 'get', url: '/diary/dailyDiary/' + no });
         setSelectedDiary(1);
     };
 

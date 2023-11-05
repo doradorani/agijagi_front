@@ -19,11 +19,11 @@ const options = {
     },
 };
 
-const DiaryBookDetail = ({ setUrl, setSelectedDiary, setDiaryData, diaryData }) => {
+const DiaryBookDetail = ({ setMethodUrl, setSelectedDiary, setDiaryData, diaryData }) => {
     const clickHandler = () => {
         setDiaryData(null);
         setSelectedDiary(0);
-        setUrl('/diary/childrenInfo');
+        setMethodUrl({ mehtod: 'get', url: '/diary/childrenInfo' });
     };
 
     return (
@@ -64,6 +64,15 @@ const DiaryBookDetail = ({ setUrl, setSelectedDiary, setDiaryData, diaryData }) 
                         ))}
                     </Turn>
                 )}
+            </div>
+            <div className="diary_write_container">
+                <div
+                    className="write_button"
+                    style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '10px', cursor: 'pointer' }}
+                    onClick={clickHandler}
+                >
+                    &#60;&nbsp;뒤로가기
+                </div>
             </div>
         </>
     );
