@@ -6,17 +6,42 @@ import token_config from '../../../../js/api/config/token_config';
 import { useValidationAdmin } from '../../../../js/api/admin/ValidationAdminApi';
 import { useDispatch } from 'react-redux';
 import { adminStateAction } from '../../../../js/api/redux_store/slice/adminLoginSlice';
+// import { noticeIndexAction } from '../../../../js/api/redux_store/slice/noticeIndexSlice';
+// import noticeIndex_config from '../../../../js/api/config/noticeIndex_config';
+// import { useParams } from 'react-router-dom';
+import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
 
 const AdminNoticeList = ({ setSelectedSideMenu }) => {
     const [noticeTable, setNoticeTable] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [perPage] = useState(10);
+    const [modifyRequest, setModifyRequest] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    // const [noticeIndex, setNoticeIndex] = useState(0);
+    const [isRefresh, setIsRefresh] = useState(0);
+    // let { noticeIndex } = useParams();
+
+    // const noticeIndexDispatch = useDispatch();
+    // noticeIndex = noticeIndex_config.noticeIndexState;
+    // const noticeIndex = useSelector((state) => state.noticeIndexState);
+
     // 관리자 로그인 상태 검증 관련 state
     const server = token_config.server;
     const adminLoginDispatch = useDispatch();
-    const validationAdmin = useValidationAdmin('get', '/notice/noticeTable/' + currentPage + '/' + perPage, null);
+    const validationAdminGetTable = useValidationAdmin(
+        'get',
+        '/notice/noticeTable/' + currentPage + '/' + perPage,
+        null
+    );
+
+    const validationAdminForDeleteNotice = useValidationAdminItem();
+
+    // const validationAdminForMoveDetail = useValidationAdmin(
+    //     'get',
+    //     '/notice/noticeDetail/' + noticeIndex + '/' + modifyRequest,
+    //     null
+    // );
 
     useEffect(() => {
         // 서버에서 공지사항 데이터 가져오는 함수
@@ -24,18 +49,14 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
             try {
                 setIsLoading(true);
                 // 관리자 로그인 상태 검증
-                const validateAdminResponse = await validationAdmin();
+                const validateAdminResponse = await validationAdminGetTable();
                 // const response = await axios.get(`${server}/notice/noticeTable/${currentPage}/${perPage}`);
                 // 서버에서 가져온 공지사항 데이터 set
                 setNoticeTable(validateAdminResponse.data.noticeDtos);
                 setTotalPages(validateAdminResponse.data.totalPages);
-
-                console.log(validateAdminResponse.data);
-                console.log(noticeTable);
-                console.log(totalPages);
             } catch (error) {
                 console.error('Error fetching notices:', error);
-                adminLoginDispatch(adminStateAction.setState(false));
+                adminLoginDispatch(adminStateAction.setAdminState(false));
             } finally {
                 setIsLoading(false);
             }
@@ -47,6 +68,44 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
         if (newPage >= 1 && newPage <= totalPages) {
             setCurrentPage(newPage);
         }
+    };
+
+    const deleteNotice = async (notice, currentPage) => {
+        try {
+            setIsLoading(true);
+            const noticeIndex = notice.no;
+
+            const deleteResponse = await validationAdminForDeleteNotice(
+                'delete',
+                '/notice/deleteNotice/' + noticeIndex,
+                null
+            );
+            setNoticeTable(null);
+
+            console.log(deleteResponse);
+
+            if (deleteResponse.code === 200 && deleteResponse.data === 1) {
+                alert('정상적으로 삭제되었습니다.');
+                const validateAdminResponse = await validationAdminGetTable();
+                // 서버에서 가져온 공지사항 데이터 reRender
+                setNoticeTable(validateAdminResponse.data.noticeDtos);
+                setTotalPages(validateAdminResponse.data.totalPages);
+
+                console.log(validateAdminResponse);
+            } else {
+                alert('게시물 삭제에 실패하였습니다.');
+            }
+            // setCurrentPage(currentPage);
+        } catch (error) {
+            console.error('Error fetching deleteNotice:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const moveToDetail = async (notice) => {
+        // noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(notice.no));
+        //navigator('/admin/admin_notice_detail');
     };
 
     return (
@@ -65,8 +124,7 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                         <thead>
                             <tr>
                                 <th>번호</th>
-                                {/* <th style={{ width: '35%' }}>제목</th> */}
-                                <th>제목</th>
+                                <th style={{ width: '35%' }}>제목</th>
                                 <th>작성자</th>
                                 <th>첨부파일</th>
                                 <th>조회수</th>
@@ -78,19 +136,23 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                         </thead>
                         <tbody>
                             {isLoading ? (
-                                <div>로딩중.....</div>
+                                <tr>
+                                    <td>로딩중.....</td>
+                                </tr>
                             ) : (
                                 (Array.isArray(noticeTable) ? noticeTable : []).map((notice) => (
                                     <tr key={notice.no}>
                                         <td>{notice.no}</td>
                                         <td style={{ textAlign: 'left' }}>
-                                            <a href="#none">{notice.title}</a>
+                                            <a href="#none" onClick={() => moveToDetail(notice)}>
+                                                {notice.title}
+                                            </a>
                                         </td>
                                         <td>{notice.admin_no}</td>
-                                        <td>{notice.admin_no}</td>
+                                        <td>{notice.attach_cnt}</td>
                                         <td>{notice.hit}</td>
-                                        <td>{notice.reg_date}</td>
-                                        <td>{notice.mod_date}</td>
+                                        <td>{notice.reg_date.substring(0, 10)}</td>
+                                        <td>{notice.mod_date.substring(0, 10)}</td>
                                         <td
                                             style={{
                                                 padding: '0px',
@@ -99,7 +161,7 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                                         >
                                             <button
                                                 type="button"
-                                                class="btn btn-light"
+                                                className="btn btn-light"
                                                 style={{
                                                     fontFamily: 'malgun gothic',
                                                     margin: '0',
@@ -109,8 +171,38 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                                                 수정하기
                                             </button>
                                         </td>
-                                        <td style={{ textAlign: 'center' }}>
-                                            <a>{notice.status}</a>
+                                        <td style={{ textAlign: 'center', padding: '0px', paddingTop: '4px' }}>
+                                            <a>
+                                                {notice.status === 0 ? (
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-light"
+                                                        disabled
+                                                        style={{
+                                                            fontFamily: 'malgun gothic',
+                                                            margin: '0',
+                                                            padding: '3px 7px ',
+                                                        }}
+                                                    >
+                                                        삭제됨
+                                                    </button>
+                                                ) : (
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-light"
+                                                        style={{
+                                                            fontFamily: 'malgun gothic',
+                                                            margin: '0',
+                                                            padding: '3px 7px ',
+                                                        }}
+                                                        onClick={() => {
+                                                            deleteNotice(notice, currentPage);
+                                                        }}
+                                                    >
+                                                        삭제하기
+                                                    </button>
+                                                )}
+                                            </a>
                                         </td>
                                     </tr>
                                 ))
@@ -118,51 +210,38 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                         </tbody>
                     </table>
                     <div aria-label="Page navigation example" style={{ marginTop: '10px' }}>
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
+                        <ul className="pagination justify-content-center">
+                            <li className="page-item">
+                                <button
+                                    className="page-link pagination_btn"
+                                    aria-label="Previous"
+                                    onClick={() => handlePageChange(currentPage - 1)}
+                                >
                                     <span aria-hidden="true">&laquo;</span>
-                                </a>
+                                </button>
                             </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    1
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    2
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    3
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    4
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    5
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    6
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">
-                                    7
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
+                            {isLoading ? (
+                                <div></div>
+                            ) : (
+                                Array.from({ length: totalPages }, (_, i) => (
+                                    <li className={`page-item ${i + 1 === currentPage ? 'active' : ''}`} key={i}>
+                                        <button
+                                            className="page-link pagination_btn"
+                                            onClick={() => handlePageChange(i + 1)}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    </li>
+                                ))
+                            )}
+                            <li className="page-item">
+                                <button
+                                    className="page-link "
+                                    aria-label="Next"
+                                    onClick={() => handlePageChange(currentPage + 1)}
+                                >
                                     <span aria-hidden="true">&raquo;</span>
-                                </a>
+                                </button>
                             </li>
                         </ul>
                     </div>

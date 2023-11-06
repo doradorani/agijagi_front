@@ -133,7 +133,6 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                             </button>
                         </Link>
                     </div>
-                    {/* <Link to="admin_post" className="link_btn_admin_sidebar"> */}
                     <button
                         className="navbar-toggler flex"
                         type="button"
@@ -156,12 +155,11 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                             공지사항
                         </div>
                     </button>
-                    {/* </Link> */}
                     <div
                         className={` collapse ${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
                         id="navbarToggleExternalContent4"
                     >
-                        <Link to="admin_post" className="link_btn_admin_sidebar">
+                        <Link to="admin_notice" className="link_btn_admin_sidebar">
                             <button
                                 className="navbar-toggler flex"
                                 type="button"
