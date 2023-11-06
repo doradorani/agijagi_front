@@ -2,7 +2,7 @@ import moment from 'moment';
 import adminToken_config from '../config/adminToken_config';
 import axios from 'axios';
 
-const RefreshAdmin = async (config, formData) => {
+const RefreshAdmin = async (config) => {
     const server = adminToken_config.server;
     let adminAccessTokenExpired = adminToken_config.adminTokenExpired;
 
