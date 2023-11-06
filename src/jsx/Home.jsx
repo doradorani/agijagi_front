@@ -1,13 +1,83 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/common/common.css';
 import '../css/home.css';
 import { Link } from 'react-router-dom';
+import useScrollFadeIn from './useScrollFadeIn';
 
 const Home = ({ setSelectedUserLoginBtn }) => {
+    const fadeIn1 = useScrollFadeIn('left');
+    const fadeIn2 = useScrollFadeIn('left');
+    const fadeIn3 = useScrollFadeIn('left');
+    const fadeIn4 = useScrollFadeIn('right');
+    const fadeIn5 = useScrollFadeIn('right');
+    const fadeIn6 = useScrollFadeIn('right');
+
+    const elements = [fadeIn1, fadeIn2, fadeIn3, fadeIn4, fadeIn5, fadeIn6];
+    // const [onScroll, setOnScroll] = useState(false);
+
+    // useEffect(() => {
+    //     setSelectedUserLoginBtn(false);
+
+    //     const handleScroll = () => {
+    //         // 현재 스크롤 위치를 가져옵니다.
+    //         const scrollY = window.scrollY;
+
+    //         // home_section2_content와 home_section3_content가 나타나기를 원하는 스크롤 위치를 설정합니다.
+    //         const revealPosition = 500; // 예시로 300px로 설정
+
+    //         // 스크롤 위치가 revealPosition보다 크면 onScroll 상태를 true로 설정합니다.
+    //         if (scrollY > revealPosition) {
+    //             setOnScroll(true);
+    //             console.log('set Scroll TRUE!!!');
+    //         } else {
+    //             setOnScroll(false);
+    //             console.log('set Scroll FALSE!!!');
+    //         }
+    //     };
+
+    //     // 스크롤 이벤트를 추가합니다.
+    //     window.addEventListener('scroll', handleScroll);
+
+    //     // 컴포넌트가 언마운트될 때 스크롤 이벤트를 제거합니다.
+    //     return () => {
+    //         window.removeEventListener('scroll', handleScroll);
+    //         console.log('Scroll Event Removed!!!');
+    //     };
+    // }, []);
+
     useEffect(() => {
-        setSelectedUserLoginBtn(false);
-    }, []);
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1, // 해당 비율 이상이 화면에 드러나면 감시됨
+        };
+
+        const callback = (entries, observer) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // 현재 감시된 요소가 화면에 나타나면 500ms 후에 나타나도록 설정
+                    setTimeout(() => {
+                        elements[index].ref.current.style.transition = 'opacity 0.5s ease-in-out';
+                        elements[index].ref.current.style.opacity = 1;
+                    }, 500);
+                    // 해당 요소 감시 중지
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(callback, observerOptions);
+
+        // 모든 요소를 감시 대상으로 등록
+        elements.forEach((element) => {
+            if (element.ref.current) {
+                observer.observe(element.ref.current);
+            }
+        });
+
+        return () => observer.disconnect();
+    }, [elements]);
 
     return (
         <div id="home_wrap">
@@ -25,26 +95,38 @@ const Home = ({ setSelectedUserLoginBtn }) => {
                     <img src="/test_imgs/diary_imgs/diary1.jpg" />
                 </div>
                 <div className="home_section2_content">
-                    <div>Lorem ipsum dolor sit amet</div>
-                    <div>Lorem ipsum dolor sit amet consectetur adipisicing</div>
+                    <div ref={fadeIn1.ref} style={fadeIn1.style}>
+                        Lorem ipsum dolor sit amet
+                    </div>
+                    <div ref={fadeIn2.ref} style={fadeIn2.style}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing
+                    </div>
                     <Link to="/diary">
-                        <button>일기 작성하기</button>
+                        <button ref={fadeIn3.ref} style={fadeIn3.style}>
+                            일기 작성하기
+                        </button>
                     </Link>
                 </div>
             </div>
             <div className="home_section3">
                 <div className="home_section3_content">
-                    <div>Lorem ipsum dolor sit amet</div>
-                    <div>Lorem ipsum dolor sit amet consectetur adipisicing</div>
+                    <div ref={fadeIn4.ref} style={fadeIn4.style}>
+                        Lorem ipsum dolor sit amet
+                    </div>
+                    <div ref={fadeIn5.ref} style={fadeIn5.style}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing
+                    </div>
                     <Link to="/community">
-                        <button>커뮤니티 구경하기</button>
+                        <button ref={fadeIn6.ref} style={fadeIn6.style}>
+                            커뮤니티 구경하기
+                        </button>
                     </Link>
                 </div>
                 <div className="home_section3_img">
                     <img src="/test_imgs/sns_imgs/baby_commu.jpg" />
                 </div>
             </div>
-            <div className="home_section4"></div>
+            {/* <div className="home_section4"></div> */}
         </div>
     );
 };

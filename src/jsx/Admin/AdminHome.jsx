@@ -16,6 +16,7 @@ import { useValidationAdmin } from '../../js/api/admin/ValidationAdminApi';
 
 import '../../css/common/adminCommon.css';
 import RegistProduct from './subpages/co-buying/RegistProduct';
+import DetailNotice from '../subpages/noticeboard/DetailNotice';
 
 const AdminHome = () => {
     const [adminData, setAdminData] = useState();
@@ -47,7 +48,8 @@ const AdminHome = () => {
                         {/* <Route path="/user_suspended" element={<UserSuspended selectedMenu={selectedMenu} />}></Route> */}
                         <Route path="/user_suspended" element={<UserSuspended />}></Route>
                         <Route path="/admin_authorization" element={<AdminAuthorization />}></Route>
-                        <Route path="/admin_post" element={<AdminNoticeList />}></Route>
+                        <Route path="/admin_notice" element={<AdminNoticeList />}></Route>
+                        <Route path="/admin_notice_detail" element={<DetailNotice />}></Route>
                         <Route path="/write_admin_notice" element={<WriteNotice />}></Route>
                         <Route path="/post_report" element={<PostReport />}></Route>
                         <Route path="/comment_report" element={<CommentReport />}></Route>

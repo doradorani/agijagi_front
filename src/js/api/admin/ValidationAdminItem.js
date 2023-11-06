@@ -5,7 +5,7 @@ import adminToken_config from '../config/adminToken_config';
 import moment from 'moment/moment';
 import { adminTokenAction } from '../redux_store/slice/adminTokenSlice';
 
-export function useValidationItem() {
+export function useValidationAdminItem() {
     const adminTokenDispatch = useDispatch();
     const navigate = useNavigate();
 
