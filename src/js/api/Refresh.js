@@ -2,7 +2,7 @@ import moment from 'moment';
 import token_config from './config/token_config';
 import axios from 'axios';
 
-const Refresh = async (config: AxiosRequestConfig) => {
+const Refresh = async (config) => {
     const server = token_config.server;
     let accessTokenExpired = token_config.tokenExpired;
 
