@@ -2,22 +2,48 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../../css/subpage/noticetable.css';
 import { useValidationUser } from '../../../js/api/ValidationApi';
+import { useDispatch } from 'react-redux';
+import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 
 const NoticeTable = ({ setSelectedNotice }) => {
-    const [noticeTableData, setNoticeTableData] = useState();
+    const [noticeTable, setNoticeTable] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [perPage] = useState(10);
+    const [isLoading, setIsLoading] = useState(false);
+
+    // 관리자 로그인 상태 검증 관련 state
+    const userLoginDispatch = useDispatch();
+    const validationUserGetTable = useValidationUser('get', '/notice/noticeTable/' + currentPage + '/' + perPage, null);
 
     useEffect(() => {
-        async function getNoticeTable() {
+        // 서버에서 공지사항 데이터 가져오는 함수
+        const getNoticeTable = async () => {
             try {
-                const response = await getNoticeTable();
-                setNoticeTableData(response);
-                console.log(response);
+                setIsLoading(true);
+                // 관리자 로그인 상태 검증
+                const validateUserResponse = await validationUserGetTable();
+                // const response = await axios.get(`${server}/notice/noticeTable/${currentPage}/${perPage}`);
+                // 서버에서 가져온 공지사항 데이터 set
+                setNoticeTable(validateUserResponse.data.noticeDtos);
+                setTotalPages(validateUserResponse.data.totalPages);
+
+                console.log(validateUserResponse.data);
             } catch (error) {
-                console.error(error);
+                console.error('Error fetching notices:', error);
+                userLoginDispatch(userStateAction.setState(false));
+            } finally {
+                setIsLoading(false);
             }
-        }
+        };
         getNoticeTable();
-    }, []);
+    }, [currentPage, perPage]);
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
+    };
 
     return (
         <div style={{ width: '800px' }}>
@@ -43,166 +69,62 @@ const NoticeTable = ({ setSelectedNotice }) => {
                         <th scope="col" style={{ width: '50px' }}>
                             조회수
                         </th>
-                        {/* <th scope="col">작성자</th>
-                        <th scope="col">작성일</th>
-                        <th scope="col">첨부파일</th>
-                        <th scope="col">조회수</th> */}
                     </tr>
                 </thead>
                 <tbody style={{ fontSize: '0.88em' }}>
-                    <tr style={{ textAlign: 'center' }}>
-                        <th scope="row">1</th>
-                        <td style={{ textAlign: 'left' }}>
-                            <a href="#none" onClick={() => setSelectedNotice(1)}>
-                                제목1111111111
-                            </a>
-                        </td>
-                        <td>관리자1</td>
-                        <td>2023.10.19</td>
-                        <td>0</td>
-                        <td>10</td>
-                    </tr>
-                    <tr style={{ textAlign: 'center' }}>
-                        <th scope="row">2</th>
-                        <td style={{ textAlign: 'left' }}>
-                            <a href="#none" onClick={() => setSelectedNotice(1)}>
-                                제목1111111111
-                            </a>
-                        </td>
-                        <td>관리자2</td>
-                        <td>2023.10.19</td>
-                        <td>4</td>
-                        <td>32</td>
-                    </tr>
-                    <tr style={{ textAlign: 'center' }}>
-                        <th scope="row">3</th>
-                        <td style={{ textAlign: 'left' }}>
-                            <a href="#none">제목1111111111</a>
-                        </td>
-                        <td>관리자3</td>
-                        <td>2023.10.19</td>
-                        <td>1</td>
-                        <td>5</td>
-                    </tr>
-                    <tr style={{ textAlign: 'center' }}>
-                        <th scope="row">1</th>
-                        <td style={{ textAlign: 'left' }}>
-                            <a href="#none">제목1111111111</a>
-                        </td>
-                        <td>관리자1</td>
-                        <td>2023.10.19</td>
-                        <td>0</td>
-                        <td>10</td>
-                    </tr>
-                    <tr style={{ textAlign: 'center' }}>
-                        <th scope="row">2</th>
-                        <td style={{ textAlign: 'left' }}>
-                            <a href="#none">제목1111111111</a>
-                        </td>
-                        <td>관리자2</td>
-                        <td>2023.10.19</td>
-                        <td>4</td>
-                        <td>32</td>
-                    </tr>
-                    <tr style={{ textAlign: 'center' }}>
-                        <th scope="row">3</th>
-                        <td style={{ textAlign: 'left' }}>
-                            <a href="#none">제목1111111111</a>
-                        </td>
-                        <td>관리자3</td>
-                        <td>2023.10.19</td>
-                        <td>1</td>
-                        <td>5</td>
-                    </tr>
-                    <tr style={{ textAlign: 'center' }}>
-                        <th scope="row">1</th>
-                        <td style={{ textAlign: 'left' }}>
-                            <a href="#none">제목1111111111</a>
-                        </td>
-                        <td>관리자1</td>
-                        <td>2023.10.19</td>
-                        <td>0</td>
-                        <td>10</td>
-                    </tr>
-                    <tr style={{ textAlign: 'center' }}>
-                        <th scope="row">2</th>
-                        <td style={{ textAlign: 'left' }}>
-                            <a href="#none">제목1111111111</a>
-                        </td>
-                        <td>관리자2</td>
-                        <td>2023.10.19</td>
-                        <td>4</td>
-                        <td>32</td>
-                    </tr>
-                    <tr style={{ textAlign: 'center' }}>
-                        <th scope="row">3</th>
-                        <td style={{ textAlign: 'left' }}>
-                            <a href="#none">제목1111111111</a>
-                        </td>
-                        <td>관리자3</td>
-                        <td>2023.10.19</td>
-                        <td>1</td>
-                        <td>5</td>
-                    </tr>
-                    <tr style={{ textAlign: 'center' }}>
-                        <th scope="row">1</th>
-                        <td style={{ textAlign: 'left' }}>
-                            <a href="#none">제목1111111111</a>
-                        </td>
-                        <td>관리자1</td>
-                        <td>2023.10.19</td>
-                        <td>0</td>
-                        <td>10</td>
-                    </tr>
+                    {isLoading ? (
+                        <tr>
+                            <td>로딩중.....</td>
+                        </tr>
+                    ) : (
+                        (Array.isArray(noticeTable) ? noticeTable : []).map((notice) => (
+                            <tr key={notice.no} style={{ textAlign: 'center' }}>
+                                <td scope="row" style={{ fontWeight: 'bold' }}>
+                                    {notice.no}
+                                </td>
+                                <td style={{ textAlign: 'left' }}>
+                                    <a href="#none">{notice.title}</a>
+                                </td>
+                                <td>{notice.admin_name}</td>
+                                <td>{notice.reg_date.substring(0, 10)}</td>
+                                <td>{notice.attach_cnt}</td>
+                                <td>{notice.hit}</td>
+                            </tr>
+                        ))
+                    )}
                 </tbody>
             </table>
 
             <nav aria-label="Page navigation example" style={{ marginRight: '70px' }}>
                 <ul className="pagination justify-content-center">
                     <li className="page-item">
-                        <a className="page-link" href="#" aria-label="Previous">
+                        <button
+                            className="page-link pagination_btn"
+                            aria-label="Previous"
+                            onClick={() => handlePageChange(currentPage - 1)}
+                        >
                             <span aria-hidden="true">&laquo;</span>
-                        </a>
+                        </button>
                     </li>
-                    <li className="">
-                        <a className="page-link notice_table_page_focus" href="#">
-                            1
-                        </a>
-                    </li>
+                    {isLoading ? (
+                        <div></div>
+                    ) : (
+                        Array.from({ length: totalPages }, (_, i) => (
+                            <li className={`page-item ${i + 1 === currentPage ? 'active' : ''}`} key={i}>
+                                <button className="page-link pagination_btn" onClick={() => handlePageChange(i + 1)}>
+                                    {i + 1}
+                                </button>
+                            </li>
+                        ))
+                    )}
                     <li className="page-item">
-                        <a className="page-link notice_table_page_focus" href="#">
-                            2
-                        </a>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link notice_table_page_focus" href="#">
-                            3
-                        </a>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link notice_table_page_focus" href="#">
-                            4
-                        </a>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link notice_table_page_focus" href="#">
-                            5
-                        </a>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link notice_table_page_focus" href="#">
-                            6
-                        </a>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link notice_table_page_focus" href="#">
-                            7
-                        </a>
-                    </li>
-                    <li className="page-item">
-                        <a className="page-link" href="#" aria-label="Next">
+                        <button
+                            className="page-link pagination_btn"
+                            aria-label="Next"
+                            onClick={() => handlePageChange(currentPage + 1)}
+                        >
                             <span aria-hidden="true">&raquo;</span>
-                        </a>
+                        </button>
                     </li>
                 </ul>
             </nav>

@@ -6,6 +6,7 @@ import adminStateReducer from './slice/adminLoginSlice';
 import tokenReducer from './slice/tokenSlice';
 import userStateReducer from './slice/userLoginSlice';
 import userInfoReducer from './slice/userInfoSlice';
+import noticeIndexReducer from './slice/noticeIndexSlice';
 
 const reducers = combineReducers({
     token: tokenReducer,
@@ -13,13 +14,14 @@ const reducers = combineReducers({
     userInfo: userInfoReducer,
     adminToken: adminTokenReducer,
     adminLogin: adminStateReducer,
+    noticeIndex: noticeIndexReducer,
 });
 
 const persistConfig = {
     key: 'root',
     storage, //storage에 redux 상태값을 저장함
     //persist 시킬 리듀서들을 넣어주기
-    whitelist: ['token', 'adminToken', 'userLogin', 'adminLogin', 'userInfo'],
+    whitelist: ['token', 'adminToken', 'userLogin', 'adminLogin', 'userInfo', 'noticeIndex'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
