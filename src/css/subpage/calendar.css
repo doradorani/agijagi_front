@@ -1,3 +1,7 @@
-.calendar {
-    padding: 0 15px;
+#calendar a {
+    text-decoration: none;
+}
+#calendar a:hover {
+    text-decoration: none;
+    color: #000;
 }
