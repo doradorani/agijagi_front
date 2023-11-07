@@ -41,15 +41,45 @@ const Note = ({ setSelectedDiary }) => {
                     <hr style={{ margin: '25px 0 10px 0', width: '100%' }} />
                     <div className="note_second_wrap flex">
                         <div className="note_select_options">
-                            <div className="note_select_date">
-                                <span className="note_select_title">날짜 &nbsp;</span>
-                                <DatePicker
-                                    dateFormat="yyyy.MM.dd"
-                                    shouldCloseOnSelect
-                                    // minDate={new Date()}
-                                    selected={selectedDate}
-                                    onChange={(date) => setSelectedDate(date)}
-                                />
+                            <div className="note_select_date flex" style={{ justifyContent: 'space-between' }}>
+                                <div>
+                                    <span className="note_select_title">날짜 &nbsp;</span>
+                                    <DatePicker
+                                        dateFormat="yyyy.MM.dd"
+                                        shouldCloseOnSelect
+                                        // minDate={new Date()}
+                                        selected={selectedDate}
+                                        onChange={(date) => setSelectedDate(date)}
+                                    />
+                                </div>
+                                <div>
+                                    <button
+                                        class="btn btn-secondary dropdown-toggle"
+                                        type="button"
+                                        id="dropdownMenu2"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        아이 선택
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                        {/* {(diaryData.childDtos !== null && Array.isArray(diaryData.childDtos)
+                                            ? diaryData.childDtos
+                                            : []
+                                        ).map((idx) => ( */}
+                                        <li>
+                                            <button
+                                                class="dropdown-item"
+                                                type="button"
+                                                // onClick={() => graphClick(idx.no)}
+                                            >
+                                                {/* {idx.name} */}
+                                                김란희
+                                            </button>
+                                        </li>
+                                        {/* ))} */}
+                                    </ul>
+                                </div>
                             </div>
                             <div className="note_input_1 flex">
                                 <div className="note_input_height">

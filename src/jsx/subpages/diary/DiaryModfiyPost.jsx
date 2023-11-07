@@ -3,35 +3,33 @@ import '../../../css/subpage/children.css';
 import ReactDatePicker from 'react-datepicker';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import moment from 'moment';
 
-const ChildrenModifyInfo = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, setRefreshData, diaryData }) => {
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [childname, setchildName] = useState('');
-    const [childImg, setChildImg] = useState(null);
+const DiaryModfiyPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData, methodUrl, setDiaryData }) => {
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [title, setTitle] = useState('');
+    const [img, setImg] = useState(null);
     const [childContent, setChildContent] = useState(null);
+
+    const dateString = diaryData.reg_date;
+    let reg_date;
+    if (dateString) {
+        reg_date = dateString.replace(' ', 'T');
+    }
+
+    const clickHandler = () => {
+        setSelectedDiary(1);
+        setMethodUrl({ method: 'get', url: '/diary/dailyDiary/' + diaryData.cd_no });
+    };
 
     let formData = new FormData();
 
     let data = {};
 
-    const clickHandler = () => {
-        setSelectedDiary(0);
-        setMethodUrl({ method: 'get', url: '/diary/childrenInfo' });
-    };
-
     const handleSubmit = async (event) => {
-        if (childname == '') {
-            data['name'] = diaryData.name;
+        if (title == '') {
+            data['title'] = diaryData.title;
         } else {
-            data['name'] = childname;
-        }
-
-        if (selectedDate == null) {
-            data['birth_date'] = diaryData.birth_date;
-        } else {
-            data['birth_date'] =
-                selectedDate.getFullYear() + '-' + (selectedDate.getMonth() + 1) + '-' + selectedDate.getDate();
+            data['title'] = title;
         }
 
         if (childContent == null) {
@@ -40,8 +38,8 @@ const ChildrenModifyInfo = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, 
             data['content'] = childContent;
         }
 
-        if (childImg != null) {
-            formData.append('file', childImg);
+        if (img != null) {
+            formData.append('file', img);
         }
         formData.append(
             'data',
@@ -52,19 +50,23 @@ const ChildrenModifyInfo = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, 
 
         try {
             setDiaryFormData(formData);
-            setMethodUrl({ method: 'post', url: '/diary/childInfo/' + diaryData.no, url2: '/diary/childrenInfo' });
-            setSelectedDiary(0);
+            setMethodUrl({
+                method: 'post',
+                url: '/diary/dailyDiaryDetail/' + diaryData.cd_no + '/' + diaryData.no,
+                url2: '/diary/dailyDiary/' + diaryData.cd_no,
+            });
+            setSelectedDiary(1);
         } catch (error) {
             console.error('에러:', error);
         }
     };
 
     const handleChange = (e) => {
-        setChildImg(e[0]);
+        setImg(e[0]);
     };
 
     return (
-        <div>
+        <>
             <div
                 className="yg_font"
                 style={{ textAlign: 'right', marginBottom: '20px', marginRight: '10px', cursor: 'pointer' }}
@@ -75,39 +77,38 @@ const ChildrenModifyInfo = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, 
             <div className="children_wrap">
                 <div className="children_container">
                     <div className="children_header">
-                        <div className="children_header_title bold">우리 아이 수정</div>
+                        <div className="children_header_title bold">오늘의 일기 수정</div>
                     </div>
                     <hr style={{ margin: '25px 0 10px 0', width: '100%' }} />
                     <div className="children_second_wrap flex">
                         <div className="children_input flex">
                             <div className="children_input_name">
-                                <span>이름 &nbsp;</span>
+                                <span>제목 &nbsp;</span>
                                 <input
                                     type="text"
-                                    onChange={(e) => setchildName(e.target.value)}
-                                    defaultValue={diaryData.name}
+                                    defaultValue={diaryData.title}
+                                    onChange={(e) => setTitle(e.target.value)}
                                     style={{ border: 'none', backgroundColor: '#f8f9fa', borderRadius: '5px' }}
                                 />
                             </div>
                             <div className="children_select_birth">
-                                <span className="children_select_title">생년월일 &nbsp;</span>
-                                {diaryData.birth_date && (
-                                    <ReactDatePicker
-                                        dateFormat="yyyy.MM.dd"
-                                        shouldCloseOnSelect
-                                        // minDate={new Date()}
-                                        selected={new Date(diaryData.birth_date)}
-                                        onChange={(date) => setSelectedDate(date)}
-                                    />
-                                )}
+                                <span className="children_select_title">날짜 &nbsp;</span>
+                                <ReactDatePicker
+                                    dateFormat="yyyy.MM.dd"
+                                    shouldCloseOnSelect
+                                    // minDate={new Date()}
+                                    selected={new Date(reg_date)}
+                                    onChange={(date) => setSelectedDate(date)}
+                                    readOnly
+                                />
                             </div>
                         </div>
-
                         <div className="">
-                            <div className="children_input_name flex" style={{ margin: ' 0 62px' }}>
-                                <div style={{ height: '200px' }}>설명 &nbsp;</div>
-                                <textarea
+                            <div className="children_input_name" style={{ margin: ' 0 62px' }}>
+                                <span style={{ height: '200px' }}>내용&nbsp;</span>
+                                <input
                                     type="text"
+                                    defaultValue={diaryData.content}
                                     onChange={(e) => setChildContent(e.target.value)}
                                     style={{
                                         width: '500px',
@@ -116,7 +117,6 @@ const ChildrenModifyInfo = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, 
                                         backgroundColor: '#f8f9fa',
                                         borderRadius: '5px',
                                     }}
-                                    defaultValue={diaryData.content}
                                 />
                             </div>
                         </div>
@@ -131,8 +131,6 @@ const ChildrenModifyInfo = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, 
                             </Link>
                         </div>
                         <div className="children_input_image" style={{ marginLeft: '32px', marginBottom: '15px' }}>
-                            {/* <button className="btn btn primary">
-                                아이 사진 등록 */}
                             <input
                                 type="file"
                                 name="아이 사진"
@@ -141,13 +139,12 @@ const ChildrenModifyInfo = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, 
                                 encType="multipart/form-data"
                                 onChange={(e) => handleChange(e.target.files)}
                             />
-                            {/* </button> */}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
-export default ChildrenModifyInfo;
+export default DiaryModfiyPost;

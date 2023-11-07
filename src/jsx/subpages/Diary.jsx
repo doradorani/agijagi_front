@@ -14,20 +14,36 @@ import { Link } from 'react-router-dom';
 import Children from './diary/Children';
 import ChildrenModifyInfo from './diary/ChildrenModifyInfo.jsx';
 import DiaryPost from './diary/DiaryPost.jsx';
+import DiaryModfiyPost from './diary/DiaryModfiyPost.jsx';
+import ScrollToTop from '../ScrollToTop.jsx';
+import userLogin_config from '../../js/api/config/userLogin_config';
 
 const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
     let diaryContents;
     const [diaryData, setDiaryData] = useState();
-    const [methodUrl, setMethodUrl] = useState({ mehtod: 'get', url: '/diary/childrenInfo' });
+    const [methodUrl, setMethodUrl] = useState({ method: 'get', url: '/diary/childrenInfo', url2: '' });
     const [selectedDiary, setSelectedDiary] = useState(0);
     const userLoginDispatch = useDispatch();
     const validationUser = useValidationUser('post', '/user/validate', null);
     const [diaryFormData, setDiaryFormData] = useState(new FormData());
-    const getDiaryData = useValidationUser(methodUrl.mehtod, methodUrl.url, diaryFormData);
+    const getDiaryData = useValidationUser(methodUrl.method, methodUrl.url, diaryFormData, methodUrl.url2);
     const [isLoading, setIsLoading] = useState(false);
     const [refreshData, setRefreshData] = useState(false);
 
-    console.log(selectedSideMenu, selectedDiary);
+    if (!userLogin_config) {
+        setDiaryData(null);
+    }
+
+    const sideMenu = (
+        <SideMenu
+            selectedMenu={1}
+            setSelectedSideMenu={setSelectedSideMenu}
+            setSelectedDiary={setSelectedDiary}
+            setMethodUrl={setMethodUrl}
+            setDiaryData={setDiaryData}
+            methodUrl={methodUrl}
+        />
+    );
 
     const diaryHeader = (select) => {
         return (
@@ -42,8 +58,10 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
             </>
         );
     };
+
     useEffect(() => {
         setDiaryData(null);
+        console.log(methodUrl);
         const getDiary = async () => {
             setIsLoading(true);
             try {
@@ -52,11 +70,12 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                     const diaryResponse = await getDiaryData();
                     setDiaryData(diaryResponse.data);
                 } catch (error) {
-                    console.log('데이터 패칭에러');
+                    console.log('데이터 파싱 에러');
                     console.log(error);
                 }
             } catch (error) {
                 console.log('검증 에러');
+                console.log(error);
                 userLoginDispatch(userStateAction.setState(false));
             } finally {
                 setIsLoading(false);
@@ -73,34 +92,43 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
             //초기 화면
             diaryContents = (
                 <>
-                    {diaryHeader('일기')}
-                    <div>
-                        <div className="go_to_add_child">
-                            <Link
-                                to="/diary"
-                                onClick={() => {
-                                    setSelectedDiary(2);
-                                }}
-                            >
-                                <input type="button" value="아이 등록" className="btn btn-primary" />
-                            </Link>
+                    <div className="post_section">
+                        <ScrollToTop />
+                        {diaryHeader('일기')}
+                        <div>
+                            <div className="go_to_add_child">
+                                <Link
+                                    to="/diary"
+                                    onClick={() => {
+                                        setSelectedDiary(2);
+                                    }}
+                                >
+                                    <input
+                                        type="button"
+                                        value="아이 등록"
+                                        className="btn btn-primary child_register_btn"
+                                    />
+                                </Link>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        {isLoading ? (
-                            <div>로딩중.....</div>
-                        ) : (
-                            (diaryData !== null && Array.isArray(diaryData) ? diaryData : []).map((idx) => (
-                                <DiaryBook
-                                    key={idx}
-                                    img={idx.img}
-                                    name={idx.name}
-                                    no={idx.no}
-                                    setMethodUrl={setMethodUrl}
-                                    setSelectedDiary={setSelectedDiary}
-                                />
-                            ))
-                        )}
+                        <div>
+                            {isLoading ? (
+                                <div>로딩중.....</div>
+                            ) : (
+                                (diaryData !== null && Array.isArray(diaryData) ? diaryData : []).map((idx) => (
+                                    <DiaryBook
+                                        key={idx}
+                                        img={idx.img}
+                                        name={idx.name}
+                                        no={idx.no}
+                                        setMethodUrl={setMethodUrl}
+                                        setSelectedDiary={setSelectedDiary}
+                                        content={idx.content}
+                                        birth_date={idx.birth_date}
+                                    />
+                                ))
+                            )}
+                        </div>
                     </div>
                 </>
             );
@@ -108,33 +136,39 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
             //다이어리 detail
             diaryContents = (
                 <>
-                    {diaryHeader('일기')}
-                    {isLoading ? (
-                        <div>로딩중.....</div>
-                    ) : (
-                        <DiaryBookDetail
-                            setSelectedDiary={setSelectedDiary}
-                            diaryData={diaryData}
-                            setDiaryData={setDiaryData}
-                            setMethodUrl={setMethodUrl}
-                        />
-                    )}
+                    <div className="post_section">
+                        <ScrollToTop />
+                        {diaryHeader('일기')}
+                        {isLoading ? (
+                            <div>로딩중.....</div>
+                        ) : (
+                            <DiaryBookDetail
+                                setSelectedDiary={setSelectedDiary}
+                                diaryData={diaryData}
+                                setDiaryData={setDiaryData}
+                                setMethodUrl={setMethodUrl}
+                            />
+                        )}
+                    </div>
                 </>
             );
         } else if (selectedDiary === 2) {
             //자녀등록
             diaryContents = (
                 <>
-                    {diaryHeader('일기')}
-                    <div className="add_diary_container">
-                        <Children
-                            setMethodUrl={setMethodUrl}
-                            setSelectedDiary={setSelectedDiary}
-                            setIsLoading={setIsLoading}
-                            setDiaryFormData={setDiaryFormData}
-                            setDiaryData={setDiaryData}
-                            setRefreshData={setRefreshData}
-                        />
+                    <div className="post_section">
+                        <ScrollToTop />
+                        {diaryHeader('일기')}
+                        <div className="add_child_container">
+                            <Children
+                                setMethodUrl={setMethodUrl}
+                                setSelectedDiary={setSelectedDiary}
+                                setIsLoading={setIsLoading}
+                                setDiaryFormData={setDiaryFormData}
+                                setDiaryData={setDiaryData}
+                                setRefreshData={setRefreshData}
+                            />
+                        </div>
                     </div>
                 </>
             );
@@ -142,14 +176,18 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
             //일기 작성
             diaryContents = (
                 <>
-                    {diaryHeader('일기')}
-                    <div className="add_diary_container">
-                        <DiaryPost
-                            setMethodUrl={setMethodUrl}
-                            setSelectedDiary={setSelectedDiary}
-                            setDiaryFormData={setDiaryFormData}
-                            setDiaryData={setDiaryData}
-                        />
+                    <div className="post_section">
+                        <ScrollToTop />
+                        {diaryHeader('일기')}
+                        <div className="add_diary_container">
+                            <DiaryPost
+                                setMethodUrl={setMethodUrl}
+                                setSelectedDiary={setSelectedDiary}
+                                setDiaryFormData={setDiaryFormData}
+                                setDiaryData={setDiaryData}
+                                methodUrl={methodUrl}
+                            />
+                        </div>
                     </div>
                 </>
             );
@@ -157,28 +195,69 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
             //자녀수정
             diaryContents = (
                 <>
-                    {diaryHeader('일기')}
-                    <div className="add_child_container">
-                        {diaryData !== null && (
-                            <ChildrenModifyInfo
-                                setMethodUrl={setMethodUrl}
-                                setSelectedDiary={setSelectedDiary}
-                                setIsLoading={setIsLoading}
-                                setDiaryFormData={setDiaryFormData}
-                                diaryData={diaryData}
-                            />
-                        )}
+                    <ScrollToTop />
+                    <div className="post_section">
+                        {diaryHeader('일기')}
+                        <div className="add_child_container">
+                            {diaryData !== null && (
+                                <ChildrenModifyInfo
+                                    setMethodUrl={setMethodUrl}
+                                    setSelectedDiary={setSelectedDiary}
+                                    setIsLoading={setIsLoading}
+                                    setDiaryFormData={setDiaryFormData}
+                                    diaryData={diaryData}
+                                />
+                            )}
+                        </div>
                     </div>
                 </>
             );
         } else if (selectedDiary === 5) {
+            //일기 수정
+            diaryContents = (
+                <>
+                    <ScrollToTop />
+                    <div className="post_section">
+                        {diaryHeader('일기')}
+                        <div className="add_diary_container">
+                            {isLoading ? (
+                                <div>로딩중.....</div>
+                            ) : (
+                                diaryData !== null && (
+                                    <DiaryModfiyPost
+                                        setMethodUrl={setMethodUrl}
+                                        setSelectedDiary={setSelectedDiary}
+                                        setDiaryFormData={setDiaryFormData}
+                                        diaryData={diaryData}
+                                        methodUrl={methodUrl}
+                                        setDiaryData={setDiaryData}
+                                    />
+                                )
+                            )}
+                        </div>
+                    </div>
+                </>
+            );
         }
     } else if (selectedSideMenu === 2) {
         //calendar
         diaryContents = (
             <>
-                {diaryHeader('달력')}
-                <Calendar setSelectedDiary={setSelectedDiary} />
+                <div className="post_section">
+                    {diaryHeader('달력')}
+                    {diaryData == null ? (
+                        <div>로딩중</div>
+                    ) : (
+                        <div className="add_diary_container">
+                            <Calendar
+                                setMethodUrl={setMethodUrl}
+                                setSelectedDiary={setSelectedDiary}
+                                setSelectedSideMenu={setSelectedSideMenu}
+                                diaryData={diaryData}
+                            />
+                        </div>
+                    )}
+                </div>
             </>
         );
     } else if (selectedSideMenu === 3) {
@@ -188,54 +267,60 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
         if (selectedDiary === 0) {
             //그래프
             diaryContents = (
-                <>
+                <div className="post_section">
                     <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
                         <img src="/test_imgs/png/diary1.png" style={{ width: '55px', marginRight: '15px' }} />
                         <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 수첩</div>
-                        {/* <div style={{ fontSize: '20px', display: 'flex', alignItems: 'flex-end', marginBottom: '10px' }}>
-                            &#62;&nbsp;수첩
-                        </div> */}
                     </div>
-                    <Graph setSelectedDiary={setSelectedDiary} />
-                </>
+                    {diaryData !== null && (
+                        <Graph
+                            diaryData={diaryData}
+                            setSelectedDiary={setSelectedDiary}
+                            setMethodUrl={setMethodUrl}
+                            setDiaryData={setDiaryData}
+                        />
+                    )}
+                </div>
             );
         } else if (selectedDiary === 1) {
             //건강정보 등록
             diaryContents = (
-                <>
+                <div className="post_section">
                     <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
                         <img src="/test_imgs/png/diary1.png" style={{ width: '55px', marginRight: '15px' }} />
                         <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 수첩</div>
                     </div>
-                    <Note setSelectedDiary={setSelectedDiary} />
-                </>
+                    <Note
+                        diaryData={diaryData}
+                        setSelectedDiary={setSelectedDiary}
+                        setMethodUrl={setMethodUrl}
+                        setDiaryData={setDiaryData}
+                    />
+                </div>
             );
         }
     }
 
     return (
-        <div className="diary_wrap">
-            <div>
-                <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg" />
-            </div>
-            <div className="diary_flex">
-                <SideMenu
-                    selectedMenu={1}
-                    setSelectedSideMenu={setSelectedSideMenu}
-                    setSelectedDiary={setSelectedDiary}
-                    setMethodUrl={setMethodUrl}
-                />
-                <div className="post_section">{diaryContents}</div>
+        <>
+            <div className="diary_wrap">
                 <div>
+                    <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg" />
+                </div>
+                <div className="diary_flex">
+                    {sideMenu}
+                    {diaryContents}
                     <div>
-                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                    </div>
-                    <div>
-                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                        <div>
+                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                        </div>
+                        <div>
+                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 export default Diary;

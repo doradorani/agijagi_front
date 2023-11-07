@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { tokenAction } from './redux_store/slice/tokenSlice';
 import token_config from './config/token_config';
 import moment from 'moment/moment';
-import userLogin_config from './config/userLogin_config';
 
-export function useValidationUser(method, url, formData) {
+export function useValidationUser(method, url, formData, url2) {
     const tokenDispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -17,12 +16,17 @@ export function useValidationUser(method, url, formData) {
             // HTTP 메소드에 따라 다른 Axios 메서드를 호출
             if (method === 'post') {
                 response = await TokenApi.post(url, formData);
+                if (url2 !== undefined && url2 !== '') {
+                    response = await TokenApi.get(url2);
+                }
             } else if (method === 'delete') {
                 response = await TokenApi.delete(url);
+                response = await TokenApi.get(url2);
             } else if (method === 'get') {
                 response = await TokenApi.get(url);
             } else if (method === 'put') {
                 response = await TokenApi.put(url, formData);
+                response = await TokenApi.get(url2);
             } else {
                 throw new Error('올바르지 않은 HTTP 메소드');
             }

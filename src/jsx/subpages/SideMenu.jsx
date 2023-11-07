@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../css/common/sidemenu.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { useValidationUser } from '../../js/api/ValidationApi';
 
 const SideMenu = ({
     selectedMenu,
     setSelectedSideMenu,
     setSelectedNotice,
-    setMethodUrl,
     setSelectedDiary,
     deleteAllContent,
+    setDiaryData,
+    setMethodUrl,
+    methodUrl,
 }) => {
     let menuContent;
 
@@ -18,42 +21,50 @@ const SideMenu = ({
         setSelectedNotice(0);
     };
 
-    const selectDiaryClicklHandler = (index1, url) => {
-        setMethodUrl('get', url);
-        setSelectedSideMenu(index1);
+    const selectDiaryClicklHandler = (index, gotoUrl) => {
+        setMethodUrl({ method: 'get', url: gotoUrl });
+        setSelectedSideMenu(index);
         setSelectedDiary(0);
     };
 
     if (selectedMenu === 1) {
         menuContent = (
-            <div>
-                <div className="side_menu_btn" onClick={() => selectDiaryClicklHandler(1, '/diary/childrenInfo')}>
-                    <img src="/test_imgs/png/diary3.png" style={{ width: '45px', marginRight: '15px' }} />
-                    육아 일기
-                </div>
+            <>
                 <div>
+                    <div className="side_menu_btn" onClick={() => selectDiaryClicklHandler(1, '/diary/childrenInfo')}>
+                        <img src="/test_imgs/png/diary3.png" style={{ width: '45px', marginRight: '15px' }} />
+                        육아 일기
+                    </div>
+                    <div>
+                        <div
+                            className="side_menu_sub_btn"
+                            onClick={() => selectDiaryClicklHandler(1, '/diary/childrenInfo')}
+                        >
+                            - 일기
+                        </div>
+                        <div
+                            className="side_menu_sub_btn"
+                            onClick={() => selectDiaryClicklHandler(2, '/diary/dailyDiaries')}
+                        >
+                            - 달력
+                        </div>
+                        <div
+                            className="side_menu_sub_btn"
+                            onClick={() => selectDiaryClicklHandler(3, '/user/validate')}
+                        >
+                            - 앨범
+                        </div>
+                    </div>
                     <div
-                        className="side_menu_sub_btn"
-                        onClick={() => selectDiaryClicklHandler(1, '/diary/childrenInfo')}
+                        className="side_menu_btn"
+                        style={{ marginTop: '15px' }}
+                        onClick={() => selectDiaryClicklHandler(4, '/childHealth/childNotes/0')}
                     >
-                        - 일기
-                    </div>
-                    <div className="side_menu_sub_btn" onClick={() => selectDiaryClicklHandler(2, '/user/validate')}>
-                        - 달력
-                    </div>
-                    <div className="side_menu_sub_btn" onClick={() => selectDiaryClicklHandler(3, '/user/validate')}>
-                        - 앨범
+                        <img src="/test_imgs/png/diary1.png" style={{ width: '45px', marginRight: '15px' }} />
+                        육아 수첩
                     </div>
                 </div>
-                <div
-                    className="side_menu_btn"
-                    style={{ marginTop: '15px' }}
-                    onClick={() => selectDiaryClicklHandler(4, '/user/validate')}
-                >
-                    <img src="/test_imgs/png/diary1.png" style={{ width: '45px', marginRight: '15px' }} />
-                    육아 수첩
-                </div>
-            </div>
+            </>
         );
     } else if (selectedMenu === 2) {
         menuContent = (

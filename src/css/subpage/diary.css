@@ -39,3 +39,7 @@
 .diary_img_in_page {
     height: 50%;
 }
+
+.child_register_btn {
+    float: right !important;
+}

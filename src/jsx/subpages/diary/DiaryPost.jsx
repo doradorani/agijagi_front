@@ -4,21 +4,26 @@ import ReactDatePicker from 'react-datepicker';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
-const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData }) => {
+const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData, methodUrl }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const [name, setName] = useState('');
+    const [title, setTitle] = useState('');
     const [img, setImg] = useState(null);
     const [childContent, setChildContent] = useState(null);
-    const [isFirstUpdateDone, setIsFirstUpdateDone] = useState(false);
 
     let formData = new FormData();
 
     let data;
 
+    const clickHandler = () => {
+        setSelectedDiary(1);
+        setMethodUrl({ method: 'get', url: '/diary/childrenInfo' });
+    };
+
     const handleSubmit = async (event) => {
         data = {
-            name: name,
+            title: title,
             birth_date: selectedDate.getFullYear() + '-' + (selectedDate.getMonth() + 1) + '-' + selectedDate.getDate(),
+            content: childContent,
         };
         formData.append('file', img);
         formData.append(
@@ -30,22 +35,16 @@ const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData
 
         try {
             setDiaryFormData(formData);
-            setMethodUrl({ mehtod: 'post', url: '/diary/dailyDiary' + diaryData.no });
-            setSelectedDiary(0);
-            // setIsFirstUpdateDone(true);
-            // setRefreshData((prev) => !prev);
+            setMethodUrl({
+                method: 'post',
+                url: '/diary/dailyDiary/' + methodUrl.url.split('/')[3],
+                url2: '/diary/dailyDiary/' + methodUrl.url.split('/')[3],
+            });
+            setSelectedDiary(1);
         } catch (error) {
             console.error('에러:', error);
         }
     };
-
-    // useEffect(() => {
-    //     if (isFirstUpdateDone) {
-    //         setMethodUrl({ method: 'get', url: '/diary/childrenInfo' });
-    //         setSelectedDiary(0);
-    //         setIsFirstUpdateDone(false);
-    //     }
-    // }, [isFirstUpdateDone]);
 
     const handleChange = (e) => {
         setImg(e[0]);
@@ -53,6 +52,13 @@ const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData
 
     return (
         <>
+            <div
+                className="yg_font"
+                style={{ textAlign: 'right', marginBottom: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onClick={clickHandler}
+            >
+                &#60;&nbsp;뒤로가기
+            </div>
             <div className="children_wrap">
                 <div className="children_container">
                     <div className="children_header">
@@ -63,7 +69,11 @@ const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData
                         <div className="children_input flex">
                             <div className="children_input_name">
                                 <span>제목 &nbsp;</span>
-                                <input type="text" onChange={(e) => setName(e.target.value)} />
+                                <input
+                                    type="text"
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    style={{ border: 'none', backgroundColor: '#f8f9fa', borderRadius: '5px' }}
+                                />
                             </div>
                             <div className="children_select_birth">
                                 <span className="children_select_title">날짜 &nbsp;</span>
@@ -77,27 +87,23 @@ const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData
                                 />
                             </div>
                         </div>
-                        <div className="children_input_image">
-                            {/* <button className="btn btn primary">
-                                아이 사진 등록 */}
-                            <input
-                                type="file"
-                                name="아이 사진"
-                                id="children_input_image"
-                                accept="image/png, image/jpeg, image/jpg"
-                                encType="multipart/form-data"
-                                onChange={(e) => handleChange(e.target.files)}
-                            />
-                            {/* </button> */}
-                        </div>
-
                         <div className="">
-                            <div className="children_input_name">
-                                <span>내용&nbsp;</span>
-                                <input type="text" onChange={(e) => setChildContent(e.target.value)} />
+                            <div className="children_input_name" style={{ margin: ' 0 62px' }}>
+                                <span style={{ height: '200px' }}>내용&nbsp;</span>
+                                <input
+                                    type="text"
+                                    onChange={(e) => setChildContent(e.target.value)}
+                                    style={{
+                                        width: '500px',
+                                        minHeight: '200px',
+                                        border: 'none',
+                                        backgroundColor: '#f8f9fa',
+                                        borderRadius: '5px',
+                                    }}
+                                />
                             </div>
                         </div>
-                        <div className="children_submit_button">
+                        <div className="children_submit_button" style={{ marginTop: '30px', marginRight: '20px' }}>
                             <Link to="/diary">
                                 <input
                                     type="submit"
@@ -106,6 +112,16 @@ const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData
                                     onClick={handleSubmit}
                                 />
                             </Link>
+                        </div>
+                        <div className="children_input_image" style={{ marginLeft: '32px', marginBottom: '15px' }}>
+                            <input
+                                type="file"
+                                name="아이 사진"
+                                id="children_input_image"
+                                accept="image/png, image/jpeg, image/jpg"
+                                encType="multipart/form-data"
+                                onChange={(e) => handleChange(e.target.files)}
+                            />
                         </div>
                     </div>
                 </div>

@@ -17,13 +17,14 @@ const Children = ({ setMethodUrl, setSelectedDiary, setDiaryFormData }) => {
 
     const clickHandler = () => {
         setSelectedDiary(0);
-        setMethodUrl({ mehtod: 'get', url: '/diary/childrenInfo' });
+        setMethodUrl({ method: 'get', url: '/diary/childrenInfo' });
     };
 
     const handleSubmit = async (event) => {
         data = {
             name: name,
             birth_date: selectedDate.getFullYear() + '-' + (selectedDate.getMonth() + 1) + '-' + selectedDate.getDate(),
+            content: childContent,
         };
         formData.append('file', img);
         formData.append(
@@ -35,7 +36,7 @@ const Children = ({ setMethodUrl, setSelectedDiary, setDiaryFormData }) => {
 
         try {
             setDiaryFormData(formData);
-            setMethodUrl({ mehtod: 'post', url: '/diary/childInfo' });
+            setMethodUrl({ method: 'post', url: '/diary/childInfo', url2: '/diary/childrenInfo' });
             setSelectedDiary(0);
             // setIsFirstUpdateDone(true);
             // setRefreshData((prev) => !prev);
@@ -61,7 +62,7 @@ const Children = ({ setMethodUrl, setSelectedDiary, setDiaryFormData }) => {
             <div>
                 <div
                     className="yg_font"
-                    style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '10px', cursor: 'pointer' }}
+                    style={{ textAlign: 'right', marginBottom: '20px', marginRight: '10px', cursor: 'pointer' }}
                     onClick={clickHandler}
                 >
                     &#60;&nbsp;뒤로가기
@@ -76,7 +77,11 @@ const Children = ({ setMethodUrl, setSelectedDiary, setDiaryFormData }) => {
                             <div className="children_input flex">
                                 <div className="children_input_name">
                                     <span>이름 &nbsp;</span>
-                                    <input type="text" onChange={(e) => setName(e.target.value)} />
+                                    <input
+                                        type="text"
+                                        onChange={(e) => setName(e.target.value)}
+                                        style={{ border: 'none', backgroundColor: '#f8f9fa', borderRadius: '5px' }}
+                                    />
                                 </div>
                                 <div className="children_select_birth">
                                     <span className="children_select_title">생년월일 &nbsp;</span>
@@ -89,7 +94,34 @@ const Children = ({ setMethodUrl, setSelectedDiary, setDiaryFormData }) => {
                                     />
                                 </div>
                             </div>
-                            <div className="children_input_image">
+
+                            <div className="">
+                                <div className="children_input_name flex" style={{ margin: ' 0 62px' }}>
+                                    <div style={{ height: '200px' }}>설명 &nbsp;</div>
+                                    <textarea
+                                        type="text"
+                                        onChange={(e) => setChildContent(e.target.value)}
+                                        style={{
+                                            width: '500px',
+                                            minHeight: '200px',
+                                            border: 'none',
+                                            backgroundColor: '#f8f9fa',
+                                            borderRadius: '5px',
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="children_submit_button" style={{ marginTop: '30px', marginRight: '20px' }}>
+                                <Link to="/diary">
+                                    <input
+                                        type="submit"
+                                        value={'등록'}
+                                        className="btn btn-primary"
+                                        onClick={handleSubmit}
+                                    />
+                                </Link>
+                            </div>
+                            <div className="children_input_image" style={{ marginLeft: '32px', marginBottom: '15px' }}>
                                 {/* <button className="btn btn primary">
                                 아이 사진 등록 */}
                                 <input
@@ -101,23 +133,6 @@ const Children = ({ setMethodUrl, setSelectedDiary, setDiaryFormData }) => {
                                     onChange={(e) => handleChange(e.target.files)}
                                 />
                                 {/* </button> */}
-                            </div>
-
-                            <div className="">
-                                <div className="children_input_name">
-                                    <span>설명 &nbsp;</span>
-                                    <input type="text" onChange={(e) => setChildContent(e.target.value)} />
-                                </div>
-                            </div>
-                            <div className="children_submit_button">
-                                <Link to="/diary">
-                                    <input
-                                        type="submit"
-                                        value={'등록'}
-                                        className="btn btn-primary"
-                                        onClick={handleSubmit}
-                                    />
-                                </Link>
                             </div>
                         </div>
                     </div>

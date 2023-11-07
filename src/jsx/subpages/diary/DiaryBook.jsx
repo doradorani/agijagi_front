@@ -2,17 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../../css/subpage/diaryBook.css';
 
-const DiaryBook = ({ setSelectedDiary, img, name, no, setMethodUrl }) => {
+const DiaryBook = ({ setSelectedDiary, img, name, no, setMethodUrl, content, birth_date }) => {
     const clickGoToHandler = () => {
-        setMethodUrl({ mehtod: 'get', url: '/diary/dailyDiary/' + no });
+        setMethodUrl({ method: 'get', url: '/diary/dailyDiary/' + no });
         setSelectedDiary(1);
     };
     const clickModifyHandler = () => {
-        setMethodUrl({ mehtod: 'get', url: '/diary/childrenDetail/' + no });
+        setMethodUrl({ method: 'get', url: '/diary/childrenDetail/' + no });
         setSelectedDiary(4);
     };
     const clickDeleteHandler = () => {
-        setMethodUrl({ mehtod: 'delete', url: '/diary/childBook/' + no });
+        setMethodUrl({ method: 'delete', url: '/diary/childBook/' + no, url2: '/diary/childrenInfo' });
         setSelectedDiary(0);
     };
 
@@ -59,11 +59,8 @@ const DiaryBook = ({ setSelectedDiary, img, name, no, setMethodUrl }) => {
                         </ul>
                         <figcaption>
                             <h2>{name} 육아일기</h2>
-                            <span>세환 ♥ 영주</span>
-                            <p>
-                                The web is an ever-changing medium whose scope, application, audience and platform
-                                continue to grow on a daily basis.{' '}
-                            </p>
+                            <span>생일 : {birth_date}</span>
+                            <p>{content}</p>
                         </figcaption>
                     </figure>
                 </li>
