@@ -9,19 +9,22 @@ import PostReport from './subpages/community/PostReport';
 import CommentReport from './subpages/community/CommentReport';
 import AdminCoBuyingList from './subpages/co-buying/AdminCo-BuyingList';
 import ScrollToTop from '../ScrollToTop';
-import WriteNotice from '../subpages/noticeboard/WriteNotice';
+import Footer from '../Footer';
+import AdminLogin from './AdminLogin';
+import WriteNotice from './subpages/noticeboard/WriteNotice';
 import { useValidationAdmin } from '../../js/api/admin/ValidationAdminApi';
 
 import '../../css/common/adminCommon.css';
 import RegistProduct from './subpages/co-buying/RegistProduct';
 import DetailNotice from '../subpages/noticeboard/DetailNotice';
-import AdminCoBuyingDetail from './subpages/co-buying/AdminCoBuyingDetail';
+import AdminDetailNotice from './subpages/noticeboard/AdminDetailNotice';
+import ModifyNotice from './subpages/noticeboard/ModifyNotice';
 
 const AdminHome = () => {
     const [adminData, setAdminData] = useState();
     const [isSidebarCollapsed, setisSidebarCollapsed] = useState(true);
     const navigate = useNavigate();
-    const validationAdmin = useValidationAdmin('post', '/admin/validate');
+    const validationAdmin = useValidationAdmin('post', '/admin/home');
     useEffect(() => {
         async function validateAdmin() {
             try {
@@ -40,21 +43,21 @@ const AdminHome = () => {
         <>
             <ScrollToTop />
             <AdminHeader />
-            <div className='admin_container'>
+            <div className="admin_container">
                 <AdminSidbar isSidebarCollapsed={isSidebarCollapsed} setisSidebarCollapsed={setisSidebarCollapsed} />
-                <div className='admin_content_section_wrap'>
+                <div className="admin_content_section_wrap">
                     <Routes>
                         {/* <Route path="/user_suspended" element={<UserSuspended selectedMenu={selectedMenu} />}></Route> */}
-                        <Route path='/user_suspended' element={<UserSuspended />}></Route>
-                        <Route path='/admin_authorization' element={<AdminAuthorization />}></Route>
-                        <Route path='/admin_notice' element={<AdminNoticeList />}></Route>
-                        <Route path='/admin_notice_detail' element={<DetailNotice />}></Route>
-                        <Route path='/write_admin_notice' element={<WriteNotice />}></Route>
-                        <Route path='/post_report' element={<PostReport />}></Route>
-                        <Route path='/comment_report' element={<CommentReport />}></Route>
-                        <Route path='/co-buying_list' element={<AdminCoBuyingList />}></Route>
-                        <Route path='/regist_product' element={<RegistProduct />}></Route>
-                        <Route path='/co-buying_detail' element={<AdminCoBuyingDetail />}></Route>
+                        <Route path="/user_suspended" element={<UserSuspended />}></Route>
+                        <Route path="/admin_authorization" element={<AdminAuthorization />}></Route>
+                        <Route path="/admin_notice" element={<AdminNoticeList />}></Route>
+                        <Route path="/admin_notice_detail" element={<AdminDetailNotice />}></Route>
+                        <Route path="/write_admin_notice" element={<WriteNotice />}></Route>
+                        <Route path="/modify_admin_notice" element={<ModifyNotice />}></Route>
+                        <Route path="/post_report" element={<PostReport />}></Route>
+                        <Route path="/comment_report" element={<CommentReport />}></Route>
+                        <Route path="/co-buying_list" element={<AdminCoBuyingList />}></Route>
+                        <Route path="/regist_product" element={<RegistProduct />}></Route>
                     </Routes>
                 </div>
             </div>

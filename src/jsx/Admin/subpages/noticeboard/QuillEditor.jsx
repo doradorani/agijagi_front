@@ -69,7 +69,15 @@ const modules = {
     },
 };
 
-const QuillEditor = ({ placeholder, value, noticeContent, setNoticeContent, ...rest }) => {
+const QuillEditor = ({
+    placeholder,
+    value,
+    noticeContent,
+    setNoticeContent,
+    editorContent,
+    setEditorContent,
+    ...rest
+}) => {
     // quill 에디터 컴포넌트 ref
     const quillRef = useRef(null);
 
@@ -95,22 +103,23 @@ const QuillEditor = ({ placeholder, value, noticeContent, setNoticeContent, ...r
         }
     }, []);
 
-    const addNoticeContent = (e) => {
-        setNoticeContent(e.target.value);
-        console.log(noticeContent);
-    };
+    // const addNoticeContent = (e) => {
+    //     setNoticeContent(e.target.value);
+    //     console.log(noticeContent);
+    // };
 
     return (
         // 테마 (bubble, snow, custom) https://quilljs.com/docs/themes/
         <ReactQuill
+            id="writeNoticeContent"
             style={{ height: '450px', marginBottom: '75px' }}
             {...rest}
             placeholder={placeholder}
             theme="snow"
             modules={modules}
             formats={formats}
-            value={noticeContent || ''}
-            onChange={(e) => setNoticeContent(e)}
+            value={editorContent || ''}
+            onChange={(e) => setEditorContent(e)}
         ></ReactQuill>
     );
 };

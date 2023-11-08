@@ -3,7 +3,7 @@ import SideMenu from './SideMenu';
 import NoticeTable from './noticeboard/NoticeTable';
 import '../../css/subpage/notice.css';
 import DetailNotice from './noticeboard/DetailNotice';
-import WriteNotice from './noticeboard/WriteNotice';
+import WriteNotice from '../Admin/subpages/noticeboard/WriteNotice';
 
 const Notice = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, selectedNotice, setSelectedNotice }) => {
     let noticeContents;

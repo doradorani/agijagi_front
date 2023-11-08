@@ -32,6 +32,13 @@ li {
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body::-webkit-scrollbar {
     width: 10px; /* 스크롤바의 너비 */
 }
@@ -50,6 +57,15 @@ body::-webkit-scrollbar-track {
 .yg_font {
     font-family: 'yg-jalnan';
 }
+
+.nn_font {
+    font-family: 'NanumSquareRound';
+}
+
+/* .nn_font_bold {
+    font-family: 'NanumSquareRound';
+    font-weight: bold;
+} */
 
 .btn {
     font-family: 'yg-jalnan';
