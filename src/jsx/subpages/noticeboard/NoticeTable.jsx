@@ -74,7 +74,7 @@ const NoticeTable = ({ setSelectedNotice }) => {
                 <tbody style={{ fontSize: '0.88em' }}>
                     {isLoading ? (
                         <tr>
-                            <td>로딩중.....</td>
+                            <td colSpan={6}>로딩중.....</td>
                         </tr>
                     ) : (
                         (Array.isArray(noticeTable) ? noticeTable : []).map((notice) => (
