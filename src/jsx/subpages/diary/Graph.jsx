@@ -90,19 +90,27 @@ const Graph = ({ setSelectedDiary, diaryData, setMethodUrl, setDiaryData }) => {
               }
             : null;
 
+    const goToWirteClick = () => {
+        setMethodUrl({ method: 'get', url: '/diary/childrenInfo' });
+        setSelectedDiary(1);
+    };
+
     return (
         <div className="diary_wrap">
             <div className="diary_second_wrap">
                 <div className="diary_section" style={{ width: '100%' }}>
                     <div className="diary_section_header flex" style={{ margin: '10px 0' }}>
                         <p className="yg_font" style={{ fontSize: '2rem' }}>
-                            우리 아이 성장 기록
+                            {graphData.length > 0 && Array.isArray(graphData)
+                                ? '우리 ' + graphData[0].cd_name
+                                : '우리 아이'}{' '}
+                            성장 기록
                         </p>
                         <div className="go_to_write_health_note" style={{ margin: 'auto 0' }}>
                             <Link
                                 to="/diary"
                                 onClick={() => {
-                                    setSelectedDiary(1);
+                                    goToWirteClick();
                                 }}
                             >
                                 <input type="button" value="오늘의 건강 기록 작성" className="btn btn-primary" />
@@ -118,7 +126,7 @@ const Graph = ({ setSelectedDiary, diaryData, setMethodUrl, setDiaryData }) => {
                             aria-expanded="false"
                             style={{ float: 'right' }}
                         >
-                            아이 선택
+                            {graphData.length > 0 && Array.isArray(graphData) ? graphData[0].cd_name : '아이 선택'}
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                             {(diaryData.childDtos !== null && Array.isArray(diaryData.childDtos)
@@ -139,7 +147,14 @@ const Graph = ({ setSelectedDiary, diaryData, setMethodUrl, setDiaryData }) => {
                                 <Line type="line" data={data} />
                             </Container>
                         ) : (
-                            <div></div>
+                            <div
+                                className="yg_font bold"
+                                style={{ width: '90vw', maxWidth: '800px', textAlign: 'center' }}
+                            >
+                                <span style={{ lineHeight: '250px', height: '250px' }}>
+                                    아이를 선택해주시거나 건강 기록을 작성해주세요
+                                </span>
+                            </div>
                         )}
                     </div>
                 </div>

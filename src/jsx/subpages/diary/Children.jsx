@@ -9,7 +9,6 @@ const Children = ({ setMethodUrl, setSelectedDiary, setDiaryFormData }) => {
     const [name, setName] = useState('');
     const [img, setImg] = useState(null);
     const [childContent, setChildContent] = useState(null);
-    const [isFirstUpdateDone, setIsFirstUpdateDone] = useState(false);
 
     let formData = new FormData();
 
@@ -38,21 +37,10 @@ const Children = ({ setMethodUrl, setSelectedDiary, setDiaryFormData }) => {
             setDiaryFormData(formData);
             setMethodUrl({ method: 'post', url: '/diary/childInfo', url2: '/diary/childrenInfo' });
             setSelectedDiary(0);
-            // setIsFirstUpdateDone(true);
-            // setRefreshData((prev) => !prev);
         } catch (error) {
             console.error('에러:', error);
         }
     };
-
-    // useEffect(() => {
-    //     if (isFirstUpdateDone) {
-    //         setMethodUrl({ method: 'get', url: '/diary/childrenInfo' });
-    //         setSelectedDiary(0);
-    //         setIsFirstUpdateDone(false);
-    //     }
-    // }, [isFirstUpdateDone]);
-
     const handleChange = (e) => {
         setImg(e[0]);
     };
@@ -94,7 +82,6 @@ const Children = ({ setMethodUrl, setSelectedDiary, setDiaryFormData }) => {
                                     />
                                 </div>
                             </div>
-
                             <div className="">
                                 <div className="children_input_name flex" style={{ margin: ' 0 62px' }}>
                                     <div style={{ height: '200px' }}>설명 &nbsp;</div>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import '../../../css/subpage/children.css';
 import ReactDatePicker from 'react-datepicker';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 
 const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData, methodUrl }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -16,7 +15,7 @@ const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData
 
     const clickHandler = () => {
         setSelectedDiary(1);
-        setMethodUrl({ method: 'get', url: '/diary/childrenInfo' });
+        setMethodUrl({ method: 'get', url: '/diary/dailyDiary/' + methodUrl.url.split('/')[3] });
     };
 
     const handleSubmit = async (event) => {
