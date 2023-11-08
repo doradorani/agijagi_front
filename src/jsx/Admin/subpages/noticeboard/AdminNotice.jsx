@@ -7,9 +7,12 @@ import { useValidationAdmin } from '../../../../js/api/admin/ValidationAdminApi'
 import { useDispatch } from 'react-redux';
 import { adminStateAction } from '../../../../js/api/redux_store/slice/adminLoginSlice';
 // import { noticeIndexAction } from '../../../../js/api/redux_store/slice/noticeIndexSlice';
-// import noticeIndex_config from '../../../../js/api/config/noticeIndex_config';
+import noticeIndex_config from '../../../../js/api/config/noticeIndex_config';
 // import { useParams } from 'react-router-dom';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
+import { noticeIndexAction } from '../../../../js/api/redux_store/slice/noticeIndexSlice';
+import { Link, unstable_HistoryRouter, useNavigate } from 'react-router-dom';
+import ModifyNotice from './ModifyNotice';
 
 const AdminNoticeList = ({ setSelectedSideMenu }) => {
     const [noticeTable, setNoticeTable] = useState([]);
@@ -21,6 +24,7 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
     // const [noticeIndex, setNoticeIndex] = useState(0);
     const [isRefresh, setIsRefresh] = useState(0);
     // let { noticeIndex } = useParams();
+    const nav = useNavigate();
 
     // const noticeIndexDispatch = useDispatch();
     // noticeIndex = noticeIndex_config.noticeIndexState;
@@ -36,6 +40,8 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
     );
 
     const validationAdminForDeleteNotice = useValidationAdminItem();
+    const validationAdminNotice = useValidationAdminItem();
+    const noticeIndexDispatch = useDispatch();
 
     // const validationAdminForMoveDetail = useValidationAdmin(
     //     'get',
@@ -70,7 +76,7 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
         }
     };
 
-    const deleteNotice = async (notice, currentPage) => {
+    const deleteNotice = async (notice) => {
         try {
             setIsLoading(true);
             const noticeIndex = notice.no;
@@ -104,8 +110,17 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
     };
 
     const moveToDetail = async (notice) => {
-        // noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(notice.no));
-        //navigator('/admin/admin_notice_detail');
+        console.log('moveToDetail CALLED!!');
+        noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(notice.no));
+
+        nav('/admin/admin_notice_detail');
+    };
+
+    const moveToModify = async (notice) => {
+        console.log('moveToModify CALLED!!');
+        noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(notice.no));
+
+        nav('/admin/modify_admin_notice');
     };
 
     return (
@@ -118,7 +133,7 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                 </div>
                 <div className="admin_authorization_second_wrap">
                     <table
-                        className="admin_authorization table table-striped table-hover"
+                        className="admin_authorization table table-striped table-hover nn_font"
                         style={{ marginTop: '15px' }}
                     >
                         <thead>
@@ -137,18 +152,16 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                         <tbody>
                             {isLoading ? (
                                 <tr>
-                                    <td>로딩중.....</td>
+                                    <td colSpan={9}>로딩중.....</td>
                                 </tr>
                             ) : (
                                 (Array.isArray(noticeTable) ? noticeTable : []).map((notice) => (
                                     <tr key={notice.no}>
                                         <td>{notice.no}</td>
-                                        <td style={{ textAlign: 'left' }}>
-                                            <a href="#none" onClick={() => moveToDetail(notice)}>
-                                                {notice.title}
-                                            </a>
+                                        <td className="nn_font bold" style={{ textAlign: 'left' }}>
+                                            <a onClick={() => moveToDetail(notice)}>{notice.title}</a>
                                         </td>
-                                        <td>{notice.admin_no}</td>
+                                        <td>{notice.admin_id}</td>
                                         <td>{notice.attach_cnt}</td>
                                         <td>{notice.hit}</td>
                                         <td>{notice.reg_date.substring(0, 10)}</td>
@@ -159,17 +172,35 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                                                 paddingTop: '4px',
                                             }}
                                         >
-                                            <button
-                                                type="button"
-                                                className="btn btn-light"
-                                                style={{
-                                                    fontFamily: 'malgun gothic',
-                                                    margin: '0',
-                                                    padding: '3px 7px ',
-                                                }}
-                                            >
-                                                수정하기
-                                            </button>
+                                            {notice.status === 0 ? (
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-light "
+                                                    disabled
+                                                    style={{
+                                                        fontFamily: 'malgun gothic',
+                                                        margin: '0',
+                                                        padding: '3px 7px ',
+                                                    }}
+                                                >
+                                                    수정하기
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-light "
+                                                    style={{
+                                                        fontFamily: 'malgun gothic',
+                                                        margin: '0',
+                                                        padding: '3px 7px ',
+                                                    }}
+                                                    onClick={() => {
+                                                        moveToModify(notice);
+                                                    }}
+                                                >
+                                                    수정하기
+                                                </button>
+                                            )}
                                         </td>
                                         <td style={{ textAlign: 'center', padding: '0px', paddingTop: '4px' }}>
                                             <a>
@@ -196,7 +227,7 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                                                             padding: '3px 7px ',
                                                         }}
                                                         onClick={() => {
-                                                            deleteNotice(notice, currentPage);
+                                                            deleteNotice(notice);
                                                         }}
                                                     >
                                                         삭제하기

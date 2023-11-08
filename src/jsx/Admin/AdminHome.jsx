@@ -11,12 +11,14 @@ import AdminCoBuyingList from './subpages/co-buying/AdminCo-BuyingList';
 import ScrollToTop from '../ScrollToTop';
 import Footer from '../Footer';
 import AdminLogin from './AdminLogin';
-import WriteNotice from '../subpages/noticeboard/WriteNotice';
+import WriteNotice from './subpages/noticeboard/WriteNotice';
 import { useValidationAdmin } from '../../js/api/admin/ValidationAdminApi';
 
 import '../../css/common/adminCommon.css';
 import RegistProduct from './subpages/co-buying/RegistProduct';
 import DetailNotice from '../subpages/noticeboard/DetailNotice';
+import AdminDetailNotice from './subpages/noticeboard/AdminDetailNotice';
+import ModifyNotice from './subpages/noticeboard/ModifyNotice';
 
 const AdminHome = () => {
     const [adminData, setAdminData] = useState();
@@ -49,8 +51,9 @@ const AdminHome = () => {
                         <Route path="/user_suspended" element={<UserSuspended />}></Route>
                         <Route path="/admin_authorization" element={<AdminAuthorization />}></Route>
                         <Route path="/admin_notice" element={<AdminNoticeList />}></Route>
-                        <Route path="/admin_notice_detail" element={<DetailNotice />}></Route>
+                        <Route path="/admin_notice_detail" element={<AdminDetailNotice />}></Route>
                         <Route path="/write_admin_notice" element={<WriteNotice />}></Route>
+                        <Route path="/modify_admin_notice" element={<ModifyNotice />}></Route>
                         <Route path="/post_report" element={<PostReport />}></Route>
                         <Route path="/comment_report" element={<CommentReport />}></Route>
                         <Route path="/co-buying_list" element={<AdminCoBuyingList />}></Route>
