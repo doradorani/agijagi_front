@@ -90,12 +90,20 @@
     animation: progress 3s ease forwards;
 }
 
-@keyframes progress {
+/* @keyframes progress {
     0% {
         width: 0px;
     }
     100% {
         width: 100%;
+    }
+} */
+@keyframes progress {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: var(--progressPercent, 0%);
     }
 }
 .progress {

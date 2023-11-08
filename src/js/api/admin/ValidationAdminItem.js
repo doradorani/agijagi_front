@@ -46,7 +46,7 @@ export function useValidationAdminItem() {
             } else {
                 // 다른 오류 처리
                 console.error('Error:', error);
-                navigate('/');
+                navigate('/admin/sign_in');
                 throw error;
             }
         }
