@@ -4,6 +4,7 @@ import noticeIndex_config from '../../../../js/api/config/noticeIndex_config';
 import { useDispatch } from 'react-redux';
 import { noticeIndexAction } from '../../../../js/api/redux_store/slice/noticeIndexSlice';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const AdminDetailNotice = () => {
     const [noticeContent, setNoticeContent] = useState(null);
@@ -19,6 +20,8 @@ const AdminDetailNotice = () => {
     const [indexOneFileNameArray, setIndexOneFileNameArray] = useState([]);
     let IndexOneFilePathArray = [];
 
+    const alertModalOpen = document.getElementById('exampleModal');
+
     useEffect(() => {
         const getDetailNotice = async () => {
             setNoticeContent(null);
@@ -33,19 +36,22 @@ const AdminDetailNotice = () => {
                     null
                 );
                 setNoticeContent(detailResponse.data);
+                console.log(detailResponse.data);
+                const zeroFileName = detailResponse.data[0].file_name;
+                const ZeroFileNameArray = zeroFileName ? zeroFileName.split(',') : null;
+                const oneFileName = detailResponse.data[1].file_name;
+                const OneFileNameArray = oneFileName ? oneFileName.split(',') : null;
 
-                const ZeroFileNameArray = detailResponse.data[0].file_name.split(',');
                 // const ZeroFilePathArray = detailResponse.data[0].attach_path.split(',');
-                const OneFileNameArray = detailResponse.data[1].file_name.split(',');
                 // const OneFilePathArray = detailResponse.data[1].attach_path.split(',');
                 setIndexZeroFileNameArray(ZeroFileNameArray);
                 setIndexOneFileNameArray(OneFileNameArray);
                 console.log(detailResponse);
-                // console.log(ZeroFileNameArray);
-                // console.log(ZeroFilePathArray);
-                // console.log('----------------------');
-                // console.log(OneFileNameArray);
-                // console.log(OneFilePathArray);
+                console.log(ZeroFileNameArray);
+                console.log(OneFileNameArray);
+                console.log('--------------');
+                console.log(indexZeroFileNameArray);
+                console.log(indexOneFileNameArray);
             } catch (error) {
                 console.error('Error fetching detailNotice:', error);
             } finally {
@@ -67,7 +73,25 @@ const AdminDetailNotice = () => {
         nav('/admin/modify_admin_notice');
     };
 
-    const deleteNotice = async (index) => {
+    const deleteNotice = (index) => {
+        Swal.fire({
+            icon: 'warning',
+            title: '정말 삭제하시겠습니까?',
+            text: '삭제한 게시물은 복구가 어려울 수 있습니다.',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteNoticeConfirm(index);
+            }
+        });
+    };
+
+    const deleteNoticeConfirm = async (index) => {
         try {
             setIsLoading(true);
             const noticeIndex = index;
@@ -82,7 +106,11 @@ const AdminDetailNotice = () => {
             console.log(deleteResponse);
 
             if (deleteResponse.code === 200 && deleteResponse.data === 1) {
-                alert('정상적으로 삭제되었습니다.');
+                Swal.fire({
+                    icon: 'success',
+                    title: '게시물이 정상적으로\n삭제되었습니다.',
+                });
+
                 const modifyRequest = 0;
 
                 const detailResponse = await validationAdminNotice(
@@ -94,7 +122,10 @@ const AdminDetailNotice = () => {
 
                 console.log(detailResponse);
             } else {
-                alert('게시물 삭제에 실패하였습니다.');
+                Swal.fire({
+                    icon: 'error',
+                    title: '게시물이 삭제에 실패하였습니다.',
+                });
             }
             // setCurrentPage(currentPage);
         } catch (error) {
@@ -105,7 +136,7 @@ const AdminDetailNotice = () => {
     };
 
     return (
-        <div className="detail_notice_wrap">
+        <div className="detail_notice_wrap nn_font">
             {isLoading ? (
                 <div className="text-center" style={{ marginTop: '250px' }}>
                     <div className="spinner-border" role="status">
@@ -165,10 +196,10 @@ const AdminDetailNotice = () => {
                                             첨부파일
                                         </div>
                                         <div>
-                                            {indexOneFileNameArray.length > 0 ? (
+                                            {indexOneFileNameArray ? (
                                                 indexOneFileNameArray.map((file_name, index) => (
                                                     <div key={index}>
-                                                        <a>{file_name}</a>
+                                                        <a href="">{file_name}</a>
                                                     </div>
                                                 ))
                                             ) : (
@@ -223,7 +254,7 @@ const AdminDetailNotice = () => {
                                             첨부파일
                                         </div>
                                         <div>
-                                            {indexOneFileNameArray.length > 0 ? (
+                                            {indexOneFileNameArray ? (
                                                 indexOneFileNameArray.map((file_name, index) => (
                                                     <div key={index}>
                                                         <a href="">{file_name}</a>
@@ -315,10 +346,10 @@ const AdminDetailNotice = () => {
                                         첨부파일
                                     </div>
                                     <div>
-                                        {indexZeroFileNameArray.length > 0 ? (
+                                        {indexZeroFileNameArray ? (
                                             indexZeroFileNameArray.map((file_name, index) => (
                                                 <div key={index}>
-                                                    <a>{file_name}</a>
+                                                    <a href="">{file_name}</a>
                                                 </div>
                                             ))
                                         ) : (
@@ -370,7 +401,7 @@ const AdminDetailNotice = () => {
                                         첨부파일
                                     </div>
                                     <div>
-                                        {indexZeroFileNameArray.length > 0 ? (
+                                        {indexZeroFileNameArray ? (
                                             indexZeroFileNameArray.map((file_name, index) => (
                                                 <div key={index}>
                                                     <a href="">{file_name}</a>
@@ -387,7 +418,11 @@ const AdminDetailNotice = () => {
                         <div className="flex" style={{ justifyContent: 'space-between' }}>
                             <div className="d-md-flex justify-content-md-start">
                                 <Link to="/admin/admin_notice">
-                                    <button type="button" className="btn btn-light ">
+                                    <button
+                                        type="button"
+                                        className="btn btn-light "
+                                        onClick={() => deleteNotice(noticeContent[0].no)}
+                                    >
                                         삭제하기
                                     </button>
                                 </Link>

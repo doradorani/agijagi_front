@@ -37,8 +37,10 @@ const ModifyNotice = () => {
                 );
                 setNoticeContent(detailResponse.data);
 
-                const ZeroFileNameArray = detailResponse.data[0].file_name.split(',');
-                const OneFileNameArray = detailResponse.data[1].file_name.split(',');
+                const zeroFileName = detailResponse.data[0].file_name;
+                const ZeroFileNameArray = zeroFileName ? zeroFileName.split(',') : null;
+                const oneFileName = detailResponse.data[1].file_name;
+                const OneFileNameArray = oneFileName ? oneFileName.split(',') : null;
                 setIndexZeroFileNameArray(ZeroFileNameArray);
                 setIndexOneFileNameArray(OneFileNameArray);
 
@@ -221,8 +223,8 @@ const ModifyNotice = () => {
                                         }}
                                     >
                                         <div style={{ margin: '10px' }}>
-                                            {indexZeroFileNameArray.length > 0 ? (
-                                                indexZeroFileNameArray.map((file_name, index) => (
+                                            {indexOneFileNameArray ? (
+                                                indexOneFileNameArray.map((file_name, index) => (
                                                     <div key={index}>
                                                         <a href="">{file_name}</a>
                                                         <button
@@ -241,6 +243,26 @@ const ModifyNotice = () => {
                                             ) : (
                                                 <div>첨부파일이 없습니다.</div>
                                             )}
+                                            {/* {indexZeroFileNameArray.length > 0 ? (
+                                                indexZeroFileNameArray.map((file_name, index) => (
+                                                    <div key={index}>
+                                                        <a href="">{file_name}</a>
+                                                        <button
+                                                            style={{
+                                                                backgroundColor: '#fff',
+                                                                border: 'none',
+                                                                color: '#ff0000',
+                                                                fontSize: '1.1em',
+                                                            }}
+                                                            onClick={() => removeUploadFiles(index)}
+                                                        >
+                                                            &nbsp;&nbsp;&#215;
+                                                        </button>
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <div>첨부파일이 없습니다.</div>
+                                            )} */}
                                         </div>
                                         <label
                                             htmlFor="noticeAttachedFile"
@@ -339,7 +361,7 @@ const ModifyNotice = () => {
                                         }}
                                     >
                                         <div style={{ margin: '10px' }}>
-                                            {indexZeroFileNameArray.length > 0 ? (
+                                            {indexZeroFileNameArray ? (
                                                 indexZeroFileNameArray.map((file_name, index) => (
                                                     <div key={index}>
                                                         <a href="">{file_name}</a>
