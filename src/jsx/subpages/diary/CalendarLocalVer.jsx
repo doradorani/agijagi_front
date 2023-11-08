@@ -1,14 +1,11 @@
 import React, { Component, useState } from 'react';
 import '../../../css/subpage/calendar.css';
-import styled from 'styled-components';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import listPlugin from '@fullcalendar/list';
 import FullCalendar from '@fullcalendar/react';
-import { useLinkClickHandler } from 'react-router-dom';
 // 자녀별로 색 다르게 => eventcolor
 
-const Calendar = (diaryData, setMethodUrl, setSelectedDiary, setSelectedSideMenu) => {
+const CalendarListVer = (diaryData, setMethodUrl, setSelectedDiary, setSelectedSideMenu) => {
+    console.log(diaryData);
     const eventClick = (clickInfo) => {
         const { no, cd_no } = clickInfo.event;
 
@@ -19,16 +16,24 @@ const Calendar = (diaryData, setMethodUrl, setSelectedDiary, setSelectedSideMenu
         clickInfo.jsEvent.preventDefault();
     };
 
-    let calendarContents = [];
+    let listContents = [];
 
-    let color = ['#ff9aa3', 'skyblue', 'yellow'];
+    let color = ['#ff9aa3', 'skyblue', 'gold'];
 
     (diaryData.diaryData !== null && Array.isArray(diaryData.diaryData) ? diaryData.diaryData : []).map((idx) =>
-        calendarContents.push({
-            title: idx.cd_name + ' [' + idx.title + ']',
-            date: idx.reg_date,
-            color: idx.sequence == 1 ? color[0] : idx.sequence == 2 ? color[1] : idx.sequence == 3 ? color[2] : 'gold',
-            allDay: 1,
+        listContents.push({
+            title:
+                idx.cd_name +
+                ' [' +
+                idx.vaccination_nm +
+                ' ' +
+                idx.inoculation_order +
+                '차 ] 병원 : ' +
+                idx.inoculation_agency,
+            start: idx.reg_date,
+            backgroundColor:
+                idx.sequence == 1 ? color[0] : idx.sequence == 2 ? color[1] : idx.sequence == 3 ? color[2] : 'black',
+            allday: 1,
             no: idx.no,
             child_no: idx.cd_no,
         })
@@ -41,8 +46,8 @@ const Calendar = (diaryData, setMethodUrl, setSelectedDiary, setSelectedSideMenu
                     <div className="calendar_second_wrap">
                         <div id="calendar">
                             <FullCalendar
-                                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                                initialView={'dayGridMonth'}
+                                plugins={[listPlugin]}
+                                initialView={'listWeek'}
                                 headerToolbar={{
                                     start: 'today',
                                     center: 'title',
@@ -50,8 +55,8 @@ const Calendar = (diaryData, setMethodUrl, setSelectedDiary, setSelectedSideMenu
                                 }}
                                 eventMinWidth={'10vh'}
                                 height={'85vh'}
-                                events={calendarContents}
-                                eventClick={eventClick}
+                                events={listContents}
+                                // eventClick={eventClick}
                             />
                         </div>
                     </div>
@@ -61,4 +66,4 @@ const Calendar = (diaryData, setMethodUrl, setSelectedDiary, setSelectedSideMenu
     );
 };
 
-export default Calendar;
+export default CalendarListVer;

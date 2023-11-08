@@ -15,7 +15,6 @@ import DiaryBook from './jsx/subpages/diary/DiaryBook';
 import DiaryBookDetail from './jsx/subpages/diary/DiaryBookDetail';
 import Graph from './jsx/subpages/diary/Graph';
 import Note from './jsx/subpages/diary/Note';
-import Calendar from './jsx/subpages/diary/Calendar';
 import CoBuyingList from './jsx/subpages/co-buying/CoBuyingList';
 import CoBuyingDetail from './jsx/subpages/co-buying/CoBuyingDetail';
 import ScrollToTop from './jsx/ScrollToTop';
@@ -43,16 +42,16 @@ function User() {
                 setSelectedUserLoginBtn={setSelectedUserLoginBtn}
             />
             <Routes>
-                <Route path='/*' element={<Home setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}></Route>
+                <Route path="/*" element={<Home setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}></Route>
                 <Route
-                    path='/user_login'
+                    path="/user_login"
                     element={<UserLogin setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}
                 ></Route>
                 {/* <Route path="/user_sign_up" element={<UserSignUp />}></Route> */}
-                <Route path='/user_info' element={<UserInfo />}></Route>
-                <Route path='/user_modify_info' element={<UserModifyInfo />}></Route>v
+                <Route path="/user_info" element={<UserInfo />}></Route>
+                <Route path="/user_modify_info" element={<UserModifyInfo />}></Route>v
                 <Route
-                    path='/diary'
+                    path="/diary"
                     element={
                         <Diary
                             selectedMenu={selectedMenu}
@@ -61,12 +60,8 @@ function User() {
                         />
                     }
                 ></Route>
-                <Route path='/diarybook_detail' element={<DiaryBookDetail />}></Route>
-                <Route path='/graph' element={<Graph />}></Route>
-                <Route path='/note' element={<Note />}></Route>
-                <Route path='/calendar' element={<Calendar />}></Route>
                 <Route
-                    path='/community'
+                    path="/community"
                     element={
                         <Community
                             selectedMenu={selectedMenu}
@@ -77,11 +72,11 @@ function User() {
                         />
                     }
                 ></Route>
-                <Route path='/post_detail' element={<DetailPost />}></Route>
-                <Route path='/co-buying_list' element={<CoBuyingList />}></Route>
-                <Route path='/co-buying_detail' element={<CoBuyingDetail />}></Route>
+                <Route path="/post_detail" element={<DetailPost />}></Route>
+                <Route path="/co-buying_list" element={<CoBuyingList />}></Route>
+                <Route path="/co-buying_detail" element={<CoBuyingDetail />}></Route>
                 <Route
-                    path='/notice'
+                    path="/notice"
                     element={
                         <Notice
                             selectedMenu={selectedMenu}

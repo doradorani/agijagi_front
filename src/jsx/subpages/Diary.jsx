@@ -4,7 +4,7 @@ import '../../css/subpage/diary.css';
 import DiaryBook from './diary/DiaryBook.jsx';
 import DiaryBookDetail from './diary/DiaryBookDetail';
 import SideMenu from './SideMenu';
-import Calendar from './diary/Calendar';
+import CalendarForDiary from './diary/CalendarForDiary.jsx';
 import Graph from './diary/Graph';
 import Note from './diary/Note';
 import { useValidationUser } from '../../js/api/ValidationApi';
@@ -17,6 +17,7 @@ import DiaryPost from './diary/DiaryPost.jsx';
 import DiaryModfiyPost from './diary/DiaryModfiyPost.jsx';
 import ScrollToTop from '../ScrollToTop.jsx';
 import userLogin_config from '../../js/api/config/userLogin_config';
+import CalendarListVer from './diary/CalendarLocalVer.jsx';
 
 const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
     let diaryContents;
@@ -61,7 +62,6 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
 
     useEffect(() => {
         setDiaryData(null);
-        console.log(methodUrl);
         const getDiary = async () => {
             setIsLoading(true);
             try {
@@ -82,7 +82,6 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
             }
         };
         getDiary();
-        console.log(diaryData);
     }, [methodUrl, selectedDiary, selectedSideMenu, refreshData]);
     //======================================//
     useEffect(() => {});
@@ -142,12 +141,15 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
                         {isLoading ? (
                             <div>로딩중.....</div>
                         ) : (
-                            <DiaryBookDetail
-                                setSelectedDiary={setSelectedDiary}
-                                diaryData={diaryData}
-                                setDiaryData={setDiaryData}
-                                setMethodUrl={setMethodUrl}
-                            />
+                            <>
+                                <ScrollToTop />
+                                <DiaryBookDetail
+                                    setSelectedDiary={setSelectedDiary}
+                                    diaryData={diaryData}
+                                    setDiaryData={setDiaryData}
+                                    setMethodUrl={setMethodUrl}
+                                />
+                            </>
                         )}
                     </div>
                 </>
@@ -195,8 +197,8 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
             //자녀수정
             diaryContents = (
                 <>
-                    <ScrollToTop />
                     <div className="post_section">
+                        <ScrollToTop />
                         {diaryHeader('일기')}
                         <div className="add_child_container">
                             {diaryData !== null && (
@@ -216,8 +218,8 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
             //일기 수정
             diaryContents = (
                 <>
-                    <ScrollToTop />
                     <div className="post_section">
+                        <ScrollToTop />
                         {diaryHeader('일기')}
                         <div className="add_diary_container">
                             {isLoading ? (
@@ -244,12 +246,13 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
         diaryContents = (
             <>
                 <div className="post_section">
+                    <ScrollToTop />
                     {diaryHeader('달력')}
                     {diaryData == null ? (
                         <div>로딩중</div>
                     ) : (
                         <div className="add_diary_container">
-                            <Calendar
+                            <CalendarForDiary
                                 setMethodUrl={setMethodUrl}
                                 setSelectedDiary={setSelectedDiary}
                                 setSelectedSideMenu={setSelectedSideMenu}
@@ -268,6 +271,7 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
             //그래프
             diaryContents = (
                 <div className="post_section">
+                    <ScrollToTop />
                     <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
                         <img src="/test_imgs/png/diary1.png" style={{ width: '55px', marginRight: '15px' }} />
                         <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 수첩</div>
@@ -286,17 +290,44 @@ const Diary = ({ selectedSideMenu, setSelectedSideMenu }) => {
             //건강정보 등록
             diaryContents = (
                 <div className="post_section">
+                    <ScrollToTop />
                     <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
                         <img src="/test_imgs/png/diary1.png" style={{ width: '55px', marginRight: '15px' }} />
                         <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 수첩</div>
                     </div>
-                    <Note
-                        diaryData={diaryData}
-                        setSelectedDiary={setSelectedDiary}
-                        setMethodUrl={setMethodUrl}
-                        setDiaryData={setDiaryData}
-                    />
+                    {diaryData !== null && (
+                        <Note
+                            diaryData={diaryData}
+                            setSelectedDiary={setSelectedDiary}
+                            setMethodUrl={setMethodUrl}
+                            setDiaryFormData={setDiaryFormData}
+                            setDiaryData={setDiaryData}
+                        />
+                    )}
                 </div>
+            );
+        } else if (selectedDiary === 2) {
+            //calendar
+            diaryContents = (
+                <>
+                    <div className="post_section">
+                        <ScrollToTop />
+                        <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
+                            <img src="/test_imgs/png/diary1.png" style={{ width: '55px', marginRight: '15px' }} />
+                            <div style={{ fontSize: '40px', marginRight: '15px' }}>육아 수첩</div>
+                        </div>
+                        {diaryData !== null && (
+                            <div className="add_diary_container">
+                                <CalendarListVer
+                                    setMethodUrl={setMethodUrl}
+                                    setSelectedDiary={setSelectedDiary}
+                                    diaryData={diaryData}
+                                    setDiaryFormData={setDiaryFormData}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </>
             );
         }
     }
