@@ -86,7 +86,6 @@ const AdminCoBuyingList = ({ setSelectedSideMenu }) => {
                                                 width: '180px',
                                                 height: '35px',
                                                 right: '25px',
-                                                border: '1px solid gray',
                                                 borderRadius: '40px',
                                             }}
                                         >
