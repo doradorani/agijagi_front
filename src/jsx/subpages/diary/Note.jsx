@@ -4,13 +4,53 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../../../css/subpage/note.css';
 import { Link } from 'react-router-dom';
 
-const Note = ({ setSelectedDiary }) => {
+const Note = ({ setSelectedDiary, diaryData, setDiaryFormData, setMethodUrl, setDiaryData }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [byteCount, setByteCount] = useState(0);
+    const [selectedChild, setSelectedChild] = useState(null);
+    const [selectedChildNo, setSelectedChildNo] = useState();
+    const [height, setHeight] = useState(null);
+    const [weight, setWeight] = useState(null);
+    const [head, setHead] = useState(null);
+    const [hospitalName, setHospitalName] = useState(null);
+    const [vaccinationName, setVaccinationName] = useState(null);
+    const [vaccinationNo, setVaccinationNo] = useState(null);
+    const [etc, setEtc] = useState(null);
+
+    let formData = new FormData();
+
+    const nameClick = (no, name) => {
+        setSelectedChild(name);
+        setSelectedChildNo(no);
+    };
+
+    const goToGraphClick = () => {
+        if (selectedChildNo == null) {
+            alert('아이를 선택하시거나 없으시면 먼저 등록을 해주세요!');
+        } else {
+            formData.append('cd_no', selectedChildNo);
+            formData.append('cd_name', selectedChildNo);
+            formData.append('height', height);
+            formData.append('weight', weight);
+            formData.append('head', head);
+            formData.append('inoculation_agency', hospitalName);
+            formData.append('vaccination_nm', vaccinationName);
+            formData.append('inoculation_order', vaccinationNo);
+            formData.append('etc', etc);
+            setDiaryFormData(formData);
+            setDiaryData(null);
+            setMethodUrl({
+                method: 'post',
+                url: '/childHealth/childNote/' + selectedChildNo,
+                url2: '/childHealth/childNotes/' + selectedChildNo,
+            });
+            setSelectedDiary(0);
+        }
+    };
 
     const handleTextChange = (e) => {
         const text = e.target.value;
-        // 함수 호출하여 바이트 수 계산
+        setEtc(text);
         fn_checkByte(text);
     };
 
@@ -47,7 +87,6 @@ const Note = ({ setSelectedDiary }) => {
                                     <DatePicker
                                         dateFormat="yyyy.MM.dd"
                                         shouldCloseOnSelect
-                                        // minDate={new Date()}
                                         selected={selectedDate}
                                         onChange={(date) => setSelectedDate(date)}
                                     />
@@ -60,53 +99,85 @@ const Note = ({ setSelectedDiary }) => {
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
                                     >
-                                        아이 선택
+                                        {selectedChild != null ? selectedChild : '아이 선택'}
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                        {/* {(diaryData.childDtos !== null && Array.isArray(diaryData.childDtos)
-                                            ? diaryData.childDtos
-                                            : []
-                                        ).map((idx) => ( */}
-                                        <li>
-                                            <button
-                                                class="dropdown-item"
-                                                type="button"
-                                                // onClick={() => graphClick(idx.no)}
-                                            >
-                                                {/* {idx.name} */}
-                                                김란희
-                                            </button>
-                                        </li>
-                                        {/* ))} */}
+                                        {(diaryData !== null && Array.isArray(diaryData) ? diaryData : []).map(
+                                            (idx) => (
+                                                <li>
+                                                    <button
+                                                        class="dropdown-item"
+                                                        type="button"
+                                                        onClick={() => nameClick(idx.no, idx.name)}
+                                                    >
+                                                        {idx.name}
+                                                    </button>
+                                                </li>
+                                            )
+                                        )}
                                     </ul>
                                 </div>
                             </div>
                             <div className="note_input_1 flex">
                                 <div className="note_input_height">
                                     <span>키 &nbsp;</span>
-                                    <input type="number" min={1} />
+                                    <input
+                                        type="number"
+                                        min={1}
+                                        onChange={(e) => {
+                                            setHeight(e.target.value);
+                                        }}
+                                    />
                                 </div>
                                 <div className="note_input_weight">
                                     <span>몸무게 &nbsp;</span>
-                                    <input type="number" min={1} />
+                                    <input
+                                        type="number"
+                                        min={1}
+                                        onChange={(e) => {
+                                            setWeight(e.target.value);
+                                        }}
+                                    />
                                 </div>
                                 <div className="note_input_head">
                                     <span>두위&nbsp;</span>
-                                    <input type="number" min={1} />
+                                    <input
+                                        type="number"
+                                        min={1}
+                                        onChange={(e) => {
+                                            setHead(e.target.value);
+                                        }}
+                                    />
                                 </div>
                             </div>
                             <div className="note_input_2 flex">
                                 <div className="vaccination_hospital_name">
                                     <span>병원 이름&nbsp;</span>
-                                    <input type="text" />
+                                    <input
+                                        type="text"
+                                        onChange={(e) => {
+                                            setHospitalName(e.target.value);
+                                        }}
+                                    />
                                 </div>
                                 <div className="vaccination_name">
                                     <span>접종 종류&nbsp;</span>
-                                    <input type="text" />
+                                    <input
+                                        type="text"
+                                        onChange={(e) => {
+                                            setVaccinationName(e.target.value);
+                                        }}
+                                    />
                                 </div>
                                 <div className="vaccination_times">
                                     <span>접종 차수&nbsp;</span>
-                                    <input type="number" min={1} />
+                                    <input
+                                        type="number"
+                                        min={1}
+                                        onChange={(e) => {
+                                            setVaccinationNo(e.target.value);
+                                        }}
+                                    />
                                 </div>
                             </div>
                             <div className="note_input_matters flex">
@@ -124,7 +195,7 @@ const Note = ({ setSelectedDiary }) => {
                                 <Link
                                     to="/diary"
                                     onClick={() => {
-                                        setSelectedDiary(0);
+                                        goToGraphClick();
                                     }}
                                 >
                                     <input type="submit" value={'등록'} className="btn btn-primary" />

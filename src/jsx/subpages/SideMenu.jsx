@@ -12,7 +12,6 @@ const SideMenu = ({
     deleteAllContent,
     setDiaryData,
     setMethodUrl,
-    methodUrl,
 }) => {
     let menuContent;
 
@@ -21,10 +20,14 @@ const SideMenu = ({
         setSelectedNotice(0);
     };
 
-    const selectDiaryClicklHandler = (index, gotoUrl) => {
+    const selectDiaryClicklHandler = (index, gotoUrl, index2) => {
         setMethodUrl({ method: 'get', url: gotoUrl });
         setSelectedSideMenu(index);
-        setSelectedDiary(0);
+        if (index2 != undefined) {
+            setSelectedDiary(index2);
+        } else {
+            setSelectedDiary(0);
+        }
     };
 
     if (selectedMenu === 1) {
@@ -62,6 +65,20 @@ const SideMenu = ({
                     >
                         <img src="/test_imgs/png/diary1.png" style={{ width: '45px', marginRight: '15px' }} />
                         육아 수첩
+                    </div>
+                    <div>
+                        <div
+                            className="side_menu_sub_btn"
+                            onClick={() => selectDiaryClicklHandler(4, '/childHealth/childNotes/0')}
+                        >
+                            - 한 눈에 보기
+                        </div>
+                        <div
+                            className="side_menu_sub_btn"
+                            onClick={() => selectDiaryClicklHandler(4, '/childHealth/inoculationNotes', 2)}
+                        >
+                            - 접종 내역
+                        </div>
                     </div>
                 </div>
             </>
