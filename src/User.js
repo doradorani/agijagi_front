@@ -20,6 +20,8 @@ import CoBuyingDetail from './jsx/subpages/co-buying/CoBuyingDetail';
 import ScrollToTop from './jsx/ScrollToTop';
 import UserModifyInfo from './jsx/Member/UserModifyInfo';
 import UserInfo from './jsx/Member/UserInfo';
+import CoBuyingFundingList from './jsx/subpages/co-buying/CoBuyingFundingList';
+import CoBuyingHitList from './jsx/subpages/co-buying/CoBuyingHitList';
 
 function User() {
     const [selectedMenu, setSelectedMenu] = useState(0);
@@ -42,16 +44,27 @@ function User() {
                 setSelectedUserLoginBtn={setSelectedUserLoginBtn}
             />
             <Routes>
-                <Route path="/" element={<Home setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}></Route>
+                <Route path='/' element={<Home setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}></Route>
                 <Route
-                    path="/user_login"
+                    path='/user_login'
                     element={<UserLogin setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}
                 ></Route>
                 {/* <Route path="/user_sign_up" element={<UserSignUp />}></Route> */}
-                <Route path="/user_info" element={<UserInfo />}></Route>
-                <Route path="/user_modify_info" element={<UserModifyInfo />}></Route>v
+                <Route path='/user_info' element={<UserInfo />}></Route>
+                <Route path='/user_modify_info' element={<UserModifyInfo />}></Route>
                 <Route
-                    path="/diary"
+                    path='/user_myFunding'
+                    element={
+                        <CoBuyingFundingList selectedMenu={selectedMenu} setSelectedSideMenu={setSelectedSideMenu} />
+                    }
+                ></Route>
+                <Route
+                    path='/user_myHit'
+                    element={<CoBuyingHitList selectedMenu={selectedMenu} setSelectedSideMenu={setSelectedSideMenu} />}
+                ></Route>
+
+                <Route
+                    path='/diary'
                     element={
                         <Diary
                             selectedMenu={selectedMenu}
@@ -61,7 +74,7 @@ function User() {
                     }
                 ></Route>
                 <Route
-                    path="/community/*"
+                    path='/community/*'
                     element={
                         <Community
                             selectedMenu={selectedMenu}
@@ -74,9 +87,9 @@ function User() {
                 ></Route>
                 {/* <Route path="/post_detail" element={<DetailPost />}></Route> */}
                 {/* <Route path="/co-buying_list" element={<CoBuyingList />}></Route> */}
-                <Route path="/co-buying_detail" element={<CoBuyingDetail />}></Route>
+                <Route path='/co-buying_detail' element={<CoBuyingDetail />}></Route>
                 <Route
-                    path="/notice/*"
+                    path='/notice/*'
                     element={
                         <Notice
                             selectedMenu={selectedMenu}

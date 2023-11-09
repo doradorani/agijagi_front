@@ -31,13 +31,20 @@ export function useKakaoLogin(code) {
 
                 userLoginDispatch(
                     userInfoAction.setUserInfo({
+                        userName: response.data.userName,
+                        userEmail: response.data.userEmail,
                         userNickname: response.data.userNickname,
                         userProfile: response.data.img || '/test_imgs/png/profile.png',
                     })
                 );
 
                 if (response.data.newUser > 0) {
-                    Swal.fire('회원가입을 축하합니다!!', '어서오세요!!', 'success');
+                    navigate('/user_info');
+                    Swal.fire(
+                        '회원가입을 축하합니다!!',
+                        '어서오세요 ' + response.data.userNickname + '님!!',
+                        'success'
+                    );
                 } else {
                     try {
                         validateMyCobuy('get', '/coBuy/myCobuy').then((res) => {
@@ -47,11 +54,9 @@ export function useKakaoLogin(code) {
                     } catch (error) {
                         console.log(error);
                     }
-
+                    navigate('/');
                     Swal.fire(response.data.userNickname + '님', '어서오세요!!', 'success');
                 }
-
-                navigate('/');
             } catch (error) {
                 console.error('Kakao login error:', error);
             }

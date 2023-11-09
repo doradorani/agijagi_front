@@ -114,7 +114,7 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                             console.log(error);
                         })
                         .finally(() => {
-                            setSelectedSideMenu(3);
+                            //setSelectedSideMenu(3);
                             navigate('/community');
                         });
                 }
