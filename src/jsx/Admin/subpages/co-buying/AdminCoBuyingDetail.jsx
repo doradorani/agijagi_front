@@ -20,7 +20,7 @@ const AdminCoBuyingDetail = () => {
             try {
                 const validateDetailProductResponse = await validateDetailProductAdmin(
                     'get',
-                    '/coBuy/admin/detailProduct/' + detailProductNo
+                    '/coBuy/detailProduct/' + detailProductNo
                 );
                 const detailResponse = validateDetailProductResponse.data.coBuyDetailProduct;
 
@@ -239,7 +239,7 @@ const AdminCoBuyingDetail = () => {
                                     <div className='like_button_wrapper'>
                                         <div className='like_button' style={{ textAlign: 'center' }}>
                                             <label htmlFor='checkbox' className='like_box'>
-                                                <input type='checkbox' id='checkbox' hidden />
+                                                <input type='checkbox' id='checkbox' hidden checked />
                                                 <svg
                                                     t='1689815540548'
                                                     class='icon'
