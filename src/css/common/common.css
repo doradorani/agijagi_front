@@ -75,3 +75,8 @@ body::-webkit-scrollbar-track {
     font-family: 'yg-jalnan';
     box-shadow: none;
 }
+
+.none_deco_link:hover {
+    text-decoration: none;
+    color: #000;
+}
