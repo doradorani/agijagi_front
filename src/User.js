@@ -61,7 +61,7 @@ function User() {
                     }
                 ></Route>
                 <Route
-                    path="/community"
+                    path="/community/*"
                     element={
                         <Community
                             selectedMenu={selectedMenu}
@@ -72,8 +72,8 @@ function User() {
                         />
                     }
                 ></Route>
-                <Route path="/post_detail" element={<DetailPost />}></Route>
-                <Route path="/co-buying_list" element={<CoBuyingList />}></Route>
+                {/* <Route path="/post_detail" element={<DetailPost />}></Route> */}
+                {/* <Route path="/co-buying_list" element={<CoBuyingList />}></Route> */}
                 <Route path="/co-buying_detail" element={<CoBuyingDetail />}></Route>
                 <Route
                     path="/notice/*"

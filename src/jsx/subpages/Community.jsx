@@ -10,6 +10,8 @@ import MyPosts from './community/MyPosts';
 import DetailPost from './community/DetailPost';
 import Swal from 'sweetalert2';
 import { useValidationItem } from '../../js/api/VlidationItem';
+import AllPost from './community/AllPost';
+import { Route, Routes } from 'react-router';
 
 const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previewImage, setPreviewImage }) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
@@ -23,103 +25,6 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
     let data;
 
     const validationItemForPost = useValidationItem();
-
-    if (selectedSideMenu === 1) {
-        if (selectedPost === 0) {
-            communityContents = (
-                <>
-                    <div className="post_section">
-                        <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
-                            <img src="/test_imgs/png/아기여워.png" style={{ width: '55px', marginRight: '15px' }} />
-                            <div style={{ fontSize: '40px', marginRight: '15px' }}>아 ~ 기여워</div>
-                            <div
-                                style={{
-                                    fontSize: '20px',
-                                    display: 'flex',
-                                    alignItems: 'flex-end',
-                                    marginBottom: '10px',
-                                }}
-                            >
-                                &#62;&nbsp;전체 게시글
-                            </div>
-                        </div>
-                        <Post
-                            setSelectedPost={setSelectedPost}
-                            previewImage={previewImage}
-                            setPreviewImage={setPreviewImage}
-                        />
-                        <Post
-                            setSelectedPost={setSelectedPost}
-                            previewImage={previewImage}
-                            setPreviewImage={setPreviewImage}
-                        />
-                        <Post
-                            setSelectedPost={setSelectedPost}
-                            previewImage={previewImage}
-                            setPreviewImage={setPreviewImage}
-                        />
-                        <LoadingPostCard />
-                    </div>
-                    <div className="tag_for_sticky">
-                        <div>
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                        </div>
-                    </div>
-                </>
-            );
-        } else if (selectedPost === 1) {
-            communityContents = (
-                <>
-                    <div className="post_section">
-                        <div className="flex" style={{ justifyContent: 'space-between' }}>
-                            <div
-                                className="yg_font"
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'flex-start',
-                                    margin: '15px 0px 10px 25px',
-                                    cursor: 'pointer',
-                                }}
-                                onClick={() => setSelectedPost(0)}
-                            >
-                                &#60;&nbsp;뒤로가기
-                            </div>
-                        </div>
-                        <DetailPost setSelectedPost={setSelectedPost} />
-                    </div>
-                    <div className="tag_for_sticky">
-                        <div>
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                        </div>
-                    </div>
-                </>
-            );
-        }
-    } else if (selectedSideMenu === 2) {
-        communityContents = (
-            <>
-                <div className="post_section">
-                    <MyPosts />
-                </div>
-                <div className="tag_for_sticky">
-                    <div>
-                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                    </div>
-                </div>
-            </>
-        );
-    } else if (selectedSideMenu === 3) {
-        communityContents = <CoBuyingList setSelectedSideMenu={setSelectedSideMenu} />;
-    } else if (selectedSideMenu === 4) {
-        communityContents = <></>;
-    } else if (selectedSideMenu === 5) {
-        communityContents = <></>;
-    } else if (selectedSideMenu === 6) {
-        communityContents = <></>;
-    }
 
     const handleFileChange = (e) => {
         const maxFiles = 5;
@@ -357,7 +262,12 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                     setPreviewImage={setPreviewImage}
                     deleteAllContent={deleteAllContent}
                 />
-                {communityContents}
+                <Routes>
+                    <Route path="/*" element={<AllPost />} />
+                    <Route path="/my_posts/:userId" element={<MyPosts />} />
+                    <Route path="/detail_post/:postId" element={<DetailPost />} />
+                    <Route path="/co_buying_list" element={<CoBuyingList />} />
+                </Routes>
                 {/* Modal START */}
                 <div
                     className="modal fade yg_font"
@@ -384,7 +294,7 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                                 className="modal-body mx-auto modap_img_contents"
                                 style={{ width: '650px', height: '485px', position: 'relative' }}
                             >
-                                {renderImageInput()}
+                                {renderImageInput}
                                 <button
                                     type="button"
                                     className="btn-close"
