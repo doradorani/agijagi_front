@@ -22,9 +22,9 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
         if (selectedPost === 0) {
             communityContents = (
                 <>
-                    <div className="post_section">
-                        <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
-                            <img src="/test_imgs/png/아기여워.png" style={{ width: '55px', marginRight: '15px' }} />
+                    <div className='post_section'>
+                        <div className=' flex yg_font' style={{ marginBottom: '30px' }}>
+                            <img src='/test_imgs/png/아기여워.png' style={{ width: '55px', marginRight: '15px' }} />
                             <div style={{ fontSize: '40px', marginRight: '15px' }}>아 ~ 기여워</div>
                             <div
                                 style={{
@@ -54,10 +54,10 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                         />
                         <LoadingPostCard />
                     </div>
-                    <div className="tag_for_sticky">
+                    <div className='tag_for_sticky'>
                         <div>
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                            <img className='adv_img_notice_right' src='/test_imgs/sns_imgs/sns1.jpg' />
+                            <img className='adv_img_notice_right' src='/test_imgs/sns_imgs/sns1.jpg' />
                         </div>
                     </div>
                 </>
@@ -65,10 +65,10 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
         } else if (selectedPost === 1) {
             communityContents = (
                 <>
-                    <div className="post_section">
-                        <div className="flex" style={{ justifyContent: 'space-between' }}>
+                    <div className='post_section'>
+                        <div className='flex' style={{ justifyContent: 'space-between' }}>
                             <div
-                                className="yg_font"
+                                className='yg_font'
                                 style={{
                                     display: 'flex',
                                     alignItems: 'flex-start',
@@ -82,10 +82,10 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                         </div>
                         <DetailPost setSelectedPost={setSelectedPost} />
                     </div>
-                    <div className="tag_for_sticky">
+                    <div className='tag_for_sticky'>
                         <div>
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                            <img className='adv_img_notice_right' src='/test_imgs/sns_imgs/sns1.jpg' />
+                            <img className='adv_img_notice_right' src='/test_imgs/sns_imgs/sns1.jpg' />
                         </div>
                     </div>
                 </>
@@ -94,22 +94,24 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
     } else if (selectedSideMenu === 2) {
         communityContents = (
             <>
-                <div className="post_section">
+                <div className='post_section'>
                     <MyPosts />
                 </div>
-                <div className="tag_for_sticky">
+                <div className='tag_for_sticky'>
                     <div>
-                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                        <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                        <img className='adv_img_notice_right' src='/test_imgs/sns_imgs/sns1.jpg' />
+                        <img className='adv_img_notice_right' src='/test_imgs/sns_imgs/sns1.jpg' />
                     </div>
                 </div>
             </>
         );
     } else if (selectedSideMenu === 3) {
-        communityContents = <CoBuyingList />;
+        communityContents = <CoBuyingList setSelectedSideMenu={setSelectedSideMenu} />;
     } else if (selectedSideMenu === 4) {
         communityContents = <></>;
     } else if (selectedSideMenu === 5) {
+        communityContents = <></>;
+    } else if (selectedSideMenu === 6) {
         communityContents = <></>;
     }
 
@@ -216,23 +218,23 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
         if (selectedFiles.length === 0) {
             return (
                 <label
-                    className="upload_img_label flex"
-                    htmlFor="fileInput"
+                    className='upload_img_label flex'
+                    htmlFor='fileInput'
                     style={{ alignItems: 'center', flexDirection: 'column' }}
                 >
-                    <img src="/test_imgs/png/picture.png" className="" width="225px" />
+                    <img src='/test_imgs/png/picture.png' className='' width='225px' />
                     <div style={{ marginTop: '10px', fontSize: '1.2em' }}>사진을 선택해주세요</div>
                 </label>
             );
         }
         return (
             <div
-                id="carouselExample"
-                className="carousel slide"
-                data-bs-ride="carousel"
+                id='carouselExample'
+                className='carousel slide'
+                data-bs-ride='carousel'
                 style={{ width: '400px', height: '450px', objectFit: 'cover' }}
             >
-                <div className="carousel-inner" style={{ width: '400px', height: '450px', objectFit: 'cover' }}>
+                <div className='carousel-inner' style={{ width: '400px', height: '450px', objectFit: 'cover' }}>
                     {selectedFiles.map((file, index) => (
                         <div
                             key={index}
@@ -246,7 +248,7 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                         >
                             <img
                                 src={URL.createObjectURL(file)}
-                                className="d-block w-100 uploaded_preview_img"
+                                className='d-block w-100 uploaded_preview_img'
                                 alt={`Image ${index + 1}`}
                                 style={{
                                     width: '400px',
@@ -257,9 +259,9 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                                 }}
                             />
                             <button
-                                type="button"
-                                className="btn btn-outline-secondary remove-file-btn"
-                                aria-label="Close"
+                                type='button'
+                                className='btn btn-outline-secondary remove-file-btn'
+                                aria-label='Close'
                                 onClick={() => removeFile(index)}
                                 style={{
                                     width: '150px',
@@ -273,24 +275,24 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                         </div>
                     ))}
                 </div>
-                <a className="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
-                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Previous</span>
+                <a className='carousel-control-prev' href='#carouselExample' role='button' data-bs-slide='prev'>
+                    <span className='carousel-control-prev-icon' aria-hidden='true'></span>
+                    <span className='visually-hidden'>Previous</span>
                 </a>
-                <a className="carousel-control-next" href="#carouselExample" role="button" data-bs-slide="next">
-                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="visually-hidden">Next</span>
+                <a className='carousel-control-next' href='#carouselExample' role='button' data-bs-slide='next'>
+                    <span className='carousel-control-next-icon' aria-hidden='true'></span>
+                    <span className='visually-hidden'>Next</span>
                 </a>
             </div>
         );
     };
 
     return (
-        <div className="community_wrap">
+        <div className='community_wrap'>
             <div>
-                <img className="community_main_img" src="/test_imgs/community_imgs/community_main.jpg" />
+                <img className='community_main_img' src='/test_imgs/community_imgs/community_main.jpg' />
             </div>
-            <div className="community_flex">
+            <div className='community_flex'>
                 <SideMenu
                     selectedMenu={2}
                     setSelectedSideMenu={setSelectedSideMenu}
@@ -301,73 +303,73 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                 {communityContents}
                 {/* Modal START */}
                 <div
-                    className="modal fade yg_font"
-                    id="modal_for_post_img"
-                    tabIndex="-1"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
+                    className='modal fade yg_font'
+                    id='modal_for_post_img'
+                    tabIndex='-1'
+                    aria-labelledby='exampleModalLabel'
+                    aria-hidden='true'
                 >
-                    <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">
+                    <div className='modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable'>
+                        <div className='modal-content'>
+                            <div className='modal-header'>
+                                <h1 className='modal-title fs-5' id='exampleModalLabel'>
                                     새 게시물 작성하기
                                 </h1>
                                 <button
-                                    type="button"
-                                    className="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
+                                    type='button'
+                                    className='btn-close'
+                                    data-bs-dismiss='modal'
+                                    aria-label='Close'
                                     onClick={deleteFiles}
                                 ></button>
                             </div>
                             <div
-                                className="modal-body mx-auto modap_img_contents"
+                                className='modal-body mx-auto modap_img_contents'
                                 style={{ width: '650px', height: '485px', position: 'relative' }}
                             >
                                 {renderImageInput()}
                                 <button
-                                    type="button"
-                                    className="btn-close"
-                                    aria-label="Close"
+                                    type='button'
+                                    className='btn-close'
+                                    aria-label='Close'
                                     onClick={deleteFiles}
                                     style={{ position: 'absolute', top: '10px', right: '13px' }}
                                 ></button>
-                                <div className="for_upload_file">
+                                <div className='for_upload_file'>
                                     <input
-                                        type="file"
-                                        name="files"
-                                        id="fileInput"
+                                        type='file'
+                                        name='files'
+                                        id='fileInput'
                                         multiple
                                         style={{ display: 'none' }}
-                                        accept="image/*"
+                                        accept='image/*'
                                         onChange={handleFileChange}
                                     />
                                 </div>
                                 <label
-                                    htmlFor="fileInput"
-                                    className="upload_img_btn"
+                                    htmlFor='fileInput'
+                                    className='upload_img_btn'
                                     style={{ position: 'absolute', bottom: '0px', right: '12px' }}
                                 >
-                                    <figure className="moving_btn_for_img_wrap" style={{ margin: '5px auto' }}>
+                                    <figure className='moving_btn_for_img_wrap' style={{ margin: '5px auto' }}>
                                         <img
-                                            className="moving_btn_for_img"
-                                            src="/test_imgs/png/upload.png"
+                                            className='moving_btn_for_img'
+                                            src='/test_imgs/png/upload.png'
                                             style={{ width: '45px' }}
                                         />
                                     </figure>
-                                    <p className="select_image_btn">사진 선택</p>
+                                    <p className='select_image_btn'>사진 선택</p>
                                 </label>
                             </div>
-                            <div className="modal-footer flex" style={{ justifyContent: 'space-between' }}>
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                            <div className='modal-footer flex' style={{ justifyContent: 'space-between' }}>
+                                <button type='button' className='btn btn-secondary' data-bs-dismiss='modal'>
                                     이전
                                 </button>
                                 <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modal_for_post_text"
+                                    type='button'
+                                    className='btn btn-primary'
+                                    data-bs-toggle='modal'
+                                    data-bs-target='#modal_for_post_text'
                                 >
                                     다음
                                 </button>
@@ -376,60 +378,60 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
                     </div>
                 </div>
                 <div
-                    className="modal fade yg_font"
-                    id="modal_for_post_text"
-                    tabIndex="-1"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
+                    className='modal fade yg_font'
+                    id='modal_for_post_text'
+                    tabIndex='-1'
+                    aria-labelledby='exampleModalLabel'
+                    aria-hidden='true'
                 >
-                    <div className="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">
+                    <div className='modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable'>
+                        <div className='modal-content'>
+                            <div className='modal-header'>
+                                <h1 className='modal-title fs-5' id='exampleModalLabel'>
                                     새 게시물 작성하기
                                 </h1>
                                 <button
-                                    type="button"
-                                    className="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
+                                    type='button'
+                                    className='btn-close'
+                                    data-bs-dismiss='modal'
+                                    aria-label='Close'
                                 ></button>
                             </div>
-                            <div className="flex_for_profile_new_post">
-                                <div className="flex_new_post">
-                                    <div className="profile_img_new_post">
-                                        <img src="/test_imgs/logo/full_logo.jpg" />
+                            <div className='flex_for_profile_new_post'>
+                                <div className='flex_new_post'>
+                                    <div className='profile_img_new_post'>
+                                        <img src='/test_imgs/logo/full_logo.jpg' />
                                     </div>
-                                    <div className="profile_info_new_post">
-                                        <div className="profile_name_new_post">hee_hee</div>
+                                    <div className='profile_info_new_post'>
+                                        <div className='profile_name_new_post'>hee_hee</div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="modal-body mx-auto">
+                            <div className='modal-body mx-auto'>
                                 <textarea
-                                    className="upload_text"
-                                    placeholder="게시물의 내용을 작성해주세요."
+                                    className='upload_text'
+                                    placeholder='게시물의 내용을 작성해주세요.'
                                     onChange={handleTextChange}
                                     value={uploadText}
                                 ></textarea>
                             </div>
-                            <sup className="byte_for_upload">
-                                (<span id="nowByte">{byteCount}</span>/2200bytes)
+                            <sup className='byte_for_upload'>
+                                (<span id='nowByte'>{byteCount}</span>/2200bytes)
                             </sup>
-                            <div className="modal-footer flex" style={{ justifyContent: 'space-between' }}>
+                            <div className='modal-footer flex' style={{ justifyContent: 'space-between' }}>
                                 <button
-                                    type="button"
-                                    className="btn btn-secondary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modal_for_post_img"
+                                    type='button'
+                                    className='btn btn-secondary'
+                                    data-bs-toggle='modal'
+                                    data-bs-target='#modal_for_post_img'
                                 >
                                     이전
                                 </button>
                                 <button
-                                    type="button"
-                                    className="btn btn-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modal_for_post_text"
+                                    type='button'
+                                    className='btn btn-primary'
+                                    data-bs-toggle='modal'
+                                    data-bs-target='#modal_for_post_text'
                                 >
                                     공유하기
                                 </button>
