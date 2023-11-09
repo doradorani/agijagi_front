@@ -230,7 +230,7 @@ const Header = ({
                                 </li>
                                 <li>
                                     <button className='dropdown-item profile_dropdown_menu_li' type='button'>
-                                        구매 상품 조회
+                                        펀딩 상품 조회
                                     </button>
                                 </li>
                                 <li>
