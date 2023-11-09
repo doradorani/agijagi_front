@@ -6,16 +6,15 @@ import token_config from './config/token_config';
 import moment from 'moment/moment';
 import Swal from 'sweetalert2';
 
-export function useValidationUser(method, url, formData, url2) {
+export function useValidationUser() {
     const tokenDispatch = useDispatch();
     const navigate = useNavigate();
 
-    return async () => {
+    return async (method, url, formData, url2) => {
         try {
             let response;
-
-            // HTTP 메소드에 따라 다른 Axios 메서드를 호출
             if (method === 'post') {
+                // HTTP 메소드에 따라 다른 Axios 메서드를 호출
                 response = await TokenApi.post(url, formData);
                 if (url2 !== undefined && url2 !== '') {
                     response = await TokenApi.get(url2);
@@ -61,51 +60,3 @@ export function useValidationUser(method, url, formData, url2) {
         }
     };
 }
-
-// import TokenApi from "./TokenApi";
-// import {tokenAction} from "./redux_store/slice/tokenSlice";
-// import token_config from "./config/token_config";
-// import moment from "moment";
-// import {useDispatch} from "react-redux";
-// import {useNavigate} from "react-router-dom";
-// import {useEffect} from "react";
-//
-// export function useValidationUser(url) {
-//     const tokenDispatch = useDispatch();    //useDispatch()를 통해 변경되는 값을 스토어로 전달한다.z
-//     const navigate = useNavigate();
-//
-//     let res = null;
-//
-//     useEffect(() => {
-//         const validationUser = async () => {
-//
-//
-//             try {
-//                 res = await TokenApi.post(url);   //TokenApi의 주소 + /user/validate
-//                 tokenDispatch(tokenAction.setTokenName(token_config.tokenName));
-//                 tokenDispatch(tokenAction.setTokenExpired(moment().add(10, 'seconds').format("yyyy-MM-DD HH:mm:ss")));
-//
-//             } catch (error) {
-//                 if (error.response.status === 401) {
-//                     alert('올바르지 않은 토큰입니다.');
-//                     navigate('/');
-//                 }
-//                 if (error.response.status === 403) {
-//                     alert('관리자만 사용할 수 있습니다.');
-//                     navigate('/');
-//                 }
-//                 else {
-//                     // 다른 오류 처리
-//                     console.error('Error:', error);
-//                 }
-//             }
-//         }
-//         validationUser()
-//         // eslint-disable-next-line react-hooks/exhaustive-deps
-//     }, []);
-//
-//     console.log('res => ' + res);
-//     console.log('res => ' + res.data);
-//
-//     return res;
-// }

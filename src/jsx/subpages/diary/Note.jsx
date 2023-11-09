@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '../../../css/subpage/note.css';
 import { Link } from 'react-router-dom';
 
-const Note = ({ setSelectedDiary, diaryData, setDiaryFormData, setMethodUrl, setDiaryData }) => {
+const Note = ({ setSelectedDiary, diaryData, setformData, setMethodUrl, setDiaryData }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [byteCount, setByteCount] = useState(0);
     const [selectedChild, setSelectedChild] = useState(null);
@@ -37,8 +37,7 @@ const Note = ({ setSelectedDiary, diaryData, setDiaryFormData, setMethodUrl, set
             formData.append('vaccination_nm', vaccinationName);
             formData.append('inoculation_order', vaccinationNo);
             formData.append('etc', etc);
-            setDiaryFormData(formData);
-            setDiaryData(null);
+            setformData(formData);
             setMethodUrl({
                 method: 'post',
                 url: '/childHealth/childNote/' + selectedChildNo,

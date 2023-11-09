@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import '../../../css/subpage/graph.css';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const Container = styled.div`
     width: 90vw;
@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 // 최근 기록 중 10개나 20개 정도의 데이터를 받아서 default로 띄우기
 
-const Graph = ({ setSelectedDiary, diaryData, setMethodUrl, setDiaryData }) => {
+const Graph = ({ setSelectedDiary, diaryData, setMethodUrl }) => {
     console.log(diaryData);
 
     const graphClick = (no) => {
@@ -23,6 +23,8 @@ const Graph = ({ setSelectedDiary, diaryData, setMethodUrl, setDiaryData }) => {
     if (diaryData.childNoteDtos != null) {
         graphData = diaryData.childNoteDtos;
     }
+
+    let childName = graphData.length > 0 && Array.isArray(graphData) ? graphData[0].cd_name : null;
 
     const height = [];
     const weight = [];
@@ -67,21 +69,21 @@ const Graph = ({ setSelectedDiary, diaryData, setMethodUrl, setDiaryData }) => {
                   datasets: [
                       {
                           type: 'line',
-                          label: ' 키',
+                          label: childName + ' 키',
                           borderColor: color[0],
                           borderWidth: 1,
                           data: height,
                       },
                       {
                           type: 'line',
-                          label: ' 몸무게',
+                          label: childName + ' 몸무게',
                           borderColor: color[1],
                           borderWidth: 1,
                           data: weight,
                       },
                       {
                           type: 'line',
-                          label: ' 머리',
+                          label: childName + ' 머리',
                           borderColor: color[2],
                           borderWidth: 1,
                           data: head,
@@ -103,7 +105,7 @@ const Graph = ({ setSelectedDiary, diaryData, setMethodUrl, setDiaryData }) => {
                         <p className="yg_font" style={{ fontSize: '2rem' }}>
                             {graphData.length > 0 && Array.isArray(graphData)
                                 ? '우리 ' + graphData[0].cd_name
-                                : '우리 아이'}{' '}
+                                : '우리 아이'}
                             성장 기록
                         </p>
                         <div className="go_to_write_health_note" style={{ margin: 'auto 0' }}>

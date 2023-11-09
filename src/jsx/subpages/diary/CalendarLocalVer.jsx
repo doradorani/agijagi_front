@@ -56,7 +56,7 @@ const CalendarListVer = (diaryData, setMethodUrl, setSelectedDiary, setSelectedS
                                 eventMinWidth={'10vh'}
                                 height={'85vh'}
                                 events={listContents}
-                                // eventClick={eventClick}
+                                eventClick={() => eventClick()}
                             />
                         </div>
                     </div>

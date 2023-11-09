@@ -1,60 +1,110 @@
-import React, { Component, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../../css/subpage/calendar.css';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
+import Swal from 'sweetalert2';
+import DiaryHeader from './DiaryHeader';
+import ScrollToTop from '../../ScrollToTop';
+import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 // 자녀별로 색 다르게 => eventcolor
 
-const CalendarForDiary = (diaryData, setMethodUrl, setSelectedDiary, setSelectedSideMenu) => {
+const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
+    const [diaryCalendarData, setDiaryCalendarData] = useState(null);
+    const userLoginDispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const getDiary = async () => {
+            try {
+                const validateResponse = validationUser('post', '/user/validate');
+                try {
+                    validationUser('get', '/diary/dailyDiaries').then((res) => {
+                        if (res.success) {
+                            setDiaryCalendarData(res.data);
+                        }
+                    });
+                    setIsLoading(true);
+                } catch (error) {
+                    console.log('데이터 파싱 에러');
+                    console.log(error);
+                }
+            } catch (error) {
+                console.log(error);
+                userLoginDispatch(userStateAction.setState(false));
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        getDiary();
+    }, []);
+
     const eventClick = (clickInfo) => {
-        const { no, cd_no } = clickInfo.event;
+        const { title, display, date, id, groupId } = clickInfo.event;
+        console.log(display);
+        console.log(clickInfo);
 
-        setMethodUrl({ method: 'get', url: '/diary/dailyDiaryDetail/' + cd_no + '/' + no });
-        setSelectedSideMenu(1);
-        setSelectedDiary(5);
-
-        clickInfo.jsEvent.preventDefault();
+        Swal.fire({
+            title: title,
+            text: display,
+            confirmButtonText: '확인',
+        }).then((res) => {
+            if (res.isConfirmed) {
+            } else {
+            }
+        });
     };
 
     let calendarContents = [];
 
     let color = ['#ff9aa3', 'skyblue', 'yellow'];
 
-    (diaryData.diaryData !== null && Array.isArray(diaryData.diaryData) ? diaryData.diaryData : []).map((idx) =>
+    (diaryCalendarData !== null && Array.isArray(diaryCalendarData) ? diaryCalendarData : []).map((idx) =>
         calendarContents.push({
             title: idx.cd_name + ' [' + idx.title + ']',
+            display: idx.content,
             date: idx.reg_date,
             color: idx.sequence == 1 ? color[0] : idx.sequence == 2 ? color[1] : idx.sequence == 3 ? color[2] : 'gold',
             allDay: 1,
-            no: idx.no,
-            child_no: idx.cd_no,
+            id: idx.no,
+            groupId: idx.cd_no,
         })
     );
 
     return (
-        <div>
-            <div className="calendar_wrap">
-                <div className="calendar_section">
-                    <div className="calendar_second_wrap">
-                        <div id="calendar">
-                            <FullCalendar
-                                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                                initialView={'dayGridMonth'}
-                                headerToolbar={{
-                                    start: 'today',
-                                    center: 'title',
-                                    end: 'prev,next',
-                                }}
-                                eventMinWidth={'10vh'}
-                                height={'85vh'}
-                                events={calendarContents}
-                                eventClick={eventClick}
-                            />
+        <div className="post_full_section">
+            <ScrollToTop />
+            <DiaryHeader select={'달력'} src={'/test_imgs/png/diary3.png'} />
+            {diaryCalendarData == null ? (
+                <div>로딩중</div>
+            ) : (
+                <div className="add_diary_container" style={{ width: '90%' }}>
+                    <div className="calendar_wrap">
+                        <div className="calendar_section">
+                            <div className="calendar_second_wrap">
+                                <div id="calendar">
+                                    <FullCalendar
+                                        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                                        initialView={'dayGridMonth'}
+                                        headerToolbar={{
+                                            start: 'today',
+                                            center: 'title',
+                                            end: 'prev,next',
+                                        }}
+                                        eventMinWidth={'10vh'}
+                                        height={'85vh'}
+                                        events={calendarContents}
+                                        eventClick={eventClick}
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

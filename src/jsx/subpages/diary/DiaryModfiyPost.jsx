@@ -1,64 +1,123 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../../css/subpage/children.css';
 import ReactDatePicker from 'react-datepicker';
-import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
+import Swal from 'sweetalert2';
 
-const DiaryModfiyPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData, methodUrl, setDiaryData }) => {
+const DiaryModfiyPost = ({ adContents, validationUser, setIsLoading, isLoading }) => {
+    const params = useParams();
+    const nav = useNavigate();
+    const userLoginDispatch = useDispatch();
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [title, setTitle] = useState('');
     const [img, setImg] = useState(null);
     const [childContent, setChildContent] = useState(null);
+    const [diaryModifyData, setDiaryModifyData] = useState();
 
-    const dateString = diaryData.reg_date;
+    useEffect(() => {
+        const getDiary = async () => {
+            try {
+                const validateResponse = validationUser('post', '/user/validate');
+                try {
+                    validationUser('get', '/diary/childrenDetail/' + params.childNo + '/' + params.diaryNo).then(
+                        (res) => {
+                            if (res.success) {
+                                setDiaryModifyData(res.data);
+                            }
+                        }
+                    );
+                    setIsLoading(true);
+                } catch (error) {
+                    console.log('데이터 파싱 에러');
+                    console.log(error);
+                }
+            } catch (error) {
+                console.log(error);
+                userLoginDispatch(userStateAction.setState(false));
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        getDiary();
+    }, []);
+
+    const dateString = diaryModifyData.reg_date;
     let reg_date;
     if (dateString) {
         reg_date = dateString.replace(' ', 'T');
     }
 
     const clickHandler = () => {
-        setSelectedDiary(1);
-        setMethodUrl({ method: 'get', url: '/diary/dailyDiary/' + diaryData.cd_no });
+        nav(-1);
     };
 
-    let formData = new FormData();
-
-    let data = {};
-
     const handleSubmit = async (event) => {
-        if (title == '') {
-            data['title'] = diaryData.title;
-        } else {
-            data['title'] = title;
-        }
+        let formData = new FormData();
+        let data = {};
+        Swal.fire({
+            icon: 'question',
+            title: '수정하시겠습니까?',
+            text: '확인을 누르시면 수정됩니다.',
+            confirmButtonText: '확인',
+        }).then((res) => {
+            if (res.isConfirmed) {
+                if (title == '') {
+                    data['title'] = diaryModifyData.title;
+                } else {
+                    data['title'] = title;
+                }
 
-        if (childContent == null) {
-            data['content'] = diaryData.content;
-        } else {
-            data['content'] = childContent;
-        }
+                if (childContent == null) {
+                    data['content'] = diaryModifyData.content;
+                } else {
+                    data['content'] = childContent;
+                }
 
-        if (img != null) {
-            formData.append('file', img);
-        }
-        formData.append(
-            'data',
-            new Blob([JSON.stringify(data)], {
-                type: 'application/json',
-            })
-        );
-
-        try {
-            setDiaryFormData(formData);
-            setMethodUrl({
-                method: 'post',
-                url: '/diary/dailyDiaryDetail/' + diaryData.cd_no + '/' + diaryData.no,
-                url2: '/diary/dailyDiary/' + diaryData.cd_no,
-            });
-            setSelectedDiary(1);
-        } catch (error) {
-            console.error('에러:', error);
-        }
+                if (img != null) {
+                    formData.append('file', img);
+                }
+                formData.append(
+                    'data',
+                    new Blob([JSON.stringify(data)], {
+                        type: 'application/json',
+                    })
+                );
+                try {
+                    validationUser('post', '/diary/dailyDiaryDetail/' + params.childNo, formData).then((res) => {
+                        if (res.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '정상적으로 수정되었습니다.',
+                                text: '*^^*',
+                                confirmButtonText: '확인',
+                            }).then((res) => {
+                                if (res.isConfirmed) {
+                                    nav('/diary/diary_book_detail/' + params.childNo);
+                                }
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '정상적으로 수정되지 않았습니다.',
+                                text: '다시 시도해주세요',
+                                confirmButtonText: '확인',
+                            }).then((res) => {
+                                if (res.isConfirmed) {
+                                    nav('/diary/diary_book_detail/' + params.childNo);
+                                }
+                            });
+                        }
+                    });
+                    setIsLoading(true);
+                } catch (error) {
+                    console.log('데이터 파싱 에러');
+                    console.log(error);
+                    userLoginDispatch(userStateAction.setState(false));
+                }
+            }
+        });
     };
 
     const handleChange = (e) => {
@@ -86,7 +145,7 @@ const DiaryModfiyPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, dia
                                 <span>제목 &nbsp;</span>
                                 <input
                                     type="text"
-                                    defaultValue={diaryData.title}
+                                    defaultValue={diaryModifyData.title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     style={{ border: 'none', backgroundColor: '#f8f9fa', borderRadius: '5px' }}
                                 />
@@ -108,7 +167,7 @@ const DiaryModfiyPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, dia
                                 <span style={{ height: '200px' }}>내용&nbsp;</span>
                                 <input
                                     type="text"
-                                    defaultValue={diaryData.content}
+                                    defaultValue={diaryModifyData.content}
                                     onChange={(e) => setChildContent(e.target.value)}
                                     style={{
                                         width: '500px',

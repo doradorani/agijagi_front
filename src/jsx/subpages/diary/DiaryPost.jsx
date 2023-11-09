@@ -3,15 +3,11 @@ import '../../../css/subpage/children.css';
 import ReactDatePicker from 'react-datepicker';
 import { Link } from 'react-router-dom';
 
-const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData, methodUrl }) => {
+const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, methodUrl }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [title, setTitle] = useState('');
     const [img, setImg] = useState(null);
     const [childContent, setChildContent] = useState(null);
-
-    let formData = new FormData();
-
-    let data;
 
     const clickHandler = () => {
         setSelectedDiary(1);
@@ -19,7 +15,8 @@ const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData
     };
 
     const handleSubmit = async (event) => {
-        data = {
+        let formData = new FormData();
+        let data = {
             title: title,
             birth_date: selectedDate.getFullYear() + '-' + (selectedDate.getMonth() + 1) + '-' + selectedDate.getDate(),
             content: childContent,
@@ -79,7 +76,6 @@ const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData
                                 <ReactDatePicker
                                     dateFormat="yyyy.MM.dd"
                                     shouldCloseOnSelect
-                                    // minDate={new Date()}
                                     selected={selectedDate}
                                     onChange={(date) => setSelectedDate(date)}
                                     readOnly
@@ -87,8 +83,8 @@ const DiaryPost = ({ setMethodUrl, setSelectedDiary, setDiaryFormData, diaryData
                             </div>
                         </div>
                         <div className="">
-                            <div className="children_input_name" style={{ margin: ' 0 62px' }}>
-                                <span style={{ height: '200px' }}>내용&nbsp;</span>
+                            <div className="children_input_name flex" style={{ margin: ' 0 71px' }}>
+                                <span style={{ marginRight: '5px' }}>내용&nbsp;</span>
                                 <input
                                     type="text"
                                     onChange={(e) => setChildContent(e.target.value)}
