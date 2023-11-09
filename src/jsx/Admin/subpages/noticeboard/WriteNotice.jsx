@@ -5,6 +5,7 @@ import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdmin
 import { noticeIndexAction } from '../../../../js/api/redux_store/slice/noticeIndexSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const WriteNotice = () => {
     const [noticeTitle, setNoticeTitle] = useState('');
@@ -49,15 +50,21 @@ const WriteNotice = () => {
         try {
             setIsLoading(true);
             if (noticeTitle === '') {
-                alert('\n제목은 필수입력 사항입니다.\n제목을 입력해주시기 바랍니다.');
+                Swal.fire({
+                    icon: 'warning',
+                    title: '제목은 필수입력 사항입니다.\n제목을 입력해주시기 바랍니다.',
+                });
                 document.getElementById('writeNoticeTitle').focus();
                 window.scrollTo({
                     top: document.getElementById('writeNoticeTitle').offsetTop,
                     behavior: 'smooth',
                 });
                 console.log(editorContent);
-            } else if (editorContent === undefined) {
-                alert('\n공지내용은 필수입력 사항입니다.\n내용을 입력해주시기 바랍니다.');
+            } else if (editorContent === undefined || editorContent === '') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '공지내용은 필수입력 사항입니다.\n내용을 입력해주시기 바랍니다.',
+                });
             } else {
                 data = {
                     title: noticeTitle,
@@ -82,7 +89,11 @@ const WriteNotice = () => {
                 console.log(registResponse);
 
                 if (registResponse.code === 200 && registResponse.data === 1) {
-                    alert('공지사항이 정상적으로 등록되었습니다.');
+                    Swal.fire({
+                        icon: 'success',
+                        title: '공지사항이 정상적으로 등록되었습니다.',
+                    });
+                    // alert('공지사항이 정상적으로 등록되었습니다.');
                     // 공지사항 정상 등록 후 게시글 detail페이지로 이동하기 위한 notice.no값 get
                     const recentNoticeIndexResponse = await getRecentNoticeIndex('get', '/notice/recentNotice');
                     noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(recentNoticeIndexResponse.data));

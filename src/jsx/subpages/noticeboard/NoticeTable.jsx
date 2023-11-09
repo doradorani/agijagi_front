@@ -4,17 +4,22 @@ import '../../../css/subpage/noticetable.css';
 import { useValidationUser } from '../../../js/api/ValidationApi';
 import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
+import { noticeIndexAction } from '../../../js/api/redux_store/slice/noticeIndexSlice';
+import noticeIndex_config from '../../../js/api/config/noticeIndex_config';
+import { Link, useParams } from 'react-router-dom';
 
 const NoticeTable = ({ setSelectedNotice }) => {
     const [noticeTable, setNoticeTable] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [perPage] = useState(10);
+    const { noticeId } = useParams();
     const [isLoading, setIsLoading] = useState(false);
 
     // 관리자 로그인 상태 검증 관련 state
     const userLoginDispatch = useDispatch();
-    const validationUserGetTable = useValidationUser('get', '/notice/noticeTable/' + currentPage + '/' + perPage, null);
+    const noticeIndexDispatch = useDispatch();
+    const validationUserGetTable = useValidationUser('get', '/notice/notices/' + currentPage + '/' + perPage, null);
 
     useEffect(() => {
         // 서버에서 공지사항 데이터 가져오는 함수
@@ -23,8 +28,6 @@ const NoticeTable = ({ setSelectedNotice }) => {
                 setIsLoading(true);
                 // 관리자 로그인 상태 검증
                 const validateUserResponse = await validationUserGetTable();
-                // const response = await axios.get(`${server}/notice/noticeTable/${currentPage}/${perPage}`);
-                // 서버에서 가져온 공지사항 데이터 set
                 setNoticeTable(validateUserResponse.data.noticeDtos);
                 setTotalPages(validateUserResponse.data.totalPages);
 
@@ -45,12 +48,18 @@ const NoticeTable = ({ setSelectedNotice }) => {
         }
     };
 
+    const moveToDetail = (index) => {
+        console.log('moveToDetail CALLED!!');
+        noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(index));
+        console.log(noticeIndex_config.noticeIndexState);
+        setSelectedNotice(1);
+    };
+
     return (
-        <div style={{ width: '800px' }}>
-            <table className="table table-striped table-hover " style={{ fontSize: '0.9em' }}>
+        <div className="nn_font" style={{ width: '800px' }}>
+            <table className="table table-striped table-hover ">
                 <thead>
                     <tr style={{ textAlign: 'center' }}>
-                        {/* <th scope="col">No.</th> */}
                         <th scope="col" style={{ width: '50px' }}>
                             No.
                         </th>
@@ -83,9 +92,14 @@ const NoticeTable = ({ setSelectedNotice }) => {
                                     {notice.no}
                                 </td>
                                 <td style={{ textAlign: 'left' }}>
-                                    <a href="#none">{notice.title}</a>
+                                    <Link
+                                        to={`/notice/detail_notice/${notice.no}`}
+                                        // onClick={noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(notice.no))}
+                                    >
+                                        {notice.title}
+                                    </Link>
                                 </td>
-                                <td>{notice.admin_name}</td>
+                                <td>{notice.admin_id}</td>
                                 <td>{notice.reg_date.substring(0, 10)}</td>
                                 <td>{notice.attach_cnt}</td>
                                 <td>{notice.hit}</td>
@@ -95,7 +109,7 @@ const NoticeTable = ({ setSelectedNotice }) => {
                 </tbody>
             </table>
 
-            <nav aria-label="Page navigation example" style={{ marginRight: '70px' }}>
+            <nav aria-label="Page navigation example" style={{ marginRight: '70px', fontSize: '0.9em' }}>
                 <ul className="pagination justify-content-center">
                     <li className="page-item">
                         <button

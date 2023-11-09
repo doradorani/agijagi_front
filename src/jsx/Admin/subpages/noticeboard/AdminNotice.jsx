@@ -6,13 +6,12 @@ import token_config from '../../../../js/api/config/token_config';
 import { useValidationAdmin } from '../../../../js/api/admin/ValidationAdminApi';
 import { useDispatch } from 'react-redux';
 import { adminStateAction } from '../../../../js/api/redux_store/slice/adminLoginSlice';
-// import { noticeIndexAction } from '../../../../js/api/redux_store/slice/noticeIndexSlice';
 import noticeIndex_config from '../../../../js/api/config/noticeIndex_config';
-// import { useParams } from 'react-router-dom';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
 import { noticeIndexAction } from '../../../../js/api/redux_store/slice/noticeIndexSlice';
 import { Link, unstable_HistoryRouter, useNavigate } from 'react-router-dom';
 import ModifyNotice from './ModifyNotice';
+import Swal from 'sweetalert2';
 
 const AdminNoticeList = ({ setSelectedSideMenu }) => {
     const [noticeTable, setNoticeTable] = useState([]);
@@ -23,7 +22,6 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
     const [isLoading, setIsLoading] = useState(false);
     // const [noticeIndex, setNoticeIndex] = useState(0);
     const [isRefresh, setIsRefresh] = useState(0);
-    // let { noticeIndex } = useParams();
     const nav = useNavigate();
 
     // const noticeIndexDispatch = useDispatch();
@@ -76,7 +74,25 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
         }
     };
 
-    const deleteNotice = async (notice) => {
+    const deleteNotice = (index) => {
+        Swal.fire({
+            icon: 'warning',
+            title: '정말 삭제하시겠습니까?',
+            text: '삭제한 게시물은 복구가 어려울 수 있습니다.',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteNoticeConfirm(index);
+            }
+        });
+    };
+
+    const deleteNoticeConfirm = async (notice) => {
         try {
             setIsLoading(true);
             const noticeIndex = notice.no;
@@ -152,7 +168,11 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                         <tbody>
                             {isLoading ? (
                                 <tr>
-                                    <td colSpan={9}>로딩중.....</td>
+                                    <td colSpan={9}>
+                                        <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                        &nbsp;&nbsp;
+                                        <span role="status">Loading...</span>
+                                    </td>
                                 </tr>
                             ) : (
                                 (Array.isArray(noticeTable) ? noticeTable : []).map((notice) => (

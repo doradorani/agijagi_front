@@ -18,22 +18,6 @@ const toolbarOptions = [
     ['clean'], // remove formatting button
 ];
 
-// const upperToolbar = [
-//     ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-//     [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-//     [{ font: [] }],
-//     [{ align: [] }],
-//     [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
-//     [{ list: 'ordered' }, { list: 'bullet' }],
-// ];
-
-// const lowerToolbar = [
-//     [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
-//     [{ header: [1, 2, 3, 4, 5, 6, false] }],
-//     ['clean'], // remove formatting button
-//     ['link', 'image', 'video'],
-// ];
-
 // 옵션에 상응하는 포맷, 추가해주지 않으면 text editor에 적용된 스타일을 볼수 없음
 export const formats = [
     'header',
@@ -81,16 +65,6 @@ const QuillEditor = ({
     // quill 에디터 컴포넌트 ref
     const quillRef = useRef(null);
 
-    // modules를 통해 핸들러를 추가해주는 방법과 toolbar를 선택해서 핸들러를 추가해주는 방법이 있다
-    // const modules = {
-    //   toolbar: {
-    //     container: toolbarOptions,
-    //     handlers: {
-    //       image: handleImage
-    //     }
-    //   },
-    // };
-
     useEffect(() => {
         const handleImage = () => {
             // 이미지 핸들 로직
@@ -102,11 +76,6 @@ const QuillEditor = ({
             toolbar.addHandler('image', handleImage);
         }
     }, []);
-
-    // const addNoticeContent = (e) => {
-    //     setNoticeContent(e.target.value);
-    //     console.log(noticeContent);
-    // };
 
     return (
         // 테마 (bubble, snow, custom) https://quilljs.com/docs/themes/

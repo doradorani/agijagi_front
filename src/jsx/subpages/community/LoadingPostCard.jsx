@@ -25,11 +25,11 @@ const LoadingPostCard = () => {
                         <span className="visually-hidden">Loading...</span>
                     </div>
                     <div style={{ width: '100px' }}>
-                        <p class="placeholder-glow" style={{ margin: '0px', height: '20px', marginTop: '1px' }}>
-                            <span class="placeholder col-12 placeholder-sm"></span>
+                        <p className="placeholder-glow" style={{ margin: '0px', height: '20px', marginTop: '1px' }}>
+                            <span className="placeholder col-12 placeholder-sm"></span>
                         </p>
-                        <p class="placeholder-glow" style={{ margin: '0px' }}>
-                            <span class="placeholder col-6 placeholder-xs"></span>
+                        <p className="placeholder-glow" style={{ margin: '0px' }}>
+                            <span className="placeholder col-6 placeholder-xs"></span>
                         </p>
                     </div>
                 </div>
@@ -65,7 +65,7 @@ const LoadingPostCard = () => {
                     </h5>
 
                     <button
-                        class="btn flex"
+                        className="btn flex"
                         type="button"
                         disabled
                         style={{
@@ -81,7 +81,7 @@ const LoadingPostCard = () => {
                         }}
                     >
                         <span
-                            class="spinner-grow spinner-grow-sm"
+                            className="spinner-grow spinner-grow-sm"
                             aria-hidden="true"
                             style={{ width: '8rem', height: '8rem', marginBottom: '30px' }}
                         ></span>
@@ -104,7 +104,7 @@ const LoadingPostCard = () => {
                             }}
                         >
                             <span
-                                class="spinner-grow spinner-grow-sm"
+                                className="spinner-grow spinner-grow-sm"
                                 aria-hidden="true"
                                 style={{ width: '1.5rem', height: '1.5rem', marginRight: '5px' }}
                             ></span>
@@ -126,7 +126,7 @@ const LoadingPostCard = () => {
                             }}
                         >
                             <span
-                                class="spinner-grow spinner-grow-sm"
+                                className="spinner-grow spinner-grow-sm"
                                 aria-hidden="true"
                                 style={{ width: '1.5rem', height: '1.5rem', marginRight: '5px' }}
                             ></span>
@@ -148,7 +148,7 @@ const LoadingPostCard = () => {
                             }}
                         >
                             <span
-                                class="spinner-grow spinner-grow-sm"
+                                className="spinner-grow spinner-grow-sm"
                                 aria-hidden="true"
                                 style={{ width: '1.5rem', height: '1.5rem', marginRight: '5px' }}
                             ></span>

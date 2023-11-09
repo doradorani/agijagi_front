@@ -16,13 +16,13 @@ function App() {
             <BrowserRouter>
                 <ScrollToTop />
                 <Routes>
-                    <Route path='/*' element={<User />}></Route>
-                    <Route path='/admin/*' element={<AdminHome />}></Route>
-                    <Route path='/admin/sign_in' element={<AdminLogin />}></Route>
-                    <Route path='/admin/sign_up' element={<AdminSignUp />}></Route>
-                    <Route path='*' element={<NoMatch />}></Route>
+                    <Route path="/*" element={<User />}></Route>
+                    <Route path="/admin/*" element={<AdminHome />}></Route>
+                    <Route path="/admin/sign_in" element={<AdminLogin />}></Route>
+                    <Route path="/admin/sign_up" element={<AdminSignUp />}></Route>
+                    <Route path="*" element={<NoMatch />}></Route>
 
-                    <Route path='/login/oauth2/callback/kakao' element={<UserAuth />} />
+                    <Route path="/login/oauth2/callback/kakao" element={<UserAuth />} />
                 </Routes>
             </BrowserRouter>
         </>
