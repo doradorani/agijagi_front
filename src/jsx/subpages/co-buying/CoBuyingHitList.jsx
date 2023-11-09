@@ -8,16 +8,17 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import token_config from '../../../js/api/config/token_config';
+import { useValidationItem } from '../../../js/api/VlidationItem';
 
-const CoBuyingList = () => {
-    const server = token_config.server;
-
+const CoBuyingHitList = (selectedMenu, setSelectedSideMenu) => {
     const [cobuyList, setCobyuList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [listCnt, setListCnt] = useState(0);
     const [perPage] = useState(6);
     const [isLoading, setIsLoading] = useState(false);
+
+    const validateMyFunding = useValidationItem();
 
     // 페이지네이션을 10개씩 보이도록 수정
     const itemsPerPage = 10;
@@ -29,11 +30,15 @@ const CoBuyingList = () => {
     useEffect(() => {
         const listProduct = async () => {
             try {
-                const validateListResponse = await axios.get(`${server}/coBuy/list/` + currentPage + '/' + perPage);
+                validateMyFunding('get', '/coBuy/myHitProduct/' + currentPage + '/' + perPage).then((res) => {
+                    console.log(res);
 
-                setCobyuList(validateListResponse.data.data.coBuyProductDtos);
-                setTotalPages(validateListResponse.data.data.totalPages);
-                setListCnt(validateListResponse.data.data.productListCnt);
+                    if (res.success) {
+                        setCobyuList(res.data.myHitProducts);
+                        setTotalPages(res.data.totalPages);
+                        setListCnt(res.data.productListCnt);
+                    }
+                });
                 setIsLoading(true);
             } catch (error) {
                 console.error('Error Message:', error.message);
@@ -55,14 +60,15 @@ const CoBuyingList = () => {
     return (
         <>
             <div className='co-buying_list_wrap'>
-                <div className='co-buying_list_second_wrap'>
+                <div className='co-buying_list_second_wrap' style={{ marginTop: '100px' }}>
+                    <SideMenu selectedMenu={4} setSelectedSideMenu={setSelectedSideMenu} />
                     <div className='product_list'>
                         <div className='product_filter_container'>
                             {/* <div className="order_select_container yg_font"> */}
                             <div className=' flex yg_font' style={{ marginBottom: '30px' }}>
                                 <img src='/test_imgs/png/bag.png' style={{ width: '55px', marginRight: '15px' }} />
-                                <div style={{ fontSize: '40px', marginRight: '15px' }}>쇼핑하기</div>
-                                <div
+                                <div style={{ fontSize: '40px', marginRight: '15px' }}>좋아요한 상품</div>
+                                {/* <div
                                     style={{
                                         fontSize: '20px',
                                         display: 'flex',
@@ -71,7 +77,7 @@ const CoBuyingList = () => {
                                     }}
                                 >
                                     &#62;&nbsp;전체 상품
-                                </div>
+                                </div> */}
                             </div>
                             {/* <select className="order_select_selectbox">
                                 <option value="">전체</option>
@@ -79,13 +85,13 @@ const CoBuyingList = () => {
                                 <option value="Y">종료된</option>
                             </select> */}
                             {/* </div> */}
-                            <ul className='order_select_option_contianer'>
+                            {/* <ul className='order_select_option_contianer'>
                                 <li className='order_select_option bold'>추천순</li>
                                 <li className='order_select_option'>인기순</li>
                                 <li className='order_select_option'>모집금액순</li>
                                 <li className='order_select_option'>마감임박순</li>
                                 <li className='order_select_option'>최신순</li>
-                            </ul>
+                            </ul> */}
                         </div>
                         <div className='product_wrap_row'>
                             {cobuyList &&
@@ -144,4 +150,4 @@ const CoBuyingList = () => {
     );
 };
 
-export default CoBuyingList;
+export default CoBuyingHitList;
