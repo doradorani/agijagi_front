@@ -13,6 +13,7 @@ import { userInfoAction } from '../js/api/redux_store/slice/userInfoSlice';
 import { useValidationUser } from '../js/api/ValidationApi';
 import { useValidationItem } from '../js/api/VlidationItem';
 import userInfo_config from '../js/api/config/userInfo_config';
+import { userCobuyAction } from '../js/api/redux_store/slice/userCobuySlice';
 
 const Header = ({
     setSelectedMenu,
@@ -78,6 +79,8 @@ const Header = ({
                         userDetailAddress: '',
                     })
                 );
+                dataDispatch(userCobuyAction.setFund([]));
+                dataDispatch(userCobuyAction.setHit([]));
 
                 alert('로그아웃에 성공하였습니다.');
                 navigate('/');

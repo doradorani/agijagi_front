@@ -25,9 +25,8 @@ const AdminCoBuyingList = ({ setSelectedSideMenu }) => {
             try {
                 const validateListResponse = await validateListProductAdmin(
                     'get',
-                    '/coBuy/admin/list/' + currentPage + '/' + perPage
+                    '/coBuy/list/' + currentPage + '/' + perPage
                 );
-                console.log(validateListResponse.data.coBuyProductDtos);
 
                 setCobyuList(validateListResponse.data.coBuyProductDtos);
                 setTotalPages(validateListResponse.data.totalPages);
@@ -134,9 +133,10 @@ const AdminCoBuyingList = ({ setSelectedSideMenu }) => {
                                     </div>
                                 </div>
                                 <div className='product_wrap_row'>
-                                    {cobuyList.map((item, index) => (
-                                        <AdminProductCard key={index} productData={item} />
-                                    ))}
+                                    {cobuyList &&
+                                        cobuyList.map((item, index) => (
+                                            <AdminProductCard key={index} productData={item} />
+                                        ))}
                                 </div>
 
                                 <div aria-label='Page navigation example' style={{ marginTop: '10px' }}>

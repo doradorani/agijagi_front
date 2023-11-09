@@ -5,8 +5,6 @@ const AdminProductCard = ({ productData }) => {
     // const {no, id, name, price, content, start_date, end_date, img, min_num, status,
     //     option1, option2, option3, option4, option5, reg_date, mod_date, accumulate} = productData;
 
-    console.log('test==>', productData);
-
     return (
         <>
             <div className='product_order_card'>

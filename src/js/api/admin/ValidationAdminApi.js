@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import adminToken_config from '../config/adminToken_config';
 import moment from 'moment/moment';
 import { adminTokenAction } from '../redux_store/slice/adminTokenSlice';
+import Swal from 'sweetalert2';
 
 export function useValidationAdmin(method, url, formData) {
     const adminTokenDispatch = useDispatch();
@@ -37,11 +38,17 @@ export function useValidationAdmin(method, url, formData) {
             console.log('error ==> ' + error);
 
             if (error.response.status === 401) {
-                alert('관리자 로그인을 부탁드립니다.');
+                Swal.fire({
+                    title: '관리자 로그인이 필요한 기능입니다.',
+                    icon: 'warning',
+                });
                 navigate('/admin/sign_in');
                 throw error;
             } else if (error.response.status === 403) {
-                alert('관리자만 사용할 수 있습니다.');
+                Swal.fire({
+                    title: '관리자 전용 기능입니다.',
+                    icon: 'warning',
+                });
                 navigate('/');
                 throw error;
             } else {

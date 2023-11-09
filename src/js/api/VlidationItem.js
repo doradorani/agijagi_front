@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { tokenAction } from './redux_store/slice/tokenSlice';
 import token_config from './config/token_config';
 import moment from 'moment/moment';
+import Swal from 'sweetalert2';
 
 export function useValidationItem() {
     const tokenDispatch = useDispatch();
@@ -32,18 +33,24 @@ export function useValidationItem() {
             return response.data; // 데이터 반환
         } catch (error) {
             if (error.response.status === 401) {
-                alert('올바르지 않은 토큰입니다.');
+                Swal.fire({
+                    title: '로그인이 필요한 기능입니다.',
+                    icon: 'warning',
+                });
                 navigate('/');
-                throw error;
+                //throw error;
             } else if (error.response.status === 403) {
-                alert('관리자만 사용할 수 있습니다.');
+                Swal.fire({
+                    title: '사용자 전용기능입니다.',
+                    icon: 'warning',
+                });
                 navigate('/');
-                throw error;
+                //throw error;
             } else {
                 // 다른 오류 처리
                 console.error('Error:', error);
                 navigate('/');
-                throw error;
+                //throw error;
             }
         }
     };
