@@ -6,12 +6,14 @@ import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import { noticeIndexAction } from '../../../js/api/redux_store/slice/noticeIndexSlice';
 import noticeIndex_config from '../../../js/api/config/noticeIndex_config';
+import { Link, useParams } from 'react-router-dom';
 
 const NoticeTable = ({ setSelectedNotice }) => {
     const [noticeTable, setNoticeTable] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [perPage] = useState(10);
+    const { noticeId } = useParams();
     const [isLoading, setIsLoading] = useState(false);
 
     // 관리자 로그인 상태 검증 관련 state
@@ -90,9 +92,12 @@ const NoticeTable = ({ setSelectedNotice }) => {
                                     {notice.no}
                                 </td>
                                 <td style={{ textAlign: 'left' }}>
-                                    <a href="#none" onClick={() => moveToDetail(notice.no)}>
+                                    <Link
+                                        to={`/notice/detail_notice/${notice.no}`}
+                                        // onClick={noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(notice.no))}
+                                    >
                                         {notice.title}
-                                    </a>
+                                    </Link>
                                 </td>
                                 <td>{notice.admin_id}</td>
                                 <td>{notice.reg_date.substring(0, 10)}</td>

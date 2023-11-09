@@ -42,7 +42,7 @@ function User() {
                 setSelectedUserLoginBtn={setSelectedUserLoginBtn}
             />
             <Routes>
-                <Route path="/*" element={<Home setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}></Route>
+                <Route path="/" element={<Home setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}></Route>
                 <Route
                     path="/user_login"
                     element={<UserLogin setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}
@@ -76,7 +76,7 @@ function User() {
                 <Route path="/co-buying_list" element={<CoBuyingList />}></Route>
                 <Route path="/co-buying_detail" element={<CoBuyingDetail />}></Route>
                 <Route
-                    path="/notice"
+                    path="/notice/*"
                     element={
                         <Notice
                             selectedMenu={selectedMenu}
