@@ -2,15 +2,30 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import '../../../css/subpage/post.css';
+import Swal from 'sweetalert2';
 
-const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
+const Post = ({ data, setSelectedPost, previewImage, setPreviewImage }) => {
     const [byteCount, setByteCount] = useState(0);
     const [postReportReason, setPostReportReason] = useState('');
+
+    const postDate = new Date(data.reg_date);
+    const currentDate = new Date();
+    const timeDifference = currentDate - postDate;
+    const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+    const s3_img_path = data.imgs_path.split(',');
+    const s3_first_img_path = s3_img_path[0];
+
     // 추후에 postURL 각 포스트 주소값으로 직접 할당해야함
     const postURL = window.location.href;
 
     const copyPostURL = () => {
-        alert(`해당 링크가 복사되었습니다.\n LINK:${postURL}`);
+        Swal.fire({
+            icon: 'success',
+            title: `해당 링크가 복사되었습니다.`,
+            text: `${postURL}/detail_post/${data.no}`,
+        });
+        // alert(`해당 링크가 복사되었습니다.\n LINK:${postURL}/detail_post/${data.no}`);
     };
 
     const handleTextChange = (e) => {
@@ -51,11 +66,12 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                 <div className="flex_for_profile">
                     <div className="flex">
                         <div className="profile_img">
-                            <img src="/test_imgs/logo/full_logo.jpg" />
+                            <img src={data.img === null ? `/test_imgs/png/profile.png` : data.img} />
                         </div>
                         <div className="profile_info">
-                            <div className="profile_name">hee_hee</div>
-                            <div className="update_date">1일 전</div>
+                            <div className="profile_name">{data.nickname}</div>
+                            {/* <div className="update_date">{data.mod_date.substring(0, 10)}</div> */}
+                            <div className="update_date">{daysAgo == 0 ? '오늘' : `${daysAgo}일 전`}</div>
                         </div>
                     </div>
                     <Link>
@@ -69,21 +85,12 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                         </div>
                     </Link>
                 </div>
-                <div className="text_contents">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, ea similique! Iusto dignissimos
-                    consectetur quia totam. Doloribus ratione consectetur magni distinctio in, officiis nesciunt, sunt
-                    recusandae cumque maxime deleniti optio.
-                </div>
-                <Link className="none_underline" onClick={() => setSelectedPost(1)}>
+                <div className="text_contents">{data.post_text}</div>
+                <Link to={`/community/detail_post/${data.no}`} className="none_underline">
                     <div className="for_detail">자세히 보기</div>
                 </Link>
                 <div className="post_main_img">
-                    <img src="/test_imgs/diary_imgs/diary2.jpg" />
-                </div>
-                <div className="hashtag_btns flex">
-                    <div># Baby</div>
-                    <div># Memory</div>
-                    <div># Diary</div>
+                    <img src={s3_first_img_path} />
                 </div>
                 <div className="emotion_btns flex">
                     <div className="flex">
@@ -91,7 +98,7 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                             <div>
                                 <img className="emotion_btn" src="/test_imgs/png/heart.png" />
                             </div>
-                            <div className="emotion_btn_cnt">10</div>
+                            <div className="emotion_btn_cnt">{data.like_cnt}</div>
                         </a>
                     </div>
                     <div className="flex">
@@ -99,7 +106,7 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                             <div>
                                 <img className="emotion_btn" src="/test_imgs/png/like.png" />
                             </div>
-                            <div className="emotion_btn_cnt">12</div>
+                            <div className="emotion_btn_cnt">{data.great_cnt}</div>
                         </a>
                     </div>
                     <div className="flex">
@@ -107,13 +114,13 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                             <div>
                                 <img className="emotion_btn" src="/test_imgs/png/sad.png" />
                             </div>
-                            <div className="emotion_btn_cnt">0</div>
+                            <div className="emotion_btn_cnt">{data.sad_cnt}</div>
                         </a>
                     </div>
                 </div>
                 <div className="reply_cnt">
-                    <Link className="none_underline" onClick={() => setSelectedPost(1)}>
-                        댓글 5개
+                    <Link to={`/community/detail_post/${data.no}`} className="none_underline">
+                        댓글 {data.reply_cnt}개
                     </Link>
                 </div>
                 {/* 모달 START */}
@@ -131,6 +138,7 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                                 style={{ width: '450px', textAlign: 'center', fontWeight: 'bold' }}
                             >
                                 <div
+                                    className="hover_cursor"
                                     data-bs-toggle="modal"
                                     data-bs-target="#modal_for_post_declaration"
                                     style={{ color: 'red' }}
@@ -138,17 +146,24 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                                     신고
                                 </div>
                                 <hr />
-                                <a href="/detail">
-                                    <div>게시물로 이동</div>
-                                </a>
+                                <Link to={`/community/detail_post/${data.no}`} className="none_underline">
+                                    <div data-bs-dismiss="modal" aria-label="Close">
+                                        게시물로 이동
+                                    </div>
+                                </Link>
                                 <hr />
-                                <a onClick={copyPostURL}>
-                                    <CopyToClipboard text={postURL}>
+                                <a
+                                    className="hover_cursor none_underline"
+                                    onClick={copyPostURL}
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                >
+                                    <CopyToClipboard text={`${postURL}/detail_post/${data.no}`}>
                                         <div>링크 복사</div>
                                     </CopyToClipboard>
                                 </a>
                                 <hr />
-                                <div data-bs-dismiss="modal" aria-label="Close">
+                                <div className="hover_cursor" data-bs-dismiss="modal" aria-label="Close">
                                     취소
                                 </div>
                             </div>
@@ -165,7 +180,7 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                     <div className="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">
+                                <h1 className="modal-title fs-5 yg_font" id="exampleModalLabel">
                                     신고사유 작성하기
                                 </h1>
                                 <button
@@ -184,7 +199,7 @@ const Post = ({ setSelectedPost, previewImage, setPreviewImage }) => {
                                     value={postReportReason}
                                 ></textarea>
                             </div>
-                            <sup className="byte_for_upload" style={{ marginRight: '25px' }}>
+                            <sup className="byte_for_upload yg_font" style={{ marginRight: '25px' }}>
                                 (<span id="nowByte">{byteCount}</span>/2200bytes)
                             </sup>
                             <div className="modal-footer">

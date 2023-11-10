@@ -65,6 +65,19 @@
     min-width: 640px;
     min-height: 640px;
     border-radius: 20px;
+    object-fit: cover;
+}
+
+.post_main_img_in_detail > img {
+    margin-left: 20px;
+    margin-right: 20px;
+    max-width: 640px;
+    max-height: 640px;
+    min-width: 640px;
+    min-height: 640px;
+    border-radius: 20px;
+    object-fit: cover;
+    margin-bottom: 30px;
 }
 
 .hashtag_btns {
@@ -82,10 +95,15 @@
 }
 
 .emotion_btns {
-    margin: 25px 20px;
+    margin: 25px 20px 20px;
 }
 
-.emotion_btns > div {
+.emotion_btns_indetail {
+    margin: -5px 20px 25px;
+}
+
+.emotion_btns > div,
+.emotion_btns_indetail > div {
     margin-right: 15px;
     padding: 5px 10px;
     border-radius: 30px;

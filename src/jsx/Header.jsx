@@ -69,12 +69,12 @@ const Header = ({
             {isUserLogin.state === false && selectedUserLoginBtn === true && (
                 // Login Page Header START
                 <header>
-                    <div id='header_wrap_login'>
-                        <div className='login_btn_main_page'>
-                            <Link to='/user_login' style={{ marginRight: '0px' }}>
+                    <div id="header_wrap_login">
+                        <div className="login_btn_main_page">
+                            <Link to="/user_login" style={{ marginRight: '0px' }}>
                                 <button
-                                    type='button'
-                                    className='btn btn-outline-dark login_btn'
+                                    type="button"
+                                    className="btn btn-outline-dark login_btn"
                                     style={{ border: 'none' }}
                                 >
                                     로그인
@@ -88,42 +88,42 @@ const Header = ({
 
             {isUserLogin.state === false && selectedUserLoginBtn === false && (
                 <header>
-                    <div id='header_wrap'>
-                        <div className='logo_wrap'>
-                            <Link to='/'>
-                                <img className='logo_img' src='/test_imgs/logo/logo.png' />
+                    <div id="header_wrap">
+                        <div className="logo_wrap">
+                            <Link to="/">
+                                <img className="logo_img" src="/test_imgs/logo/logo.png" />
                                 아기자기
                             </Link>
                         </div>
-                        <div className='nav_bar row columns'>
-                            <ul className='menu *align-center *expanded text-center SMN_effect-14'>
+                        <div className="nav_bar row columns">
+                            <ul className="menu *align-center *expanded text-center SMN_effect-14">
                                 <li>
-                                    <Link to='/' onClick={() => headerMenuClickHandler(0)}>
+                                    <Link to="/" onClick={() => headerMenuClickHandler(0)}>
                                         홈
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/diary' onClick={() => headerMenuClickHandler(1)}>
+                                    <Link to="/diary" onClick={() => headerMenuClickHandler(1)}>
                                         육아 기록
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/community' onClick={() => headerMenuClickHandler(2)}>
+                                    <Link to="/community" onClick={() => headerMenuClickHandler(2)}>
                                         육아 커뮤니티
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/notice/list' onClick={() => headerMenuClickHandler(3)}>
+                                    <Link to="/notice/list" onClick={() => headerMenuClickHandler(3)}>
                                         공지사항
                                     </Link>
                                 </li>
                             </ul>
                         </div>
-                        <div className='login_btn_main_page'>
-                            <Link to='/user_login'>
+                        <div className="login_btn_main_page">
+                            <Link to="/user_login">
                                 <button
-                                    type='button'
-                                    className='btn btn-outline-dark'
+                                    type="button"
+                                    className="btn btn-outline-dark"
                                     style={{ border: 'none' }}
                                     onClick={() => setSelectedUserLoginBtn(true)}
                                 >
@@ -137,73 +137,73 @@ const Header = ({
             {/* After Login Page Header START*/}
             {isUserLogin.state === true && (
                 <header>
-                    <div id='header_wrap'>
-                        <div className='logo_wrap'>
-                            <Link to='/'>
-                                <img className='logo_img' src='/test_imgs/logo/logo.png' />
+                    <div id="header_wrap">
+                        <div className="logo_wrap">
+                            <Link to="/">
+                                <img className="logo_img" src="/test_imgs/logo/logo.png" />
                                 아기자기
                             </Link>
                         </div>
-                        <div className='nav_bar row columns'>
-                            <ul className='menu *align-center *expanded text-center SMN_effect-14'>
+                        <div className="nav_bar row columns">
+                            <ul className="menu *align-center *expanded text-center SMN_effect-14">
                                 <li>
-                                    <Link to='/' onClick={() => headerMenuClickHandler(0)}>
+                                    <Link to="/" onClick={() => headerMenuClickHandler(0)}>
                                         홈
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/diary' onClick={() => headerMenuClickHandler(1)}>
+                                    <Link to="/diary" onClick={() => headerMenuClickHandler(1)}>
                                         육아 기록
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/community' onClick={() => headerMenuClickHandler(2)}>
+                                    <Link to="/community" onClick={() => headerMenuClickHandler(2)}>
                                         육아 커뮤니티
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/notice/list' onClick={() => headerMenuClickHandler(3)}>
+                                    <Link to="/notice/list" onClick={() => headerMenuClickHandler(3)}>
                                         공지사항
                                     </Link>
                                 </li>
                             </ul>
                         </div>
-                        <div className='after_login_btn_main_page yg_font'>
-                            <div data-bs-toggle='dropdown' aria-expanded='false'>
-                                <a href='#none'>
+                        <div className="after_login_btn_main_page yg_font">
+                            <div data-bs-toggle="dropdown" aria-expanded="false">
+                                <a href="#none">
                                     <span>{userInfo_config.userNickname} 님</span>
                                     {/* <img className='header_user_profile_img' src='/test_imgs/png/profile.png' /> */}
                                     <img
-                                        className='header_user_profile_img'
+                                        className="header_user_profile_img"
                                         src={userInfo_config.userProfile || '/test_imgs/png/profile.png'}
                                         style={{ width: '50px', height: '50px', objectFit: 'cover' }}
                                     />
                                 </a>
                             </div>
                             <ul
-                                className='dropdown-menu'
+                                className="dropdown-menu"
                                 style={{
                                     textAlign: 'center',
                                 }}
                             >
                                 <li>
                                     <button
-                                        className='dropdown-item profile_dropdown_menu_li'
-                                        type='button'
+                                        className="dropdown-item profile_dropdown_menu_li"
+                                        type="button"
                                         onClick={handleUserInfo}
                                     >
                                         회원 정보 조회 및 수정
                                     </button>
                                 </li>
                                 <li>
-                                    <button className='dropdown-item profile_dropdown_menu_li' type='button'>
+                                    <button className="dropdown-item profile_dropdown_menu_li" type="button">
                                         좋아요한 게시물
                                     </button>
                                 </li>
                                 <li>
                                     <button
-                                        className='dropdown-item profile_dropdown_menu_li'
-                                        type='button'
+                                        className="dropdown-item profile_dropdown_menu_li"
+                                        type="button"
                                         onClick={handleMyHit}
                                     >
                                         좋아요한 상품
@@ -211,8 +211,8 @@ const Header = ({
                                 </li>
                                 <li>
                                     <button
-                                        className='dropdown-item profile_dropdown_menu_li'
-                                        type='button'
+                                        className="dropdown-item profile_dropdown_menu_li"
+                                        type="button"
                                         onClick={handleMyFunding}
                                     >
                                         펀딩 상품 조회
@@ -220,8 +220,7 @@ const Header = ({
                                 </li>
                                 <li>
                                     <a
-                                        className='dropdown-item profile_dropdown_menu_li'
-                                        href='#none5'
+                                        className="dropdown-item profile_dropdown_menu_li"
                                         onClick={() => logOutHandler()}
                                     >
                                         로그아웃

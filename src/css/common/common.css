@@ -80,3 +80,7 @@ body::-webkit-scrollbar-track {
     text-decoration: none;
     color: #000;
 }
+
+.hover_cursor:hover {
+    cursor: pointer;
+}
