@@ -20,7 +20,7 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
                 const validateResponse = validationUser('post', '/user/validate');
                 try {
                     validationUser('get', '/diary/childrenPictures').then((res) => {
-                        if (res.success) {
+                        if (res != undefined && res.success) {
                             setForuCutsData(res.data);
                         }
                     });
@@ -45,7 +45,9 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
     const getTitle = (index) => fourCutsData?.[index]?.title || '';
 
     const ImgContainer = styled.div`
-        src: ${(props) => props.url};
+        img {
+            src: ${(props) => props.url};
+        }
     `;
 
     const toggleText = (index) => {
@@ -65,77 +67,80 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
 
     return (
         <>
-            <div className="post_section">
-                <ScrollToTop />
-                <DiaryHeader select={'인생 네컷'} src={'/test_imgs/png/diary3.png'} />
-                <div style={{ marginBottom: '10px', height: '20px' }}>
-                    <button
-                        className="btn btn-secondary dropdown-toggle"
-                        type="button"
-                        id="dropdownMenu2"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                        style={{ float: 'right' }}
-                    >
-                        {/* {selectedChild != null ? selectedChild : '아이 선택'} */}
-                        아이 선택
-                    </button>
-                    <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        {/* {(fourCutsData !== null && Array.isArray(fourCutsData) ? fourCutsData : []).map((idx) => (
+            <div className="post_full_section">
+                <div className="post_section">
+                    <div style={{ paddingLeft: '1.7%' }}>
+                        <DiaryHeader select={'인생네컷'} src={'/test_imgs/png/diary3.png'} />
+                    </div>
+                    <div style={{ marginBottom: '10px', height: '20px' }}>
+                        <button
+                            className="btn btn-secondary dropdown-toggle"
+                            type="button"
+                            id="dropdownMenu2"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            style={{ float: 'right' }}
+                        >
+                            {/* {selectedChild != null ? selectedChild : '아이 선택'} */}
+                            아이 선택
+                        </button>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            {/* {(fourCutsData !== null && Array.isArray(fourCutsData) ? fourCutsData : []).map((idx) => (
                         <li>
                             <button className="dropdown-item" type="button" onClick={() => nameClick(idx.no, idx.name)}>
                                 {idx.name}
                             </button>
                         </li>
                     ))} */}
-                        <li>김란희</li>
-                    </ul>
-                </div>
-                <div className="four_cuts_album_wrap">
-                    <div className="four_cuts_photos">
-                        <div className="four_cuts_album_containter">
-                            <div className="four_cust_header"></div>
-                            <div className="four_cuts_photos">
-                                {[0, 1, 2, 3].map((index) => (
-                                    <ImgContainer
-                                        key={index}
-                                        className="photo_frame"
-                                        onMouseEnter={() => toggleText(index)}
-                                        onMouseLeave={() => toggleText(index)}
-                                    >
-                                        <img
-                                            id={'cuts_img' + index}
-                                            src={getImageUrl(index)}
-                                            alt={`description ${index}`}
-                                            style={{ height: '200px' }}
-                                        />
-                                        <span
-                                            id={'desc' + index}
-                                            className={
-                                                showText[index]
-                                                    ? 'photo_description four_cuts_show_text'
-                                                    : 'photo_description four_cuts_hide_text'
-                                            }
+                            <li>김란희</li>
+                        </ul>
+                    </div>
+                    <div className="four_cuts_album_wrap">
+                        <div className="four_cuts_photos">
+                            <div className="four_cuts_album_containter">
+                                <div className="four_cust_header"></div>
+                                <div className="four_cuts_photos">
+                                    {[0, 1, 2, 3].map((index) => (
+                                        <ImgContainer
+                                            key={index}
+                                            className="photo_frame"
+                                            onMouseEnter={() => toggleText(index)}
+                                            onMouseLeave={() => toggleText(index)}
                                         >
-                                            {getTitle(index)}
-                                        </span>
-                                    </ImgContainer>
-                                ))}
+                                            <img
+                                                id={'cuts_img' + index}
+                                                src={getImageUrl(index)}
+                                                alt={`description ${index}`}
+                                                style={{ height: '200px' }}
+                                            />
+                                            <span
+                                                id={'desc' + index}
+                                                className={
+                                                    showText[index]
+                                                        ? 'photo_description four_cuts_show_text'
+                                                        : 'photo_description four_cuts_hide_text'
+                                                }
+                                            >
+                                                {getTitle(index)}
+                                            </span>
+                                        </ImgContainer>
+                                    ))}
+                                </div>
+                                <div className="four_cust_footer">
+                                    <p className="four_cuts_title"></p>
+                                    <p className="four_cuts_date">
+                                        {today.getFullYear() +
+                                            '-' +
+                                            ('0' + (today.getMonth() + 1)).slice(-2) +
+                                            '-' +
+                                            ('0' + today.getDate()).slice(-2)}
+                                    </p>
+                                </div>
                             </div>
-                            <div className="four_cust_footer">
-                                <p className="four_cuts_title"></p>
-                                <p className="four_cuts_date">
-                                    {today.getFullYear() +
-                                        '-' +
-                                        ('0' + (today.getMonth() + 1)).slice(-2) +
-                                        '-' +
-                                        ('0' + today.getDate()).slice(-2)}
-                                </p>
-                            </div>
+                            <button value="사진 저장" onClick={onFourCutCapture} className="btn primary-btn">
+                                사진 저장
+                            </button>
                         </div>
-                        <button value="사진 저장" onClick={onFourCutCapture} className="btn primary-btn">
-                            사진 저장
-                        </button>
                     </div>
                 </div>
             </div>

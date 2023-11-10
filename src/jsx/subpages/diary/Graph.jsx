@@ -6,6 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import { useDispatch } from 'react-redux';
+import DiaryHeader from './DiaryHeader';
 
 const Container = styled.div`
     width: 90vw;
@@ -25,7 +26,7 @@ const Graph = ({ adContents, isLoading, setIsLoading, validationUser }) => {
                 const validateResponse = validationUser('post', '/user/validate');
                 try {
                     validationUser('get', '/childHealth/childNotes/' + params.childNo).then((res) => {
-                        if (res.success) {
+                        if (res != undefined && res.success) {
                             setChildGraphData(res.data);
                         }
                     });
@@ -47,7 +48,7 @@ const Graph = ({ adContents, isLoading, setIsLoading, validationUser }) => {
     const graphClick = (no) => {
         try {
             validationUser('get', '/childHealth/childNotes/' + no).then((res) => {
-                if (res.success) {
+                if (res != undefined && res.success) {
                     setChildGraphData(res.data);
                 }
             });
@@ -139,62 +140,82 @@ const Graph = ({ adContents, isLoading, setIsLoading, validationUser }) => {
             : null;
 
     return (
-        <div className="diary_wrap">
-            <div className="diary_second_wrap">
-                <div className="diary_section" style={{ width: '100%' }}>
-                    <div className="diary_section_header flex" style={{ margin: '10px 0' }}>
-                        <p className="yg_font" style={{ fontSize: '2rem' }}>
-                            {graphData.length > 0 && Array.isArray(graphData)
-                                ? '우리   ' + graphData[0].cd_name
-                                : '우리   아이'}
-                            &nbsp; 성장 기록
-                        </p>
-                        <div className="go_to_write_health_note" style={{ margin: 'auto 0' }}>
-                            <Link to="/diary/register_child_health">
-                                <input type="button" value="오늘의 건강 기록 작성" className="btn btn-primary" />
-                            </Link>
-                        </div>
+        <>
+            <div className="post_full_section">
+                <div className="post_section">
+                    <div style={{ paddingLeft: '1.7%' }}>
+                        <DiaryHeader select={'육아 수첩'} src={'/test_imgs/png/diary1.png'} />
                     </div>
-                    <div className="dropdown">
-                        <button
-                            className="btn btn-secondary dropdown-toggle"
-                            type="button"
-                            id="dropdownMenu2"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                            style={{ float: 'right' }}
-                        >
-                            {graphData.length > 0 && Array.isArray(graphData) ? graphData[0].cd_name : '아이 선택'}
-                        </button>
-                        <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            {(childGraphData !== null ? childList : []).map((idx) => (
-                                <li>
-                                    <button className="dropdown-item" type="button" onClick={() => graphClick(idx.no)}>
-                                        {idx.name}
+                    <div className="diary_wrap">
+                        <div className="diary_second_wrap">
+                            <div className="diary_section" style={{ width: '100%' }}>
+                                <div className="diary_section_header flex" style={{ margin: '10px 0' }}>
+                                    <p className="yg_font" style={{ fontSize: '2rem' }}>
+                                        {graphData.length > 0 && Array.isArray(graphData)
+                                            ? '우리   ' + graphData[0].cd_name
+                                            : '우리   아이'}
+                                        &nbsp; 성장 기록
+                                    </p>
+                                    <div className="go_to_write_health_note" style={{ margin: 'auto 0' }}>
+                                        <Link to="/diary/register_child_health">
+                                            <input
+                                                type="button"
+                                                value="오늘의 건강 기록 작성"
+                                                className="btn btn-primary"
+                                            />
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="dropdown">
+                                    <button
+                                        className="btn btn-secondary dropdown-toggle"
+                                        type="button"
+                                        id="dropdownMenu2"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                        style={{ float: 'right' }}
+                                    >
+                                        {graphData.length > 0 && Array.isArray(graphData)
+                                            ? graphData[0].cd_name
+                                            : '아이 선택'}
                                     </button>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="area_for_graph_detail">
-                        {graphData.length > 0 ? (
-                            <Container>
-                                <Line type="line" data={data} />
-                            </Container>
-                        ) : (
-                            <div
-                                className="yg_font bold"
-                                style={{ width: '90vw', maxWidth: '800px', textAlign: 'center' }}
-                            >
-                                <span style={{ lineHeight: '250px', height: '250px' }}>
-                                    아이를 선택해주시거나 건강 기록을 작성해주세요
-                                </span>
+                                    <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                        {(childGraphData !== null ? childList : []).map((idx) => (
+                                            <li>
+                                                <button
+                                                    className="dropdown-item"
+                                                    type="button"
+                                                    onClick={() => graphClick(idx.no)}
+                                                >
+                                                    {idx.name}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="area_for_graph_detail">
+                                    {graphData.length > 0 ? (
+                                        <Container>
+                                            <Line type="line" data={data} />
+                                        </Container>
+                                    ) : (
+                                        <div
+                                            className="yg_font bold"
+                                            style={{ width: '90vw', maxWidth: '800px', textAlign: 'center' }}
+                                        >
+                                            <span style={{ lineHeight: '350px', height: '350px', fontSize: '1.6rem' }}>
+                                                건강 기록을 작성해주세요
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                        )}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            {adContents}
+        </>
     );
 };
 

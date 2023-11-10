@@ -21,6 +21,7 @@ import DiaryPost from './diary/DiaryPost.jsx';
 const Diary = ({}) => {
     const validationUser = useValidationUser();
     const [isLoading, setIsLoading] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
 
     const sideMenu = <SideMenu selectedMenu={1} />;
 
@@ -58,6 +59,8 @@ const Diary = ({}) => {
                             path="/diary_book_detail/:childNo"
                             element={
                                 <DiaryBookDetail
+                                    isUpdate={isUpdate}
+                                    setIsUpdate={setIsUpdate}
                                     isLoading={isLoading}
                                     setIsLoading={setIsLoading}
                                     validationUser={validationUser}
@@ -133,6 +136,7 @@ const Diary = ({}) => {
                             path="/children_health_list"
                             element={
                                 <CalendarListVer
+                                    adContents={adContents}
                                     isLoading={isLoading}
                                     setIsLoading={setIsLoading}
                                     validationUser={validationUser}
@@ -143,6 +147,7 @@ const Diary = ({}) => {
                             path="/children_health_note/:childNo"
                             element={
                                 <Graph
+                                    adContents={adContents}
                                     isLoading={isLoading}
                                     setIsLoading={setIsLoading}
                                     validationUser={validationUser}

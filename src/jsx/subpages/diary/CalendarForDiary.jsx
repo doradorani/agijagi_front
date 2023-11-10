@@ -23,7 +23,7 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
                 const validateResponse = validationUser('post', '/user/validate');
                 try {
                     validationUser('get', '/diary/dailyDiaries').then((res) => {
-                        if (res.success) {
+                        if (res != undefined && res.success) {
                             setDiaryCalendarData(res.data);
                         }
                     });
@@ -43,17 +43,63 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
     }, []);
 
     const eventClick = (clickInfo) => {
-        const { title, display, date, id, groupId } = clickInfo.event;
-        console.log(display);
-        console.log(clickInfo);
+        const { title, display, date, id, groupId, constraint } = clickInfo.event;
+        console.log(constraint);
 
         Swal.fire({
             title: title,
             text: display,
-            confirmButtonText: '확인',
+            imageUrl: constraint,
+            imageWidth: 350,
+            imageHeight: 350,
+            showConfirmButton: true,
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: '수정',
+            denyButtonText: '삭제',
+            cancelButtonText: '닫기',
         }).then((res) => {
             if (res.isConfirmed) {
-            } else {
+                navigate('/diary/modify_child_info/' + groupId + '/' + id);
+            } else if (res.isDenied) {
+                Swal.fire({
+                    title: '정말 삭제하시겠습니까?',
+                    text: '삭제하시면 복구가 불가능합니다.',
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    cancelButtonText: '아니오',
+                    confirmButtonText: '예',
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        try {
+                            validationUser(
+                                'delete',
+                                '/diary/dailyDiary/' + groupId + '/' + id,
+                                null,
+                                '/diary/dailyDiaries'
+                            ).then((res) => {
+                                if (res != undefined && res.success) {
+                                    setDiaryCalendarData(res.data);
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: '성공적으로 삭제되었습니다.',
+                                        content: '*^^*',
+                                        confirmButtonText: '확인',
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: '삭제하지 못했습니다.',
+                                        content: '다시 시도해주세요',
+                                        confirmButtonText: '확인',
+                                    });
+                                }
+                            });
+                        } catch (error) {
+                            console.log(error);
+                        }
+                    }
+                });
             }
         });
     };
@@ -67,6 +113,7 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
             title: idx.cd_name + ' [' + idx.title + ']',
             display: idx.content,
             date: idx.reg_date,
+            constraint: idx.img,
             color: idx.sequence == 1 ? color[0] : idx.sequence == 2 ? color[1] : idx.sequence == 3 ? color[2] : 'gold',
             allDay: 1,
             id: idx.no,
@@ -76,7 +123,6 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
 
     return (
         <div className="post_full_section">
-            <ScrollToTop />
             <DiaryHeader select={'달력'} src={'/test_imgs/png/diary3.png'} />
             {diaryCalendarData == null ? (
                 <div>로딩중</div>

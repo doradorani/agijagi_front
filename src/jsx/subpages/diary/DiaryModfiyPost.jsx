@@ -24,7 +24,7 @@ const DiaryModfiyPost = ({ adContents, validationUser, setIsLoading, isLoading }
                 try {
                     validationUser('get', '/diary/dailyDiaryDetail/' + params.childNo + '/' + params.diaryNo).then(
                         (res) => {
-                            if (res.success) {
+                            if (res != undefined && res.success) {
                                 setDiaryModifyData(res.data);
                             }
                         }
@@ -94,7 +94,7 @@ const DiaryModfiyPost = ({ adContents, validationUser, setIsLoading, isLoading }
                         '/diary/dailyDiaryDetail/' + params.childNo + '/' + params.diaryNo,
                         formData
                     ).then((res) => {
-                        if (res.success) {
+                        if (res != undefined && res.success) {
                             Swal.fire({
                                 icon: 'success',
                                 title: '정상적으로 수정되었습니다.',
@@ -128,6 +128,8 @@ const DiaryModfiyPost = ({ adContents, validationUser, setIsLoading, isLoading }
         });
     };
 
+    console.log(diaryModifyData?.fourcuts_checked);
+
     const handleChange = (e) => {
         setImg(e[0]);
     };
@@ -146,8 +148,43 @@ const DiaryModfiyPost = ({ adContents, validationUser, setIsLoading, isLoading }
                     </div>
                     <div className="children_wrap">
                         <div className="children_container">
-                            <div className="children_header">
-                                <div className="children_header_title bold">오늘의 일기 수정</div>
+                            <div className="children_header flex">
+                                <div className="children_header_title bold" style={{ paddingLeft: '95px' }}>
+                                    오늘의 일기 수정
+                                </div>
+                                {diaryModifyData != null && (
+                                    <div
+                                        className="like_button diary_like"
+                                        style={{ textAlign: 'center', border: 'none', width: '150px' }}
+                                    >
+                                        <label htmlFor="checkbox" className="like_box">
+                                            <input
+                                                type="checkbox"
+                                                id="checkbox"
+                                                hidden
+                                                defaultValue={diaryModifyData?.fourcuts_checked == 1 ? 'checked' : null}
+                                            />
+                                            <svg
+                                                t="1689815540548"
+                                                className="icon"
+                                                viewBox="0 0 1024 1024"
+                                                version="1.1"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                p-id="2271"
+                                            >
+                                                <path
+                                                    d="M742.4 101.12A249.6 249.6 0 0 0 512 256a249.6 249.6 0 0 0-230.72-154.88C143.68 101.12 32 238.4 32 376.32c0 301.44 416 546.56 480 546.56s480-245.12 480-546.56c0-137.92-111.68-275.2-249.6-275.2z"
+                                                    fill="#231F20"
+                                                    p-id="2272"
+                                                    id="heart"
+                                                ></path>
+                                            </svg>
+                                            <span></span>
+                                        </label>
+
+                                        <div className="yg_font">인생 네컷</div>
+                                    </div>
+                                )}
                             </div>
                             <hr style={{ margin: '25px 0 10px 0', width: '100%' }} />
                             {diaryModifyData != null && (
