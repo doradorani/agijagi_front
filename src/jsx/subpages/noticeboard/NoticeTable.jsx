@@ -19,7 +19,7 @@ const NoticeTable = ({ setSelectedNotice }) => {
     // 관리자 로그인 상태 검증 관련 state
     const userLoginDispatch = useDispatch();
     const noticeIndexDispatch = useDispatch();
-    const validationUserGetTable = useValidationUser('get', '/notice/notices/' + currentPage + '/' + perPage, null);
+    const validationUserGetTable = useValidationUser();
 
     useEffect(() => {
         // 서버에서 공지사항 데이터 가져오는 함수
@@ -27,11 +27,15 @@ const NoticeTable = ({ setSelectedNotice }) => {
             try {
                 setIsLoading(true);
                 // 관리자 로그인 상태 검증
-                const validateUserResponse = await validationUserGetTable();
-                setNoticeTable(validateUserResponse.data.noticeDtos);
-                setTotalPages(validateUserResponse.data.totalPages);
+                const validateUserResponse = await validationUserGetTable(
+                    'get',
+                    '/notice/notices/' + currentPage + '/' + perPage,
+                    null
+                );
+                setNoticeTable(validateUserResponse?.data?.noticeDtos);
+                setTotalPages(validateUserResponse?.data?.totalPages);
 
-                console.log(validateUserResponse.data);
+                console.log(validateUserResponse?.data);
             } catch (error) {
                 console.error('Error fetching notices:', error);
                 userLoginDispatch(userStateAction.setState(false));
@@ -48,12 +52,12 @@ const NoticeTable = ({ setSelectedNotice }) => {
         }
     };
 
-    const moveToDetail = (index) => {
-        console.log('moveToDetail CALLED!!');
-        noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(index));
-        console.log(noticeIndex_config.noticeIndexState);
-        setSelectedNotice(1);
-    };
+    // const moveToDetail = (index) => {
+    //     console.log('moveToDetail CALLED!!');
+    //     noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(index));
+    //     console.log(noticeIndex_config.noticeIndexState);
+    //     setSelectedNotice(1);
+    // };
 
     return (
         <div className="nn_font" style={{ width: '800px' }}>
@@ -87,22 +91,22 @@ const NoticeTable = ({ setSelectedNotice }) => {
                         </tr>
                     ) : (
                         (Array.isArray(noticeTable) ? noticeTable : []).map((notice) => (
-                            <tr key={notice.no} style={{ textAlign: 'center' }}>
+                            <tr key={notice?.no} style={{ textAlign: 'center' }}>
                                 <td scope="row" style={{ fontWeight: 'bold' }}>
-                                    {notice.no}
+                                    {notice?.no}
                                 </td>
                                 <td style={{ textAlign: 'left' }}>
                                     <Link
-                                        to={`/notice/detail_notice/${notice.no}`}
+                                        to={`/notice/detail_notice/${notice?.no}`}
                                         // onClick={noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(notice.no))}
                                     >
-                                        {notice.title}
+                                        {notice?.title}
                                     </Link>
                                 </td>
-                                <td>{notice.admin_id}</td>
-                                <td>{notice.reg_date.substring(0, 10)}</td>
-                                <td>{notice.attach_cnt}</td>
-                                <td>{notice.hit}</td>
+                                <td>{notice?.admin_id}</td>
+                                <td>{notice?.reg_date.substring(0, 10)}</td>
+                                <td>{notice?.attach_cnt}</td>
+                                <td>{notice?.hit}</td>
                             </tr>
                         ))
                     )}

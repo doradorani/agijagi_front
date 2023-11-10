@@ -97,7 +97,8 @@ div .my_posts_post_main_img > div {
     opacity: 1;
 } */
 
-.my_posts_post_main_img > img {
+.my_posts_post_main_img > img,
+.my_posts_contents_wrap > button {
     margin: 30px 20px 0px 20px;
     max-width: 310px;
     max-height: 240px;
@@ -111,7 +112,6 @@ div .my_posts_post_main_img > div {
     padding: 0px 10px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 }
 
 .my_post_title {
@@ -123,5 +123,5 @@ div .my_posts_post_main_img > div {
 
 .division_line_in_posts {
     margin: 0 auto;
-    width: 700px;
+    width: 900px;
 }
