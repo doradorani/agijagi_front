@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/common/common.css';
 import '../css/common/header.css';
 import isUserLogin from '../js/api/config/userLogin_config';
-import token_config from '../js/api/config/token_config';
 import { useDispatch } from 'react-redux';
 import { userStateAction } from '../js/api/redux_store/slice/userLoginSlice';
 import { userInfoAction } from '../js/api/redux_store/slice/userInfoSlice';
