@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
 import { adminStateAction } from '../../../../js/api/redux_store/slice/adminLoginSlice';
+import AdminCountdownTimer from '../../../../js/api/admin/AdminCountdownTimer';
 
 const AdminCoBuyingDetail = () => {
     const location = useLocation();
@@ -138,17 +139,7 @@ const AdminCoBuyingDetail = () => {
                                         <span className='co-buying_remainingsdays_wrapper'>
                                             {detailCobuy.adminCobuyStart && detailCobuy.adminCobuyEnd ? (
                                                 <span>
-                                                    {detailCobuy.adminCobuyStart} ~ {detailCobuy.adminCobuyEnd}{' '}
-                                                    &nbsp;&nbsp;
-                                                    <span className='bold'>
-                                                        (
-                                                        {Math.floor(
-                                                            (detailCobuy.adminCobuyEnd_Date -
-                                                                detailCobuy.adminCobuyStart_Date) /
-                                                                (1000 * 60 * 60 * 24)
-                                                        )}
-                                                        일 남음)
-                                                    </span>
+                                                    <AdminCountdownTimer detailCobuy={detailCobuy} />{' '}
                                                 </span>
                                             ) : (
                                                 ''

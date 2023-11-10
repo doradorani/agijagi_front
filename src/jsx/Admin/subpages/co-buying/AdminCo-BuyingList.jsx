@@ -132,12 +132,22 @@ const AdminCoBuyingList = ({ setSelectedSideMenu }) => {
                                         </ul>
                                     </div>
                                 </div>
+                                <div className={cobuyList.length === 0 ? '' : 'product_wrap_row'}>
+                                    {cobuyList.length === 0 ? (
+                                        <p style={{ textAlign: 'center', fontSize: '24px' }}>상품이 없습니다</p>
+                                    ) : (
+                                        cobuyList.map((item, index) => (
+                                            <AdminProductCard key={index} productData={item} />
+                                        ))
+                                    )}
+                                </div>
+                                {/* 
                                 <div className='product_wrap_row'>
                                     {cobuyList &&
                                         cobuyList.map((item, index) => (
                                             <AdminProductCard key={index} productData={item} />
                                         ))}
-                                </div>
+                                </div> */}
 
                                 <div aria-label='Page navigation example' style={{ marginTop: '10px' }}>
                                     <ul className='pagination justify-content-center'>

@@ -10,6 +10,9 @@ import cobuy_config from '../../../js/api/config/userCobuy_config';
 import { useValidationItem } from '../../../js/api/VlidationItem';
 import Swal from 'sweetalert2';
 import { userCobuyAction } from '../../../js/api/redux_store/slice/userCobuySlice';
+import CountdownTimer from '../../../js/api/CountdownTimer';
+import userCobuy_config from '../../../js/api/config/userCobuy_config';
+import userLogin_config from '../../../js/api/config/userLogin_config';
 
 const CoBuyingDetail = ({ setSelectedSideMenu }) => {
     const location = useLocation();
@@ -29,15 +32,37 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
     const userCoBuyDispatch = useDispatch();
     const navigate = useNavigate();
 
+    const today = new Date();
+    const [fundingText, setFundingText] = useState('');
+
+    const validateOptionFunding = useValidationItem();
+
     useEffect(() => {
         const listProduct = async () => {
             try {
-                const validateListResponse = await axios.get(`${server}/coBuy/detailProduct/` + detailProductNo);
+                let detailResponse;
 
-                const detailResponse = validateListResponse.data.data.coBuyDetailProduct;
+                if (userLogin_config.state) {
+                    await validateOptionFunding('get', '/coBuy/userDetailProduct/' + detailProductNo).then((res) => {
+                        detailResponse = res.data.coBuyDetailProduct;
+
+                        const myOptionResponse = res.data.myCobuyOption;
+                        if (myOptionResponse !== null && myOptionResponse !== undefined && myOptionResponse !== '') {
+                            setSelectedOption(myOptionResponse);
+                        }
+                    });
+                } else {
+                    const validateListResponse = await axios.get(`${server}/coBuy/detailProduct/` + detailProductNo);
+                    detailResponse = validateListResponse.data.data.coBuyDetailProduct;
+                }
 
                 const startDate = new Date(detailResponse.start_date);
                 const endDate = new Date(detailResponse.end_date);
+
+                if (today < startDate) setFundingText('펀딩 대기중');
+                else if (today > endDate) setFundingText('펀딩 마감');
+                else if (userCobuy_config.fundings.includes(detailProductNo)) setFundingText('펀딩 취소');
+                else setFundingText('펀딩하기');
 
                 setDetailCobuy({
                     cobuyNo: detailResponse.no,
@@ -65,22 +90,45 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
 
                 setIsLoading(true);
             } catch (error) {
-                console.error('Error Message:', error.message);
-                console.error('Status Code:', error.response.status);
+                console.error('Error :', error);
                 userCoBuyDispatch(userStateAction.setState(false));
             } finally {
                 setIsLoading(false);
             }
         };
         listProduct();
-    }, []);
+    }, [fundingText]);
 
     const handleOptionChange = (e) => {
         const value = e.target.value;
         setSelectedOption(value); // 선택한 값을 상태 변수에 저장
     };
 
-    const userFundingHandler = async () => {
+    const userFundingHandler = () => {
+        if (fundingText === '펀딩 대기중') {
+            Swal.fire({
+                text: '펀딩 대기중입니다!',
+                icon: 'warning',
+                timer: 1000,
+                showConfirmButton: false,
+            });
+            return;
+        } else if (fundingText === '펀딩 마감') {
+            Swal.fire({
+                text: '펀딩이 마감되었습니다.',
+                icon: 'error',
+                timer: 1000,
+                showConfirmButton: false,
+            });
+            return;
+        } else if (fundingText === '펀딩하기') {
+            confirmFunding();
+        } else {
+            cancelFunding();
+        }
+    };
+
+    const confirmFunding = async () => {
         if (selectedOption === '' || selectedOption === null) {
             Swal.fire({
                 title: '옵션을 선택해주세요',
@@ -91,7 +139,6 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                 title: '펀딩 하시겠습니까?',
                 text: detailCobuy.cobuyName,
                 icon: 'warning',
-
                 showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
@@ -100,26 +147,56 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                 //reverseButtons: true, // 버튼 순서 거꾸로
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // 모달창에서 확인 버튼을 누른 경우
-
                     validateFunding('post', '/coBuy/fundingProduct/' + detailProductNo + '/' + selectedOption)
                         .then((fundingResponse) => {
                             if (fundingResponse.data == 0) {
                                 Swal.fire('이미 펀딩한 상품입니다~!.', '다시 확인해주세요!', 'warning');
                             } else if (fundingResponse.success) {
                                 Swal.fire('펀딩이 완료되었습니다.', '화끈하시네요~!', 'success');
+                                const updatedFundings = [...userCobuy_config.fundings, detailProductNo];
+                                userCoBuyDispatch(userCobuyAction.setFund(updatedFundings));
+                                setFundingText('펀딩 취소');
                             }
                         })
                         .catch((error) => {
                             console.log(error);
-                        })
-                        .finally(() => {
-                            //setSelectedSideMenu(3);
-                            navigate('/community');
                         });
                 }
             });
         }
+    };
+
+    const cancelFunding = async () => {
+        Swal.fire({
+            title: '펀딩을 취소하시겠습니까?',
+            text: detailCobuy.cobuyName,
+            icon: 'warning',
+            showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            //reverseButtons: true, // 버튼 순서 거꾸로
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log('test');
+                validateFunding('post', '/coBuy/cancelFundingProduct/' + detailProductNo)
+                    .then((fundingResponse) => {
+                        if (fundingResponse.success) {
+                            Swal.fire('펀딩이 완료되었습니다.', '화끈하시네요~!', 'success');
+                            const updatedFundings = userCobuy_config.fundings.filter(
+                                (productNo) => productNo !== detailProductNo
+                            );
+                            userCoBuyDispatch(userCobuyAction.setFund(updatedFundings));
+                            setSelectedOption('');
+                            setFundingText('펀딩하기');
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        });
     };
 
     const hitHandler = () => {
@@ -238,15 +315,7 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                                         <span className='co-buying_remainingsdays_wrapper'>
                                             {detailCobuy.cobuyStart && detailCobuy.cobuyEnd ? (
                                                 <span>
-                                                    {detailCobuy.cobuyStart} ~ {detailCobuy.cobuyEnd} &nbsp;&nbsp;
-                                                    <span className='bold'>
-                                                        (
-                                                        {Math.floor(
-                                                            (detailCobuy.cobuyEnd_Date - detailCobuy.cobuyStart_Date) /
-                                                                (1000 * 60 * 60 * 24)
-                                                        )}
-                                                        일 남음)
-                                                    </span>
+                                                    <CountdownTimer detailCobuy={detailCobuy} />{' '}
                                                 </span>
                                             ) : (
                                                 ''
@@ -295,47 +364,50 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className='co-buying_options_container'>
-                                <div className='co-buygin_options_wrapper'>
-                                    <div className='co-buying_options_text'>
-                                        <p>옵션 선택</p>
-                                    </div>
-                                    <div className='co-buyging_options_wrapper'>
-                                        <select
-                                            className='co-buying_options_select'
-                                            onChange={handleOptionChange}
-                                            value={selectedOption}
-                                        >
-                                            <option value=''>-- 선택 --</option>
-                                            {detailCobuy.cobuyOption1 && (
-                                                <option value={detailCobuy.cobuyOption1}>
-                                                    {detailCobuy.cobuyOption1}
-                                                </option>
-                                            )}
-                                            {detailCobuy.cobuyOption2 && (
-                                                <option value={detailCobuy.cobuyOption2}>
-                                                    {detailCobuy.cobuyOption2}
-                                                </option>
-                                            )}
-                                            {detailCobuy.cobuyOption3 && (
-                                                <option value={detailCobuy.cobuyOption3}>
-                                                    {detailCobuy.cobuyOption3}
-                                                </option>
-                                            )}
-                                            {detailCobuy.cobuyOption4 && (
-                                                <option value={detailCobuy.cobuyOption4}>
-                                                    {detailCobuy.cobuyOption4}
-                                                </option>
-                                            )}
-                                            {detailCobuy.cobuyOption5 && (
-                                                <option value={detailCobuy.cobuyOption5}>
-                                                    {detailCobuy.cobuyOption5}
-                                                </option>
-                                            )}
-                                        </select>
+                            {fundingText !== '펀딩 마감' && (
+                                <div className='co-buying_options_container'>
+                                    <div className='co-buygin_options_wrapper'>
+                                        <div className='co-buying_options_text'>
+                                            <p>옵션 선택</p>
+                                        </div>
+                                        <div className='co-buyging_options_wrapper'>
+                                            <select
+                                                className='co-buying_options_select'
+                                                onChange={handleOptionChange}
+                                                value={selectedOption}
+                                            >
+                                                <option value=''>-- 선택 --</option>
+                                                {detailCobuy.cobuyOption1 && (
+                                                    <option value={detailCobuy.cobuyOption1}>
+                                                        {detailCobuy.cobuyOption1}
+                                                    </option>
+                                                )}
+                                                {detailCobuy.cobuyOption2 && (
+                                                    <option value={detailCobuy.cobuyOption2}>
+                                                        {detailCobuy.cobuyOption2}
+                                                    </option>
+                                                )}
+                                                {detailCobuy.cobuyOption3 && (
+                                                    <option value={detailCobuy.cobuyOption3}>
+                                                        {detailCobuy.cobuyOption3}
+                                                    </option>
+                                                )}
+                                                {detailCobuy.cobuyOption4 && (
+                                                    <option value={detailCobuy.cobuyOption4}>
+                                                        {detailCobuy.cobuyOption4}
+                                                    </option>
+                                                )}
+                                                {detailCobuy.cobuyOption5 && (
+                                                    <option value={detailCobuy.cobuyOption5}>
+                                                        {detailCobuy.cobuyOption5}
+                                                    </option>
+                                                )}
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
+
                             <div className='co-buying_buttons_container'>
                                 <div className='co-buying_buttons_wrapper flex'>
                                     <div className='like_button_wrapper'>
@@ -345,12 +417,12 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                                                     type='checkbox'
                                                     id='checkbox'
                                                     hidden
-                                                    checked={isChecked}
+                                                    defaultChecked={isChecked}
                                                     onClick={hitHandler}
                                                 />
                                                 <svg
                                                     t='1689815540548'
-                                                    class='icon'
+                                                    className='icon'
                                                     viewBox='0 0 1024 1024'
                                                     version='1.1'
                                                     xmlns='http://www.w3.org/2000/svg'
@@ -376,7 +448,7 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                                     </div>
                                     <div className='co-buying_botton_wrpper'>
                                         <div className='buying_button' onClick={userFundingHandler}>
-                                            <p className='bold'>펀딩하기</p>
+                                            <p className='bold'>{fundingText}</p>
                                         </div>
                                     </div>
                                 </div>

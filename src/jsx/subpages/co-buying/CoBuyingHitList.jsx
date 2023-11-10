@@ -31,8 +31,6 @@ const CoBuyingHitList = (selectedMenu, setSelectedSideMenu) => {
         const listProduct = async () => {
             try {
                 validateMyFunding('get', '/coBuy/myHitProduct/' + currentPage + '/' + perPage).then((res) => {
-                    console.log(res);
-
                     if (res.success) {
                         setCobyuList(res.data.myHitProducts);
                         setTotalPages(res.data.totalPages);
@@ -93,9 +91,16 @@ const CoBuyingHitList = (selectedMenu, setSelectedSideMenu) => {
                                 <li className='order_select_option'>최신순</li>
                             </ul> */}
                         </div>
-                        <div className='product_wrap_row'>
+                        {/* <div className='product_wrap_row'>
                             {cobuyList &&
                                 cobuyList.map((item, index) => <ProductCard key={index} productData={item} />)}
+                        </div> */}
+                        <div className={cobuyList.length === 0 ? '' : 'product_wrap_row'}>
+                            {cobuyList.length === 0 ? (
+                                <p style={{ textAlign: 'center', fontSize: '24px' }}>상품이 없습니다</p>
+                            ) : (
+                                cobuyList.map((item, index) => <ProductCard key={index} productData={item} />)
+                            )}
                         </div>
 
                         <div aria-label='Page navigation example' style={{ marginTop: '10px' }}>
