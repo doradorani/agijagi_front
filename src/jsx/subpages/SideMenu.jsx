@@ -42,7 +42,7 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, delete
                         </div>
                     </Link>
                     <div>
-                        <Link to="/diary/children_health_note" className="none_deco_link">
+                        <Link to="/diary/children_health_note/0" className="none_deco_link">
                             <div className="side_menu_sub_btn">- 한 눈에 보기</div>
                         </Link>
                         <Link to="/diary/children_health_list" className="none_deco_link">

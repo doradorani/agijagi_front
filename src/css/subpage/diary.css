@@ -1,3 +1,8 @@
+.magazine {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
 .diary_main_img {
     width: 100%;
     max-height: 400px;
@@ -72,4 +77,43 @@ div.magazine > div:nth-child(2n + 3) div.diary_btn .diary_next_btn,
 div.magazine > div:nth-child(2n + 4) div.diary_btn .diary_prev_btn,
 div.magazine > div:last-child div.diary_btn .diary_next_btn {
     display: none;
+}
+
+.diary_detail_btn {
+    position: relative;
+    text-align: center;
+}
+
+.diary_detail_btn > span.background_for_book_detail {
+    position: absolute;
+    background-color: #000;
+    top: 55px;
+    left: 0;
+    width: 450px;
+    height: 350px;
+    opacity: 0;
+}
+
+.diary_detail_btn:hover > span.background_for_book_detail {
+    opacity: 0.4;
+}
+
+.diary_detail_btn:hover > div {
+    opacity: 1;
+    width: 100%;
+    height: auto;
+}
+
+div .diary_detail_btn > div {
+    position: absolute;
+    opacity: 0;
+    counter-reset: #fff;
+    top: 55px;
+    left: 0;
+    padding-top: 35%;
+    padding-left: 35%;
+    width: 450px;
+    height: 350px;
+    z-index: 10;
+    color: #fff;
 }

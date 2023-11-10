@@ -70,7 +70,7 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
                 <DiaryHeader select={'인생 네컷'} src={'/test_imgs/png/diary3.png'} />
                 <div style={{ marginBottom: '10px', height: '20px' }}>
                     <button
-                        class="btn btn-secondary dropdown-toggle"
+                        className="btn btn-secondary dropdown-toggle"
                         type="button"
                         id="dropdownMenu2"
                         data-bs-toggle="dropdown"
@@ -80,10 +80,10 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
                         {/* {selectedChild != null ? selectedChild : '아이 선택'} */}
                         아이 선택
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
                         {/* {(fourCutsData !== null && Array.isArray(fourCutsData) ? fourCutsData : []).map((idx) => (
                         <li>
-                            <button class="dropdown-item" type="button" onClick={() => nameClick(idx.no, idx.name)}>
+                            <button className="dropdown-item" type="button" onClick={() => nameClick(idx.no, idx.name)}>
                                 {idx.name}
                             </button>
                         </li>

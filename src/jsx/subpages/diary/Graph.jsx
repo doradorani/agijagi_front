@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import '../../../css/subpage/graph.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
+import { useDispatch } from 'react-redux';
 
 const Container = styled.div`
     width: 90vw;
@@ -11,26 +13,70 @@ const Container = styled.div`
 `;
 // 최근 기록 중 10개나 20개 정도의 데이터를 받아서 default로 띄우기
 
-const Graph = ({ setSelectedDiary, diaryData, setMethodUrl }) => {
-    console.log(diaryData);
+const Graph = ({ adContents, isLoading, setIsLoading, validationUser }) => {
+    const [childGraphData, setChildGraphData] = useState();
+    const userLoginDispatch = useDispatch();
+    const params = useParams();
+
+    useEffect(() => {
+        setChildGraphData(null);
+        const getDiary = async () => {
+            try {
+                const validateResponse = validationUser('post', '/user/validate');
+                try {
+                    validationUser('get', '/childHealth/childNotes/' + params.childNo).then((res) => {
+                        if (res.success) {
+                            setChildGraphData(res.data);
+                        }
+                    });
+                    setIsLoading(true);
+                } catch (error) {
+                    console.log('데이터 파싱 에러');
+                    console.log(error);
+                }
+            } catch (error) {
+                console.log(error);
+                userLoginDispatch(userStateAction.setState(false));
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        getDiary();
+    }, []);
 
     const graphClick = (no) => {
-        setMethodUrl({ method: 'get', url: '/childHealth/childNotes/' + no });
+        try {
+            validationUser('get', '/childHealth/childNotes/' + no).then((res) => {
+                if (res.success) {
+                    setChildGraphData(res.data);
+                }
+            });
+            setIsLoading(true);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+        // setMethodUrl({ method: 'get', url: '/childHealth/childNotes/' + no });
     };
     const color = ['rgb(54, 162, 235)', 'rgb(162, 54, 54)', 'rgb(235, 162, 54)'];
 
     let graphData = [];
-    if (diaryData.childNoteDtos != null) {
-        graphData = diaryData.childNoteDtos;
+    if (childGraphData != null) {
+        graphData = childGraphData.childNoteDtos;
+    }
+    let childList = [];
+    if (childGraphData != null) {
+        childList = childGraphData.childDtos;
     }
 
-    let childName = graphData.length > 0 && Array.isArray(graphData) ? graphData[0].cd_name : null;
+    let childName = graphData.length > 0 ? graphData[0].cd_name : null;
 
     const height = [];
     const weight = [];
     const head = [];
 
-    (graphData !== null && Array.isArray(graphData) ? graphData : []).map((idx) =>
+    (graphData !== null ? graphData : []).map((idx) =>
         height.push({
             x:
                 new Date(idx.reg_date).getFullYear() +
@@ -41,7 +87,7 @@ const Graph = ({ setSelectedDiary, diaryData, setMethodUrl }) => {
             y: idx.height,
         })
     );
-    (graphData !== null && Array.isArray(graphData) ? graphData : []).map((idx) =>
+    (graphData !== null ? graphData : []).map((idx) =>
         weight.push({
             x:
                 new Date(idx.reg_date).getFullYear() +
@@ -52,7 +98,7 @@ const Graph = ({ setSelectedDiary, diaryData, setMethodUrl }) => {
             y: idx.weight,
         })
     );
-    (graphData !== null && Array.isArray(graphData) ? graphData : []).map((idx) =>
+    (graphData !== null ? graphData : []).map((idx) =>
         head.push({
             x:
                 new Date(idx.reg_date).getFullYear() +
@@ -92,11 +138,6 @@ const Graph = ({ setSelectedDiary, diaryData, setMethodUrl }) => {
               }
             : null;
 
-    const goToWirteClick = () => {
-        setMethodUrl({ method: 'get', url: '/diary/childrenInfo' });
-        setSelectedDiary(1);
-    };
-
     return (
         <div className="diary_wrap">
             <div className="diary_second_wrap">
@@ -104,24 +145,19 @@ const Graph = ({ setSelectedDiary, diaryData, setMethodUrl }) => {
                     <div className="diary_section_header flex" style={{ margin: '10px 0' }}>
                         <p className="yg_font" style={{ fontSize: '2rem' }}>
                             {graphData.length > 0 && Array.isArray(graphData)
-                                ? '우리 ' + graphData[0].cd_name
-                                : '우리 아이'}
-                            성장 기록
+                                ? '우리   ' + graphData[0].cd_name
+                                : '우리   아이'}
+                            &nbsp; 성장 기록
                         </p>
                         <div className="go_to_write_health_note" style={{ margin: 'auto 0' }}>
-                            <Link
-                                to="/diary"
-                                onClick={() => {
-                                    goToWirteClick();
-                                }}
-                            >
+                            <Link to="/diary/register_child_health">
                                 <input type="button" value="오늘의 건강 기록 작성" className="btn btn-primary" />
                             </Link>
                         </div>
                     </div>
-                    <div class="dropdown">
+                    <div className="dropdown">
                         <button
-                            class="btn btn-secondary dropdown-toggle"
+                            className="btn btn-secondary dropdown-toggle"
                             type="button"
                             id="dropdownMenu2"
                             data-bs-toggle="dropdown"
@@ -130,13 +166,10 @@ const Graph = ({ setSelectedDiary, diaryData, setMethodUrl }) => {
                         >
                             {graphData.length > 0 && Array.isArray(graphData) ? graphData[0].cd_name : '아이 선택'}
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            {(diaryData.childDtos !== null && Array.isArray(diaryData.childDtos)
-                                ? diaryData.childDtos
-                                : []
-                            ).map((idx) => (
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            {(childGraphData !== null ? childList : []).map((idx) => (
                                 <li>
-                                    <button class="dropdown-item" type="button" onClick={() => graphClick(idx.no)}>
+                                    <button className="dropdown-item" type="button" onClick={() => graphClick(idx.no)}>
                                         {idx.name}
                                     </button>
                                 </li>

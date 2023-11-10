@@ -13,12 +13,10 @@ import { userStateAction } from '../../js/api/redux_store/slice/userLoginSlice';
 import { Link, Route, Routes } from 'react-router-dom';
 import Children from './diary/Children';
 import ChildrenModifyInfo from './diary/ChildrenModifyInfo.jsx';
-import DiaryPost from './diary/DiaryPost.jsx';
 import DiaryModfiyPost from './diary/DiaryModfiyPost.jsx';
-import ScrollToTop from '../ScrollToTop.jsx';
-import userLogin_config from '../../js/api/config/userLogin_config';
 import CalendarListVer from './diary/CalendarLocalVer.jsx';
 import FourCutsImg from './diary/FourCutsImg.jsx';
+import DiaryPost from './diary/DiaryPost.jsx';
 
 const Diary = ({}) => {
     const validationUser = useValidationUser();
@@ -78,9 +76,20 @@ const Diary = ({}) => {
                             }
                         ></Route>
                         <Route
-                            path="/modify_diary_post/:childNo/:diaryNo"
+                            path="/modify_child_info/:childNo/:diaryNo"
                             element={
                                 <DiaryModfiyPost
+                                    adContents={adContents}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path="/write_diary/:childNo"
+                            element={
+                                <DiaryPost
                                     adContents={adContents}
                                     isLoading={isLoading}
                                     setIsLoading={setIsLoading}
@@ -121,7 +130,7 @@ const Diary = ({}) => {
                             }
                         ></Route>
                         <Route
-                            path="/children_health_calendar"
+                            path="/children_health_list"
                             element={
                                 <CalendarListVer
                                     isLoading={isLoading}
@@ -141,9 +150,9 @@ const Diary = ({}) => {
                             }
                         ></Route>
                         <Route
-                            path="/register_child_health/:childNo"
+                            path="/register_child_health"
                             element={
-                                <Graph
+                                <Note
                                     adContents={adContents}
                                     isLoading={isLoading}
                                     setIsLoading={setIsLoading}

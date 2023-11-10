@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ScrollToTop from '../../ScrollToTop';
 import DiaryHeader from './DiaryHeader';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -10,7 +9,6 @@ import Swal from 'sweetalert2';
 const DiaryBook = ({ adContents, isLoading, setIsLoading, validationUser }) => {
     const [childBookData, setChildBookData] = useState(null);
     const userLoginDispatch = useDispatch();
-    const [refreshChildBook, setRefreshChildBook] = useState(false);
 
     useEffect(() => {
         const getDiary = async () => {
@@ -31,12 +29,11 @@ const DiaryBook = ({ adContents, isLoading, setIsLoading, validationUser }) => {
                 console.log(error);
                 userLoginDispatch(userStateAction.setState(false));
             } finally {
-                setRefreshChildBook(false);
                 setIsLoading(false);
             }
         };
         getDiary();
-    }, [refreshChildBook]);
+    }, []);
 
     const clickDeleteHandler = (no) => {
         Swal.fire({
@@ -67,7 +64,6 @@ const DiaryBook = ({ adContents, isLoading, setIsLoading, validationUser }) => {
     return (
         <>
             <div className="post_section">
-                <ScrollToTop />
                 <DiaryHeader select={'일기'} src={'/test_imgs/png/diary3.png'} />
                 <div>
                     <div className="go_to_add_child">

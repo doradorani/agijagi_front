@@ -58,6 +58,8 @@ const DiaryBookDetail = ({ isLoading, setIsLoading, validationUser }) => {
         getDiary();
     }, []);
 
+    const writeDiaryUrl = '/diary/write_diary/' + params.childNo;
+
     const clickDiaryDeleteHandler = (no) => {
         Swal.fire({
             icon: 'warning',
@@ -95,16 +97,16 @@ const DiaryBookDetail = ({ isLoading, setIsLoading, validationUser }) => {
     return (
         <>
             <div className="post_full_section">
-                <ScrollToTop />
                 <DiaryHeader select={'일기'} src={'/test_imgs/png/diary3.png'} />
                 <div className="diary_book_detail_wrap">
                     <div className="flex" style={{ justifyContent: 'space-between' }}>
                         <div className="yg_font" style={{ fontSize: '40px' }}>
-                            육아일기
+                            {}
                         </div>
                         <div className="flex">
-                            <div
-                                className="yg_font"
+                            <Link
+                                to={writeDiaryUrl}
+                                className="yg_font none_deco_link"
                                 style={{
                                     display: 'flex',
                                     alignItems: 'flex-end',
@@ -114,7 +116,7 @@ const DiaryBookDetail = ({ isLoading, setIsLoading, validationUser }) => {
                                 }}
                             >
                                 &nbsp;일기 쓰기
-                            </div>
+                            </Link>
                             <div
                                 className="yg_font"
                                 style={{
@@ -134,14 +136,16 @@ const DiaryBookDetail = ({ isLoading, setIsLoading, validationUser }) => {
                             <div className="area_for_diary_detail">
                                 {isLoading ? (
                                     <div>로딩중.....</div>
-                                ) : diaryBookData !== null &&
-                                  Array.isArray(diaryBookData) &&
-                                  diaryBookData.length > 0 ? (
+                                ) : diaryBookData !== null && diaryBookData.length > 0 ? (
                                     <div className="turn_js_wrap">
                                         <Turn options={options} className="magazine">
-                                            {diaryBookData != null &&
+                                            {diaryBookData == null ? (
+                                                <div></div>
+                                            ) : (
+                                                !isLoading &&
                                                 diaryBookData.map((idx) => {
-                                                    const modifyUrl = '/diary/modify_child_info/' + idx.no;
+                                                    const modifyUrl =
+                                                        '/diary/modify_child_info/' + idx.cd_no + '/' + idx.no;
                                                     return (
                                                         <div key={idx} className="detail_page yg_font">
                                                             <h3 style={{ textAlign: 'center' }}>{idx.title}</h3>
@@ -153,45 +157,48 @@ const DiaryBookDetail = ({ isLoading, setIsLoading, validationUser }) => {
                                                                     new Date(idx.reg_date).getDate() +
                                                                     '일'}
                                                             </p>
-                                                            <img
-                                                                className="diary_img_in_page"
-                                                                src={idx.img}
-                                                                style={{
-                                                                    width: '350px',
-                                                                    height: '350px',
-                                                                    margin: '15px auto 10px',
-                                                                    objectFit: 'cover',
-                                                                }}
-                                                                alt=""
-                                                                onClick={() => clickDiaryDeleteHandler(idx.no)}
-                                                            />
-                                                            <p style={{ minHeight: '100px' }}>{idx.content}</p>
-                                                            <div
-                                                                className="diary_detail_btn flex"
-                                                                style={{ margin: '0 150px' }}
-                                                            >
-                                                                <div>
-                                                                    <Link
-                                                                        to={modifyUrl}
-                                                                        className="diary_modify_detail_btn"
-                                                                        style={{
-                                                                            cursor: 'pointer',
-                                                                            margin: '0 10px',
-                                                                        }}
-                                                                    >
-                                                                        수정
-                                                                    </Link>
-                                                                </div>
-                                                                <div
-                                                                    className="diary_delete_detail_btn"
+
+                                                            <div className="diary_detail_btn" style={{ width: '100%' }}>
+                                                                <img
+                                                                    className="diary_img_in_page"
+                                                                    src={idx.img}
                                                                     style={{
-                                                                        cursor: 'pointer',
+                                                                        width: '350px',
+                                                                        height: '350px',
+                                                                        margin: '15px auto 10px',
+                                                                        objectFit: 'cover',
                                                                     }}
-                                                                    onClick={() => clickDiaryDeleteHandler(idx.no)}
-                                                                >
-                                                                    삭제
+                                                                    alt=""
+                                                                />
+                                                                <div>
+                                                                    <div className="flex">
+                                                                        <Link
+                                                                            to={modifyUrl}
+                                                                            className="diary_modify_detail_btn none_deco_link"
+                                                                            style={{
+                                                                                cursor: 'pointer',
+                                                                                margin: '0 10px',
+                                                                                color: '#fff',
+                                                                            }}
+                                                                        >
+                                                                            수정
+                                                                        </Link>
+                                                                        <div
+                                                                            className="diary_delete_detail_btn"
+                                                                            style={{
+                                                                                cursor: 'pointer',
+                                                                            }}
+                                                                            onClick={() =>
+                                                                                clickDiaryDeleteHandler(idx.no)
+                                                                            }
+                                                                        >
+                                                                            삭제
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
+                                                                <span className="background_for_book_detail"></span>
                                                             </div>
+                                                            <p style={{ minHeight: '100px' }}>{idx.content}</p>
                                                             <div className="diary_btn" style={{ paddingBottom: '5px' }}>
                                                                 <div
                                                                     className="diary_prev_btn"
@@ -215,7 +222,8 @@ const DiaryBookDetail = ({ isLoading, setIsLoading, validationUser }) => {
                                                             </div>
                                                         </div>
                                                     );
-                                                })}
+                                                })
+                                            )}
                                         </Turn>
                                     </div>
                                 ) : (
