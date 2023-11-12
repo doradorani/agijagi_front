@@ -5,11 +5,12 @@ import html2canvas from 'html2canvas';
 import { useNavigate, useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
-import ScrollToTop from '../../ScrollToTop';
 import DiaryHeader from './DiaryHeader';
+import axios from 'axios';
 
 const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) => {
     const [fourCutsData, setForuCutsData] = useState();
+    const [images, setImages] = useState();
     const params = useParams();
     const userLoginDispatch = useDispatch();
     const navigate = useNavigate();
@@ -22,6 +23,7 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
                     validationUser('get', '/diary/childrenPictures').then((res) => {
                         if (res != undefined && res.success) {
                             setForuCutsData(res.data);
+                            setImages(res.data[0].img);
                         }
                     });
                     setIsLoading(true);
@@ -39,30 +41,32 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
         getDiary();
     }, []);
 
-    const [showText, setShowText] = useState([false, false, false, false]);
+    // const [showText, setShowText] = useState([false, false, false, false]);
 
     const getImageUrl = (index) => fourCutsData?.[index]?.img || '';
     const getTitle = (index) => fourCutsData?.[index]?.title || '';
 
     const ImgContainer = styled.div`
         img {
-            src: ${(props) => props.url};
+            src: ${(props) => props.url + '/timestamp=' + new Date().getTime()};
         }
     `;
 
-    const toggleText = (index) => {
-        setShowText(showText.map((text, i) => (i === index ? !text : text)));
-    };
+    // const toggleText = (index) => {
+    //     setShowText(showText.map((text, i) => (i === index ? !text : text)));
+    // };
 
     const today = new Date();
     const onFourCutCapture = () => {
-        html2canvas(document.querySelector('.four_cuts_album_containter')).then((canvas) => {
-            const link = document.createElement('a');
-            link.download = 'image';
-            link.href = canvas.toDataURL();
-            document.body.appendChild(link);
-            link.click();
-        });
+        html2canvas(document.querySelector('.four_cuts_album_containter'), { allowTaint: true, useCORS: true }).then(
+            (canvas) => {
+                const link = document.createElement('a');
+                link.download = 'image';
+                link.href = canvas.toDataURL();
+                document.body.appendChild(link);
+                link.click();
+            }
+        );
     };
 
     return (
@@ -100,31 +104,27 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
                             <div className="four_cuts_album_containter">
                                 <div className="four_cust_header"></div>
                                 <div className="four_cuts_photos">
-                                    {[0, 1, 2, 3].map((index) => (
-                                        <ImgContainer
-                                            key={index}
-                                            className="photo_frame"
-                                            onMouseEnter={() => toggleText(index)}
-                                            onMouseLeave={() => toggleText(index)}
-                                        >
-                                            <img
-                                                id={'cuts_img' + index}
-                                                src={getImageUrl(index)}
-                                                alt={`description ${index}`}
-                                                style={{ height: '200px' }}
-                                            />
-                                            <span
-                                                id={'desc' + index}
-                                                className={
-                                                    showText[index]
-                                                        ? 'photo_description four_cuts_show_text'
-                                                        : 'photo_description four_cuts_hide_text'
-                                                }
-                                            >
-                                                {getTitle(index)}
-                                            </span>
-                                        </ImgContainer>
-                                    ))}
+                                    {[0, 1, 2, 3].map((index) => {
+                                        // setImages(getImageUrl(0));
+                                        return (
+                                            <>
+                                                <ImgContainer
+                                                    key={index}
+                                                    className="photo_frame"
+                                                    // onMouseEnter={() => toggleText(index)}
+                                                    // onMouseLeave={() => toggleText(index)}
+                                                >
+                                                    <img
+                                                        id={'cuts_img' + index}
+                                                        src={getImageUrl(index)}
+                                                        alt={`description ${index}`}
+                                                        style={{ height: '200px' }}
+                                                        crossOrigin="anonymous"
+                                                    />
+                                                </ImgContainer>
+                                            </>
+                                        );
+                                    })}
                                 </div>
                                 <div className="four_cust_footer">
                                     <p className="four_cuts_title"></p>

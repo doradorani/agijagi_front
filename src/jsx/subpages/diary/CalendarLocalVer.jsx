@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import DiaryHeader from './DiaryHeader';
+import Swal from 'sweetalert2';
 // 자녀별로 색 다르게 => eventcolor
 
 const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }) => {
@@ -39,7 +40,11 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
         getDiary();
     }, []);
     const eventClick = (clickInfo) => {
-        const { no, cd_no } = clickInfo.event;
+        const { no, cd_no, title } = clickInfo.event;
+
+        Swal.fire({
+            title: title,
+        });
     };
 
     let listContents = [];
@@ -50,12 +55,10 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
         listContents.push({
             title:
                 idx.cd_name +
-                ' [' +
-                idx.vaccination_nm +
-                ' ' +
-                idx.inoculation_order +
-                '차 ] 병원 : ' +
-                idx.inoculation_agency,
+                (idx.vaccination_nm == null ? '' : ' [' + idx.vaccination_nm + '] ') +
+                (idx.inoculation_order == null ? '' : idx.inoculation_order + '차 ') +
+                (idx.inoculation_agency == null ? '' : '병원 : ' + idx.inoculation_order),
+            content: '키: ' + idx.height + ' 몸무게: ' + idx.wieght + ' 두위: ' + idx.head,
             start: idx.reg_date,
             backgroundColor:
                 idx.sequence == 1 ? color[0] : idx.sequence == 2 ? color[1] : idx.sequence == 3 ? color[2] : 'black',
@@ -87,7 +90,7 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
                                         eventMinWidth={'10vh'}
                                         height={'85vh'}
                                         events={listContents}
-                                        eventClick={() => eventClick()}
+                                        eventClick={eventClick}
                                     />
                                 </div>
                             </div>

@@ -15,6 +15,7 @@ const DiaryModfiyPost = ({ adContents, validationUser, setIsLoading, isLoading }
     const [title, setTitle] = useState('');
     const [img, setImg] = useState(null);
     const [childContent, setChildContent] = useState(null);
+    const [diaryLike, setDiaryLike] = useState();
     const [diaryModifyData, setDiaryModifyData] = useState();
 
     useEffect(() => {
@@ -78,7 +79,15 @@ const DiaryModfiyPost = ({ adContents, validationUser, setIsLoading, isLoading }
                 } else {
                     data['content'] = childContent;
                 }
-
+                if (diaryLike == null) {
+                    data['fourcuts_checked'] = diaryModifyData.fourcuts_checked;
+                } else {
+                    if (diaryLike) {
+                        data['fourcuts_checked'] = 1;
+                    } else {
+                        data['fourcuts_checked'] = 0;
+                    }
+                }
                 if (img != null) {
                     formData.append('file', img);
                 }
@@ -128,8 +137,6 @@ const DiaryModfiyPost = ({ adContents, validationUser, setIsLoading, isLoading }
         });
     };
 
-    console.log(diaryModifyData?.fourcuts_checked);
-
     const handleChange = (e) => {
         setImg(e[0]);
     };
@@ -162,7 +169,12 @@ const DiaryModfiyPost = ({ adContents, validationUser, setIsLoading, isLoading }
                                                 type="checkbox"
                                                 id="checkbox"
                                                 hidden
-                                                defaultValue={diaryModifyData?.fourcuts_checked == 1 ? 'checked' : null}
+                                                defaultChecked={
+                                                    diaryModifyData.diaryModifyData?.fourcuts_checked == 1
+                                                        ? true
+                                                        : false
+                                                }
+                                                onClick={() => setDiaryLike(!diaryLike)}
                                             />
                                             <svg
                                                 t="1689815540548"
