@@ -51,3 +51,14 @@
     border: 1px solid #ff4898;
     color: #000;
 }
+
+.children_header {
+    justify-content: space-between;
+}
+.children_header_title {
+    width: 100%;
+}
+
+.single_btn {
+    display: none;
+}

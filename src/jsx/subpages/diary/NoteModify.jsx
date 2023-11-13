@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import DiaryHeader from './DiaryHeader';
 
-const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
+const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [byteCount, setByteCount] = useState(0);
     const [selectedChild, setSelectedChild] = useState(null);
@@ -31,10 +31,9 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
 
     useEffect(() => {
         try {
-            validationUser('get', '/diary/childrenInfo').then((res) => {
+            validationUser('get', '/childHealth/childNotes').then((res) => {
                 if (res != undefined && res.success) {
                     setChildListData(res.data);
-                    console.log(res.data);
                 }
             });
             setIsLoading(true);
@@ -65,21 +64,50 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
             }).then((res) => {
                 if (res.isConfirmed) {
                     let formData = new FormData();
-                    formData.append('cd_no', selectedChildNo);
-                    formData.append('cd_name', selectedChildNo);
-                    formData.append('height', height);
-                    formData.append('weight', weight);
-                    formData.append('head', head);
-                    formData.append('inoculation_agency', hospitalName);
-                    formData.append('vaccination_nm', vaccinationName);
-                    formData.append('inoculation_order', vaccinationNo);
-                    formData.append('etc', etc);
+                    formData.append('cd_no', childListData.cd_no);
+                    formData.append('cd_name', childListData.cd_name);
+                    if (weight == '') {
+                        formData.append('weight', childListData.weight);
+                    } else {
+                        formData.append('weight', weight);
+                    }
+                    if (height == '') {
+                        formData.append('height', childListData.height);
+                    } else {
+                        formData.append('height', height);
+                    }
+                    if (head == '') {
+                        formData.append('head', childListData.head);
+                    } else {
+                        formData.append('head', head);
+                    }
+                    if (hospitalName == '') {
+                        formData.append('inoculation_agency', childListData.inoculation_agency);
+                    } else {
+                        formData.append('inoculation_agency', hospitalName);
+                    }
+                    if (vaccinationName == '') {
+                        formData.append('vaccination_nm', childListData.vaccination_nm);
+                    } else {
+                        formData.append('vaccination_nm', vaccinationName);
+                    }
+                    if (vaccinationNo == '') {
+                        formData.append('inoculation_order', childListData.inoculation_order);
+                    } else {
+                        formData.append('inoculation_order', vaccinationNo);
+                    }
+                    if (etc == '') {
+                        formData.append('etc', childListData.etc);
+                    } else {
+                        formData.append('etc', etc);
+                    }
+
                     try {
-                        validationUser('post', '/childHealth/childNote/' + selectedChildNo, formData).then((res) => {
+                        validationUser('put', '/childHealth/childNote/' + selectedChildNo, formData).then((res) => {
                             if (res != undefined && res.success) {
                                 Swal.fire({
                                     icon: 'success',
-                                    title: '성공적으로 등록되었습니다.',
+                                    title: '성공적으로 수정되었습니다.',
                                     text: '*^^*',
                                     confirmButtonText: '확인',
                                 }).then((res) => {
@@ -90,7 +118,7 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
                             } else {
                                 Swal.fire({
                                     icon: 'error',
-                                    title: '등록이 되지 않았습니다.',
+                                    title: '수정 되지 않았습니다.',
                                     text: '다시 시도해주세요',
                                     confirmButtonText: '확인',
                                 }).then((res) => {
@@ -107,6 +135,14 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
             });
         }
     };
+    let reg_date;
+
+    if (childListData != null) {
+        if (childListData.reg_date) {
+            const dateString = childListData.reg_date;
+            reg_date = dateString.replace(' ', 'T');
+        }
+    }
 
     const handleTextChange = (e) => {
         const text = e.target.value;
@@ -141,7 +177,7 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
                     <div className="note_wrap">
                         <div className="note_container">
                             <div className="note_header">
-                                <div className="note_header_title bold">오늘의 건강 기록</div>
+                                <div className="note_header_title bold">오늘의 건강 수정</div>
                             </div>
                             <hr style={{ margin: '25px 0 10px 0', width: '100%' }} />
                             <div className="note_second_wrap flex">
@@ -158,7 +194,7 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
                                                 <DatePicker
                                                     dateFormat="yyyy.MM.dd"
                                                     shouldCloseOnSelect
-                                                    selected={selectedDate}
+                                                    selected={new Date(reg_date)}
                                                     onChange={(date) => setSelectedDate(date)}
                                                 />
                                             </div>
@@ -170,24 +206,8 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
                                                     data-bs-toggle="dropdown"
                                                     aria-expanded="false"
                                                 >
-                                                    {selectedChild != null ? selectedChild : '아이 선택'}
+                                                    {childListData != null ? childListData.cd_name : null}
                                                 </button>
-                                                <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                                    {(childListData !== null && Array.isArray(childListData)
-                                                        ? childListData
-                                                        : []
-                                                    ).map((idx) => (
-                                                        <li key={idx}>
-                                                            <button
-                                                                className="dropdown-item"
-                                                                type="button"
-                                                                onClick={() => nameClick(idx.no, idx.name)}
-                                                            >
-                                                                {idx.name}
-                                                            </button>
-                                                        </li>
-                                                    ))}
-                                                </ul>
                                             </div>
                                         </div>
                                         <div className="note_input_1 flex">
@@ -196,6 +216,7 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
                                                 <input
                                                     type="number"
                                                     min={1}
+                                                    defaultValue={childListData.height}
                                                     onChange={(e) => {
                                                         setHeight(e.target.value);
                                                     }}
@@ -206,6 +227,7 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
                                                 <input
                                                     type="number"
                                                     min={1}
+                                                    defaultValue={childListData.weight}
                                                     onChange={(e) => {
                                                         setWeight(e.target.value);
                                                     }}
@@ -216,6 +238,7 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
                                                 <input
                                                     type="number"
                                                     min={1}
+                                                    defaultValue={childListData.head}
                                                     onChange={(e) => {
                                                         setHead(e.target.value);
                                                     }}
@@ -269,7 +292,7 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
                                                     goToGraphClick();
                                                 }}
                                             >
-                                                <input type="submit" value={'등록'} className="btn btn-primary" />
+                                                <input type="submit" value={'수정'} className="btn btn-primary" />
                                             </div>
                                         </div>
                                     </div>
@@ -284,4 +307,4 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
     );
 };
 
-export default Note;
+export default NoteModify;

@@ -37,7 +37,7 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, delete
                             <div className="side_menu_sub_btn">- 앨범</div>
                         </Link>
                     </div>
-                    <Link to="/diary/children_health_note" className="none_deco_link">
+                    <Link to="/diary/children_health_note/0" className="none_deco_link">
                         <div className="side_menu_btn" style={{ marginTop: '15px' }}>
                             <img src="/test_imgs/png/diary1.png" style={{ width: '45px', marginRight: '15px' }} />
                             육아 수첩

@@ -21,12 +21,16 @@ export function useValidationUser() {
                 }
             } else if (method === 'delete') {
                 response = await TokenApi.delete(url);
-                response = await TokenApi.get(url2);
+                if (url2 !== undefined && url2 !== '') {
+                    response = await TokenApi.get(url2);
+                }
             } else if (method === 'get') {
                 response = await TokenApi.get(url);
             } else if (method === 'put') {
                 response = await TokenApi.put(url, formData);
-                response = await TokenApi.get(url2);
+                if (url2 !== undefined && url2 !== '') {
+                    response = await TokenApi.get(url2);
+                }
             } else {
                 throw new Error('올바르지 않은 HTTP 메소드');
             }
@@ -43,19 +47,19 @@ export function useValidationUser() {
                     icon: 'warning',
                 });
                 navigate('/');
-                throw error;
+                // throw error;
             } else if (error.response.status === 403) {
                 Swal.fire({
                     title: '사용자 전용 기능입니다.',
                     icon: 'warning',
                 });
                 navigate('/');
-                throw error;
+                // throw error;
             } else {
                 // 다른 오류 처리
                 console.error('Error:', error);
                 navigate('/');
-                throw error;
+                // throw error;
             }
         }
     };
