@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../css/member/userModifyInfo.css';
 import DaumPostcode from 'react-daum-postcode';
 import userInfo_config from '../../js/api/config/userInfo_config';
@@ -9,6 +9,7 @@ import TokenApi from '../../js/api/TokenApi';
 import { useNavigate } from 'react-router-dom';
 import { userInfoAction } from '../../js/api/redux_store/slice/userInfoSlice';
 import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
 const UserModifyInfo = () => {
     const server = token_config.server;
@@ -35,6 +36,14 @@ const UserModifyInfo = () => {
     const [userDetailAddress, setUserDetailAddress] = useState(userInfo_config.userDetailAddress);
 
     const [dupChkValue, setDupChkValue] = useState('');
+
+    const handleGoBack = () => {
+        navigate(-1);
+    };
+
+    useEffect(() => {
+        setUserProfileImage(userInfo_config.userProfile);
+    }, []);
 
     const handleNicknameCheck = async () => {
         axios
@@ -63,7 +72,6 @@ const UserModifyInfo = () => {
         };
 
         let userModifyData = new FormData();
-
         userModifyData.append('file', userProfileImage);
         userModifyData.append('info', new Blob([JSON.stringify(updatedInfo)], { type: 'application/json' }));
 
@@ -75,7 +83,11 @@ const UserModifyInfo = () => {
                             return validateUserInfo('get', '/user/info');
                         } else {
                             console.log(modifyResponse.error);
-                            alert('수정 중 문제가 발생하였습니다.');
+                            Swal.fire({
+                                title: '수정 중 문제가 발생하였습니다..',
+                                icon: 'warning',
+                                confirmButtonText: '확인',
+                            });
                             navigate('/user_info');
                         }
                     })
@@ -93,26 +105,28 @@ const UserModifyInfo = () => {
                                 userDetailAddress: modifyInfoResponse.address_detail2,
                             };
 
-                            console.log(responseUserInfo);
-
                             dataDispatch(userInfoAction.setUserInfo(responseUserInfo));
-                            alert('수정이 완료되었습니다.');
+                            Swal.fire({
+                                title: '수정이 완료되었습니다.',
+                                icon: 'success',
+                                confirmButtonText: '확인',
+                            });
                             navigate('/user_info');
                         } else {
                             // 처리에 실패한 경우에 대한 처리
                             alert('서버에 문제가 생겨 다시 불러오기를 실패하였습니다.');
-                            navigate('user_info');
+                            navigate('/user_info');
                         }
                     })
                     .catch((error) => {
                         console.log(error);
                         alert('서버에 문제가 생겼습니다. 다시 수정해주세요.');
-                        navigate('user_info');
+                        navigate('/user_info');
                     });
             } catch (error) {
                 console.log(error);
                 alert('서버에 문제가 생겼습니다. 다시 수정해주세요.');
-                navigate('user_info');
+                navigate('/user_info');
             }
         } else {
             alert('별명 중복체크를 하셔야합니다.');
@@ -147,6 +161,7 @@ const UserModifyInfo = () => {
 
     const deleteFiles = () => {
         setpreviewProfileImage('/test_imgs/png/profile.png');
+        setUserProfileImage(null);
     };
 
     const handleOpenPostcode = () => {
@@ -367,9 +382,7 @@ const UserModifyInfo = () => {
                             className='btn btn_user_modify_cancel'
                             type='button'
                             style={{ width: '200px' }}
-                            onClick={() => {
-                                //UserInfo로 이동
-                            }}
+                            onClick={handleGoBack}
                         >
                             취소
                         </button>

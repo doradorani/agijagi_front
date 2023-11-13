@@ -8,7 +8,18 @@ const AdminTokenApi = axios.create({
     timeout: 10000,
 });
 
-AdminTokenApi.interceptors.request.use(RefreshAdmin);
+AdminTokenApi.interceptors.request.use(
+    (config) => {
+        // 요청 전에 withCredentials를 true로 설정
+        config.withCredentials = true;
+
+        // Refresh 함수에서 추가적인 설정이 필요하면 호출
+        return RefreshAdmin(config);
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 //TokenApi.interceptors.request.use(refresh, refreshErrorHandle);
 // refresh

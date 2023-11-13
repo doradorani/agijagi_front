@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import '../../css/member/userModifyInfo.css';
 import DaumPostcode from 'react-daum-postcode';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, unstable_HistoryRouter, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useValidationUser } from '../../js/api/ValidationApi';
 import { userStateAction } from '../../js/api/redux_store/slice/userLoginSlice';
 import userInfo_config from '../../js/api/config/userInfo_config';
 import { userInfoAction } from '../../js/api/redux_store/slice/userInfoSlice';
+import Swal from 'sweetalert2';
+import { useValidationItem } from '../../js/api/VlidationItem';
+import { tokenAction } from '../../js/api/redux_store/slice/tokenSlice';
+import { userCobuyAction } from '../../js/api/redux_store/slice/userCobuySlice';
 
 const UserInfo = () => {
     const [userPostCode, setUserPostCode] = useState('');
@@ -17,6 +21,55 @@ const UserInfo = () => {
     let i = 1;
     // const [selectedFiles, setSelectedFiles] = useState([]);
     // const [byteCount, setByteCount] = useState(0);
+
+    const navigate = useNavigate();
+    const dataDispatch = useDispatch();
+    const validateSignOutUser = useValidationItem();
+
+    const handleGoBack = () => {
+        navigate(-1);
+    };
+
+    const signOutHandler = () => {
+        Swal.fire({
+            title: '정말 탈퇴하시겠습니까?',
+            text: '이 작업은 취소할 수 없습니다!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: '네, 탈퇴하겠습니다.',
+            cancelButtonText: '아니오, 취소합니다.',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                validateSignOutUser('post', '/user/signOut').then((res) => {
+                    if (res == 1) {
+                        dataDispatch(tokenAction.setTokenName(''));
+                        dataDispatch(tokenAction.setTokenExpired(''));
+                        dataDispatch(userStateAction.setState(false));
+                        dataDispatch(
+                            userInfoAction.setUserInfo({
+                                userProfile: '',
+                                userName: '',
+                                userNickname: '',
+                                userEmail: '',
+                                userPhone: '',
+                                userZipcode: '',
+                                userAddress: '',
+                                userDetailAddress: '',
+                            })
+                        );
+                        dataDispatch(userCobuyAction.setFund([]));
+                        dataDispatch(userCobuyAction.setHit([]));
+                        Swal.fire('탈퇴되었습니다!', '이용해 주셔서 감사합니다.', 'success');
+                        navigate('/');
+                    } else {
+                        Swal.fire('탈퇴 권한이 없습니다..', '본인 인증이 필요합니다.', 'fail');
+                    }
+                });
+            }
+        });
+    };
 
     return (
         <div className='admin_login_wrap'>
@@ -166,7 +219,7 @@ const UserInfo = () => {
                         </label>
                     </div>
 
-                    <div className='gap-3 flex' style={{ justifyContent: 'space-between' }}>
+                    <div className='gap-3 flex' style={{ justifyContent: 'space-between', paddingBottom: '10px' }}>
                         <button className='btn btn_admin_login' type='button' style={{ width: '500px' }}>
                             <Link
                                 to='/user_modify_info'
@@ -175,6 +228,25 @@ const UserInfo = () => {
                             >
                                 수정하기
                             </Link>
+                        </button>
+                        <button
+                            className='btn btn_admin_login'
+                            type='button'
+                            style={{ width: '500px' }}
+                            onClick={handleGoBack}
+                        >
+                            뒤로가기
+                        </button>
+                    </div>
+
+                    <div className='gap-3 flex' style={{ justifyContent: 'space-between' }}>
+                        <button
+                            className='btn btn_admin_login'
+                            type='button'
+                            style={{ width: '500px' }}
+                            onClick={signOutHandler}
+                        >
+                            탈퇴하기
                         </button>
                     </div>
                 </div>
