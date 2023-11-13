@@ -168,7 +168,12 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                                     <tr key={notice.no}>
                                         <td>{notice.no}</td>
                                         <td className="nn_font bold" style={{ textAlign: 'left' }}>
-                                            <a onClick={() => moveToDetail(notice)}>{notice.title}</a>
+                                            <a
+                                                className="hover_cursor none_underline"
+                                                onClick={() => moveToDetail(notice)}
+                                            >
+                                                {notice.title}
+                                            </a>
                                         </td>
                                         <td>{notice.admin_id}</td>
                                         <td>{notice.attach_cnt}</td>

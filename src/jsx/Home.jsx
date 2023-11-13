@@ -12,39 +12,9 @@ const Home = ({ setSelectedUserLoginBtn }) => {
     const fadeIn4 = useScrollFadeIn('right');
     const fadeIn5 = useScrollFadeIn('right');
     const fadeIn6 = useScrollFadeIn('right');
+    const fadeIn7 = useScrollFadeIn('left');
 
     const elements = [fadeIn1, fadeIn2, fadeIn3, fadeIn4, fadeIn5, fadeIn6];
-    // const [onScroll, setOnScroll] = useState(false);
-
-    // useEffect(() => {
-    //     setSelectedUserLoginBtn(false);
-
-    //     const handleScroll = () => {
-    //         // 현재 스크롤 위치를 가져옵니다.
-    //         const scrollY = window.scrollY;
-
-    //         // home_section2_content와 home_section3_content가 나타나기를 원하는 스크롤 위치를 설정합니다.
-    //         const revealPosition = 500; // 예시로 300px로 설정
-
-    //         // 스크롤 위치가 revealPosition보다 크면 onScroll 상태를 true로 설정합니다.
-    //         if (scrollY > revealPosition) {
-    //             setOnScroll(true);
-    //             console.log('set Scroll TRUE!!!');
-    //         } else {
-    //             setOnScroll(false);
-    //             console.log('set Scroll FALSE!!!');
-    //         }
-    //     };
-
-    //     // 스크롤 이벤트를 추가합니다.
-    //     window.addEventListener('scroll', handleScroll);
-
-    //     // 컴포넌트가 언마운트될 때 스크롤 이벤트를 제거합니다.
-    //     return () => {
-    //         window.removeEventListener('scroll', handleScroll);
-    //         console.log('Scroll Event Removed!!!');
-    //     };
-    // }, []);
 
     useEffect(() => {
         const observerOptions = {
@@ -95,14 +65,14 @@ const Home = ({ setSelectedUserLoginBtn }) => {
                     <img src="/test_imgs/diary_imgs/diary1.jpg" />
                 </div>
                 <div className="home_section2_content">
-                    <div ref={fadeIn1.ref} style={fadeIn1.style}>
+                    <div ref={fadeIn1?.ref} style={fadeIn1?.style}>
                         Lorem ipsum dolor sit amet
                     </div>
-                    <div ref={fadeIn2.ref} style={fadeIn2.style}>
+                    <div ref={fadeIn2?.ref} style={fadeIn2?.style}>
                         Lorem ipsum dolor sit amet consectetur adipisicing
                     </div>
                     <Link to="/diary">
-                        <button ref={fadeIn3.ref} style={fadeIn3.style}>
+                        <button ref={fadeIn3?.ref} style={fadeIn3?.style}>
                             일기 작성하기
                         </button>
                     </Link>
@@ -110,19 +80,19 @@ const Home = ({ setSelectedUserLoginBtn }) => {
             </div>
             <div className="home_section3">
                 <div className="home_section3_content">
-                    <div ref={fadeIn4.ref} style={fadeIn4.style}>
+                    <div ref={fadeIn4?.ref} style={fadeIn4?.style}>
                         Lorem ipsum dolor sit amet
                     </div>
-                    <div ref={fadeIn5.ref} style={fadeIn5.style}>
+                    <div ref={fadeIn5?.ref} style={fadeIn5?.style}>
                         Lorem ipsum dolor sit amet consectetur adipisicing
                     </div>
                     <Link to="/community">
-                        <button ref={fadeIn6.ref} style={fadeIn6.style}>
+                        <button ref={fadeIn6?.ref} style={fadeIn6?.style}>
                             커뮤니티 구경하기
                         </button>
                     </Link>
                 </div>
-                <div className="home_section3_img">
+                <div className="home_section3_img" ref={fadeIn7?.ref} style={fadeIn7?.style}>
                     <img src="/test_imgs/sns_imgs/baby_commu.jpg" />
                 </div>
             </div>

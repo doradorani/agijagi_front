@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../../../../css/admin/community/postreport.css';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -10,28 +11,28 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [reportTable, setReportTable] = useState([]);
 
-    const validationAdminGetTable = useValidationAdminItem();
+    const validationAdmin = useValidationAdminItem();
+
+    const getReplyReportTable = async () => {
+        try {
+            setIsLoading(true);
+            // 관리자 로그인 상태 검증
+            const validateAdminResponse = await validationAdmin(
+                'get',
+                '/report/replyReportTable/' + currentPage + '/' + perPage,
+                null
+            );
+            console.log(validateAdminResponse);
+            setReportTable(validateAdminResponse?.data?.replyReportDtos);
+            setTotalPages(validateAdminResponse?.data?.totalPages);
+        } catch (error) {
+            console.error('Error fetching notices:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
-        // 서버에서 공지사항 데이터 가져오는 함수
-        const getReplyReportTable = async () => {
-            try {
-                setIsLoading(true);
-                // 관리자 로그인 상태 검증
-                const validateAdminResponse = await validationAdminGetTable(
-                    'get',
-                    '/report/replyReportTable/' + currentPage + '/' + perPage,
-                    null
-                );
-                console.log(validateAdminResponse);
-                setReportTable(validateAdminResponse?.data?.replyReportDtos);
-                setTotalPages(validateAdminResponse?.data?.totalPages);
-            } catch (error) {
-                console.error('Error fetching notices:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
         getReplyReportTable();
     }, [currentPage, perPage]);
 
@@ -41,7 +42,79 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
         }
     };
 
-    const targetRow = reportTable.find((item) => item.no === reportIndex);
+    const deleteReport = (postIndex, replyIndex, reportIndex) => {
+        Swal.fire({
+            icon: 'warning',
+            title: '정말 삭제하시겠습니까?',
+            text: '삭제한 게시물은 복구 및 확인이 어려울 수 있습니다.',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteReportConfirm(postIndex, replyIndex, reportIndex);
+            }
+        });
+    };
+
+    const deleteReportConfirm = async (postIndex, replyIndex, reportIndex) => {
+        try {
+            setIsLoading(true);
+            // const reportIndex = reportIndex;
+
+            const deleteResponse = await validationAdmin(
+                'delete',
+                '/report/deleteReplyReport/' + postIndex + '/' + replyIndex + '/' + reportIndex,
+                null
+            );
+            setReportTable(null);
+
+            console.log(deleteResponse);
+
+            if (deleteResponse?.code === 200 && deleteResponse?.data === 1) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '정상적으로 처리되었습니다.',
+                    confirmButtonText: '확인',
+                });
+                getReplyReportTable();
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: '정상적으로 처리되지 않았습니다.',
+                    text: '다시 시도해주시기 바랍니다.',
+                    confirmButtonText: '확인',
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching deleteNotice:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const rejectReport = (postIndex, replyIndex, reportIndex) => {
+        Swal.fire({
+            icon: 'warning',
+            title: '신고를 기각하시겠습니까?',
+            text: '한 번 처리된 신고는 수정이 어려울 수 있습니다.',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteReportConfirm(postIndex, replyIndex, reportIndex);
+            }
+        });
+    };
+
+    const targetRow = reportTable?.find((item) => item.no === reportIndex);
 
     return (
         <div className="admin_authorization_wrap">
@@ -122,6 +195,7 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                 textOverflow: 'ellipsis',
                                                 whiteSpace: 'nowrap',
                                             }}
+                                            title={`${report?.comment}`}
                                             // onClick={() => moveToDetail(report.post_no)}
                                         >
                                             {report.comment}
@@ -134,8 +208,9 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                             textOverflow: 'ellipsis',
                                             whiteSpace: 'nowrap',
                                         }}
+                                        title={`${report?.user_mail}`}
                                     >
-                                        {report.user_mail}
+                                        {report?.user_mail}
                                     </td>
                                     <td
                                         style={{
@@ -165,6 +240,7 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                             textOverflow: 'ellipsis',
                                             whiteSpace: 'nowrap',
                                         }}
+                                        title={`${report?.report_user}`}
                                     >
                                         {report.report_user}
                                     </td>
@@ -173,62 +249,63 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                         7
                                     )}/${report.reg_date.substring(8, 10)}`}</td>
                                     <td>
-                                        {report.reg_date.substring(0, 10) === report.mod_date.substring(0, 10)
+                                        {report?.reg_date === report?.mod_date
                                             ? '미처리'
-                                            : report.mod_date.substring(0, 10)}
+                                            : `${report?.mod_date.substring(2, 4)}/${report?.mod_date.substring(
+                                                  5,
+                                                  7
+                                              )}/${report?.mod_date.substring(8, 10)}`}
                                     </td>
-                                    <td
-                                        style={{
-                                            padding: '0px',
-                                            paddingTop: '4px',
-                                        }}
-                                    >
-                                        {report.status === 0 ? (
-                                            <button
-                                                type="button"
-                                                className="btn btn-light "
-                                                disabled
+                                    {report?.reply_status !== 1 || console.log(report.status) ? (
+                                        <td
+                                            style={{
+                                                padding: '0px',
+                                                paddingTop: '8px',
+                                            }}
+                                            colSpan={2}
+                                        >
+                                            삭제된 댓글
+                                        </td>
+                                    ) : report?.status !== 1 ? (
+                                        <td
+                                            style={{
+                                                padding: '0px',
+                                                paddingTop: '8px',
+                                            }}
+                                            colSpan={2}
+                                        >
+                                            처리된 신고
+                                        </td>
+                                    ) : (
+                                        <>
+                                            <td
                                                 style={{
-                                                    fontFamily: 'malgun gothic',
-                                                    margin: '0',
-                                                    padding: '3px 7px ',
+                                                    padding: '0px',
+                                                    paddingTop: '4px',
                                                 }}
                                             >
-                                                삭제됨
-                                            </button>
-                                        ) : (
-                                            <button
-                                                type="button"
-                                                className="btn btn-light "
-                                                style={{
-                                                    fontFamily: 'malgun gothic',
-                                                    margin: '0',
-                                                    padding: '3px 7px ',
-                                                }}
-                                                // onClick={() => {
-                                                //     moveToModify(notice);
-                                                // }}
-                                            >
-                                                댓글 삭제
-                                            </button>
-                                        )}
-                                    </td>
-                                    <td style={{ textAlign: 'center', padding: '0px', paddingTop: '4px' }}>
-                                        <a>
-                                            {report?.status === 0 ? (
                                                 <button
                                                     type="button"
-                                                    className="btn btn-light"
-                                                    disabled
+                                                    className="btn btn-light "
                                                     style={{
+                                                        width: '105px',
                                                         fontFamily: 'malgun gothic',
                                                         margin: '0',
                                                         padding: '3px 7px ',
                                                     }}
+                                                    onClick={() =>
+                                                        deleteReport(report?.post_no, report?.reply_no, report?.no)
+                                                    }
                                                 >
-                                                    기각됨
+                                                    댓글 삭제
                                                 </button>
-                                            ) : (
+                                            </td>
+                                            <td
+                                                style={{
+                                                    padding: '0px',
+                                                    paddingTop: '4px',
+                                                }}
+                                            >
                                                 <button
                                                     type="button"
                                                     className="btn btn-light"
@@ -237,15 +314,15 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                         margin: '0',
                                                         padding: '3px 7px ',
                                                     }}
-                                                    // onClick={() => {
-                                                    //     deleteNotice(notice);
-                                                    // }}
+                                                    onClick={() => {
+                                                        rejectReport(0, 0, report?.no);
+                                                    }}
                                                 >
                                                     신고 기각
                                                 </button>
-                                            )}
-                                        </a>
-                                    </td>
+                                            </td>
+                                        </>
+                                    )}
                                 </tr>
                             ))
                         )}
@@ -337,7 +414,6 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                     className="btn btn-primary"
                                     data-bs-dismiss="modal"
                                     aria-label="Close"
-                                    // onClick={() => summitReport(postId)}
                                 >
                                     기각하기
                                 </button>

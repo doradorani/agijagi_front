@@ -275,7 +275,6 @@ const DetailPost = () => {
                                     </div>
                                 </div>
                                 <hr className="division_line" />
-                                <div className="reply_cnt">댓글 {responseData?.data?.reply_cnt}개</div>
                                 <DetailReplys reportReason={reportReason} setReportReason={setReportReason} />
                             </div>
                             {/* 게시물 모달 START */}

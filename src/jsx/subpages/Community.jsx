@@ -13,16 +13,12 @@ import isUserLogin from '../../js/api/config/userLogin_config';
 import { Route, Routes, useNavigate } from 'react-router';
 import userInfo_config from '../../js/api/config/userInfo_config';
 
-const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previewImage, setPreviewImage }) => {
+const Community = ({ setSelectedSideMenu, previewImage, setPreviewImage }) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [uploadText, setUploadText] = useState('');
-    const [fileInfo, setFileInfo] = useState('');
     const [byteCount, setByteCount] = useState(0);
-    const [selectedPost, setSelectedPost] = useState(0);
-    const [loading, setIsLoading] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
 
-    let communityContents;
     let data;
     const user_profile = userInfo_config.userProfile;
     const user_nickname = userInfo_config.userNickname;
@@ -35,7 +31,6 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
         const maxFileSize = 25600000;
         const files = e.target.files;
         const newSelectedFiles = [];
-        let fileInfoText = '';
 
         for (let i = 0; i < files.length; i++) {
             const file = files[i];

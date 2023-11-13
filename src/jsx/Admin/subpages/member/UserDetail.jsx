@@ -4,7 +4,7 @@ import AdminSidbar from '../../AdminSidebar';
 import adminToken_config from '../../../../js/api/config/adminToken_config';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
 import Swal from 'sweetalert2';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const UserDetail = ({ selectedMenu }) => {
     const location = useLocation();
@@ -91,86 +91,167 @@ const UserDetail = ({ selectedMenu }) => {
     };
 
     return (
-        <div className='admin_authorization_wrap '>
-            <div className='admin_page_menu_title_wrap'>
-                <img src='/test_imgs/svg/group.svg' />
-                <div className='admin_page_menu_title yg_font '>유저 관리</div>
-                <div className='yg_font admin_page_menu_sub_title'> &#62; 상세 정보</div>
+        <div className="admin_authorization_wrap ">
+            <div className="admin_page_menu_title_wrap">
+                <img src="/test_imgs/svg/group.svg" />
+                <div className="admin_page_menu_title yg_font ">유저 관리</div>
+                <div className="yg_font admin_page_menu_sub_title"> &#62; 상세 정보</div>
             </div>
-            <div className='admin_authorization_second_wrap'>
-                <table className='admin_authorization table table-striped table-hover'>
-                    <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>이름</th>
-                            <th>아이디</th>
-                            <th>이메일</th>
-                            <th>핸드폰 번호</th>
-                            <th>가입일자</th>
-                            <th>수정일자</th>
-                            <th>승인 여부</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {userManageList.map((user, index) => (
-                            <tr key={index} onClick={() => userDetailHandler(user.no)}>
-                                <td>{user.no}</td>
-                                <td>{user.name}</td>
-                                <td>{user.nickname}</td>
-                                <td>{user.email}</td>
-                                <td>{user.phone}</td>
-                                <td>{user.reg_date}</td>
-                                <td>{user.mod_date}</td>
-                                <td>{user.status}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-
-                <div aria-label='Page navigation example' style={{ marginTop: '10px' }}>
-                    <ul className='pagination justify-content-center'>
-                        <li className='page-item'>
-                            <button
-                                className='page-link pagination_btn'
-                                aria-label='Previous'
-                                onClick={() => {
-                                    if (startPage === 1) {
-                                        userManageListHandler(1);
-                                    } else {
-                                        userManageListHandler(startPage - 1);
-                                    }
-                                }}
-                            >
-                                <span aria-hidden='true'>&laquo;</span>
-                            </button>
-                        </li>
-                        {isLoading ? (
-                            <div></div>
-                        ) : (
-                            Array.from({ length: endPage - startPage + 1 }, (_, i) => (
-                                <li
-                                    className={`page-item ${startPage + i === currentPage ? 'active' : ''}`}
-                                    key={startPage + i}
-                                >
-                                    <button
-                                        className='page-link pagination_btn'
-                                        onClick={() => userManageListHandler(startPage + i)}
+            <div className="admin_authorization_second_wrap" style={{ width: '100%' }}>
+                <div>
+                    <div
+                        className="user_detail_wrap_for_admin flex"
+                        style={{
+                            marginTop: '20px',
+                            paddingBottom: '25px',
+                            width: '90%',
+                            height: '500px',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                        }}
+                    >
+                        <div className="flex " style={{ marginTop: '35px', justifyContent: 'space-evenly' }}>
+                            <div>
+                                <div className="user_modify_profile_wrap yg_font">
+                                    <img
+                                        className="profile_img_for_modify"
+                                        src="/test_imgs/png/profile.png"
+                                        style={{ objectFit: 'cover' }}
+                                    />
+                                </div>
+                                <div>
+                                    <div className="form-floating mb-3">
+                                        <input
+                                            type="text"
+                                            className="form-control custom_floating_label"
+                                            id="floatingInputName"
+                                            placeholder="이름"
+                                            disabled={true}
+                                            style={{ paddingBottom: '3px', borderRadius: '10px' }}
+                                        />
+                                        <label htmlFor="floatingInputName">
+                                            <span>이름</span>
+                                            &nbsp;
+                                            <span style={{ color: 'red ' }}>*</span>
+                                        </label>
+                                    </div>
+                                    <div
+                                        className="form-floating mb-2 "
+                                        style={{
+                                            marginBottom: '10px',
+                                            paddingBottom: '0px',
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'flex-end',
+                                        }}
                                     >
-                                        {startPage + i}
-                                    </button>
-                                </li>
-                            ))
-                        )}
-                        <li className='page-item'>
-                            <button
-                                className='page-link '
-                                aria-label='Next'
-                                onClick={() => userManageListHandler(endPage + 1)}
+                                        <input
+                                            type="text"
+                                            className="form-control custom_floating_label"
+                                            id="floatingInputNickName"
+                                            placeholder="별명"
+                                            disabled={true}
+                                            style={{ paddingBottom: '3px', width: '500px', borderRadius: '10px' }}
+                                        />
+                                        <label htmlFor="floatingInputNickName">
+                                            <span>별명</span>
+                                            &nbsp;
+                                            <span style={{ color: 'red ' }}>*</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                className="flex"
+                                style={{ flexDirection: 'column', justifyContent: 'space-between', width: '500px' }}
                             >
-                                <span aria-hidden='true'>&raquo;</span>
+                                <div
+                                    className="form-floating mb-2"
+                                    style={{ marginBottom: '10px', paddingBottom: '0px' }}
+                                >
+                                    <input
+                                        type="email"
+                                        className="form-control custom_floating_label"
+                                        id="floatingInputEmail"
+                                        style={{ paddingBottom: '3px', borderRadius: '10px' }}
+                                        placeholder="E-mail"
+                                        disabled={true}
+                                    />
+                                    <label htmlFor="floatingInputEmail">
+                                        <span>E-mail</span>
+                                        &nbsp;
+                                        <span style={{ color: 'red ' }}>*</span>
+                                    </label>
+                                </div>
+                                <div
+                                    className="form-floating mb-2 "
+                                    style={{ marginBottom: '10px', paddingBottom: '0px' }}
+                                >
+                                    <input
+                                        type="number"
+                                        className="form-control custom_floating_label sign_up_phone"
+                                        id="floatingInputPhoneNumber"
+                                        placeholder="휴대 전화"
+                                        disabled={true}
+                                        style={{ paddingBottom: '3px', borderRadius: '10px' }}
+                                    />
+                                    <label htmlFor="floatingInputPhoneNumber">
+                                        <span>휴대 전화</span>
+                                    </label>
+                                </div>
+                                <div className="form-floating mb-2">
+                                    <input
+                                        type="text"
+                                        className="form-control custom_floating_label"
+                                        id="floatingInputPostCode"
+                                        placeholder="Password"
+                                        disabled={true}
+                                        style={{ paddingBottom: '3px', borderRadius: '10px' }}
+                                    />
+                                    <label htmlFor="floatingInputPostCode">
+                                        <span>우편 번호</span>
+                                    </label>
+                                </div>
+                                <div className="form-floating  mb-2 ">
+                                    <input
+                                        type="text"
+                                        className="form-control custom_floating_label sign_up_phone"
+                                        id="floatingInputAddress"
+                                        placeholder="주소"
+                                        disabled={true}
+                                        style={{ paddingBottom: '3px', borderRadius: '10px' }}
+                                    />
+                                    <label htmlFor="floatingInputAddress">
+                                        <span>주소</span>
+                                    </label>
+                                </div>
+
+                                <div className="form-floating mb-2 ">
+                                    <input
+                                        type="text"
+                                        className="form-control custom_floating_label sign_up_phone"
+                                        id="floatingInputDetailAddress"
+                                        placeholder="상세 주소"
+                                        disabled={true}
+                                        style={{ paddingBottom: '3px', borderRadius: '10px' }}
+                                    />
+                                    <label htmlFor="floatingInputDetailAddress">
+                                        <span>상세 주소</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="gap-2 ">
+                            <button
+                                className="btn btn_admin_login"
+                                type="button"
+                                style={{ width: '500px', marginBottom: '10px' }}
+                                // onClick={handleGoBack}
+                            >
+                                뒤로가기
                             </button>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

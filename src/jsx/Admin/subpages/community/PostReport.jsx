@@ -10,7 +10,6 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
     const [perPage] = useState(10);
     const [isLoading, setIsLoading] = useState(false);
     const [reportTable, setReportTable] = useState([]);
-    const [postIndex, setPostIndex] = useState(0);
 
     const validationAdmin = useValidationAdminItem();
 
@@ -78,14 +77,14 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
             if (deleteResponse?.code === 200 && deleteResponse?.data === 1) {
                 Swal.fire({
                     icon: 'success',
-                    title: '정상적으로 삭제되었습니다.',
+                    title: '정상적으로 처리되었습니다.',
                     confirmButtonText: '확인',
                 });
                 getPostReportTable();
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: '게시물 삭제에 실패하였습니다.',
+                    title: '정상적으로 처리되지 않았습니다.',
                     text: '다시 시도해주시기 바랍니다.',
                     confirmButtonText: '확인',
                 });
@@ -95,6 +94,24 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const rejectReport = (postIndex, reportIndex) => {
+        Swal.fire({
+            icon: 'warning',
+            title: '신고를 기각하시겠습니까?',
+            text: '한 번 처리된 신고는 수정이 어려울 수 있습니다.',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteReportConfirm(postIndex, reportIndex);
+            }
+        });
     };
 
     const targetRow = reportTable?.find((item) => item?.no === reportIndex);
@@ -165,7 +182,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                     <tr
                                         key={report?.no}
                                         className={`${
-                                            report?.post_status === '0' || report?.status === '0' ? 'disable_row' : ''
+                                            report?.post_status !== 1 || report?.status !== 1 ? 'disable_row' : ''
                                         }`}
                                     >
                                         <td>{report?.no}</td>
@@ -184,6 +201,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                     textOverflow: 'ellipsis',
                                                     whiteSpace: 'nowrap',
                                                 }}
+                                                title={`${report?.post_text}`}
                                             >
                                                 {report?.post_text}
                                             </Link>
@@ -195,6 +213,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                 textOverflow: 'ellipsis',
                                                 whiteSpace: 'nowrap',
                                             }}
+                                            title={`${report?.user_mail}`}
                                         >
                                             {report?.user_mail}
                                         </td>
@@ -214,9 +233,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                 }}
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modal_for_post_report"
-                                                onClick={() => {
-                                                    setReportIndex(report?.no);
-                                                }}
+                                                onClick={() => setReportIndex(report?.no)}
                                             >
                                                 신고 사유
                                             </button>
@@ -228,6 +245,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                 textOverflow: 'ellipsis',
                                                 whiteSpace: 'nowrap',
                                             }}
+                                            title={`${report?.report_user}`}
                                         >
                                             {report?.report_user}
                                         </td>
@@ -236,61 +254,61 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                             7
                                         )}/${report?.reg_date.substring(8, 10)}`}</td>
                                         <td>
-                                            {report?.reg_date.substring(0, 10) === report?.mod_date.substring(0, 10)
+                                            {report?.reg_date === report?.mod_date
                                                 ? '미처리'
-                                                : report?.mod_date.substring(0, 10)}
+                                                : `${report?.mod_date.substring(2, 4)}/${report?.mod_date.substring(
+                                                      5,
+                                                      7
+                                                  )}/${report?.mod_date.substring(8, 10)}`}
                                         </td>
-                                        <td
-                                            style={{
-                                                padding: '0px',
-                                                paddingTop: '4px',
-                                            }}
-                                        >
-                                            {report?.post_status === '0' ? (
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-light "
-                                                    disabled
+                                        {report?.post_status !== 1 || console.log(report.status) ? (
+                                            <td
+                                                style={{
+                                                    padding: '0px',
+                                                    paddingTop: '8px',
+                                                }}
+                                                colSpan={2}
+                                            >
+                                                삭제된 게시물
+                                            </td>
+                                        ) : report?.status !== 1 ? (
+                                            <td
+                                                style={{
+                                                    padding: '0px',
+                                                    paddingTop: '8px',
+                                                }}
+                                                colSpan={2}
+                                            >
+                                                처리된 신고
+                                            </td>
+                                        ) : (
+                                            <>
+                                                <td
                                                     style={{
-                                                        fontFamily: 'malgun gothic',
-                                                        margin: '0',
-                                                        padding: '3px 7px ',
+                                                        padding: '0px',
+                                                        paddingTop: '4px',
                                                     }}
                                                 >
-                                                    삭제됨
-                                                </button>
-                                            ) : (
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-light "
-                                                    style={{
-                                                        width: '105px',
-                                                        fontFamily: 'malgun gothic',
-                                                        margin: '0',
-                                                        padding: '3px 7px ',
-                                                    }}
-                                                    onClick={() => deleteReport(report?.post_no, report?.no)}
-                                                >
-                                                    게시물 삭제
-                                                </button>
-                                            )}
-                                        </td>
-                                        <td style={{ textAlign: 'center', padding: '0px', paddingTop: '4px' }}>
-                                            <a>
-                                                {report?.status === 0 ? (
                                                     <button
                                                         type="button"
-                                                        className="btn btn-light"
-                                                        disabled
+                                                        className="btn btn-light "
                                                         style={{
+                                                            width: '105px',
                                                             fontFamily: 'malgun gothic',
                                                             margin: '0',
                                                             padding: '3px 7px ',
                                                         }}
+                                                        onClick={() => deleteReport(report?.post_no, report?.no)}
                                                     >
-                                                        기각됨
+                                                        게시물 삭제
                                                     </button>
-                                                ) : (
+                                                </td>
+                                                <td
+                                                    style={{
+                                                        padding: '0px',
+                                                        paddingTop: '4px',
+                                                    }}
+                                                >
                                                     <button
                                                         type="button"
                                                         className="btn btn-light"
@@ -299,15 +317,15 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                             margin: '0',
                                                             padding: '3px 7px ',
                                                         }}
-                                                        // onClick={() => {
-                                                        //     deleteNotice(notice);
-                                                        // }}
+                                                        onClick={() => {
+                                                            rejectReport(0, report?.no);
+                                                        }}
                                                     >
                                                         신고 기각
                                                     </button>
-                                                )}
-                                            </a>
-                                        </td>
+                                                </td>
+                                            </>
+                                        )}
                                     </tr>
                                 ))
                             )}
@@ -389,17 +407,20 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                     <button
                                         type="button"
                                         className="btn btn-danger"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#modal_for_post_detail"
+                                        disabled={targetRow?.post_status !== 1 || targetRow?.status !== 1}
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                        onClick={() => deleteReport(targetRow?.post_no, targetRow?.no)}
                                     >
                                         게시물 삭제하기
                                     </button>
                                     <button
                                         type="submit"
                                         className="btn btn-primary"
+                                        disabled={targetRow?.post_status !== 1 || targetRow?.status !== 1}
                                         data-bs-dismiss="modal"
                                         aria-label="Close"
-                                        // onClick={() => summitReport(postId)}
+                                        onClick={() => rejectReport(0, targetRow?.no)}
                                     >
                                         기각하기
                                     </button>

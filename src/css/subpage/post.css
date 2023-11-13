@@ -232,3 +232,17 @@ div.re_reply_show {
     border-radius: 5px;
     padding-left: 8px;
 }
+
+figure.zoom_in > img,
+figure.zoom_in > button {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
+}
+
+figure.zoom_in:hover > img,
+figure.zoom_in:hover > button {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+}
