@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../../../css/admin/community/postreport.css';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
@@ -12,6 +12,7 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
     const [reportTable, setReportTable] = useState([]);
 
     const validationAdmin = useValidationAdminItem();
+    const nav = useNavigate();
 
     const getReplyReportTable = async () => {
         try {
@@ -114,6 +115,29 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
         });
     };
 
+    const userDetailHandler = (email) => {
+        try {
+            validationAdmin('get', '/admin/showUserDetail/' + email).then((res) => {
+                if (res.success) {
+                    nav('/admin/user_detail', { state: res.data });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '실패',
+                        text: '서버에 문제가 생겨 실패하였습니다. 다시 시도해주세요.',
+                    });
+                }
+            });
+        } catch (error) {
+            console.error('error: ', error);
+            Swal.fire({
+                icon: 'error',
+                title: '에러',
+                text: '서버에 문제가 생겨 실패하였습니다. 다시 시도해주세요.',
+            });
+        }
+    };
+
     const targetRow = reportTable?.find((item) => item.no === reportIndex);
 
     return (
@@ -196,7 +220,6 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                 whiteSpace: 'nowrap',
                                             }}
                                             title={`${report?.comment}`}
-                                            // onClick={() => moveToDetail(report.post_no)}
                                         >
                                             {report.comment}
                                         </Link>
@@ -208,6 +231,7 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                             textOverflow: 'ellipsis',
                                             whiteSpace: 'nowrap',
                                         }}
+                                        onClick={() => userDetailHandler(report?.user_mail)}
                                         title={`${report?.user_mail}`}
                                     >
                                         {report?.user_mail}
@@ -240,6 +264,7 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                             textOverflow: 'ellipsis',
                                             whiteSpace: 'nowrap',
                                         }}
+                                        onClick={() => userDetailHandler(report?.report_user)}
                                         title={`${report?.report_user}`}
                                     >
                                         {report.report_user}
@@ -376,7 +401,7 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h1 className="modal-title fs-5 yg_font" id="exampleModalLabel">
-                                    게시물 신고사유
+                                    댓글 신고사유
                                 </h1>
                                 <button
                                     type="button"
@@ -404,16 +429,18 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                 <button
                                     type="button"
                                     className="btn btn-danger"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modal_for_post_detail"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                    onClick={() => deleteReport(targetRow?.post_no, targetRow?.reply_no, targetRow?.no)}
                                 >
-                                    게시물 삭제하기
+                                    댓글 삭제하기
                                 </button>
                                 <button
                                     type="submit"
                                     className="btn btn-primary"
                                     data-bs-dismiss="modal"
                                     aria-label="Close"
+                                    onClick={() => rejectReport(0, 0, targetRow?.no)}
                                 >
                                     기각하기
                                 </button>

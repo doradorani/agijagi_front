@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../../css/subpage/noticetable.css';
-import { useValidationUser } from '../../../js/api/ValidationApi';
 import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
-import { noticeIndexAction } from '../../../js/api/redux_store/slice/noticeIndexSlice';
-import noticeIndex_config from '../../../js/api/config/noticeIndex_config';
 import { Link, useParams } from 'react-router-dom';
+import { useValidationItem } from '../../../js/api/VlidationItem';
 
 const NoticeTable = ({ setSelectedNotice }) => {
     const [noticeTable, setNoticeTable] = useState([]);
@@ -18,8 +16,7 @@ const NoticeTable = ({ setSelectedNotice }) => {
 
     // 관리자 로그인 상태 검증 관련 state
     const userLoginDispatch = useDispatch();
-    const noticeIndexDispatch = useDispatch();
-    const validationUserGetTable = useValidationUser();
+    const validationUserGetTable = useValidationItem();
 
     useEffect(() => {
         // 서버에서 공지사항 데이터 가져오는 함수

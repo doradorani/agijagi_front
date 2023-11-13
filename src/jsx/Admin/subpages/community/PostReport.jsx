@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../../../css/admin/community/postreport.css';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
@@ -12,6 +12,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
     const [reportTable, setReportTable] = useState([]);
 
     const validationAdmin = useValidationAdminItem();
+    const nav = useNavigate();
 
     const getPostReportTable = async () => {
         try {
@@ -114,6 +115,29 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
         });
     };
 
+    const userDetailHandler = (email) => {
+        try {
+            validationAdmin('get', '/admin/showUserDetail/' + email).then((res) => {
+                if (res.success) {
+                    nav('/admin/user_detail', { state: res.data });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '실패',
+                        text: '서버에 문제가 생겨 실패하였습니다. 다시 시도해주세요.',
+                    });
+                }
+            });
+        } catch (error) {
+            console.error('error: ', error);
+            Swal.fire({
+                icon: 'error',
+                title: '에러',
+                text: '서버에 문제가 생겨 실패하였습니다. 다시 시도해주세요.',
+            });
+        }
+    };
+
     const targetRow = reportTable?.find((item) => item?.no === reportIndex);
 
     return (
@@ -214,6 +238,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                 whiteSpace: 'nowrap',
                                             }}
                                             title={`${report?.user_mail}`}
+                                            onClick={() => userDetailHandler(report?.user_mail)}
                                         >
                                             {report?.user_mail}
                                         </td>
@@ -245,6 +270,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                 textOverflow: 'ellipsis',
                                                 whiteSpace: 'nowrap',
                                             }}
+                                            onClick={() => userDetailHandler(report?.report_user)}
                                             title={`${report?.report_user}`}
                                         >
                                             {report?.report_user}
