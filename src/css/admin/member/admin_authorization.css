@@ -15,3 +15,10 @@
 .admin_authorization {
     width: 100%;
 }
+
+.user_detail_wrap_for_admin {
+    margin: 0 auto;
+    border-radius: 15px;
+    border: 1px solid #dadada;
+    box-shadow: 0px 0px 4px #7d8392;
+}

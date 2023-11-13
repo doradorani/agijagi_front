@@ -92,7 +92,7 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, delete
                     </div>
                 </Link>
                 <div>
-                    <Link to="/community/co_buying_list">
+                    <Link to="/community/co_buying_list" className="none_deco_link">
                         <div className="side_menu_sub_btn" onClick={() => setSelectedSideMenu(3)}>
                             - 전체 상품
                         </div>

@@ -187,46 +187,46 @@ const UserModifyInfo = () => {
     };
 
     return (
-        <div className='admin_login_wrap'>
-            <div className='input_admin_info_box_wrap_for_signup' style={{ marginTop: '100px', marginBottom: '60px' }}>
-                <div className='input_admin_info_box_for_signup' style={{ marginTop: '30px', marginBottom: '30px' }}>
-                    <div className='admin_login_title yg_font' style={{ fontSize: '2.1em' }}>
+        <div className="admin_login_wrap">
+            <div className="input_admin_info_box_wrap_for_signup" style={{ marginTop: '100px', marginBottom: '60px' }}>
+                <div className="input_admin_info_box_for_signup" style={{ marginTop: '30px', marginBottom: '30px' }}>
+                    <div className="admin_login_title yg_font" style={{ fontSize: '2.1em' }}>
                         회원정보 수정
                     </div>
-                    <div className='user_modify_profile_wrap yg_font'>
+                    <div className="user_modify_profile_wrap yg_font">
                         <img
-                            className='profile_img_for_modify'
+                            className="profile_img_for_modify"
                             src={previewProfileImage || userInfo_config.userProfile || '/test_imgs/png/profile.png'}
                             style={{ objectFit: 'cover' }}
                         />
 
                         <div
-                            data-bs-toggle='modal'
-                            data-bs-target='#modal_for_add_profile_phote'
-                            className='add_a_photo_img'
+                            data-bs-toggle="modal"
+                            data-bs-target="#modal_for_add_profile_phote"
+                            className="add_a_photo_img"
                             onClick={(e) => setModalStyle('modal_for_add_profile_phote1')}
                         >
-                            <img className='add_a_photo_img_log' src='/test_imgs/png/white_camera.png' />
+                            <img className="add_a_photo_img_log" src="/test_imgs/png/white_camera.png" />
                         </div>
                     </div>
-                    <div className='form-floating mb-2'>
+                    <div className="form-floating mb-2">
                         <input
-                            type='text'
-                            className='form-control custom_floating_label'
-                            id='floatingInputName'
-                            placeholder='이름'
+                            type="text"
+                            className="form-control custom_floating_label"
+                            id="floatingInputName"
+                            placeholder="이름"
                             defaultValue={userInfo_config.userName}
                             onChange={(e) => setUserName(e.target.value)}
                             style={{ paddingBottom: '3px' }}
                         />
-                        <label htmlFor='floatingInputName'>
+                        <label htmlFor="floatingInputName">
                             <span>이름</span>
                             &nbsp;
                             <span style={{ color: 'red ' }}>*</span>
                         </label>
                     </div>
                     <div
-                        className='form-floating mb-2'
+                        className="form-floating mb-2"
                         style={{
                             marginBottom: '10px',
                             paddingBottom: '0px',
@@ -236,22 +236,22 @@ const UserModifyInfo = () => {
                         }}
                     >
                         <input
-                            type='text'
-                            className='form-control custom_floating_label'
-                            id='floatingInputNickName'
-                            placeholder='별명'
+                            type="text"
+                            className="form-control custom_floating_label"
+                            id="floatingInputNickName"
+                            placeholder="별명"
                             defaultValue={userInfo_config.userNickname}
                             onChange={(e) => setUserNickname(e.target.value)}
                             style={{ paddingBottom: '3px', width: '250px' }}
                         />
-                        <label htmlFor='floatingInputNickName'>
+                        <label htmlFor="floatingInputNickName">
                             <span>별명</span>s &nbsp;
                             <span style={{ color: 'red ' }}>*</span>
                         </label>
 
                         <button
-                            type='button'
-                            className='btn btn-outline-primary'
+                            type="button"
+                            className="btn btn-outline-primary"
                             style={{ marginLeft: '15px', height: '38px' }}
                             onClick={handleNicknameCheck}
                         >
@@ -259,42 +259,40 @@ const UserModifyInfo = () => {
                         </button>
                     </div>
 
-                    <div className='form-floating mb-2' style={{ marginBottom: '10px', paddingBottom: '0px' }}>
+                    <div className="form-floating mb-2" style={{ marginBottom: '10px', paddingBottom: '0px' }}>
                         <input
-                            type='email'
-                            className='form-control custom_floating_label'
-                            id='floatingInputEmail'
+                            type="email"
+                            className="form-control custom_floating_label"
+                            id="floatingInputEmail"
                             style={{ paddingBottom: '3px' }}
-                            placeholder='E-mail'
+                            placeholder="E-mail"
                             defaultValue={userInfo_config.userEmail}
                             onChange={(e) => setUserEmail(e.target.value)}
                         />
-                        <label htmlFor='floatingInputEmail'>
+                        <label htmlFor="floatingInputEmail">
                             <span>E-mail</span>
                             &nbsp;
                             <span style={{ color: 'red ' }}>*</span>
                         </label>
                     </div>
-                    <div className='form-floating mb-2 ' style={{ marginBottom: '10px', paddingBottom: '0px' }}>
+                    <div className="form-floating mb-2 " style={{ marginBottom: '10px', paddingBottom: '0px' }}>
                         <input
-                            type='number'
-                            className='form-control custom_floating_label sign_up_phone'
-                            id='floatingInputPhoneNumber'
-                            placeholder='휴대 전화'
+                            type="number"
+                            className="form-control custom_floating_label sign_up_phone"
+                            id="floatingInputPhoneNumber"
+                            placeholder="휴대 전화"
                             defaultValue={userInfo_config.userPhone}
                             onChange={(e) => setUserPhone(e.target.value)}
                             style={{ paddingBottom: '3px' }}
                         />
-                        <label htmlFor='floatingInputPhoneNumber'>
+                        <label htmlFor="floatingInputPhoneNumber">
                             <span>휴대 전화</span>
-                            &nbsp;
-                            <span style={{ color: 'red ' }}>*</span>
                             &nbsp;&nbsp;
                             <span>('-'를 빼고 입력해주세요.)</span>
                         </label>
                     </div>
                     <div
-                        className='form-floating mb-1'
+                        className="form-floating mb-1"
                         style={{
                             marginBottom: '10px',
                             paddingBottom: '0px',
@@ -305,21 +303,19 @@ const UserModifyInfo = () => {
                         }}
                     >
                         <input
-                            type='text'
-                            className='form-control custom_floating_label'
-                            id='floatingInputPostCode'
-                            placeholder='Password'
+                            type="text"
+                            className="form-control custom_floating_label"
+                            id="floatingInputPostCode"
+                            placeholder="Password"
                             style={{ paddingBottom: '3px', width: '250px' }}
                             defaultValue={userZipcode}
                         />
-                        <label htmlFor='floatingInputPostCode'>
+                        <label htmlFor="floatingInputPostCode">
                             <span>우편 번호</span>
-                            &nbsp;
-                            <span style={{ color: 'red ' }}>*</span>
                         </label>
                         <button
-                            type='button'
-                            className='btn btn-outline-primary'
+                            type="button"
+                            className="btn btn-outline-primary"
                             style={{ marginLeft: '15px', boxSizing: 'border-box' }}
                             onClick={(e) => handleOpenPostcode()}
                         >
@@ -337,50 +333,48 @@ const UserModifyInfo = () => {
                         </div>
                     )}
 
-                    <div className='form-floating  mb-1 ' style={{ marginBottom: '10px', paddingBottom: '0px' }}>
+                    <div className="form-floating  mb-1 " style={{ marginBottom: '10px', paddingBottom: '0px' }}>
                         <input
-                            type='text'
-                            className='form-control custom_floating_label sign_up_phone'
-                            id='floatingInputAddress'
-                            placeholder='주소'
+                            type="text"
+                            className="form-control custom_floating_label sign_up_phone"
+                            id="floatingInputAddress"
+                            placeholder="주소"
                             style={{ paddingBottom: '3px' }}
                             defaultValue={userAddress}
                             onChange={(e) => setUserAddress(e.target.value)}
                         />
-                        <label htmlFor='floatingInputAddress'>
+                        <label htmlFor="floatingInputAddress">
                             <span>주소</span>
-                            &nbsp;
-                            <span style={{ color: 'red ' }}>*</span>
                         </label>
                     </div>
 
-                    <div className='form-floating mb-4 ' style={{ paddingBottom: '10px' }}>
+                    <div className="form-floating mb-4 " style={{ paddingBottom: '10px' }}>
                         <input
-                            type='text'
-                            className='form-control custom_floating_label sign_up_phone'
-                            id='floatingInputDetailAddress'
-                            placeholder='상세 주소'
+                            type="text"
+                            className="form-control custom_floating_label sign_up_phone"
+                            id="floatingInputDetailAddress"
+                            placeholder="상세 주소"
                             defaultValue={userInfo_config.userDetailAddress}
                             onChange={(e) => setUserDetailAddress(e.target.value)}
                             style={{ paddingBottom: '3px' }}
                         />
-                        <label htmlFor='floatingInputDetailAddress'>
+                        <label htmlFor="floatingInputDetailAddress">
                             <span>상세 주소</span>
                         </label>
                     </div>
 
-                    <div className='gap-3 flex' style={{ justifyContent: 'space-between' }}>
+                    <div className="gap-3 flex" style={{ justifyContent: 'space-between' }}>
                         <button
-                            className='btn btn_admin_login'
-                            type='button'
+                            className="btn btn_admin_login"
+                            type="button"
                             style={{ width: '200px' }}
                             onClick={handleUpdateUserInfo}
                         >
                             수정하기
                         </button>
                         <button
-                            className='btn btn_user_modify_cancel'
-                            type='button'
+                            className="btn btn_user_modify_cancel"
+                            type="button"
                             style={{ width: '200px' }}
                             onClick={handleGoBack}
                         >
@@ -391,35 +385,35 @@ const UserModifyInfo = () => {
             </div>
             {/* 회원 정보 수정 => 프로필 사진 선택 모달 START */}
             <div
-                className='modal fade'
-                id='modal_for_add_profile_phote'
-                tabIndex='-1'
-                aria-labelledby='exampleModalLabel'
-                aria-hidden='true'
+                className="modal fade"
+                id="modal_for_add_profile_phote"
+                tabIndex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
             >
-                <div className='modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable'>
-                    <div className='modal-content'>
+                <div className="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
+                    <div className="modal-content">
                         <div
-                            className='modal-body mx-auto'
+                            className="modal-body mx-auto"
                             style={{ width: '450px', textAlign: 'center', fontWeight: 'bold' }}
                         >
                             <input
-                                type='file'
-                                accept='image/*'
-                                id='fileInput'
-                                encType='multipart/form-data'
+                                type="file"
+                                accept="image/*"
+                                id="fileInput"
+                                encType="multipart/form-data"
                                 style={{ display: 'none' }}
                                 onChange={handleFileChange}
                             />
-                            <div data-bs-dismiss='modal' onClick={handleFileChange}>
+                            <div data-bs-dismiss="modal" onClick={handleFileChange}>
                                 프로필 사진 선택하기
                             </div>
                             <hr />
-                            <div data-bs-dismiss='modal' onClick={deleteFiles}>
+                            <div data-bs-dismiss="modal" onClick={deleteFiles}>
                                 프로필 사진 삭제
                             </div>
                             <hr />
-                            <div data-bs-dismiss='modal' aria-label='Close'>
+                            <div data-bs-dismiss="modal" aria-label="Close">
                                 닫기
                             </div>
                         </div>
