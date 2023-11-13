@@ -1,7 +1,11 @@
-.community_main_img {
+div.community_main_img {
     width: 100%;
     max-height: 400px;
-    object-fit: cover;
+}
+img.community_main_img {
+    /* width: 100%; */
+    max-height: 400px;
+    object-fit: contain;
 }
 
 .flex {

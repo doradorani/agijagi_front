@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import NoticeTable from '../../../subpages/noticeboard/NoticeTable';
-import AdminSidbar from '../../AdminSidebar';
-import axios from 'axios';
 import token_config from '../../../../js/api/config/token_config';
 import { useValidationAdmin } from '../../../../js/api/admin/ValidationAdminApi';
 import { useDispatch } from 'react-redux';
 import { adminStateAction } from '../../../../js/api/redux_store/slice/adminLoginSlice';
-import noticeIndex_config from '../../../../js/api/config/noticeIndex_config';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
 import { noticeIndexAction } from '../../../../js/api/redux_store/slice/noticeIndexSlice';
-import { Link, unstable_HistoryRouter, useNavigate } from 'react-router-dom';
-import ModifyNotice from './ModifyNotice';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const AdminNoticeList = ({ setSelectedSideMenu }) => {
@@ -40,12 +35,6 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
     const validationAdminForDeleteNotice = useValidationAdminItem();
     const validationAdminNotice = useValidationAdminItem();
     const noticeIndexDispatch = useDispatch();
-
-    // const validationAdminForMoveDetail = useValidationAdmin(
-    //     'get',
-    //     '/notice/noticeDetail/' + noticeIndex + '/' + modifyRequest,
-    //     null
-    // );
 
     useEffect(() => {
         // 서버에서 공지사항 데이터 가져오는 함수
