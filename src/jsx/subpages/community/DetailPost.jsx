@@ -5,22 +5,26 @@ import { useValidationItem } from '../../../js/api/VlidationItem';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import Swal from 'sweetalert2';
 import userInfo_config from '../../../js/api/config/userInfo_config';
+import DetailReplys from './DetailReplys';
+import LoadingPostCard from './LoadingPostCard';
 
-const DetailPost = ({ setSelectedPost }) => {
+const DetailPost = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [responseData, setResponseData] = useState();
     const [byteCount, setByteCount] = useState(0);
-    const [postReportReason, setPostReportReason] = useState('');
+    const [reportReason, setReportReason] = useState('');
 
     const loginedUserNickname = userInfo_config.userNickname;
-
+    const ValidationItem = useValidationItem();
+    const nav = useNavigate();
     const { postId } = useParams();
+    // 링크 복사 (공유기능을 위한 URL값 가져오기)
     const postURL = window.location.href;
-
+    // 현재 날짜와 작성일 비교 변수
     const postDate = new Date(responseData?.data?.reg_date);
     const currentDate = new Date();
-    const timeDifference = currentDate - postDate;
-    const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const postTimeDifference = currentDate - postDate;
+    const daysAgo = Math.floor(postTimeDifference / (1000 * 60 * 60 * 24));
 
     let s3_img_path = [];
     if (responseData && responseData.data && responseData.data.imgs_path) {
@@ -31,15 +35,12 @@ const DetailPost = ({ setSelectedPost }) => {
         s3_first_img_path = s3_img_path[0];
     }
 
-    const nav = useNavigate();
-    const validationItemForDetailPost = useValidationItem();
-
     useEffect(() => {
         const getDetaillPost = async () => {
             console.log('getDetaillPost() CALLED!!');
             try {
                 setIsLoading(true);
-                const response = await validationItemForDetailPost('get', '/community/getDetailPost/' + postId, null);
+                const response = await ValidationItem('get', '/community/getDetailPost/' + postId, null);
                 if (response.code === 200 && response.data !== null) {
                     console.log(response);
 
@@ -58,18 +59,17 @@ const DetailPost = ({ setSelectedPost }) => {
         Swal.fire({
             icon: 'success',
             title: `해당 링크가 복사되었습니다.`,
-            text: `${postURL}/detail_post/${responseData?.data?.no}`,
+            text: `${postURL}`,
         });
-        // alert(`해당 링크가 복사되었습니다.\n LINK:${postURL}/detail_post/${data.no}`);
     };
 
     const handleTextChange = (e) => {
         const text = e.target.value;
         // 함수 호출하여 바이트 수 계산
-        setPostReportReason(text);
+        setReportReason(text);
         fn_checkByte(text);
 
-        console.log(postReportReason);
+        console.log(reportReason);
     };
 
     // 바이트 수 체크 함수
@@ -89,10 +89,113 @@ const DetailPost = ({ setSelectedPost }) => {
         setByteCount(totalByte);
     };
 
+    const deletePostHandler = (index) => {
+        Swal.fire({
+            icon: 'warning',
+            title: '정말 삭제하시겠습니까?',
+            text: '삭제한 게시물은 복구가 어려울 수 있습니다.',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deletePostConfirm(index);
+            }
+        });
+    };
+
+    const deletePostConfirm = async (index) => {
+        try {
+            const postIndex = index;
+
+            const deleteResponse = await ValidationItem('delete', '/community/deletePost/' + postIndex, null);
+            if (deleteResponse.code === 200 && deleteResponse.data === 1) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '게시물이 정상적으로\n삭제되었습니다.',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: '게시물이 삭제에 실패하였습니다.',
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching deletePost:', error);
+        } finally {
+            nav('/community/my_posts');
+        }
+    };
+
+    const summitReport = async () => {
+        try {
+            if (reportReason === '') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '신고사유가 누락되었습니다.',
+                    text: '다시 시도해주시기 바랍니다.',
+                });
+            } else {
+                setIsLoading(true);
+                const summitReportRes = await ValidationItem(
+                    'post',
+                    '/community/summitReport/' + postId + '/' + 0 + '/' + reportReason,
+                    null
+                );
+                if (summitReportRes?.code === 200) {
+                    if (summitReportRes?.code === 200 && summitReportRes?.data !== 0) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '신고가 정상적으로\n접수되었습니다.',
+                        });
+                        setReportReason('');
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '신고 접수에 실패하였습니다.',
+                            text: '다시 시도해주시기 바랍니다.',
+                        });
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('summitReport error', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <>
-            {isLoading || responseData === undefined || responseData?.data === undefined ? (
-                <div></div>
+            {isLoading ? (
+                <>
+                    <LoadingPostCard />
+                    <div className="tag_for_sticky">
+                        <div>
+                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                        </div>
+                    </div>
+                </>
+            ) : responseData === undefined || responseData?.data === undefined ? (
+                <>
+                    <div className="flex" style={{ flexDirection: 'column', alignItems: 'center' }}>
+                        <img src="/test_imgs/community_imgs/sumaho.png" alt="" style={{ width: '350px' }} />
+                        <div className="nn_font" style={{ fontSize: '1.2em' }}>
+                            더 이상 이용할 수 없는 컨텐츠 입니다.
+                        </div>
+                    </div>
+
+                    <div className="tag_for_sticky">
+                        <div>
+                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
+                        </div>
+                    </div>
+                </>
             ) : (
                 <>
                     <div className="post_section nn_font">
@@ -173,179 +276,7 @@ const DetailPost = ({ setSelectedPost }) => {
                                 </div>
                                 <hr className="division_line" />
                                 <div className="reply_cnt">댓글 {responseData?.data?.reply_cnt}개</div>
-                                <div className="write_reply_box">
-                                    <div className="each_reply_box">
-                                        <div className="flex_for_profile">
-                                            <div className="flex">
-                                                <div className="reply_profile_img">
-                                                    <img src="/test_imgs/logo/full_logo.jpg" />
-                                                </div>
-                                                <div className="reply_profile_info">
-                                                    <div className="profile_name">hee_hee</div>
-                                                    <div className="update_date">1일 전</div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <img
-                                                    src="/test_imgs/png/more.png"
-                                                    style={{
-                                                        width: '20px',
-                                                        height: '60px',
-                                                        objectFit: 'contain',
-                                                        marginRight: '10px',
-                                                    }}
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modal_for_change_reply"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="reply_text_content">
-                                            댓글 1 댓글 1 댓글 1 댓글 1 댓글 1 댓글 1 댓글 1
-                                        </div>
-                                    </div>
-                                    <div className="each_reply_box">
-                                        <div className="flex_for_profile">
-                                            <div className="flex">
-                                                <div className="reply_profile_img">
-                                                    <img src="/test_imgs/logo/full_logo.jpg" />
-                                                </div>
-                                                <div className="reply_profile_info">
-                                                    <div className="profile_name">hee_hee</div>
-                                                    <div className="update_date">1일 전</div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <img
-                                                    src="/test_imgs/png/more.png"
-                                                    style={{
-                                                        width: '20px',
-                                                        height: '60px',
-                                                        objectFit: 'contain',
-                                                        marginRight: '10px',
-                                                    }}
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modal_for_change_reply"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="reply_text_content">
-                                            댓글 2 댓글 2 댓글 2 댓글 2 댓글 2 댓글 2 댓글 2 댓글 2 댓글 2 댓글 2 댓글 2
-                                            댓글 2 댓글 2 댓글 2 댓글 2
-                                        </div>
-                                        <div className="each_re_reply_text_content">
-                                            <div className="reply_arrow_img">
-                                                <img src="/test_imgs/png/reply-blue.png" />
-                                            </div>
-                                            <div className="re_reply_content_box">
-                                                <div className="flex_for_profile">
-                                                    <div className="flex">
-                                                        <div className="reply_profile_img">
-                                                            <img src="/test_imgs/logo/full_logo.jpg" />
-                                                        </div>
-                                                        <div className="reply_profile_info">
-                                                            <div className="profile_name">hee_hee</div>
-                                                            <div className="update_date">1일 전</div>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <img
-                                                            src="/test_imgs/png/more.png"
-                                                            style={{
-                                                                width: '20px',
-                                                                height: '60px',
-                                                                objectFit: 'contain',
-                                                            }}
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modal_for_change_reply"
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="reply_text_content">
-                                                    대댓글 1 대댓글 1 대댓글 1 대댓글 1 대댓글 1 대댓글 1 대댓글 1
-                                                    대댓글 1 대댓글 1 대댓글 1 대댓글 1 대댓글 1 대댓글 1 대댓글 1
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="each_re_reply_text_content">
-                                            <div className="reply_arrow_img">
-                                                <img src="/test_imgs/png/reply-blue.png" />
-                                            </div>
-                                            <div className="re_reply_content_box">
-                                                <div className="flex_for_profile">
-                                                    <div className="flex">
-                                                        <div className="reply_profile_img">
-                                                            <img src="/test_imgs/logo/full_logo.jpg" />
-                                                        </div>
-                                                        <div className="reply_profile_info">
-                                                            <div className="profile_name">hee_hee</div>
-                                                            <div className="update_date">1일 전</div>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <img
-                                                            src="/test_imgs/png/more.png"
-                                                            style={{
-                                                                width: '20px',
-                                                                height: '60px',
-                                                                objectFit: 'contain',
-                                                            }}
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modal_for_change_reply"
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="reply_text_content">
-                                                    대댓글 2 대댓글 2 대댓글 2 대댓글 2 대댓글 2 대댓글 2 대댓글 2
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="each_reply_box">
-                                        <div className="flex_for_profile">
-                                            <div className="flex">
-                                                <div className="reply_profile_img">
-                                                    <img src="/test_imgs/logo/full_logo.jpg" />
-                                                </div>
-                                                <div className="reply_profile_info">
-                                                    <div className="profile_name">hee_hee</div>
-                                                    <div className="update_date">1일 전</div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <img
-                                                    src="/test_imgs/png/more.png"
-                                                    style={{
-                                                        width: '20px',
-                                                        height: '60px',
-                                                        objectFit: 'contain',
-                                                        marginRight: '10px',
-                                                    }}
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modal_for_change_reply"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="reply_text_content">
-                                            댓글 3 댓글 3 댓글 3 댓글 3 댓글 3 댓글 3 댓글 3 댓글 3
-                                        </div>
-                                    </div>
-                                    {/* <hr className="division_line_for_reply"/> */}
-                                    <div className="division_box_for_write_reply">
-                                        <div>
-                                            <textarea
-                                                className="upload_reply"
-                                                name="text"
-                                                placeholder="댓글 달기..."
-                                                rows={'1'}
-                                            ></textarea>
-                                        </div>
-                                        <div className="send_logo_wrap">
-                                            <a href="#none">
-                                                <img className="send_logo" src="/test_imgs/png/paper-airplane.png" />
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                                <DetailReplys reportReason={reportReason} setReportReason={setReportReason} />
                             </div>
                             {/* 게시물 모달 START */}
                             <div
@@ -361,17 +292,21 @@ const DetailPost = ({ setSelectedPost }) => {
                                             className="modal-body mx-auto"
                                             style={{ width: '450px', textAlign: 'center', fontWeight: 'bold' }}
                                         >
-                                            <div
-                                                className="hover_cursor"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modal_for_post_declaration"
-                                                style={{ color: 'red' }}
-                                            >
-                                                게시물 신고
-                                            </div>
+                                            {loginedUserNickname !== responseData?.data?.nickname && (
+                                                <>
+                                                    <div
+                                                        className="hover_cursor"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modal_for_post_declaration"
+                                                        style={{ color: 'red' }}
+                                                    >
+                                                        신고하기
+                                                    </div>{' '}
+                                                    <hr />
+                                                </>
+                                            )}
                                             {loginedUserNickname === responseData?.data?.nickname ? (
                                                 <>
-                                                    <hr />
                                                     <div
                                                         className="hover_cursor"
                                                         data-bs-toggle="modal"
@@ -379,21 +314,28 @@ const DetailPost = ({ setSelectedPost }) => {
                                                     >
                                                         수정하기
                                                     </div>{' '}
+                                                    <hr />
+                                                    <div
+                                                        className="hover_cursor"
+                                                        data-bs-dismiss="modal"
+                                                        aria-label="Close"
+                                                        style={{ color: 'red' }}
+                                                        onClick={() => deletePostHandler(responseData?.data?.no)}
+                                                    >
+                                                        삭제하기
+                                                    </div>{' '}
+                                                    <hr />
                                                 </>
                                             ) : (
                                                 <></>
                                             )}
-
-                                            <hr />
                                             <a
                                                 className="hover_cursor none_underline"
                                                 onClick={copyPostURL}
                                                 data-bs-dismiss="modal"
                                                 aria-label="Close"
                                             >
-                                                <CopyToClipboard
-                                                    text={`${postURL}/detail_post/${responseData?.data?.no}`}
-                                                >
+                                                <CopyToClipboard text={`${postURL}`}>
                                                     <div>링크 복사</div>
                                                 </CopyToClipboard>
                                             </a>
@@ -431,7 +373,7 @@ const DetailPost = ({ setSelectedPost }) => {
                                                 placeholder="게시물의 신고사유를 작성해주세요."
                                                 style={{ width: '400px' }}
                                                 onChange={handleTextChange}
-                                                value={postReportReason}
+                                                value={reportReason}
                                             ></textarea>
                                         </div>
                                         <sup className="byte_for_upload yg_font" style={{ marginRight: '25px' }}>
@@ -440,13 +382,19 @@ const DetailPost = ({ setSelectedPost }) => {
                                         <div className="modal-footer">
                                             <button
                                                 type="button"
-                                                className="btn btn-primary"
+                                                className="btn btn-secondary"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#modal_for_post_detail"
                                             >
                                                 이전
                                             </button>
-                                            <button type="submit" className="btn btn-primary">
+                                            <button
+                                                type="submit"
+                                                className="btn btn-primary"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                                onClick={() => summitReport()}
+                                            >
                                                 제출하기
                                             </button>
                                         </div>
@@ -454,44 +402,6 @@ const DetailPost = ({ setSelectedPost }) => {
                                 </div>
                             </div>
                             {/* 게시물 모달 END */}
-                            {/*댓글 모달 START */}
-                            <div
-                                className="modal fade"
-                                id="modal_for_change_reply"
-                                tabIndex="-1"
-                                aria-labelledby="exampleModalLabel"
-                                aria-hidden="true"
-                            >
-                                <div className="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
-                                    <div className="modal-content">
-                                        <div
-                                            className="modal-body mx-auto"
-                                            style={{ width: '450px', textAlign: 'center', fontWeight: 'bold' }}
-                                        >
-                                            <a href="/detail">
-                                                <div>대댓글 작성</div>
-                                            </a>
-                                            <hr />
-                                            <a href="/post_link_copy">
-                                                <div>댓글 수정</div>
-                                            </a>
-                                            <hr />
-                                            <div
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modal_for_post_declaration"
-                                                style={{ color: 'red' }}
-                                            >
-                                                댓글 신고
-                                            </div>
-                                            <hr />
-                                            <div data-bs-dismiss="modal" aria-label="Close">
-                                                취소
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/*댓글 모달 END */}
                         </div>
                     </div>
                     <div className="tag_for_sticky">
