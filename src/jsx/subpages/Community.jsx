@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '../../css/subpage/community.css';
-import Post from './community/Post';
 import SideMenu from './SideMenu';
-import LoadingPostCard from './community/LoadingPostCard';
 import CoBuyingList from './co-buying/CoBuyingList';
 import MyPosts from './community/MyPosts';
 import DetailPost from './community/DetailPost';
@@ -13,7 +11,6 @@ import { useValidationItem } from '../../js/api/VlidationItem';
 import AllPost from './community/AllPost';
 import isUserLogin from '../../js/api/config/userLogin_config';
 import { Route, Routes, useNavigate } from 'react-router';
-import CoBuyingFundingList from './co-buying/CoBuyingFundingList';
 import userInfo_config from '../../js/api/config/userInfo_config';
 
 const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previewImage, setPreviewImage }) => {
@@ -277,8 +274,13 @@ const Community = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, previe
 
     return (
         <div className="community_wrap">
-            <div>
-                <img className="community_main_img" src="/test_imgs/community_imgs/community_main.jpg" />
+            <div
+                className="community_main_img flex"
+                style={{ justifyContent: 'space-evenly', backgroundColor: '#DAEEED' }}
+            >
+                <img className="community_main_img" src="/test_imgs/community_imgs/commu2.jpg" />
+                <img className="community_main_img" src="/test_imgs/community_imgs/community_heart.jpg" />
+                <img className="community_main_img" src="/test_imgs/community_imgs/community.jpg" />
             </div>
             <div className="community_flex">
                 <SideMenu
