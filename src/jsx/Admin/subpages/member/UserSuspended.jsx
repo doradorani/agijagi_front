@@ -86,7 +86,6 @@ const UserSuspended = ({ selectedMenu }) => {
         try {
             validateUserManage('get', '/admin/showUserDetail/' + email).then((res) => {
                 if (res.success) {
-                    console.log(res.data);
                     navigate('/admin/user_detail', { state: res.data });
                 } else {
                     Swal.fire({
@@ -98,7 +97,6 @@ const UserSuspended = ({ selectedMenu }) => {
             });
         } catch (error) {
             console.error('error: ', error);
-            // SweetAlert로 에러 메시지 표시
             Swal.fire({
                 icon: 'error',
                 title: '에러',
