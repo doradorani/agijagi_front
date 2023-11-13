@@ -5,10 +5,14 @@ import { store } from '../redux_store/store'; // Redux 스토어의 경로로 �
 //hook 안에서는 hook을 호출할 수 없는 점을 확인
 store.subscribe(() => {
     adminLogin_config.state = store.getState().adminLogin.adminState;
+    adminLogin_config.grade = store.getState().adminLogin.adminGrade;
+    adminLogin_config.account = store.getState().adminLogin.adminAccount;
 });
 
 const adminLogin_config = {
     state: false,
+    grade: 0,
+    account: '',
 };
 
 export default adminLogin_config;

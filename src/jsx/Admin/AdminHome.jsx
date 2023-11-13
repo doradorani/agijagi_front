@@ -18,6 +18,7 @@ import AdminDetailNotice from './subpages/noticeboard/AdminDetailNotice';
 import ModifyNotice from './subpages/noticeboard/ModifyNotice';
 import AdminCoBuyingDetail from './subpages/co-buying/AdminCoBuyingDetail';
 import AdminNoneAuthorization from './subpages/member/AdminNoneAuthorization';
+import UserDetail from './subpages/member/UserDetail';
 
 const AdminHome = () => {
     const [adminData, setAdminData] = useState();
@@ -49,6 +50,7 @@ const AdminHome = () => {
                     <Routes>
                         {/* <Route path="/user_suspended" element={<UserSuspended selectedMenu={selectedMenu} />}></Route> */}
                         <Route path='/user_suspended' element={<UserSuspended />}></Route>
+                        <Route path='/user_detail' element={<UserDetail />}></Route>
                         <Route path='/admin_authorization' element={<AdminAuthorization />}></Route>
                         <Route path='/admin_none_authorization' element={<AdminNoneAuthorization />}></Route>
                         <Route path='/admin_notice' element={<AdminNoticeList />}></Route>

@@ -3,18 +3,23 @@ import '../../../../css/admin/member/admin_authorization.css';
 import AdminSidbar from '../../AdminSidebar';
 import adminToken_config from '../../../../js/api/config/adminToken_config';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
-import adminLogin_config from '../../../../js/api/config/adminLogin_config';
 import Swal from 'sweetalert2';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const AdminAuthorization = ({ setSelectedSideMenu }) => {
+const UserDetail = ({ selectedMenu }) => {
+    const location = useLocation();
+    const userData = location.state.reg_date;
+
+    console.log('test : ' + userData);
+
     const server = adminToken_config.server;
-    const validateAuth = useValidationAdminItem();
-    const [adminAuthList, setAdminAuthList] = useState([]);
+    const validateUserManage = useValidationAdminItem();
+
+    const [userManageList, setUserManageList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [listCnt, setListCnt] = useState(0);
     const [perPage] = useState(10);
-    const [updateAdminNo, setUpdateAdminNo] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
     // 페이지네이션을 10개씩 보이도록 수정
@@ -25,14 +30,14 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
     useEffect(() => {
         const userManageList = async () => {
             try {
-                validateAuth('get', '/admin/authList/' + currentPage + '/' + perPage).then((res) => {
+                validateUserManage('get', '/admin/userManageList/' + currentPage + '/' + perPage).then((res) => {
                     if (res.success) {
-                        const processedData = res.data.authListDtos.map((admin) => ({
-                            ...admin,
-                            reg_date: formatDate(admin.reg_date),
-                            mod_date: formatDate(admin.mod_date),
+                        const processedData = res.data.userManageListDtos.map((user) => ({
+                            ...user,
+                            reg_date: formatDate(user.reg_date),
+                            mod_date: formatDate(user.mod_date),
                         }));
-                        setAdminAuthList(processedData);
+                        setUserManageList(processedData);
                         setTotalPages(res.data.totalPages);
                         setListCnt(res.data.totalPages);
                     } else {
@@ -54,53 +59,12 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
             }
         };
         userManageList();
-    }, [currentPage, updateAdminNo]);
+    }, [currentPage]);
 
-    const authListHandler = (newPage) => {
+    const userManageListHandler = (newPage) => {
         if (newPage >= 1 && newPage <= totalPages) {
             setCurrentPage(newPage);
         }
-    };
-
-    const adminGradeHandler = (no, grade) => {
-        if (adminLogin_config.grade !== 2) {
-            Swal.fire({
-                icon: 'error',
-                title: '접근 권한이 없습니다',
-                text: '최고 관리자만 해당 기능을 사용할 수 있습니다.',
-            });
-            return;
-        }
-        Swal.fire({
-            title: '권한을 입력하세요',
-            input: 'select',
-            inputOptions: {
-                0: '미승인',
-                1: '승인',
-                2: '최고관리자',
-            },
-            inputPlaceholder: '권한을 선택하세요',
-            inputValue: grade, // 기본값 설정
-            showCancelButton: true,
-            confirmButtonText: '확인',
-            cancelButtonText: '취소',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const gradeData = result.value;
-                try {
-                    validateAuth('put', '/admin/updateGrade/' + no + '/' + gradeData).then((res) => {
-                        if (res.success && res.data == 1) {
-                            Swal.fire('업데이트 완료', '권한이 업데이트되었습니다.', 'success');
-                            setUpdateAdminNo(no);
-                        } else {
-                            Swal.fire('업데이트 실패', '서버 오류가 발생했습니다.', 'error');
-                        }
-                    });
-                } catch (error) {
-                    Swal.fire('에러', '예상치 못한 오류가 발생했습니다.', 'error');
-                }
-            }
-        });
     };
 
     const formatDate = (dateArray) => {
@@ -122,15 +86,19 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
         return `${year}-${formattedMonth}-${formattedDay} ${formattedHour}:${formattedMinute}`;
     };
 
+    const userDetailHandler = (no) => {
+        //navigate('/admin/user_detail');
+    };
+
     return (
-        <div className='admin_authorization_wrap'>
+        <div className='admin_authorization_wrap '>
             <div className='admin_page_menu_title_wrap'>
-                <img src='/test_imgs/svg/approval.svg' />
-                <div className='admin_page_menu_title yg_font '>관리자 승인</div>
-                <div className='yg_font admin_page_menu_sub_title'> &#62; 승인 관리자</div>
+                <img src='/test_imgs/svg/group.svg' />
+                <div className='admin_page_menu_title yg_font '>유저 관리</div>
+                <div className='yg_font admin_page_menu_sub_title'> &#62; 상세 정보</div>
             </div>
             <div className='admin_authorization_second_wrap'>
-                <table className='admin_authorization table table-striped table-hover' style={{ marginTop: '15px' }}>
+                <table className='admin_authorization table table-striped table-hover'>
                     <thead>
                         <tr>
                             <th>번호</th>
@@ -140,40 +108,20 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
                             <th>핸드폰 번호</th>
                             <th>가입일자</th>
                             <th>수정일자</th>
-                            <th>등급</th>
-                            <th>등급 수정</th>
+                            <th>승인 여부</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {adminAuthList.map((admin, index) => (
-                            <tr key={index}>
-                                <td>{admin.no}</td>
-                                <td>{admin.name}</td>
-                                <td>{admin.id}</td>
-                                <td>{admin.email}</td>
-                                <td>{admin.phone}</td>
-                                <td>{admin.reg_date}</td>
-                                <td>{admin.mod_date}</td>
-                                <td>{admin.grade === 1 ? '관리자' : admin.grade === 2 ? '최고관리자' : '기타'}</td>
-                                <td
-                                    style={{
-                                        padding: '0px',
-                                        paddingTop: '4px',
-                                    }}
-                                >
-                                    <button
-                                        type='button'
-                                        className='btn btn-light '
-                                        style={{
-                                            fontFamily: 'malgun gothic',
-                                            margin: '0',
-                                            padding: '3px 7px ',
-                                        }}
-                                        onClick={() => adminGradeHandler(admin.no, admin.grade)}
-                                    >
-                                        등급 변경
-                                    </button>
-                                </td>
+                        {userManageList.map((user, index) => (
+                            <tr key={index} onClick={() => userDetailHandler(user.no)}>
+                                <td>{user.no}</td>
+                                <td>{user.name}</td>
+                                <td>{user.nickname}</td>
+                                <td>{user.email}</td>
+                                <td>{user.phone}</td>
+                                <td>{user.reg_date}</td>
+                                <td>{user.mod_date}</td>
+                                <td>{user.status}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -187,9 +135,9 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
                                 aria-label='Previous'
                                 onClick={() => {
                                     if (startPage === 1) {
-                                        authListHandler(1);
+                                        userManageListHandler(1);
                                     } else {
-                                        authListHandler(startPage - 1);
+                                        userManageListHandler(startPage - 1);
                                     }
                                 }}
                             >
@@ -206,7 +154,7 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
                                 >
                                     <button
                                         className='page-link pagination_btn'
-                                        onClick={() => authListHandler(startPage + i)}
+                                        onClick={() => userManageListHandler(startPage + i)}
                                     >
                                         {startPage + i}
                                     </button>
@@ -217,7 +165,7 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
                             <button
                                 className='page-link '
                                 aria-label='Next'
-                                onClick={() => authListHandler(endPage + 1)}
+                                onClick={() => userManageListHandler(endPage + 1)}
                             >
                                 <span aria-hidden='true'>&raquo;</span>
                             </button>
@@ -229,4 +177,4 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
     );
 };
 
-export default AdminAuthorization;
+export default UserDetail;
