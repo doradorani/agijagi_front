@@ -60,8 +60,7 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
                 (idx.inoculation_agency == null ? '' : '병원 : ' + idx.inoculation_order),
             content: '키: ' + idx.height + ' 몸무게: ' + idx.wieght + ' 두위: ' + idx.head,
             start: idx.reg_date,
-            backgroundColor:
-                idx.sequence == 1 ? color[0] : idx.sequence == 2 ? color[1] : idx.sequence == 3 ? color[2] : 'black',
+            backgroundColor: color[idx.sequence - 1],
             allday: 1,
             no: idx.no,
             child_no: idx.cd_no,

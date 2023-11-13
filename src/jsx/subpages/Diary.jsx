@@ -17,6 +17,7 @@ import DiaryModfiyPost from './diary/DiaryModfiyPost.jsx';
 import CalendarListVer from './diary/CalendarLocalVer.jsx';
 import FourCutsImg from './diary/FourCutsImg.jsx';
 import DiaryPost from './diary/DiaryPost.jsx';
+import NoteModify from './diary/NoteModify.jsx';
 
 const Diary = ({}) => {
     const validationUser = useValidationUser();
@@ -39,7 +40,10 @@ const Diary = ({}) => {
         <>
             <div className="diary_wrap">
                 <div>
-                    <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg" />
+                    <img
+                        className="diary_main_img"
+                        src="https://s3.ap-northeast-2.amazonaws.com/agijagi-2023.10.31/agijagi_background/diary_nav_background6.png"
+                    />
                 </div>
                 <div className="diary_flex">
                     {sideMenu}
@@ -158,6 +162,17 @@ const Diary = ({}) => {
                             path="/register_child_health"
                             element={
                                 <Note
+                                    adContents={adContents}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path="/modify_child_health/:childNo/:healtNo"
+                            element={
+                                <NoteModify
                                     adContents={adContents}
                                     isLoading={isLoading}
                                     setIsLoading={setIsLoading}

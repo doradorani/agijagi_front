@@ -114,7 +114,7 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
             display: idx.content,
             date: idx.reg_date,
             constraint: idx.img,
-            color: idx.sequence == 1 ? color[0] : idx.sequence == 2 ? color[1] : idx.sequence == 3 ? color[2] : 'gold',
+            color: color[idx.sequence - 1],
             allDay: 1,
             id: idx.no,
             groupId: idx.cd_no,
