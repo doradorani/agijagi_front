@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux';
 import adminToken_config from '../../js/api/config/adminToken_config';
 import { adminTokenAction } from '../../js/api/redux_store/slice/adminTokenSlice';
 import { adminStateAction } from '../../js/api/redux_store/slice/adminLoginSlice';
+import adminLogin_config from '../../js/api/config/adminLogin_config';
+import Swal from 'sweetalert2';
 
 const AdminHeader = ({ setSelectedMenu }) => {
     // const [isAdminSidebarOpen, setisAdminSidebarOpen] = useState(false);
@@ -19,21 +21,43 @@ const AdminHeader = ({ setSelectedMenu }) => {
     const adminTokenDispatch = useDispatch();
 
     const adminLogOut = async () => {
-        const confirmAdminLogout = window.confirm('정말 로그아웃 하시겠습니까?');
+        const confirmAdminLogout = await Swal.fire({
+            title: '로그아웃 확인',
+            text: '정말 로그아웃 하시겠습니까?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+        });
 
-        if (confirmAdminLogout) {
+        if (confirmAdminLogout.isConfirmed) {
             try {
                 await axios.post(`${server}/admin/logOut`);
+                adminLoginDispatch(adminStateAction.setAdminGrade(0));
+                adminLoginDispatch(adminStateAction.setAdminAccount(''));
+                adminLoginDispatch(adminStateAction.setAdminState(false));
                 adminTokenDispatch(adminTokenAction.setAdminTokenName(''));
                 adminTokenDispatch(adminTokenAction.setAdminTokenExpired(''));
-                adminLoginDispatch(adminStateAction.setAdminState(false));
-                alert('로그아웃에 성공하였습니다.');
-                navigate('/admin/sign_in');
+                Swal.fire({
+                    icon: 'success',
+                    title: '로그아웃 성공',
+                    text: '로그아웃에 성공하였습니다.',
+                }).then(() => {
+                    navigate('/admin/sign_in');
+                });
             } catch (error) {
-                console.log('에러 : ' + error);
+                console.error('에러 : ', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: '에러 발생',
+                    text: '로그아웃 중 에러가 발생했습니다.',
+                });
             }
         }
     };
+
+    const adminGradeText =
+        adminLogin_config.grade === 1 ? '관리자님' : adminLogin_config.grade === 2 ? '최고관리자님' : '';
 
     return (
         <>
@@ -72,7 +96,11 @@ const AdminHeader = ({ setSelectedMenu }) => {
                                 공동구매 상품 관리
                             </Link>
                         </div> */}
+
                         <div className='admin_btn_page'>
+                            <span style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>
+                                {adminLogin_config.account} {adminGradeText}
+                            </span>
                             <Link to='/admin_modify'>
                                 <input
                                     type='button'

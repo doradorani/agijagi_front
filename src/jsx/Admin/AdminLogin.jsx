@@ -49,11 +49,13 @@ const AdminLogin = () => {
 
                 Swal.fire({
                     icon: 'success',
-                    title: '어서오세요, ' + signInData.adminAccount + ' ' + adminGradeName,
+                    title: signInData.adminAccount + ' ' + adminGradeName,
                     text: '행복한 업무되세요!',
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: '확인',
                 });
+                adminDispatch(adminStateAction.setAdminAccount(signInData.adminAccount));
+                adminDispatch(adminStateAction.setAdminGrade(response.data.adminGrade));
                 adminDispatch(adminTokenAction.setAdminTokenName(response.data.accessToken));
                 adminDispatch(
                     adminTokenAction.setAdminTokenExpired(moment().add(20, 'seconds').format('yyyy-MM-DD HH:mm:ss'))

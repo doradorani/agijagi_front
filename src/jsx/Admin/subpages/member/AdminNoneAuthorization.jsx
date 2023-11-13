@@ -3,6 +3,7 @@ import '../../../../css/admin/member/admin_authorization.css';
 import AdminSidbar from '../../AdminSidebar';
 import adminToken_config from '../../../../js/api/config/adminToken_config';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
+import adminLogin_config from '../../../../js/api/config/adminLogin_config';
 import Swal from 'sweetalert2';
 
 const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
@@ -13,6 +14,7 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
     const [totalPages, setTotalPages] = useState(1);
     const [listCnt, setListCnt] = useState(0);
     const [perPage] = useState(10);
+    const [updateAdminNo, setUpdateAdminNo] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
     // 페이지네이션을 10개씩 보이도록 수정
@@ -52,7 +54,7 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
             }
         };
         userManageList();
-    }, [currentPage]);
+    }, [currentPage, updateAdminNo]);
 
     const authNoneListHandler = (newPage) => {
         if (newPage >= 1 && newPage <= totalPages) {
@@ -60,7 +62,15 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
         }
     };
 
-    const adminGradeHandler = (grade) => {
+    const adminGradeHandler = (no, grade) => {
+        if (adminLogin_config.grade !== 2) {
+            Swal.fire({
+                icon: 'error',
+                title: '접근 권한이 없습니다',
+                text: '최고 관리자만 해당 기능을 사용할 수 있습니다.',
+            });
+            return;
+        }
         Swal.fire({
             title: '권한을 입력하세요',
             input: 'select',
@@ -76,31 +86,19 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
             cancelButtonText: '취소',
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(result.value);
-
-                // 값을 서버로 전송
-                // fetch('/api/updateAdminGrade', {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     },
-                //     body: JSON.stringify({ adminId, grade: parseInt(result.value) }),
-                // })
-                //     .then((response) => response.json())
-                //     .then((data) => {
-                //         // 서버 응답에 따른 처리
-                //         if (data.success) {
-                //             // 성공적으로 업데이트된 경우
-                //             Swal.fire('업데이트 완료', '권한이 업데이트되었습니다.', 'success');
-                //         } else {
-                //             // 업데이트 실패 시
-                //             Swal.fire('업데이트 실패', '서버 오류가 발생했습니다.', 'error');
-                //         }
-                //     })
-                //     .catch((error) => {
-                //         // 예상치 못한 오류 발생 시
-                //         Swal.fire('에러', '예상치 못한 오류가 발생했습니다.', 'error');
-                //     });
+                const gradeData = result.value;
+                try {
+                    validateNoneAuth('put', '/admin/updateGrade/' + no + '/' + gradeData).then((res) => {
+                        if (res.success && res.data == 1) {
+                            Swal.fire('업데이트 완료', '권한이 업데이트되었습니다.', 'success');
+                            setUpdateAdminNo(no);
+                        } else {
+                            Swal.fire('업데이트 실패', '서버 오류가 발생했습니다.', 'error');
+                        }
+                    });
+                } catch (error) {
+                    Swal.fire('에러', '예상치 못한 오류가 발생했습니다.', 'error');
+                }
             }
         });
     };
@@ -117,10 +115,11 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
         const formattedDay = day < 10 ? `0${day}` : day;
         const formattedHour = hour < 10 ? `0${hour}` : hour;
         const formattedMinute = minute < 10 ? `0${minute}` : minute;
-        const formattedSecond = second < 10 ? `0${second}` : second;
+        //const formattedSecond = second < 10 ? `0${second}` : second;
 
         // 'xxxx-xx-xx xx:xx:xx' 형태로 반환
-        return `${year}-${formattedMonth}-${formattedDay} ${formattedHour}:${formattedMinute}:${formattedSecond}`;
+        // return `${year}-${formattedMonth}-${formattedDay} ${formattedHour}:${formattedMinute}:${formattedSecond}`;
+        return `${year}-${formattedMonth}-${formattedDay} ${formattedHour}:${formattedMinute}`;
     };
 
     return (
@@ -168,7 +167,7 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
                                             margin: '0',
                                             padding: '3px 7px ',
                                         }}
-                                        onClick={() => adminGradeHandler(admin.grade)}
+                                        onClick={() => adminGradeHandler(admin.no, admin.grade)}
                                     >
                                         등급 변경
                                     </button>

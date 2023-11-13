@@ -4,10 +4,13 @@ import AdminSidbar from '../../AdminSidebar';
 import adminToken_config from '../../../../js/api/config/adminToken_config';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const UserSuspended = ({ selectedMenu }) => {
     const server = adminToken_config.server;
     const validateUserManage = useValidationAdminItem();
+    const navigate = useNavigate();
+
     const [userManageList, setUserManageList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -72,10 +75,36 @@ const UserSuspended = ({ selectedMenu }) => {
         const formattedDay = day < 10 ? `0${day}` : day;
         const formattedHour = hour < 10 ? `0${hour}` : hour;
         const formattedMinute = minute < 10 ? `0${minute}` : minute;
-        const formattedSecond = second < 10 ? `0${second}` : second;
+        //const formattedSecond = second < 10 ? `0${second}` : second;
 
         // 'xxxx-xx-xx xx:xx:xx' 형태로 반환
-        return `${year}-${formattedMonth}-${formattedDay} ${formattedHour}:${formattedMinute}:${formattedSecond}`;
+        // return `${year}-${formattedMonth}-${formattedDay} ${formattedHour}:${formattedMinute}:${formattedSecond}`;
+        return `${year}-${formattedMonth}-${formattedDay} ${formattedHour}:${formattedMinute}`;
+    };
+
+    const userDetailHandler = (email) => {
+        try {
+            validateUserManage('get', '/admin/showUserDetail/' + email).then((res) => {
+                if (res.success) {
+                    console.log(res.data);
+                    navigate('/admin/user_detail', { state: res.data });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '실패',
+                        text: '서버에 문제가 생겨 실패하였습니다. 다시 시도해주세요.',
+                    });
+                }
+            });
+        } catch (error) {
+            console.error('error: ', error);
+            // SweetAlert로 에러 메시지 표시
+            Swal.fire({
+                icon: 'error',
+                title: '에러',
+                text: '서버에 문제가 생겨 실패하였습니다. 다시 시도해주세요.',
+            });
+        }
     };
 
     return (
@@ -100,7 +129,7 @@ const UserSuspended = ({ selectedMenu }) => {
                     </thead>
                     <tbody>
                         {userManageList.map((user, index) => (
-                            <tr key={index}>
+                            <tr key={index} onClick={() => userDetailHandler(user.email)}>
                                 <td>{user.no}</td>
                                 <td>{user.name}</td>
                                 <td>{user.nickname}</td>
