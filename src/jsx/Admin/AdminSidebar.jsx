@@ -14,11 +14,11 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
             }`}
             style={{ backgroundColor: '#eff0f3' }}
         >
-            <nav className="navbar" style={{ paddingBottom: '0px' }}>
-                <div className="container-fluid ">
+            <nav className='navbar' style={{ paddingBottom: '0px' }}>
+                <div className='container-fluid '>
                     <button
-                        className="navbar-toggler flex"
-                        type="button"
+                        className='navbar-toggler flex'
+                        type='button'
                         style={{ border: 'none', width: '250px' }}
                         onClick={() => toggleSidebar()}
                     >
@@ -28,8 +28,8 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                             }`}
                         >
                             <img
-                                className="collapse_arrow"
-                                src="/test_imgs/png/down-arrow.png"
+                                className='collapse_arrow'
+                                src='/test_imgs/png/down-arrow.png'
                                 style={{ width: '30px' }}
                             />
                         </span>
@@ -49,15 +49,15 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                     </button>
                 </div>
             </nav>
-            <nav className="navbar" style={{ marginTop: '0px', paddingTop: '0px' }}>
-                <div className="container-fluid">
-                    <Link to="user_suspended" className="link_btn_admin_sidebar">
+            <nav className='navbar' style={{ marginTop: '0px', paddingTop: '0px' }}>
+                <div className='container-fluid'>
+                    <Link to='user_suspended' className='link_btn_admin_sidebar'>
                         <button
-                            className="navbar-toggler flex"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#navbarToggleExternalContent2"
-                            aria-expanded="false"
+                            className='navbar-toggler flex'
+                            type='button'
+                            data-bs-toggle='collapse'
+                            data-bs-target='#navbarToggleExternalContent2'
+                            aria-expanded='false'
                             style={{ border: 'none', width: '245px' }}
                         >
                             <span
@@ -65,7 +65,7 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                                     isSidebarCollapsed ? 'admin_side_open' : 'admin_side_collapsed'
                                 }`}
                             >
-                                <img src="/test_imgs/svg/group.svg" style={{ width: '30px' }} />
+                                <img src='/test_imgs/svg/group.svg' style={{ width: '30px' }} />
                             </span>
                             <div
                                 className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
@@ -83,12 +83,12 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                         </button>
                     </Link>
                     <button
-                        className="navbar-toggler flex"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarToggleExternalContent3"
-                        role="button"
-                        aria-expanded="false"
+                        className='navbar-toggler flex'
+                        type='button'
+                        data-bs-toggle='collapse'
+                        data-bs-target='#navbarToggleExternalContent3'
+                        role='button'
+                        aria-expanded='false'
                         style={{ border: 'none', width: '245px' }}
                     >
                         <span
@@ -96,7 +96,7 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                                 isSidebarCollapsed ? 'admin_side_open' : 'admin_side_collapsed'
                             }`}
                         >
-                            <img src="/test_imgs/svg/approval.svg" style={{ width: '30px' }} />
+                            <img src='/test_imgs/svg/approval.svg' style={{ width: '30px' }} />
                         </span>
                         <div
                             className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
@@ -114,16 +114,16 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                     </button>
                     <div
                         className={` collapse ${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
-                        id="navbarToggleExternalContent3"
+                        id='navbarToggleExternalContent3'
                     >
-                        <Link to="admin_authorization" className="link_btn_admin_sidebar">
+                        <Link to='admin_authorization' className='link_btn_admin_sidebar'>
                             <button
-                                className="navbar-toggler flex"
-                                type="button"
+                                className='navbar-toggler flex'
+                                type='button'
                                 style={{ border: 'none', width: '245px' }}
                             >
                                 <span className={`navbar-toggler1-icon `} style={{ marginLeft: '15px' }}>
-                                    <img src="/test_imgs/svg/chevron_right.svg" style={{ width: '30px' }} />
+                                    <img src='/test_imgs/svg/chevron_right.svg' style={{ width: '30px' }} />
                                 </span>
                                 <div
                                     className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
@@ -140,14 +140,14 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                                 </div>
                             </button>
                         </Link>
-                        <Link to="admin_authorization" className="link_btn_admin_sidebar">
+                        <Link to='admin_none_authorization' className='link_btn_admin_sidebar'>
                             <button
-                                className="navbar-toggler flex"
-                                type="button"
+                                className='navbar-toggler flex'
+                                type='button'
                                 style={{ border: 'none', width: '245px' }}
                             >
-                                <span className="navbar-toggler1-icon" style={{ marginLeft: '15px' }}>
-                                    <img src="/test_imgs/svg/chevron_right.svg" style={{ width: '30px' }} />
+                                <span className='navbar-toggler1-icon' style={{ marginLeft: '15px' }}>
+                                    <img src='/test_imgs/svg/chevron_right.svg' style={{ width: '30px' }} />
                                 </span>
                                 <div
                                     className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
@@ -166,11 +166,11 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                         </Link>
                     </div>
                     <button
-                        className="navbar-toggler flex"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarToggleExternalContent4"
-                        aria-expanded="false"
+                        className='navbar-toggler flex'
+                        type='button'
+                        data-bs-toggle='collapse'
+                        data-bs-target='#navbarToggleExternalContent4'
+                        aria-expanded='false'
                         style={{ border: 'none', width: '245px' }}
                     >
                         <span
@@ -178,7 +178,7 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                                 isSidebarCollapsed ? 'admin_side_open' : 'admin_side_collapsed'
                             }`}
                         >
-                            <img src="/test_imgs/svg/notice.svg" style={{ width: '30px' }} />
+                            <img src='/test_imgs/svg/notice.svg' style={{ width: '30px' }} />
                         </span>
                         <div
                             className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
@@ -196,16 +196,16 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                     </button>
                     <div
                         className={` collapse ${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
-                        id="navbarToggleExternalContent4"
+                        id='navbarToggleExternalContent4'
                     >
-                        <Link to="admin_notice" className="link_btn_admin_sidebar">
+                        <Link to='admin_notice' className='link_btn_admin_sidebar'>
                             <button
-                                className="navbar-toggler flex"
-                                type="button"
+                                className='navbar-toggler flex'
+                                type='button'
                                 style={{ border: 'none', width: '245px' }}
                             >
-                                <span className="navbar-toggler1-icon" style={{ marginLeft: '15px' }}>
-                                    <img src="/test_imgs/svg/chevron_right.svg" style={{ width: '30px' }} />
+                                <span className='navbar-toggler1-icon' style={{ marginLeft: '15px' }}>
+                                    <img src='/test_imgs/svg/chevron_right.svg' style={{ width: '30px' }} />
                                 </span>
                                 <div
                                     className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
@@ -222,14 +222,14 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                                 </div>
                             </button>
                         </Link>
-                        <Link to="write_admin_notice" className="link_btn_admin_sidebar">
+                        <Link to='write_admin_notice' className='link_btn_admin_sidebar'>
                             <button
-                                className="navbar-toggler flex"
-                                type="button"
+                                className='navbar-toggler flex'
+                                type='button'
                                 style={{ border: 'none', width: '245px' }}
                             >
-                                <span className="navbar-toggler1-icon" style={{ marginLeft: '15px' }}>
-                                    <img src="/test_imgs/svg/chevron_right.svg" style={{ width: '30px' }} />
+                                <span className='navbar-toggler1-icon' style={{ marginLeft: '15px' }}>
+                                    <img src='/test_imgs/svg/chevron_right.svg' style={{ width: '30px' }} />
                                 </span>
                                 <div
                                     className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
@@ -248,11 +248,11 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                         </Link>
                     </div>
                     <button
-                        className="navbar-toggler flex"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarToggleExternalContent5"
-                        aria-expanded="false"
+                        className='navbar-toggler flex'
+                        type='button'
+                        data-bs-toggle='collapse'
+                        data-bs-target='#navbarToggleExternalContent5'
+                        aria-expanded='false'
                         style={{ border: 'none', width: '245px' }}
                     >
                         <span
@@ -260,7 +260,7 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                                 isSidebarCollapsed ? 'admin_side_open' : 'admin_side_collapsed'
                             }`}
                         >
-                            <img src="/test_imgs/svg/report.svg" style={{ width: '30px' }} />
+                            <img src='/test_imgs/svg/report.svg' style={{ width: '30px' }} />
                         </span>
                         <div
                             className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
@@ -278,16 +278,16 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                     </button>
                     <div
                         className={` collapse ${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
-                        id="navbarToggleExternalContent5"
+                        id='navbarToggleExternalContent5'
                     >
-                        <Link to="post_report" className="link_btn_admin_sidebar">
+                        <Link to='post_report' className='link_btn_admin_sidebar'>
                             <button
-                                className="navbar-toggler flex"
-                                type="button"
+                                className='navbar-toggler flex'
+                                type='button'
                                 style={{ border: 'none', width: '245px' }}
                             >
-                                <span className="navbar-toggler1-icon" style={{ marginLeft: '15px' }}>
-                                    <img src="/test_imgs/svg/chevron_right.svg" style={{ width: '30px' }} />
+                                <span className='navbar-toggler1-icon' style={{ marginLeft: '15px' }}>
+                                    <img src='/test_imgs/svg/chevron_right.svg' style={{ width: '30px' }} />
                                 </span>
                                 <div
                                     className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
@@ -304,14 +304,14 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                                 </div>
                             </button>
                         </Link>
-                        <Link to="comment_report" className="link_btn_admin_sidebar">
+                        <Link to='comment_report' className='link_btn_admin_sidebar'>
                             <button
-                                className="navbar-toggler flex"
-                                type="button"
+                                className='navbar-toggler flex'
+                                type='button'
                                 style={{ border: 'none', width: '245px' }}
                             >
-                                <span className="navbar-toggler1-icon" style={{ marginLeft: '15px' }}>
-                                    <img src="/test_imgs/svg/chevron_right.svg" style={{ width: '30px' }} />
+                                <span className='navbar-toggler1-icon' style={{ marginLeft: '15px' }}>
+                                    <img src='/test_imgs/svg/chevron_right.svg' style={{ width: '30px' }} />
                                 </span>
                                 <div
                                     className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
@@ -330,11 +330,11 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                         </Link>
                     </div>
                     <button
-                        className="navbar-toggler flex"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarToggleExternalContent6"
-                        aria-expanded="false"
+                        className='navbar-toggler flex'
+                        type='button'
+                        data-bs-toggle='collapse'
+                        data-bs-target='#navbarToggleExternalContent6'
+                        aria-expanded='false'
                         style={{ border: 'none', width: '245px' }}
                     >
                         <span
@@ -342,7 +342,7 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                                 isSidebarCollapsed ? 'admin_side_open' : 'admin_side_collapsed'
                             }`}
                         >
-                            <img src="/test_imgs/svg/shopping_cart.svg" style={{ width: '30px' }} />
+                            <img src='/test_imgs/svg/shopping_cart.svg' style={{ width: '30px' }} />
                         </span>
                         <div
                             className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
@@ -360,16 +360,16 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                     </button>
                     <div
                         className={` collapse ${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
-                        id="navbarToggleExternalContent6"
+                        id='navbarToggleExternalContent6'
                     >
-                        <Link to="co-buying_list" className="link_btn_admin_sidebar">
+                        <Link to='co-buying_list' className='link_btn_admin_sidebar'>
                             <button
-                                className="navbar-toggler flex"
-                                type="button"
+                                className='navbar-toggler flex'
+                                type='button'
                                 style={{ border: 'none', width: '245px', display: 'flex', alignItems: 'flex-end' }}
                             >
-                                <span className="navbar-toggler1-icon" style={{ marginLeft: '15px' }}>
-                                    <img src="/test_imgs/svg/chevron_right.svg" style={{ width: '30px' }} />
+                                <span className='navbar-toggler1-icon' style={{ marginLeft: '15px' }}>
+                                    <img src='/test_imgs/svg/chevron_right.svg' style={{ width: '30px' }} />
                                 </span>
                                 <div
                                     className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}
@@ -386,14 +386,14 @@ const AdminSidbar = ({ isSidebarCollapsed, setisSidebarCollapsed }) => {
                                 </div>
                             </button>
                         </Link>
-                        <Link to="regist_product" className="link_btn_admin_sidebar">
+                        <Link to='regist_product' className='link_btn_admin_sidebar'>
                             <button
-                                className="navbar-toggler flex"
-                                type="button"
+                                className='navbar-toggler flex'
+                                type='button'
                                 style={{ border: 'none', width: '245px', display: 'flex', alignItems: 'flex-end' }}
                             >
-                                <span className="navbar-toggler1-icon" style={{ marginLeft: '15px' }}>
-                                    <img src="/test_imgs/svg/chevron_right.svg" style={{ width: '30px' }} />
+                                <span className='navbar-toggler1-icon' style={{ marginLeft: '15px' }}>
+                                    <img src='/test_imgs/svg/chevron_right.svg' style={{ width: '30px' }} />
                                 </span>
                                 <div
                                     className={`${isSidebarCollapsed ? '' : 'admin_side_fold'}`}

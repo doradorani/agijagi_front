@@ -5,10 +5,10 @@ import adminToken_config from '../../../../js/api/config/adminToken_config';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
 import Swal from 'sweetalert2';
 
-const AdminAuthorization = ({ setSelectedSideMenu }) => {
+const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
     const server = adminToken_config.server;
-    const validateAuth = useValidationAdminItem();
-    const [adminAuthList, setAdminAuthList] = useState([]);
+    const validateNoneAuth = useValidationAdminItem();
+    const [adminNoneAuthList, setAdminNoneAuthList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [listCnt, setListCnt] = useState(0);
@@ -23,14 +23,14 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
     useEffect(() => {
         const userManageList = async () => {
             try {
-                validateAuth('get', '/admin/authList/' + currentPage + '/' + perPage).then((res) => {
+                validateNoneAuth('get', '/admin/noneAuthList/' + currentPage + '/' + perPage).then((res) => {
                     if (res.success) {
-                        const processedData = res.data.authListDtos.map((admin) => ({
+                        const processedData = res.data.noneAuthListDtos.map((admin) => ({
                             ...admin,
                             reg_date: formatDate(admin.reg_date),
                             mod_date: formatDate(admin.mod_date),
                         }));
-                        setAdminAuthList(processedData);
+                        setAdminNoneAuthList(processedData);
                         setTotalPages(res.data.totalPages);
                         setListCnt(res.data.totalPages);
                     } else {
@@ -54,7 +54,7 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
         userManageList();
     }, [currentPage]);
 
-    const authListHandler = (newPage) => {
+    const authNoneListHandler = (newPage) => {
         if (newPage >= 1 && newPage <= totalPages) {
             setCurrentPage(newPage);
         }
@@ -77,17 +77,6 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 console.log(result.value);
-                try {
-                    validateAuth('put', '/admin/updateAuth/' + result.value).then((res) => {
-                        if (result.success) {
-                            Swal.fire('업데이트 완료', '권한이 업데이트되었습니다.', 'success');
-                        } else {
-                            Swal.fire('업데이트 실패', '서버 오류가 발생했습니다.', 'error');
-                        }
-                    });
-                } catch (error) {
-                    console.log('error : ' + error);
-                }
 
                 // 값을 서버로 전송
                 // fetch('/api/updateAdminGrade', {
@@ -156,7 +145,7 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {adminAuthList.map((admin, index) => (
+                        {adminNoneAuthList.map((admin, index) => (
                             <tr key={index}>
                                 <td>{admin.no}</td>
                                 <td>{admin.name}</td>
@@ -197,9 +186,9 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
                                 aria-label='Previous'
                                 onClick={() => {
                                     if (startPage === 1) {
-                                        authListHandler(1);
+                                        authNoneListHandler(1);
                                     } else {
-                                        authListHandler(startPage - 1);
+                                        authNoneListHandler(startPage - 1);
                                     }
                                 }}
                             >
@@ -216,7 +205,7 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
                                 >
                                     <button
                                         className='page-link pagination_btn'
-                                        onClick={() => authListHandler(startPage + i)}
+                                        onClick={() => authNoneListHandler(startPage + i)}
                                     >
                                         {startPage + i}
                                     </button>
@@ -227,7 +216,7 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
                             <button
                                 className='page-link '
                                 aria-label='Next'
-                                onClick={() => authListHandler(endPage + 1)}
+                                onClick={() => authNoneListHandler(endPage + 1)}
                             >
                                 <span aria-hidden='true'>&raquo;</span>
                             </button>
@@ -239,4 +228,4 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
     );
 };
 
-export default AdminAuthorization;
+export default AdminNoneAuthorization;

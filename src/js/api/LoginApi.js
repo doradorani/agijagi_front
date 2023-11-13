@@ -38,7 +38,10 @@ export function useKakaoLogin(code) {
                     })
                 );
 
-                if (response.data.newUser > 0) {
+                if (response.data.newUser > 1) {
+                    navigate('/user_info');
+                    Swal.fire('복귀를 축하합니다!!', '어서오세요 ' + response.data.userNickname + '님!!', 'success');
+                } else if (response.data.newUser > 0) {
                     navigate('/user_info');
                     Swal.fire(
                         '회원가입을 축하합니다!!',

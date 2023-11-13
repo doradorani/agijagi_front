@@ -9,6 +9,7 @@ import moment from 'moment';
 import AdminTokenApi from '../../js/api/admin/AdminTokenApi';
 import { adminStateAction } from '../../js/api/redux_store/slice/adminLoginSlice';
 import { tr } from 'date-fns/locale';
+import Swal from 'sweetalert2';
 
 const AdminLogin = () => {
     const server = adminToken_config.server;
@@ -32,18 +33,44 @@ const AdminLogin = () => {
         event.preventDefault();
         try {
             const response = await axios.post(`${server}/admin/signIn`, signInData);
-            adminDispatch(adminTokenAction.setAdminTokenName(response.data.accessToken));
-            adminDispatch(
-                adminTokenAction.setAdminTokenExpired(moment().add(20, 'seconds').format('yyyy-MM-DD HH:mm:ss'))
-            );
-            adminDispatch(adminStateAction.setAdminState(true));
 
-            alert(signInData.adminAccount + ' 관리자님 어서오세요.');
+            if (response.data.adminGrade == 0) {
+                Swal.fire({
+                    icon: 'info',
+                    title: '관리자 승인이 필요합니다',
+                    html: '유저는 아직 승인되지 않았습니다.<br/><br/>관리자에게 문의하세요.',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '확인',
+                });
+            } else {
+                let adminGradeName;
+                if (response.data.adminGrade == 1) adminGradeName = '관리자님';
+                else if (response.data.adminGrade == 2) adminGradeName = '최고 관리자님';
 
-            navigator('/admin');
+                Swal.fire({
+                    icon: 'success',
+                    title: '어서오세요, ' + signInData.adminAccount + ' ' + adminGradeName,
+                    text: '행복한 업무되세요!',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '확인',
+                });
+                adminDispatch(adminTokenAction.setAdminTokenName(response.data.accessToken));
+                adminDispatch(
+                    adminTokenAction.setAdminTokenExpired(moment().add(20, 'seconds').format('yyyy-MM-DD HH:mm:ss'))
+                );
+                adminDispatch(adminStateAction.setAdminState(true));
+                navigator('/admin');
+            }
         } catch (error) {
-            if (error.response.status === 400) alert('관리자 인증을 실패하였습니다.');
-            else console.log('error -> ' + error);
+            if (error.response.status === 400) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '관리자 인증 실패',
+                    text: '올바른 관리자 계정으로 다시 로그인하세요.',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '확인',
+                });
+            } else console.log('error -> ' + error);
         }
     };
 
