@@ -130,7 +130,10 @@ const AdminAuthorization = ({ setSelectedSideMenu }) => {
                 <div className='yg_font admin_page_menu_sub_title'> &#62; 승인 관리자</div>
             </div>
             <div className='admin_authorization_second_wrap'>
-                <table className='admin_authorization table table-striped table-hover' style={{ marginTop: '15px' }}>
+                <table
+                    className='admin_authorization table table-striped table-hover nn_font'
+                    style={{ marginTop: '15px' }}
+                >
                     <thead>
                         <tr>
                             <th>번호</th>

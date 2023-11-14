@@ -39,15 +39,16 @@ export function useKakaoLogin(code) {
                 );
 
                 if (response.data.newUser > 1) {
-                    navigate('/user_info');
                     Swal.fire('복귀를 축하합니다!!', '어서오세요 ' + response.data.userNickname + '님!!', 'success');
                 } else if (response.data.newUser > 0) {
-                    navigate('/user_info');
-                    Swal.fire(
-                        '회원가입을 축하합니다!!',
-                        '어서오세요 ' + response.data.userNickname + '님!!',
-                        'success'
-                    );
+                    Swal.fire({
+                        title: '회원가입을 축하합니다!!',
+                        html:
+                            '어서오세요 ' +
+                            response.data.userNickname +
+                            '님!!<br>저희 사이트는 최초 1회 닉네임 변경을 권장합니다.',
+                        icon: 'success',
+                    });
                 } else {
                     try {
                         validateMyCobuy('get', '/coBuy/myCobuy').then((res) => {
@@ -57,9 +58,10 @@ export function useKakaoLogin(code) {
                     } catch (error) {
                         console.log(error);
                     }
-                    navigate('/');
+
                     Swal.fire(response.data.userNickname + '님', '어서오세요!!', 'success');
                 }
+                navigate('/');
             } catch (error) {
                 console.error('Kakao login error:', error);
             }
