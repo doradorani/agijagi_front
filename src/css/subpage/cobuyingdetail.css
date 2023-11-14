@@ -1,7 +1,21 @@
+.co-buying_detail_wrap {
+    width: 100%;
+}
+
+.co-buying_detail_wrap_admin {
+    margin-left: 50px;
+    display: flex;
+    justify-content: center;
+}
+
 .co-buying_detail_second_wrap {
     display: flex;
     justify-content: space-between;
-    margin: 35px 25px;
+    margin: 20px 25px;
+}
+
+.co-buying_detail_second_wrap_admin {
+    margin: 20px 25px;
 }
 
 .co-buying_detail_section {
@@ -12,16 +26,22 @@
 /* 왼쪽 section css */
 
 .co-buying_detail_left_section {
-    width: 60%;
+    width: 55%;
 }
 .co-buying_detail_main_img {
-    width: 650px;
+    margin: 0 auto;
+    width: 550px;
     height: 400px;
-    border-radius: 8px;
+    border-radius: 15px;
+    object-fit: cover;
 }
 
 .detail_sub_section_wrapper {
-    margin-top: 85px;
+    margin-top: 50px;
+}
+
+.co-buying_participants_wrapper {
+    color: #ff4898;
 }
 
 .deatil_sub_section_first_img > img {
@@ -29,14 +49,16 @@
     margin: 5px auto;
     text-align: center;
     visibility: visible;
-    width: 650px;
-    height: 1423.08px;
+    width: 550px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 /* 오른쪽 section css */
 
 .co-buying_detail_right_section {
-    width: 50%;
+    width: 480px;
     margin-right: 50px;
 }
 
@@ -115,6 +137,7 @@
 
 .co-buying_funding_rate_container {
     display: flex;
+    justify-content: space-between;
 }
 
 .co-buying_funding_rate {
@@ -131,9 +154,6 @@
 /* 좋아요 css */
 
 .like_button {
-    border: 1px solid #dadada;
-    border-radius: 8px;
-    padding: 3px 13px;
     --c: #ff4898;
 }
 
@@ -226,28 +246,29 @@
 
 /*  */
 
-.buying_button > p {
-    line-height: 100%;
-}
-
 .buying_button {
-    margin-top: 10px;
-    width: 400px;
+    /* margin-top: 10px; */
+    width: 320px;
+    /* height: 40px; */
     background-color: #ff4898;
     border-radius: 8px;
     text-align: center;
-    height: 55px;
+    height: 45px;
     margin-left: 25px;
     color: #fff;
     cursor: pointer;
 }
 
 .buying_button > p {
-    line-height: 55px;
+    line-height: 45px;
 }
 
 .boarder_line {
     width: 2px;
     background-color: #dadada;
-    margin: 0 30px;
+    margin: 0 40px;
+}
+
+label.selected_heart > div {
+    color: #000;
 }

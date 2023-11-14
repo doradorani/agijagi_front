@@ -192,11 +192,17 @@ const RegistProduct = () => {
                                 onChange={handleImageChange}
                                 multiple
                             />
-                            <label htmlFor="imageInput" className="btn btn_user_modify_cancel mb-2">
+                            <label htmlFor="imageInput" className="btn btn_user_modify_cancel mb-3">
                                 사진 추가
                             </label>
-                            <div className="yg_font mb-3" style={{ marginRight: '10px' }}>
-                                최대 5개까지 이미지를 업로드할 수 있습니다.
+                            <div
+                                className="nn_font mb-2 flex"
+                                style={{
+                                    marginRight: '10px',
+                                    flexDirection: 'column',
+                                }}
+                            >
+                                <p className="mb-0">최대 5개까지 이미지를 업로드할 수 있습니다.</p>
                                 <p>첫 번째 이미지가 프로필 이미지로 설정됩니다.</p>
                             </div>
                             {images.length > 0 ? (
@@ -205,7 +211,7 @@ const RegistProduct = () => {
                                         key={index}
                                         className="flex mb-4"
                                         style={{
-                                            width: '500px',
+                                            width: '550px',
                                             height: '400px',
                                             borderRadius: '30px',
                                             flexDirection: 'column',
@@ -218,9 +224,9 @@ const RegistProduct = () => {
                                             className="mb-1"
                                             src={image}
                                             style={{
-                                                width: '500px',
+                                                width: '550px',
                                                 height: '400px',
-                                                objectFit: 'contain',
+                                                objectFit: 'cover',
                                                 borderRadius: '30px',
                                             }}
                                         />
@@ -235,10 +241,10 @@ const RegistProduct = () => {
                                 ))
                             ) : (
                                 <label
-                                    htmlFor="imageInput "
+                                    htmlFor="imageInput"
                                     className="flex mb-4 upload upload_img_label"
                                     style={{
-                                        width: '500px',
+                                        width: '550px',
                                         height: '400px',
                                         backgroundColor: '#EFF0F3',
                                         borderRadius: '30px',
@@ -253,9 +259,9 @@ const RegistProduct = () => {
                                                 className="mb-1"
                                                 src={image}
                                                 style={{
-                                                    width: '500px',
+                                                    width: '550px',
                                                     height: '400px',
-                                                    objectFit: 'contain',
+                                                    objectFit: 'cover',
                                                     borderRadius: '30px',
                                                 }}
                                             />
@@ -268,18 +274,22 @@ const RegistProduct = () => {
                                             ></button>
                                         </div>
                                     ))}
-                                    <img className="mb-1" src="/test_imgs/png/image.png" style={{ width: '200px' }} />
+                                    <img
+                                        className="mb-2"
+                                        src="/test_imgs/png/image.png"
+                                        style={{ width: '200px', paddingTop: '10px' }}
+                                    />
                                     <div className="yg_font" style={{ fontSize: '1.5em' }}>
                                         사진 업로드
                                         <p style={{ fontSize: '0.6em' }}>
-                                            업로드되는 이미지는 500px &#10006; 400px로 잘릴 수 있습니다.
+                                            업로드되는 이미지는 550px &#10006; 400px로 잘릴 수 있습니다.
                                         </p>
                                     </div>
                                 </label>
                             )}
                         </div>
                     </div>
-                    <div style={{ width: '40%' }}>
+                    <div className="nn_font" style={{ width: '40%' }}>
                         <div className="input-group mb-3">
                             <span
                                 className="input-group-text flex"

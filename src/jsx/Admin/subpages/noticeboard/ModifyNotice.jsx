@@ -133,7 +133,7 @@ const ModifyNotice = () => {
 
     return (
         <>
-            <div className="detail_notice_wrap ">
+            <div className="detail_notice_wrap nn_font">
                 <div className="admin_page_menu_title_wrap" style={{ marginLeft: '20px', marginBottom: '20px' }}>
                     <img src="/test_imgs/svg/pencil.svg" />
                     <div className="admin_page_menu_title yg_font ">공지사항</div>
@@ -271,6 +271,7 @@ const ModifyNotice = () => {
                                             style={{
                                                 marginTop: '6px',
                                                 marginRight: '10px',
+                                                fontFamily: 'NanumSquareRound',
                                                 width: '100px ',
                                                 height: '35px',
                                             }}

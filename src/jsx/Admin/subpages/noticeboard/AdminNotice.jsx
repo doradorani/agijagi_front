@@ -204,7 +204,7 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                                                     type="button"
                                                     className="btn btn-light "
                                                     style={{
-                                                        fontFamily: 'malgun gothic',
+                                                        fontFamily: 'NanumSquareRound',
                                                         margin: '0',
                                                         padding: '3px 7px ',
                                                     }}
@@ -224,7 +224,7 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                                                         className="btn btn-light"
                                                         disabled
                                                         style={{
-                                                            fontFamily: 'malgun gothic',
+                                                            fontFamily: 'NanumSquareRound',
                                                             margin: '0',
                                                             padding: '3px 7px ',
                                                         }}
@@ -236,7 +236,7 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
                                                         type="button"
                                                         className="btn btn-light"
                                                         style={{
-                                                            fontFamily: 'malgun gothic',
+                                                            fontFamily: 'NanumSquareRound',
                                                             margin: '0',
                                                             padding: '3px 7px ',
                                                         }}

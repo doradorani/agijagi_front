@@ -123,15 +123,15 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
     };
 
     return (
-        <div className='admin_authorization_wrap'>
-            <div className='admin_page_menu_title_wrap'>
-                <img src='/test_imgs/svg/approval.svg' />
-                <div className='admin_page_menu_title yg_font '>관리자 승인</div>
-                <div className='yg_font admin_page_menu_sub_title'> &#62; 미승인 관리자</div>
+        <div className="admin_authorization_wrap">
+            <div className="admin_page_menu_title_wrap">
+                <img src="/test_imgs/svg/approval.svg" />
+                <div className="admin_page_menu_title yg_font ">관리자 승인</div>
+                <div className="yg_font admin_page_menu_sub_title"> &#62; 미승인 관리자</div>
             </div>
-            <div className='admin_authorization_second_wrap'>
+            <div className="admin_authorization_second_wrap">
                 <table
-                    className='admin_authorization table table-striped table-hover nn_font'
+                    className="admin_authorization table table-striped table-hover nn_font"
                     style={{ marginTop: '15px' }}
                 >
                     <thead>
@@ -163,10 +163,10 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
                                     }}
                                 >
                                     <button
-                                        type='button'
-                                        className='btn btn-light '
+                                        type="button"
+                                        className="btn btn-light "
                                         style={{
-                                            fontFamily: 'malgun gothic',
+                                            fontFamily: 'NanumSquareRound',
                                             margin: '0',
                                             padding: '3px 7px ',
                                         }}
@@ -180,12 +180,12 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
                     </tbody>
                 </table>
 
-                <div aria-label='Page navigation example' style={{ marginTop: '10px' }}>
-                    <ul className='pagination justify-content-center'>
-                        <li className='page-item'>
+                <div aria-label="Page navigation example" style={{ marginTop: '10px' }}>
+                    <ul className="pagination justify-content-center">
+                        <li className="page-item">
                             <button
-                                className='page-link pagination_btn'
-                                aria-label='Previous'
+                                className="page-link pagination_btn"
+                                aria-label="Previous"
                                 onClick={() => {
                                     if (startPage === 1) {
                                         authNoneListHandler(1);
@@ -194,7 +194,7 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
                                     }
                                 }}
                             >
-                                <span aria-hidden='true'>&laquo;</span>
+                                <span aria-hidden="true">&laquo;</span>
                             </button>
                         </li>
                         {isLoading ? (
@@ -206,7 +206,7 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
                                     key={startPage + i}
                                 >
                                     <button
-                                        className='page-link pagination_btn'
+                                        className="page-link pagination_btn"
                                         onClick={() => authNoneListHandler(startPage + i)}
                                     >
                                         {startPage + i}
@@ -214,13 +214,13 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
                                 </li>
                             ))
                         )}
-                        <li className='page-item'>
+                        <li className="page-item">
                             <button
-                                className='page-link '
-                                aria-label='Next'
+                                className="page-link "
+                                aria-label="Next"
                                 onClick={() => authNoneListHandler(endPage + 1)}
                             >
-                                <span aria-hidden='true'>&raquo;</span>
+                                <span aria-hidden="true">&raquo;</span>
                             </button>
                         </li>
                     </ul>

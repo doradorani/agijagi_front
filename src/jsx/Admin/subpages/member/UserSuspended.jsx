@@ -106,13 +106,13 @@ const UserSuspended = ({ selectedMenu }) => {
     };
 
     return (
-        <div className='admin_authorization_wrap '>
-            <div className='admin_page_menu_title_wrap'>
-                <img src='/test_imgs/svg/group.svg' />
-                <div className='admin_page_menu_title yg_font '>유저 관리</div>
+        <div className="admin_authorization_wrap nn_font">
+            <div className="admin_page_menu_title_wrap">
+                <img src="/test_imgs/svg/group.svg" />
+                <div className="admin_page_menu_title yg_font ">유저 관리</div>
             </div>
-            <div className='admin_authorization_second_wrap'>
-                <table className='admin_authorization table table-striped table-hover'>
+            <div className="admin_authorization_second_wrap">
+                <table className="admin_authorization table table-striped table-hover">
                     <thead>
                         <tr>
                             <th>번호</th>
@@ -141,12 +141,12 @@ const UserSuspended = ({ selectedMenu }) => {
                     </tbody>
                 </table>
 
-                <div aria-label='Page navigation example' style={{ marginTop: '10px' }}>
-                    <ul className='pagination justify-content-center'>
-                        <li className='page-item'>
+                <div aria-label="Page navigation example" style={{ marginTop: '10px' }}>
+                    <ul className="pagination justify-content-center">
+                        <li className="page-item">
                             <button
-                                className='page-link pagination_btn'
-                                aria-label='Previous'
+                                className="page-link pagination_btn"
+                                aria-label="Previous"
                                 onClick={() => {
                                     if (startPage === 1) {
                                         userManageListHandler(1);
@@ -155,7 +155,7 @@ const UserSuspended = ({ selectedMenu }) => {
                                     }
                                 }}
                             >
-                                <span aria-hidden='true'>&laquo;</span>
+                                <span aria-hidden="true">&laquo;</span>
                             </button>
                         </li>
                         {isLoading ? (
@@ -167,7 +167,7 @@ const UserSuspended = ({ selectedMenu }) => {
                                     key={startPage + i}
                                 >
                                     <button
-                                        className='page-link pagination_btn'
+                                        className="page-link pagination_btn"
                                         onClick={() => userManageListHandler(startPage + i)}
                                     >
                                         {startPage + i}
@@ -175,13 +175,13 @@ const UserSuspended = ({ selectedMenu }) => {
                                 </li>
                             ))
                         )}
-                        <li className='page-item'>
+                        <li className="page-item">
                             <button
-                                className='page-link '
-                                aria-label='Next'
+                                className="page-link "
+                                aria-label="Next"
                                 onClick={() => userManageListHandler(endPage + 1)}
                             >
-                                <span aria-hidden='true'>&raquo;</span>
+                                <span aria-hidden="true">&raquo;</span>
                             </button>
                         </li>
                     </ul>
