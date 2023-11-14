@@ -195,31 +195,46 @@ const DiaryPost = ({ adContents, validationUser }) => {
                                         </div>
                                     </div>
                                     <div
-                                        className="children_submit_button"
-                                        style={{ marginTop: '30px', marginRight: '20px' }}
+                                        className="flex"
+                                        style={{ justifyContent: 'space-between', marginTop: '25px' }}
                                     >
-                                        <div>
+                                        <div
+                                            className="children_input_image"
+                                            style={{ marginLeft: '32px', marginBottom: '15px' }}
+                                        >
+                                            <label
+                                                htmlFor="children_input_image"
+                                                style={{
+                                                    backgroundColor: '#ff4898',
+                                                    border: '1px solid #ff4898',
+                                                    borderRadius: '5px',
+                                                    color: '#fff',
+                                                    padding: '8px',
+                                                }}
+                                            >
+                                                아이 사진 등록
+                                            </label>
                                             <input
-                                                type="submit"
-                                                value={'등록'}
-                                                className="btn btn-primary"
-                                                onClick={handleSubmit}
-                                                style={{ backgroundColor: '#ff4898', border: '1px solid #ff4898' }}
+                                                type="file"
+                                                name="아이 사진"
+                                                id="children_input_image"
+                                                accept="image/png, image/jpeg, image/jpg"
+                                                encType="multipart/form-data"
+                                                onChange={(e) => handleChange(e.target.files)}
+                                                style={{ display: 'none' }}
                                             />
                                         </div>
-                                    </div>
-                                    <div
-                                        className="children_input_image"
-                                        style={{ marginLeft: '32px', marginBottom: '15px' }}
-                                    >
-                                        <input
-                                            type="file"
-                                            name="아이 사진"
-                                            id="children_input_image"
-                                            accept="image/png, image/jpeg, image/jpg"
-                                            encType="multipart/form-data"
-                                            onChange={(e) => handleChange(e.target.files)}
-                                        />
+                                        <div className="children_submit_button">
+                                            <div>
+                                                <input
+                                                    type="submit"
+                                                    value={'등록'}
+                                                    className="btn btn-primary"
+                                                    onClick={handleSubmit}
+                                                    style={{ backgroundColor: '#ff4898', border: '1px solid #ff4898' }}
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

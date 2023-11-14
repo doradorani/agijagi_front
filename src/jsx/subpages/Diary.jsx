@@ -7,7 +7,7 @@ import SideMenu from './SideMenu';
 import CalendarForDiary from './diary/CalendarForDiary.jsx';
 import Graph from './diary/Graph';
 import Note from './diary/Note';
-import { useValidationUser } from '../../js/api/ValidationApi';
+import { useValidationItem } from '../../js/api/VlidationItem.js';
 import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../js/api/redux_store/slice/userLoginSlice';
 import { Link, Route, Routes } from 'react-router-dom';
@@ -20,7 +20,7 @@ import DiaryPost from './diary/DiaryPost.jsx';
 import NoteModify from './diary/NoteModify.jsx';
 
 const Diary = ({}) => {
-    const validationUser = useValidationUser();
+    const validationUser = useValidationItem();
     const [isLoading, setIsLoading] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
 
@@ -42,7 +42,7 @@ const Diary = ({}) => {
                 <div>
                     <img
                         className="diary_main_img"
-                        src="https://s3.ap-northeast-2.amazonaws.com/agijagi-2023.10.31/agijagi_background/diary_nav_background6.png"
+                        src="https://s3.ap-northeast-2.amazonaws.com/agijagi-2023.10.31/agijagi_background/diary_nav_background7.png"
                     />
                 </div>
                 <div className="diary_flex">
@@ -170,7 +170,7 @@ const Diary = ({}) => {
                             }
                         ></Route>
                         <Route
-                            path="/modify_child_health/:childNo/:healtNo"
+                            path="/modify_child_health/:childNo/:healthNo"
                             element={
                                 <NoteModify
                                     adContents={adContents}

@@ -10,9 +10,11 @@ import ScrollToTop from '../../ScrollToTop';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
+import { useValidationUser } from '../../../js/api/ValidationApi';
 // 자녀별로 색 다르게 => eventcolor
 
 const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
+    const validationUse = useValidationUser();
     const [diaryCalendarData, setDiaryCalendarData] = useState(null);
     const userLoginDispatch = useDispatch();
     const navigate = useNavigate();
@@ -43,9 +45,7 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
     }, []);
 
     const eventClick = (clickInfo) => {
-        const { title, display, date, id, groupId, constraint } = clickInfo.event;
-        console.log(constraint);
-
+        const { title, display, id, groupId, constraint } = clickInfo.event;
         Swal.fire({
             title: title,
             text: display,
@@ -72,20 +72,19 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
                 }).then((res) => {
                     if (res.isConfirmed) {
                         try {
-                            validationUser(
-                                'delete',
-                                '/diary/dailyDiary/' + groupId + '/' + id,
-                                null,
-                                '/diary/dailyDiaries'
-                            ).then((res) => {
+                            validationUser('delete', '/diary/dailyDiary/' + groupId + '/' + id).then((res) => {
                                 if (res != undefined && res.success) {
-                                    setDiaryCalendarData(res.data);
+                                    validationUser('get', '/diary/dailyDiaries').then((res) => {
+                                        if (res != undefined && res.success) {
+                                            setDiaryCalendarData(res.data);
+                                        }
+                                    });
                                     Swal.fire({
                                         icon: 'success',
                                         title: '성공적으로 삭제되었습니다.',
                                         content: '*^^*',
                                         confirmButtonText: '확인',
-                                    });
+                                    }).then();
                                 } else {
                                     Swal.fire({
                                         icon: 'error',
