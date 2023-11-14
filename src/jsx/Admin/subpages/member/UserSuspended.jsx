@@ -16,6 +16,7 @@ const UserSuspended = ({ selectedMenu }) => {
     const [totalPages, setTotalPages] = useState(1);
     const [listCnt, setListCnt] = useState(0);
     const [perPage] = useState(10);
+    const [updateUserNo, setUpdateUserNo] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
     // 페이지네이션을 10개씩 보이도록 수정
@@ -52,10 +53,11 @@ const UserSuspended = ({ selectedMenu }) => {
                 console.log('error : ' + error);
             } finally {
                 setIsLoading(false);
+                setUpdateUserNo('');
             }
         };
         userManageList();
-    }, [currentPage]);
+    }, [currentPage, updateUserNo]);
 
     const userManageListHandler = (newPage) => {
         if (newPage >= 1 && newPage <= totalPages) {
@@ -105,14 +107,47 @@ const UserSuspended = ({ selectedMenu }) => {
         }
     };
 
+    const userManageHandler = (no, status) => {
+        Swal.fire({
+            title: '권한을 입력하세요',
+            input: 'select',
+            inputOptions: {
+                0: '탈퇴',
+                1: '활성화',
+                2: '제재',
+            },
+            inputPlaceholder: '상태를 변경하세요',
+            inputValue: status, // 기본값 설정
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const statusData = result.value;
+                try {
+                    validateUserManage('put', '/admin/updateUserStatus/' + no + '/' + statusData).then((res) => {
+                        if (res.success && res.data == 1) {
+                            Swal.fire('업데이트 완료', '상태가 업데이트되었습니다.', 'success');
+                            setUpdateUserNo(no);
+                        } else {
+                            Swal.fire('업데이트 실패', '서버 오류가 발생했습니다.', 'error');
+                        }
+                    });
+                } catch (error) {
+                    Swal.fire('에러', '예상치 못한 오류가 발생했습니다.', 'error');
+                }
+            }
+        });
+    };
+
     return (
-        <div className="admin_authorization_wrap nn_font">
-            <div className="admin_page_menu_title_wrap">
-                <img src="/test_imgs/svg/group.svg" />
-                <div className="admin_page_menu_title yg_font ">유저 관리</div>
+        <div className='admin_authorization_wrap nn_font'>
+            <div className='admin_page_menu_title_wrap'>
+                <img src='/test_imgs/svg/group.svg' />
+                <div className='admin_page_menu_title yg_font '>유저 관리</div>
             </div>
-            <div className="admin_authorization_second_wrap">
-                <table className="admin_authorization table table-striped table-hover">
+            <div className='admin_authorization_second_wrap'>
+                <table className='admin_authorization table table-striped table-hover'>
                     <thead>
                         <tr>
                             <th>번호</th>
@@ -122,7 +157,8 @@ const UserSuspended = ({ selectedMenu }) => {
                             <th>핸드폰 번호</th>
                             <th>가입일자</th>
                             <th>수정일자</th>
-                            <th>승인 여부</th>
+                            <th>상태</th>
+                            <th>관리</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -136,17 +172,39 @@ const UserSuspended = ({ selectedMenu }) => {
                                 <td>{user.reg_date}</td>
                                 <td>{user.mod_date}</td>
                                 <td>{user.status}</td>
+                                <td
+                                    style={{
+                                        padding: '0px',
+                                        paddingTop: '4px',
+                                    }}
+                                >
+                                    <button
+                                        type='button'
+                                        className='btn btn-light '
+                                        style={{
+                                            fontFamily: 'NanumSquareRound',
+                                            margin: '0',
+                                            padding: '3px 7px ',
+                                        }}
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // 이벤트 전파 방지
+                                            userManageHandler(user.no, user.status);
+                                        }}
+                                    >
+                                        상태 변경
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
 
-                <div aria-label="Page navigation example" style={{ marginTop: '10px' }}>
-                    <ul className="pagination justify-content-center">
-                        <li className="page-item">
+                <div aria-label='Page navigation example' style={{ marginTop: '10px' }}>
+                    <ul className='pagination justify-content-center'>
+                        <li className='page-item'>
                             <button
-                                className="page-link pagination_btn"
-                                aria-label="Previous"
+                                className='page-link pagination_btn'
+                                aria-label='Previous'
                                 onClick={() => {
                                     if (startPage === 1) {
                                         userManageListHandler(1);
@@ -155,7 +213,7 @@ const UserSuspended = ({ selectedMenu }) => {
                                     }
                                 }}
                             >
-                                <span aria-hidden="true">&laquo;</span>
+                                <span aria-hidden='true'>&laquo;</span>
                             </button>
                         </li>
                         {isLoading ? (
@@ -167,7 +225,7 @@ const UserSuspended = ({ selectedMenu }) => {
                                     key={startPage + i}
                                 >
                                     <button
-                                        className="page-link pagination_btn"
+                                        className='page-link pagination_btn'
                                         onClick={() => userManageListHandler(startPage + i)}
                                     >
                                         {startPage + i}
@@ -175,13 +233,13 @@ const UserSuspended = ({ selectedMenu }) => {
                                 </li>
                             ))
                         )}
-                        <li className="page-item">
+                        <li className='page-item'>
                             <button
-                                className="page-link "
-                                aria-label="Next"
+                                className='page-link '
+                                aria-label='Next'
                                 onClick={() => userManageListHandler(endPage + 1)}
                             >
-                                <span aria-hidden="true">&raquo;</span>
+                                <span aria-hidden='true'>&raquo;</span>
                             </button>
                         </li>
                     </ul>

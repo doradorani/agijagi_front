@@ -25,6 +25,16 @@ export function useKakaoLogin(code) {
             try {
                 const response = await axios.post(`${server}/kakao/login?code=${code}`);
 
+                if (response.data.userStatus === 2) {
+                    Swal.fire({
+                        title: '제재된 사용자입니다.',
+                        text: '기능을 사용하실 수 없습니다.',
+                        icon: 'warning',
+                    });
+                    navigate('/');
+                    return;
+                }
+
                 tokenDispatch(tokenAction.setTokenName(response.data.accessToken));
                 tokenDispatch(tokenAction.setTokenExpired(moment().add(2, 'hours').format('yyyy-MM-DD HH:mm:ss')));
                 userLoginDispatch(userStateAction.setState(true));
