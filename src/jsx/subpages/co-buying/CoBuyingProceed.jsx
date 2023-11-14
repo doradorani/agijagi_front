@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../../../css/subpage/cobuyinglist.css';
 import SideMenu from '../SideMenu';
 import { Link } from 'react-router-dom';
@@ -9,7 +10,9 @@ import axios from 'axios';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import token_config from '../../../js/api/config/token_config';
 
-const CoBuyingList = () => {
+const CoBuyingProceed = () => {
+    const { status } = useParams(); //ing, going, end
+
     const server = token_config.server;
 
     const [cobuyList, setCobyuList] = useState([]);
@@ -30,8 +33,9 @@ const CoBuyingList = () => {
     useEffect(() => {
         const listProduct = async () => {
             try {
+                console.log(status);
                 const validateListResponse = await axios.get(
-                    `${server}/coBuy/list/` + optionList + '/' + currentPage + '/' + perPage
+                    `${server}/coBuy/list/` + status + '/' + optionList + '/' + currentPage + '/' + perPage
                 );
 
                 setCobyuList(validateListResponse.data.data.coBuyProductDtos);
@@ -47,7 +51,7 @@ const CoBuyingList = () => {
             }
         };
         listProduct();
-    }, [currentPage, optionList]);
+    }, [status, currentPage, optionList]);
 
     const cobuyPageHandler = (newPage) => {
         if (newPage >= 1 && newPage <= totalPages) {
@@ -77,7 +81,14 @@ const CoBuyingList = () => {
                                         marginBottom: '10px',
                                     }}
                                 >
-                                    &#62;&nbsp;전체 상품
+                                    &#62;&nbsp;
+                                    {status === 'ing'
+                                        ? '진행 중인 상품'
+                                        : status === 'going'
+                                        ? '진행 예정 상품'
+                                        : status === 'end'
+                                        ? '진행 종료 상품'
+                                        : '전체 상품'}
                                 </div>
                             </div>
                             {/* <select className="order_select_selectbox">
@@ -184,4 +195,4 @@ const CoBuyingList = () => {
     );
 };
 
-export default CoBuyingList;
+export default CoBuyingProceed;
