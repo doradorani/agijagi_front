@@ -38,11 +38,13 @@ function CountdownTimer({ detailCobuy }) {
     };
 
     return (
-        <div className='countdown-timer'>
-            <div className='countdown-dates'>
+        <div className="countdown-timer">
+            <div className="countdown-dates">
                 {detailCobuy.adminCobuyStart} ~ {detailCobuy.adminCobuyEnd}
             </div>
-            <div className='countdown-remaining-time'>{remainingTime}</div>
+            <div className="countdown-remaining-time" style={{ fontSize: '1.2em', color: '#ff4898' }}>
+                {remainingTime}
+            </div>
         </div>
     );
 }

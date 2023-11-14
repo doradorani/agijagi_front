@@ -122,7 +122,7 @@ const WriteNotice = () => {
                         <div className="admin_page_menu_title yg_font ">공지사항</div>
                         <div className="yg_font admin_page_menu_sub_title"> &#62; 작성하기</div>
                     </div>
-                    <div className="detail_notice_content_wrap">
+                    <div className="detail_notice_content_wrap nn_font">
                         <div className="write_notice_content_box">
                             <div className="">
                                 <div className="input-group mb-3 write_notice_title" style={{ margin: '0px' }}>
@@ -213,6 +213,7 @@ const WriteNotice = () => {
                                         style={{
                                             marginTop: '6px',
                                             marginRight: '10px',
+                                            fontFamily: 'NanumSquareRound',
                                             width: '100px ',
                                             height: '35px',
                                         }}

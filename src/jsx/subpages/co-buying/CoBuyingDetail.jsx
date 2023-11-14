@@ -223,29 +223,48 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
 
     return (
         <>
-            <div className='co-buying_detail_wrap'>
-                <div>
-                    <img className='diary_main_img' src='/test_imgs/community_imgs/community_main.jpg' />
+            <div className="co-buying_detail_wrap nn_font">
+                <div
+                    className="community_main_img flex"
+                    style={{ justifyContent: 'space-evenly', backgroundColor: '#DAEEED' }}
+                >
+                    <img className="community_main_img" src="/test_imgs/community_imgs/commu2.jpg" />
+                    <img className="community_main_img" src="/test_imgs/community_imgs/community_heart.jpg" />
+                    <img className="community_main_img" src="/test_imgs/community_imgs/community.jpg" />
                 </div>
-                <div className='co-buying_detail_second_wrap'>
-                    <SideMenu />
-                    <div className='co-buying_detail_section'>
-                        <div className='co-buying_detail_left_section'>
-                            <div className='co-buying_detail_main_img'>
+                <div className="co-buying_detail_second_wrap" style={{ paddingLeft: '40px', paddingTop: '30px' }}>
+                    <SideMenu selectedMenu={2} setSelectedSideMenu={setSelectedSideMenu} />
+                    <div className="co-buying_detail_section">
+                        <div className="co-buying_detail_left_section">
+                            <div className=" flex yg_font" style={{ marginBottom: '30px', marginLeft: '35px' }}>
+                                <img src="/test_imgs/png/bag.png" style={{ width: '55px', marginRight: '15px' }} />
+                                <div style={{ fontSize: '40px', marginRight: '15px' }}>쇼핑하기</div>
+                                <div
+                                    style={{
+                                        fontSize: '20px',
+                                        display: 'flex',
+                                        alignItems: 'flex-end',
+                                        marginBottom: '10px',
+                                    }}
+                                >
+                                    &#62;&nbsp;제품 상세
+                                </div>
+                            </div>
+                            <div className="co-buying_detail_main_img">
                                 <img
-                                    className='co-buying_detail_main_img'
+                                    className="co-buying_detail_main_img"
                                     src={detailCobuy.cobuyImg ? detailCobuy.cobuyImg.split(',')[0] : ''}
-                                    alt=''
+                                    alt=""
                                 />
                             </div>
                             <hr />
-                            <div className='co-buying_detail_sub_section'>
-                                <div className='detail_sub_section_wrapper'>
-                                    <div className='detail_sub_section_title'>
+                            <div className="co-buying_detail_sub_section">
+                                <div className="detail_sub_section_wrapper">
+                                    <div className="detail_sub_section_title">
                                         <hr />
-                                        <p className='bold'>상세 설명 및 이미지</p>
+                                        <p className="bold">상세 설명 및 이미지</p>
                                     </div>
-                                    <div className='deatil_sub_section_first_img'>
+                                    <div className="deatil_sub_section_first_img">
                                         {detailCobuy.cobuyName ? (
                                             detailCobuy.cobuyImg.split(',').slice(1).length > 0 ? (
                                                 detailCobuy.cobuyImg
@@ -262,48 +281,44 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className='boarder_line'></div>
-                        <div className='co-buying_detail_right_section'>
-                            <div className='co-buying_detail_right_container'>
-                                <div className='co-buying_category_container'>
-                                    <div className='co-buying_category_name_container'>
-                                        <a href='#none' className='co-buying_category_link'>
+                        <div className="boarder_line" style={{ marginTop: '80px' }}></div>
+                        <div className="co-buying_detail_right_section" style={{ marginTop: '80px' }}>
+                            <div className="co-buying_detail_right_container">
+                                <div className="co-buying_category_container">
+                                    <div className="co-buying_category_name_container">
+                                        <a
+                                            className="co-buying_category_link yg_font none_deco_link"
+                                            style={{ fontSize: '1.1em' }}
+                                        >
                                             <span>{detailCobuy.cobuyName ? detailCobuy.cobuyName : ''}</span>
                                         </a>
                                         <br />
                                         <br />
-                                        가격 : {detailCobuy.cobuyPrice ? detailCobuy.cobuyPrice : ''} 원
-                                        {/* <div className='co-buying_hastag_name_container'>
-                                            <a href='#none' className='co-buying_hastag_name_link'>
-                                                <span>
-                                                    <span className='co-buying_hastag_name_wrapper'>
-                                                        <div className='co-buying_hashtag_name'>
-                                                            <span className='hashtag_sharp'>#</span>
-                                                            <span>손목</span>
-                                                        </div>
-                                                    </span>
-                                                </span>
-                                            </a>
-                                        </div> */}
+                                        <span style={{ fontSize: '1.1em' }}>
+                                            가격 : {detailCobuy.cobuyPrice ? detailCobuy.cobuyPrice : ''} 원
+                                        </span>
                                     </div>
-                                    <div className='co-buying_sharing_icon_container'>
-                                        <div className='co-buying_sharing_icon_box'>
-                                            <img src='/test_imgs/community_imgs/share.png' alt='' />
+                                    <div className="co-buying_sharing_icon_container">
+                                        <div className="co-buying_sharing_icon_box">
+                                            <img src="/test_imgs/community_imgs/share.png" alt="" />
                                         </div>
                                     </div>
                                 </div>
-                                <hr className='co-buying_line' />
-                                <div className='co-buying_short_info_container'>
-                                    <p className='co-buying_short_info_detail_1'>
+                                <hr className="co-buying_line" />
+                                <div className="co-buying_short_info_container">
+                                    <p className="co-buying_short_info_detail_1">
                                         {detailCobuy.cobuyContent ? detailCobuy.cobuyContent : ''}
                                     </p>
                                 </div>
-                                <div className='co-buying_funding_info_container'>
-                                    <div className='co-buying_participants_remainingsdays_container flex'>
-                                        <div className='co-buying_participants_wrapper'>
+                                <div className="co-buying_funding_info_container">
+                                    <div className="co-buying_participants_remainingsdays_container flex">
+                                        <div className="co-buying_participants_wrapper" style={{ fontSize: '1.1em' }}>
                                             {typeof detailCobuy.cobuyAccumulate === 'number' &&
                                             typeof detailCobuy.cobuyMin === 'number' ? (
-                                                <span className='bold'>
+                                                <span
+                                                    className="yg_font"
+                                                    style={{ fontSize: '1.3em', marginRight: '5px' }}
+                                                >
                                                     {detailCobuy.cobuyAccumulate} / {detailCobuy.cobuyMin}
                                                 </span>
                                             ) : null}
@@ -312,7 +327,7 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                                         </div>
                                     </div>
                                     <div>
-                                        <span className='co-buying_remainingsdays_wrapper'>
+                                        <span className="co-buying_remainingsdays_wrapper">
                                             {detailCobuy.cobuyStart && detailCobuy.cobuyEnd ? (
                                                 <span>
                                                     <CountdownTimer detailCobuy={detailCobuy} />{' '}
@@ -322,11 +337,14 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                                             )}
                                         </span>
                                     </div>
-                                    <div className='co-buying_funding_money_wrapper'>
-                                        <p className='co-buying_funding_money'>
+                                    <div className="co-buying_funding_money_wrapper" style={{ fontSize: '1.1em' }}>
+                                        <p className="co-buying_funding_money">
                                             {typeof detailCobuy.cobuyAccumulate === 'number' &&
                                             !isNaN(parseInt(detailCobuy.cobuyPrice)) ? (
-                                                <span className='bold'>
+                                                <span
+                                                    className="yg_font"
+                                                    style={{ fontSize: '1.5em', marginRight: '5px' }}
+                                                >
                                                     {detailCobuy.cobuyAccumulate * parseInt(detailCobuy.cobuyPrice) ||
                                                         0}
                                                 </span>
@@ -337,21 +355,21 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                                         </p>
                                     </div>
                                 </div>
-                                <div className='co-buying_funding_rate_container'>
-                                    <div className='co-buying_progressbar_wrappper'>
+                                <div className="co-buying_funding_rate_container">
+                                    <div className="co-buying_progressbar_wrappper">
                                         <div
-                                            className='progressbar'
+                                            className="progressbar"
                                             style={{
                                                 '--progressPercent': `${
                                                     (detailCobuy.cobuyAccumulate / detailCobuy.cobuyMin) * 100
                                                 }%`,
                                             }}
                                         >
-                                            <div className='progress'></div>
+                                            <div className="progress"></div>
                                         </div>
                                     </div>
-                                    <div className='co-buying_funding_text'>
-                                        <b className='co-buying_funding_rate'>
+                                    <div className="co-buying_funding_text">
+                                        <b className="co-buying_funding_rate">
                                             {typeof detailCobuy.cobuyMin === 'number' &&
                                             typeof detailCobuy.cobuyAccumulate === 'number'
                                                 ? `${(
@@ -365,18 +383,17 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                                 </div>
                             </div>
                             {fundingText !== '펀딩 마감' && (
-                                <div className='co-buying_options_container'>
-                                    <div className='co-buygin_options_wrapper'>
-                                        <div className='co-buying_options_text'>
-                                            <p>옵션 선택</p>
-                                        </div>
-                                        <div className='co-buyging_options_wrapper'>
+                                <div className="co-buying_options_container">
+                                    <div className="co-buygin_options_wrapper">
+                                        <div className="co-buying_options_text mt-2">옵션 선택</div>
+                                        <div className="co-buyging_options_wrapper mt-1">
                                             <select
-                                                className='co-buying_options_select'
+                                                class=" form-select form-select-sm"
+                                                aria-label="Small select example"
                                                 onChange={handleOptionChange}
                                                 value={selectedOption}
                                             >
-                                                <option value=''>-- 선택 --</option>
+                                                <option value="">-- 선택 --</option>
                                                 {detailCobuy.cobuyOption1 && (
                                                     <option value={detailCobuy.cobuyOption1}>
                                                         {detailCobuy.cobuyOption1}
@@ -408,47 +425,63 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                                 </div>
                             )}
 
-                            <div className='co-buying_buttons_container'>
-                                <div className='co-buying_buttons_wrapper flex'>
-                                    <div className='like_button_wrapper'>
-                                        <div className='like_button' style={{ textAlign: 'center' }}>
-                                            <label htmlFor='checkbox' className='like_box'>
+                            <div className="co-buying_buttons_container">
+                                <div className="co-buying_buttons_wrapper flex" style={{ justifyContent: 'center' }}>
+                                    <div className="like_button_wrapper">
+                                        <div
+                                            className="like_button"
+                                            style={{ textAlign: 'center', position: 'relative' }}
+                                        >
+                                            <label htmlFor="checkbox" className="like_box">
                                                 <input
-                                                    type='checkbox'
-                                                    id='checkbox'
+                                                    type="checkbox"
+                                                    id="checkbox"
                                                     hidden
                                                     defaultChecked={isChecked}
                                                     onClick={hitHandler}
                                                 />
                                                 <svg
-                                                    t='1689815540548'
-                                                    className='icon'
-                                                    viewBox='0 0 1024 1024'
-                                                    version='1.1'
-                                                    xmlns='http://www.w3.org/2000/svg'
-                                                    p-id='2271'
+                                                    t="1689815540548"
+                                                    className="icon"
+                                                    viewBox="0 0 1024 1024"
+                                                    version="1.1"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    p-id="2271"
                                                 >
                                                     <path
-                                                        d='M742.4 101.12A249.6 249.6 0 0 0 512 256a249.6 249.6 0 0 0-230.72-154.88C143.68 101.12 32 238.4 32 376.32c0 301.44 416 546.56 480 546.56s480-245.12 480-546.56c0-137.92-111.68-275.2-249.6-275.2z'
-                                                        fill='#231F20'
-                                                        p-id='2272'
-                                                        id='heart'
+                                                        d="M742.4 101.12A249.6 249.6 0 0 0 512 256a249.6 249.6 0 0 0-230.72-154.88C143.68 101.12 32 238.4 32 376.32c0 301.44 416 546.56 480 546.56s480-245.12 480-546.56c0-137.92-111.68-275.2-249.6-275.2z"
+                                                        fill="#231F20"
+                                                        p-id="2272"
+                                                        id="heart"
                                                     ></path>
                                                 </svg>
                                                 <span></span>
                                             </label>
-                                            <div className='likes_count' style={{ textAlign: 'center' }}>
-                                                <div className='likes_count'>
-                                                    {typeof detailCobuy.cobuyHit === 'number'
-                                                        ? detailCobuy.cobuyHit.toLocaleString()
-                                                        : '0'}
-                                                </div>
+                                            <div className="likes_count" style={{ textAlign: 'center' }}>
+                                                <label
+                                                    htmlFor="checkbox"
+                                                    className={isChecked ? '' : 'selected_heart'}
+                                                    style={{
+                                                        textAlign: 'center',
+                                                        position: 'absolute',
+                                                        top: '45%',
+                                                        left: '50%',
+                                                        transform: ' translate(-50%, -50%)',
+                                                        color: '#fff',
+                                                    }}
+                                                >
+                                                    <div className="likes_count">
+                                                        {typeof detailCobuy.cobuyHit === 'number'
+                                                            ? detailCobuy.cobuyHit.toLocaleString()
+                                                            : '0'}
+                                                    </div>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='co-buying_botton_wrpper'>
-                                        <div className='buying_button' onClick={userFundingHandler}>
-                                            <p className='bold'>{fundingText}</p>
+                                    <div className="co-buying_botton_wrpper">
+                                        <div className="buying_button" onClick={userFundingHandler}>
+                                            <p className="yg_font">{fundingText}</p>
                                         </div>
                                     </div>
                                 </div>

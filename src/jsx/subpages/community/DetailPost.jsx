@@ -13,6 +13,7 @@ const DetailPost = () => {
     const [responseData, setResponseData] = useState();
     const [byteCount, setByteCount] = useState(0);
     const [reportReason, setReportReason] = useState('');
+    const [emotionBtnData, setEmotionBtnData] = useState();
 
     const loginedUserNickname = userInfo_config.userNickname;
     const ValidationItem = useValidationItem();
@@ -168,6 +169,21 @@ const DetailPost = () => {
         }
     };
 
+    const emotionBtnHandler = async (btnIndex, post_no) => {
+        try {
+            setIsLoading(true);
+            const res = await ValidationItem('put', '/community/updateEmotionBtn' + btnIndex + '/' + post_no, null);
+            if (res.success) {
+                const result = await ValidationItem('get', '/community/getEmotionBtnCnt' + post_no, null);
+                setEmotionBtnData(result);
+            }
+        } catch (error) {
+            console.error('게시물을 불러오는 중 오류 발생', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <>
             {isLoading ? (
@@ -250,7 +266,10 @@ const DetailPost = () => {
                                 </div>
                                 <div className="emotion_btns_indetail flex">
                                     <div className="flex">
-                                        <a className="flex none_underline">
+                                        <a
+                                            className="flex none_underline"
+                                            onClick={() => emotionBtnHandler(1, responseData?.data?.no)}
+                                        >
                                             <div>
                                                 <img className="emotion_btn" src="/test_imgs/png/heart.png" />
                                             </div>
@@ -258,7 +277,7 @@ const DetailPost = () => {
                                         </a>
                                     </div>
                                     <div className="flex">
-                                        <a className="flex none_underline">
+                                        <a className="flex none_underline" onClick={() => emotionBtnHandler(2)}>
                                             <div>
                                                 <img className="emotion_btn" src="/test_imgs/png/like.png" />
                                             </div>
@@ -266,7 +285,7 @@ const DetailPost = () => {
                                         </a>
                                     </div>
                                     <div className="flex">
-                                        <a className="flex none_underline">
+                                        <a className="flex none_underline" onClick={() => emotionBtnHandler(3)}>
                                             <div>
                                                 <img className="emotion_btn" src="/test_imgs/png/sad.png" />
                                             </div>

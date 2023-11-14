@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import '../../../css/subpage/cobuyinglist.css';
 import SideMenu from '../SideMenu';
-import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
-import { useValidationAdminItem } from '../../../js/api/admin/ValidationAdminItem';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
-import token_config from '../../../js/api/config/token_config';
 import { useValidationItem } from '../../../js/api/VlidationItem';
 
 const CoBuyingFundingList = (selectedMenu, setSelectedSideMenu) => {
@@ -57,58 +53,45 @@ const CoBuyingFundingList = (selectedMenu, setSelectedSideMenu) => {
 
     return (
         <>
-            <div className='co-buying_list_wrap'>
-                <div className='co-buying_list_second_wrap' style={{ marginTop: '100px' }}>
-                    <SideMenu selectedMenu={4} setSelectedSideMenu={setSelectedSideMenu} />
-                    <div className='product_list'>
-                        <div className='product_filter_container'>
-                            {/* <div className="order_select_container yg_font"> */}
-                            <div className=' flex yg_font' style={{ marginBottom: '30px' }}>
-                                <img src='/test_imgs/png/bag.png' style={{ width: '55px', marginRight: '15px' }} />
-                                <div style={{ fontSize: '40px', marginRight: '15px' }}>펀딩 상품 조회</div>
-                                {/* <div
-                                    style={{
-                                        fontSize: '20px',
-                                        display: 'flex',
-                                        alignItems: 'flex-end',
-                                        marginBottom: '10px',
-                                    }}
-                                >
-                                    &#62;&nbsp;전체 상품
-                                </div> */}
+            <div
+                className="community_main_img flex"
+                style={{ justifyContent: 'space-evenly', backgroundColor: '#DAEEED' }}
+            >
+                <img className="community_main_img" src="/test_imgs/community_imgs/commu2.jpg" />
+                <img className="community_main_img" src="/test_imgs/community_imgs/community_heart.jpg" />
+                <img className="community_main_img" src="/test_imgs/community_imgs/community.jpg" />
+            </div>
+            <div className="community_flex" style={{ height: '110vh' }}>
+                <SideMenu selectedMenu={4} setSelectedSideMenu={setSelectedSideMenu} />
+                <div className="co-buying_list_second_wrap">
+                    <div
+                        className="product_list flex"
+                        style={{ flexDirection: 'column', justifyContent: 'space-between' }}
+                    >
+                        <div>
+                            <div className="product_filter_container">
+                                <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
+                                    <img
+                                        src="/test_imgs/png/cart.png"
+                                        style={{ width: '55px', marginRight: '15px', objectFit: 'contain' }}
+                                    />
+                                    <div style={{ fontSize: '40px', marginRight: '15px' }}>펀딩 상품 조회</div>
+                                </div>
                             </div>
-                            {/* <select className="order_select_selectbox">
-                                <option value="">전체</option>
-                                <option value="N">진행중</option>
-                                <option value="Y">종료된</option>
-                            </select> */}
-                            {/* </div> */}
-                            {/* <ul className='order_select_option_contianer'>
-                                <li className='order_select_option bold'>추천순</li>
-                                <li className='order_select_option'>인기순</li>
-                                <li className='order_select_option'>모집금액순</li>
-                                <li className='order_select_option'>마감임박순</li>
-                                <li className='order_select_option'>최신순</li>
-                            </ul> */}
+                            <div className={cobuyList.length === 0 ? '' : 'product_wrap_row'}>
+                                {cobuyList.length === 0 ? (
+                                    <p style={{ textAlign: 'center', fontSize: '24px' }}>상품이 없습니다</p>
+                                ) : (
+                                    cobuyList.map((item, index) => <ProductCard key={index} productData={item} />)
+                                )}
+                            </div>
                         </div>
-                        {/* <div className='product_wrap_row'>
-                            {cobuyList &&
-                                cobuyList.map((item, index) => <ProductCard key={index} productData={item} />)}
-                        </div> */}
-                        <div className={cobuyList.length === 0 ? '' : 'product_wrap_row'}>
-                            {cobuyList.length === 0 ? (
-                                <p style={{ textAlign: 'center', fontSize: '24px' }}>상품이 없습니다</p>
-                            ) : (
-                                cobuyList.map((item, index) => <ProductCard key={index} productData={item} />)
-                            )}
-                        </div>
-
-                        <div aria-label='Page navigation example' style={{ marginTop: '10px' }}>
-                            <ul className='pagination justify-content-center'>
-                                <li className='page-item'>
+                        <div aria-label="Page navigation example ">
+                            <ul className="pagination justify-content-center ">
+                                <li className="page-item">
                                     <button
-                                        className='page-link pagination_btn'
-                                        aria-label='Previous'
+                                        className="page-link pagination_btn"
+                                        aria-label="Previous"
                                         onClick={() => {
                                             if (startPage === 1) {
                                                 cobuyPageHandler(1);
@@ -117,7 +100,7 @@ const CoBuyingFundingList = (selectedMenu, setSelectedSideMenu) => {
                                             }
                                         }}
                                     >
-                                        <span aria-hidden='true'>&laquo;</span>
+                                        <span aria-hidden="true">&laquo;</span>
                                     </button>
                                 </li>
                                 {isLoading ? (
@@ -129,7 +112,7 @@ const CoBuyingFundingList = (selectedMenu, setSelectedSideMenu) => {
                                             key={startPage + i}
                                         >
                                             <button
-                                                className='page-link pagination_btn'
+                                                className="page-link pagination_btn"
                                                 onClick={() => cobuyPageHandler(startPage + i)}
                                             >
                                                 {startPage + i}
@@ -137,13 +120,13 @@ const CoBuyingFundingList = (selectedMenu, setSelectedSideMenu) => {
                                         </li>
                                     ))
                                 )}
-                                <li className='page-item'>
+                                <li className="page-item">
                                     <button
-                                        className='page-link '
-                                        aria-label='Next'
+                                        className="page-link "
+                                        aria-label="Next"
                                         onClick={() => cobuyPageHandler(endPage + 1)}
                                     >
-                                        <span aria-hidden='true'>&raquo;</span>
+                                        <span aria-hidden="true">&raquo;</span>
                                     </button>
                                 </li>
                             </ul>

@@ -252,7 +252,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                 type="button"
                                                 className="btn btn-light"
                                                 style={{
-                                                    fontFamily: 'malgun gothic',
+                                                    fontFamily: 'NanumSquareRound',
                                                     margin: '0',
                                                     padding: '3px 7px ',
                                                 }}
@@ -320,7 +320,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                         className="btn btn-light "
                                                         style={{
                                                             width: '105px',
-                                                            fontFamily: 'malgun gothic',
+                                                            fontFamily: 'NanumSquareRound',
                                                             margin: '0',
                                                             padding: '3px 7px ',
                                                         }}
@@ -339,7 +339,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                         type="button"
                                                         className="btn btn-light"
                                                         style={{
-                                                            fontFamily: 'malgun gothic',
+                                                            fontFamily: 'NanumSquareRound',
                                                             margin: '0',
                                                             padding: '3px 7px ',
                                                         }}
@@ -395,7 +395,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                     </div>
                     {/* 모달 START */}
                     <div
-                        className="modal fade"
+                        className="modal fade nn_font"
                         id="modal_for_post_report"
                         tabIndex="-1"
                         aria-labelledby="exampleModalLabel"
