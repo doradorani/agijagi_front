@@ -10,7 +10,7 @@ import axios from 'axios';
 
 const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) => {
     const [fourCutsData, setForuCutsData] = useState();
-    const [images, setImages] = useState();
+    // const [images, setImages] = useState();
     const params = useParams();
     const userLoginDispatch = useDispatch();
     const navigate = useNavigate();
@@ -23,7 +23,6 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
                     validationUser('get', '/diary/childrenPictures').then((res) => {
                         if (res != undefined && res.success) {
                             setForuCutsData(res.data);
-                            setImages(res.data[0].img);
                         }
                     });
                     setIsLoading(true);
@@ -47,9 +46,7 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
     const getTitle = (index) => fourCutsData?.[index]?.title || '';
 
     const ImgContainer = styled.div`
-        img {
-            src: ${(props) => props.url + '/timestamp=' + new Date().getTime()};
-        }
+        src: ${(props) => props.url + '/timestamp=' + new Date().getTime()};
     `;
 
     // const toggleText = (index) => {
@@ -99,49 +96,65 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
                             <li>김란희</li>
                         </ul>
                     </div>
-                    <div className="four_cuts_album_wrap">
-                        <div className="four_cuts_photos">
-                            <div className="four_cuts_album_containter">
-                                <div className="four_cust_header"></div>
-                                <div className="four_cuts_photos">
-                                    {[0, 1, 2, 3].map((index) => {
-                                        // setImages(getImageUrl(0));
-                                        return (
-                                            <>
-                                                <ImgContainer
-                                                    key={index}
-                                                    className="photo_frame"
-                                                    // onMouseEnter={() => toggleText(index)}
-                                                    // onMouseLeave={() => toggleText(index)}
-                                                >
-                                                    <img
-                                                        id={'cuts_img' + index}
-                                                        src={getImageUrl(index)}
-                                                        alt={`description ${index}`}
-                                                        style={{ height: '200px' }}
-                                                        crossOrigin="anonymous"
-                                                    />
-                                                </ImgContainer>
-                                            </>
-                                        );
-                                    })}
+                    {fourCutsData?.length == 4 ? (
+                        <div className="four_cuts_album_wrap">
+                            <div className="four_cuts_photos">
+                                <div className="four_cuts_album_containter">
+                                    <div className="four_cust_header"></div>
+                                    <div className="four_cuts_photos">
+                                        {fourCutsData != null &&
+                                            [0, 1, 2, 3].map((index) => {
+                                                // setImages(getImageUrl(0));
+                                                return (
+                                                    <>
+                                                        <ImgContainer
+                                                            key={index}
+                                                            className="photo_frame"
+                                                            // onMouseEnter={() => toggleText(index)}
+                                                            // onMouseLeave={() => toggleText(index)}
+                                                        >
+                                                            <img
+                                                                id={'cuts_img' + index}
+                                                                src={getImageUrl(index)}
+                                                                alt={`description ${index}`}
+                                                                style={{ height: '200px' }}
+                                                                crossOrigin="anonymous"
+                                                            />
+                                                        </ImgContainer>
+                                                    </>
+                                                );
+                                            })}
+                                    </div>
+                                    <div className="four_cust_footer">
+                                        <p className="four_cuts_title"></p>
+                                        <p className="four_cuts_date">
+                                            {today.getFullYear() +
+                                                '-' +
+                                                ('0' + (today.getMonth() + 1)).slice(-2) +
+                                                '-' +
+                                                ('0' + today.getDate()).slice(-2)}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="four_cust_footer">
-                                    <p className="four_cuts_title"></p>
-                                    <p className="four_cuts_date">
-                                        {today.getFullYear() +
-                                            '-' +
-                                            ('0' + (today.getMonth() + 1)).slice(-2) +
-                                            '-' +
-                                            ('0' + today.getDate()).slice(-2)}
-                                    </p>
-                                </div>
+                                <button value="사진 저장" onClick={onFourCutCapture} className="btn primary-btn">
+                                    사진 저장
+                                </button>
                             </div>
-                            <button value="사진 저장" onClick={onFourCutCapture} className="btn primary-btn">
-                                사진 저장
-                            </button>
                         </div>
-                    </div>
+                    ) : (
+                        <div
+                            className="yg_font"
+                            style={{
+                                fontSize: '1.7rem',
+                                textAlign: 'center',
+                                height: '500px',
+                                lineHeight: '500px',
+                                paddingLeft: '60px',
+                            }}
+                        >
+                            일기를 4장 이상 좋아요를 눌러주세요
+                        </div>
+                    )}
                 </div>
             </div>
             {adContents}

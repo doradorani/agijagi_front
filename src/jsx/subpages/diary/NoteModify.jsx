@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../../css/subpage/note.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
@@ -23,6 +23,7 @@ const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => 
     const [childListData, setChildListData] = useState();
     const userLoginDispatch = useDispatch();
     const nav = useNavigate();
+    const params = useParams();
 
     const nameClick = (no, name) => {
         setSelectedChild(name);
@@ -31,9 +32,10 @@ const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => 
 
     useEffect(() => {
         try {
-            validationUser('get', '/childHealth/childNotes').then((res) => {
+            validationUser('get', '/childHealth/childNotes/' + params.childNo + '/' + params.healthNo).then((res) => {
                 if (res != undefined && res.success) {
                     setChildListData(res.data);
+                    console.log(res.data);
                 }
             });
             setIsLoading(true);
@@ -184,118 +186,120 @@ const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => 
                                 {isLoading ? (
                                     <div>로딩중.....</div>
                                 ) : (
-                                    <div className="note_select_options">
-                                        <div
-                                            className="note_select_date flex"
-                                            style={{ justifyContent: 'space-between' }}
-                                        >
-                                            <div>
-                                                <span className="note_select_title">날짜 &nbsp;</span>
-                                                <DatePicker
-                                                    dateFormat="yyyy.MM.dd"
-                                                    shouldCloseOnSelect
-                                                    selected={new Date(reg_date)}
-                                                    onChange={(date) => setSelectedDate(date)}
-                                                />
-                                            </div>
-                                            <div>
-                                                <button
-                                                    className="btn btn-secondary dropdown-toggle"
-                                                    type="button"
-                                                    id="dropdownMenu2"
-                                                    data-bs-toggle="dropdown"
-                                                    aria-expanded="false"
-                                                >
-                                                    {childListData != null ? childListData.cd_name : null}
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div className="note_input_1 flex">
-                                            <div className="note_input_height">
-                                                <span>키 &nbsp;</span>
-                                                <input
-                                                    type="number"
-                                                    min={1}
-                                                    defaultValue={childListData.height}
-                                                    onChange={(e) => {
-                                                        setHeight(e.target.value);
-                                                    }}
-                                                />
-                                            </div>
-                                            <div className="note_input_weight">
-                                                <span>몸무게 &nbsp;</span>
-                                                <input
-                                                    type="number"
-                                                    min={1}
-                                                    defaultValue={childListData.weight}
-                                                    onChange={(e) => {
-                                                        setWeight(e.target.value);
-                                                    }}
-                                                />
-                                            </div>
-                                            <div className="note_input_head">
-                                                <span>두위&nbsp;</span>
-                                                <input
-                                                    type="number"
-                                                    min={1}
-                                                    defaultValue={childListData.head}
-                                                    onChange={(e) => {
-                                                        setHead(e.target.value);
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="note_input_2 flex">
-                                            <div className="vaccination_hospital_name">
-                                                <span>병원 이름&nbsp;</span>
-                                                <input
-                                                    type="text"
-                                                    onChange={(e) => {
-                                                        setHospitalName(e.target.value);
-                                                    }}
-                                                />
-                                            </div>
-                                            <div className="vaccination_name">
-                                                <span>접종 종류&nbsp;</span>
-                                                <input
-                                                    type="text"
-                                                    onChange={(e) => {
-                                                        setVaccinationName(e.target.value);
-                                                    }}
-                                                />
-                                            </div>
-                                            <div className="vaccination_times">
-                                                <span>접종 차수&nbsp;</span>
-                                                <input
-                                                    type="number"
-                                                    min={1}
-                                                    onChange={(e) => {
-                                                        setVaccinationNo(e.target.value);
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="note_input_matters flex">
-                                            <span>기타 유의 사항&nbsp;</span>
-                                            <textarea
-                                                className="upload_text"
-                                                placeholder=" 기타 유의 사항을 적어주세요."
-                                                onChange={handleTextChange}
-                                            ></textarea>
-                                            <sup className="byte_for_input_matters_box">
-                                                (<span id="nowByte">{byteCount}</span>/2000bytes)
-                                            </sup>
-                                        </div>
-                                        <div className="note_submit_button">
+                                    childListData != null && (
+                                        <div className="note_select_options">
                                             <div
-                                                onClick={() => {
-                                                    goToGraphClick();
-                                                }}
+                                                className="note_select_date flex"
+                                                style={{ justifyContent: 'space-between' }}
                                             >
-                                                <input type="submit" value={'수정'} className="btn btn-primary" />
+                                                <div>
+                                                    <span className="note_select_title">날짜 &nbsp;</span>
+                                                    <DatePicker
+                                                        dateFormat="yyyy.MM.dd"
+                                                        shouldCloseOnSelect
+                                                        selected={new Date(reg_date)}
+                                                        onChange={(date) => setSelectedDate(date)}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <button
+                                                        className="btn btn-secondary dropdown-toggle"
+                                                        type="button"
+                                                        id="dropdownMenu2"
+                                                        data-bs-toggle="dropdown"
+                                                        aria-expanded="false"
+                                                    >
+                                                        {childListData != null ? childListData.cd_name : null}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div className="note_input_1 flex">
+                                                <div className="note_input_height">
+                                                    <span>키 &nbsp;</span>
+                                                    <input
+                                                        type="number"
+                                                        min={1}
+                                                        defaultValue={childListData.height}
+                                                        onChange={(e) => {
+                                                            setHeight(e.target.value);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="note_input_weight">
+                                                    <span>몸무게 &nbsp;</span>
+                                                    <input
+                                                        type="number"
+                                                        min={1}
+                                                        defaultValue={childListData.weight}
+                                                        onChange={(e) => {
+                                                            setWeight(e.target.value);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="note_input_head">
+                                                    <span>두위&nbsp;</span>
+                                                    <input
+                                                        type="number"
+                                                        min={1}
+                                                        defaultValue={childListData.head}
+                                                        onChange={(e) => {
+                                                            setHead(e.target.value);
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="note_input_2 flex">
+                                                <div className="vaccination_hospital_name">
+                                                    <span>병원 이름&nbsp;</span>
+                                                    <input
+                                                        type="text"
+                                                        onChange={(e) => {
+                                                            setHospitalName(e.target.value);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="vaccination_name">
+                                                    <span>접종 종류&nbsp;</span>
+                                                    <input
+                                                        type="text"
+                                                        onChange={(e) => {
+                                                            setVaccinationName(e.target.value);
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="vaccination_times">
+                                                    <span>접종 차수&nbsp;</span>
+                                                    <input
+                                                        type="number"
+                                                        min={1}
+                                                        onChange={(e) => {
+                                                            setVaccinationNo(e.target.value);
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="note_input_matters flex">
+                                                <span>기타 유의 사항&nbsp;</span>
+                                                <textarea
+                                                    className="upload_text"
+                                                    placeholder=" 기타 유의 사항을 적어주세요."
+                                                    onChange={handleTextChange}
+                                                ></textarea>
+                                                <sup className="byte_for_input_matters_box">
+                                                    (<span id="nowByte">{byteCount}</span>/2000bytes)
+                                                </sup>
+                                            </div>
+                                            <div className="note_submit_button">
+                                                <div
+                                                    onClick={() => {
+                                                        goToGraphClick();
+                                                    }}
+                                                >
+                                                    <input type="submit" value={'수정'} className="btn btn-primary" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    )
                                 )}
                             </div>
                         </div>
