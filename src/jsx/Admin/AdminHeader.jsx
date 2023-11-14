@@ -64,38 +64,38 @@ const AdminHeader = ({ setSelectedMenu }) => {
             {/* Admin Page Header START*/}
             {
                 <header>
-                    <div id="admin_header_wrap">
-                        <div className="admin_logo_container">
-                            <Link to="/admin" className="flex">
-                                <img className="admin_logo_img" src="/test_imgs/logo/logo.png" />
+                    <div id='admin_header_wrap'>
+                        <div className='admin_logo_container'>
+                            <Link to='/admin' className='flex'>
+                                <img className='admin_logo_img' src='/test_imgs/logo/logo.png' />
                                 <span style={{ marginLeft: '10px' }}>아기자기</span>
                                 <span style={{ marginLeft: '5px', paddingTop: '15px', fontSize: '0.6em' }}>admin</span>
                             </Link>
                         </div>
-                        <div className="admin_btn_page">
+                        <div className='admin_btn_page'>
                             <span
-                                className="yg_font"
+                                className='yg_font'
                                 style={{ marginTop: '3px', fontWeight: 'bold', fontSize: '1.3rem' }}
                             >
                                 {adminLogin_config.account} {adminGradeText}
                             </span>
-                            <Link to="/admin_modify">
+                            <Link to='/admin/admin_modify'>
                                 <input
-                                    type="button"
-                                    className="btn btn-outline-dark admin_btn"
+                                    type='button'
+                                    className='btn btn-outline-dark admin_btn'
                                     style={{ border: 'none' }}
-                                    value="회원 수정"
-                                    onClick={() => {
-                                        setSelectedMenu(7);
-                                    }}
+                                    value='회원 수정'
+                                    // onClick={() => {
+                                    //     setSelectedMenu(7);
+                                    // }}
                                 />
                             </Link>
 
                             <input
-                                type="button"
-                                className="btn btn-outline-dark admin_btn"
+                                type='button'
+                                className='btn btn-outline-dark admin_btn'
                                 style={{ border: 'none' }}
-                                value="로그아웃"
+                                value='로그아웃'
                                 onClick={() => {
                                     adminLogOut();
                                 }}

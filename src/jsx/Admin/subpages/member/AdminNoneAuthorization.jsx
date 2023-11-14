@@ -127,10 +127,13 @@ const AdminNoneAuthorization = ({ setSelectedSideMenu }) => {
             <div className='admin_page_menu_title_wrap'>
                 <img src='/test_imgs/svg/approval.svg' />
                 <div className='admin_page_menu_title yg_font '>관리자 승인</div>
-                <div className='yg_font admin_page_menu_sub_title'> &#62; 승인 관리자</div>
+                <div className='yg_font admin_page_menu_sub_title'> &#62; 미승인 관리자</div>
             </div>
             <div className='admin_authorization_second_wrap'>
-                <table className='admin_authorization table table-striped table-hover' style={{ marginTop: '15px' }}>
+                <table
+                    className='admin_authorization table table-striped table-hover nn_font'
+                    style={{ marginTop: '15px' }}
+                >
                     <thead>
                         <tr>
                             <th>번호</th>
