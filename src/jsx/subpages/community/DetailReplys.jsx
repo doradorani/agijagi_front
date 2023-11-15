@@ -30,7 +30,7 @@ const DetailReplys = ({ reportReason, setReportReason }) => {
     }, []);
 
     const getReplys = async () => {
-        console.log('registReply() CALLED!!');
+        console.log('getReplys() CALLED!!');
         try {
             setReplyText('');
             setIsLoading(true);
@@ -131,7 +131,7 @@ const DetailReplys = ({ reportReason, setReportReason }) => {
         try {
             setIsLoadingForReply(true);
             const registReplyRes = await ValidationItem(
-                'put',
+                'post',
                 '/community/registReply/' + postId + '/' + replyText,
                 null
             );
@@ -158,7 +158,7 @@ const DetailReplys = ({ reportReason, setReportReason }) => {
             const replyIndex = index;
             setIsLoadingForReply(true);
             const registReplyRes = await ValidationItem(
-                'put',
+                'post',
                 '/community/registReReply/' + postId + '/' + replyText + '/' + replyIndex,
                 null
             );

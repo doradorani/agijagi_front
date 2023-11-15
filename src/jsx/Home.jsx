@@ -17,6 +17,7 @@ const Home = ({ setSelectedUserLoginBtn }) => {
     const elements = [fadeIn1, fadeIn2, fadeIn3, fadeIn4, fadeIn5, fadeIn6];
 
     useEffect(() => {
+        setSelectedUserLoginBtn(false);
         const observerOptions = {
             root: null,
             rootMargin: '0px',

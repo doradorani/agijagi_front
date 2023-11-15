@@ -231,6 +231,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                             </Link>
                                         </td>
                                         <td
+                                            className="hover_cursor"
                                             style={{
                                                 display: 'block',
                                                 overflow: 'hidden',
@@ -264,6 +265,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                             </button>
                                         </td>
                                         <td
+                                            className="hover_cursor"
                                             style={{
                                                 display: 'block',
                                                 overflow: 'hidden',

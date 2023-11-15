@@ -58,13 +58,13 @@ const CoBuyingList = () => {
 
     return (
         <>
-            <div className='co-buying_list_wrap nn_font'>
-                <div className='co-buying_list_second_wrap'>
-                    <div className='product_list'>
-                        <div className='product_filter_container'>
+            <div className="co-buying_list_wrap nn_font">
+                <div className="co-buying_list_second_wrap">
+                    <div className="product_list">
+                        <div className="product_filter_container">
                             {/* <div className="order_select_container yg_font"> */}
-                            <div className=' flex yg_font' style={{ marginBottom: '30px' }}>
-                                <img src='/test_imgs/png/bag.png' style={{ width: '55px', marginRight: '15px' }} />
+                            <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
+                                <img src="/test_imgs/png/bag.png" style={{ width: '55px', marginRight: '15px' }} />
                                 <div style={{ fontSize: '40px', marginRight: '15px' }}>쇼핑하기</div>
                                 <div
                                     style={{
@@ -77,21 +77,8 @@ const CoBuyingList = () => {
                                     &#62;&nbsp;전체 상품
                                 </div>
                             </div>
-                            {/* <select className="order_select_selectbox">
-                                <option value="">전체</option>
-                                <option value="N">진행중</option>
-                                <option value="Y">종료된</option>
-                            </select> */}
-                            {/* </div> */}
-                            {/* <ul className='order_select_option_contianer'>
-                                <li className='order_select_option bold'>추천순</li>
-                                <li className='order_select_option'>인기순</li>
-                                <li className='order_select_option'>모집금액순</li>
-                                <li className='order_select_option'>마감임박순</li>
-                                <li className='order_select_option'>최신순</li>
-                            </ul> */}
-                            {/*  */}
-                            <ul className='order_select_option_contianer'>
+
+                            <ul className="order_select_option_contianer nn_font">
                                 <li
                                     className={`order_select_option ${optionList === 'hit' ? 'bold' : ''}`}
                                     onClick={() => listOptionHandler('hit')}
@@ -129,12 +116,12 @@ const CoBuyingList = () => {
                             )}
                         </div>
 
-                        <div aria-label='Page navigation example' style={{ marginTop: '10px' }}>
-                            <ul className='pagination justify-content-center'>
-                                <li className='page-item'>
+                        <div aria-label="Page navigation example" style={{ marginTop: '10px' }}>
+                            <ul className="pagination justify-content-center">
+                                <li className="page-item">
                                     <button
-                                        className='page-link pagination_btn'
-                                        aria-label='Previous'
+                                        className="page-link pagination_btn"
+                                        aria-label="Previous"
                                         onClick={() => {
                                             if (startPage === 1) {
                                                 cobuyPageHandler(1);
@@ -143,7 +130,7 @@ const CoBuyingList = () => {
                                             }
                                         }}
                                     >
-                                        <span aria-hidden='true'>&laquo;</span>
+                                        <span aria-hidden="true">&laquo;</span>
                                     </button>
                                 </li>
                                 {isLoading ? (
@@ -155,7 +142,7 @@ const CoBuyingList = () => {
                                             key={startPage + i}
                                         >
                                             <button
-                                                className='page-link pagination_btn'
+                                                className="page-link pagination_btn"
                                                 onClick={() => cobuyPageHandler(startPage + i)}
                                             >
                                                 {startPage + i}
@@ -163,13 +150,13 @@ const CoBuyingList = () => {
                                         </li>
                                     ))
                                 )}
-                                <li className='page-item'>
+                                <li className="page-item">
                                     <button
-                                        className='page-link '
-                                        aria-label='Next'
+                                        className="page-link "
+                                        aria-label="Next"
                                         onClick={() => cobuyPageHandler(endPage + 1)}
                                     >
-                                        <span aria-hidden='true'>&raquo;</span>
+                                        <span aria-hidden="true">&raquo;</span>
                                     </button>
                                 </li>
                             </ul>

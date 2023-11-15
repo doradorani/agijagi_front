@@ -61,7 +61,7 @@ const CoBuyingFundingList = (selectedMenu, setSelectedSideMenu) => {
                 <img className="community_main_img" src="/test_imgs/community_imgs/community_heart.jpg" />
                 <img className="community_main_img" src="/test_imgs/community_imgs/community.jpg" />
             </div>
-            <div className="community_flex" style={{ height: '110vh' }}>
+            <div className="community_flex">
                 <SideMenu selectedMenu={4} setSelectedSideMenu={setSelectedSideMenu} />
                 <div className="co-buying_list_second_wrap">
                     <div
