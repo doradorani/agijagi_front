@@ -74,64 +74,8 @@ const AdminCoBuyingList = ({ setSelectedSideMenu }) => {
                                                 alignItems: 'flex-end',
                                                 marginBottom: '10px',
                                             }}
-                                        >
-                                            {/* &#62;&nbsp;진행 중인 상품 */}
-                                        </div>
+                                        ></div>
                                     </div>
-                                    {/* <div style={{ position: 'relative' }}>
-                                        <div
-                                            style={{
-                                                position: 'absolute',
-                                                border: '#dadada',
-                                                width: '180px',
-                                                height: '35px',
-                                                right: '25px',
-                                                borderRadius: '40px',
-                                            }}
-                                        >
-                                            <input
-                                                className="shopping_search_bar"
-                                                type="text"
-                                                placeholder="검색어 입력"
-                                                style={{
-                                                    border: 'none',
-                                                    width: '130px',
-                                                    height: '32px',
-                                                    marginLeft: '12px',
-                                                    position: 'absolute',
-                                                    top: '1px',
-                                                    right: '35px',
-                                                }}
-                                            ></input>
-                                            <button
-                                                style={{
-                                                    backgroundColor: '#fff',
-                                                    border: 'none',
-                                                    borderRadius: '100%',
-                                                    width: '30px',
-                                                    height: '30px',
-                                                    position: 'absolute',
-                                                    right: '1px',
-                                                    top: '1.5px',
-                                                }}
-                                            >
-                                                <img
-                                                    src="/test_imgs/svg/search.svg"
-                                                    style={{ width: '30px', height: '30px' }}
-                                                />
-                                            </button>
-                                        </div>
-                                        <ul
-                                            className="order_select_option_contianer"
-                                            style={{ position: 'relative', top: '40px' }}
-                                        >
-                                            <li className="order_select_option bold">추천순</li>
-                                            <li className="order_select_option">인기순</li>
-                                            <li className="order_select_option">모집금액순</li>
-                                            <li className="order_select_option">마감임박순</li>
-                                            <li className="order_select_option">최신순</li>
-                                        </ul>
-                                    </div> */}
                                 </div>
                                 <div className={cobuyList.length === 0 ? '' : 'product_wrap_row'}>
                                     {cobuyList.length === 0 ? (

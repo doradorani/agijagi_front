@@ -117,9 +117,9 @@ const MyPosts = ({ isUpdate, setIsUpdate }) => {
                                         <div className="my_posts_profile_img">
                                             <img
                                                 src={
-                                                    response?.userDto
+                                                    response?.userDto?.img
                                                         ? response?.userDto?.img
-                                                        : `/test_imgs/png/profile.png`
+                                                        : '/test_imgs/png/profile.png'
                                                 }
                                             />
                                         </div>

@@ -73,7 +73,7 @@ const AdminCoBuyingDetail = () => {
                         <div className="admin_page_menu_title yg_font ">공동 구매</div>
                         <div className="yg_font admin_page_menu_sub_title">&#62; 제품 등록</div>
                     </div>
-                    <div className="co-buying_detail_section" style={{ position: 'relative' }}>
+                    <div className="co-buying_detail_section">
                         <div className="co-buying_detail_left_section">
                             <div className="co-buying_detail_main_img">
                                 <img
@@ -112,10 +112,7 @@ const AdminCoBuyingDetail = () => {
                             </div>
                         </div>
                         <div className="boarder_line"></div>
-                        <div
-                            className="co-buying_detail_right_section"
-                            style={{ position: 'sticky', height: ' 650px', top: '100px' }}
-                        >
+                        <div className="co-buying_detail_right_section">
                             <div className="co-buying_detail_right_container">
                                 <div className="co-buying_category_container">
                                     <div className="co-buying_category_name_container yg_font">

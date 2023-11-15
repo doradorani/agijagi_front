@@ -5,9 +5,10 @@
 }
 
 .notice_flex {
+    width: 1370px;
     display: flex;
     justify-content: space-between;
-    margin: 50px 100px 0px 100px;
+    margin: 50px auto;
 }
 
 .notice_flex > div {

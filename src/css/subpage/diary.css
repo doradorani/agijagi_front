@@ -15,12 +15,15 @@
 .post_full_section {
     width: 80%;
     margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
 }
 
 .diary_flex {
+    width: 1350px;
     display: flex;
     justify-content: space-around;
-    margin: 50px 80px 0px 80px;
+    margin: 50px auto;
 }
 
 .magazine {

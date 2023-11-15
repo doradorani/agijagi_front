@@ -13,9 +13,10 @@ img.community_main_img {
 }
 
 .community_flex {
+    width: 1370px;
     display: flex;
     justify-content: space-between;
-    margin: 50px 80px 0px 80px;
+    margin: 50px auto;
 }
 
 .community_flex > div {

@@ -71,15 +71,11 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, delete
                     <Link to="/community/my_posts" className="none_deco_link">
                         <div className="side_menu_sub_btn">- 내 게시글</div>
                     </Link>
-                    <Link to="/community/detail_post/:postId" className="none_deco_link">
-                        <div className="side_menu_sub_btn">- test</div>
-                    </Link>
                 </div>
                 <div
                     className="side_menu_btn"
                     data-bs-toggle="modal"
                     data-bs-target="#modal_for_post_img"
-                    // onClick={() => setPreviewImage(null)}
                     onClick={deleteAllContent}
                 >
                     <img src="/test_imgs/png/pencil_logo.png" style={{ width: '45px', marginRight: '15px' }} />새 글
@@ -114,16 +110,6 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, delete
                     <img src="/test_imgs/png/post-it.png" style={{ width: '45px', marginRight: '15px' }} />
                     공지사항
                 </div>
-                {/* <div
-                    className='side_menu_btn'
-                    onClick={() => setSelectedSideMenu(2)}
-                    // data-bs-toggle="modal"
-                    // data-bs-target="#modal_for_post_img"
-                    style={{ marginTop: '15px' }}
-                >
-                    <img src='/test_imgs/png/pencil_logo.png' style={{ width: '45px', marginRight: '15px' }} />
-                    공지사항 작성하기
-                </div> */}
             </div>
         );
     } else if (selectedMenu === 4) {

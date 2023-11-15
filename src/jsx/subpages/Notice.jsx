@@ -12,7 +12,7 @@ const Notice = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, selectedN
             <div>
                 <img className="notice_main_img" src="/test_imgs/notice_imgs/notice_board2.jpg" />
             </div>
-            <div className="notice_flex">
+            <div className="notice_flex" style={{ width: '1370px', margin: '50px auto' }}>
                 <SideMenu
                     selectedMenu={3}
                     setSelectedSideMenu={setSelectedSideMenu}

@@ -122,34 +122,36 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
 
     return (
         <div className="post_full_section">
-            <DiaryHeader select={'달력'} src={'/test_imgs/png/diary3.png'} />
-            {diaryCalendarData == null ? (
-                <div>로딩중</div>
-            ) : (
-                <div className="add_diary_container" style={{ width: '90%' }}>
-                    <div className="calendar_wrap">
-                        <div className="calendar_section">
-                            <div className="calendar_second_wrap">
-                                <div id="calendar">
-                                    <FullCalendar
-                                        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                                        initialView={'dayGridMonth'}
-                                        headerToolbar={{
-                                            start: 'today',
-                                            center: 'title',
-                                            end: 'prev,next',
-                                        }}
-                                        eventMinWidth={'10vh'}
-                                        height={'85vh'}
-                                        events={calendarContents}
-                                        eventClick={eventClick}
-                                    />
+            <div style={{ width: '1100px' }}>
+                <DiaryHeader select={'달력'} src={'/test_imgs/png/diary3.png'} />
+                {diaryCalendarData == null ? (
+                    <div>로딩중</div>
+                ) : (
+                    <div className="add_diary_container" style={{ width: '90%' }}>
+                        <div className="calendar_wrap">
+                            <div className="calendar_section">
+                                <div className="calendar_second_wrap">
+                                    <div id="calendar">
+                                        <FullCalendar
+                                            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                                            initialView={'dayGridMonth'}
+                                            headerToolbar={{
+                                                start: 'today',
+                                                center: 'title',
+                                                end: 'prev,next',
+                                            }}
+                                            eventMinWidth={'10vh'}
+                                            height={'85vh'}
+                                            events={calendarContents}
+                                            eventClick={eventClick}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 };

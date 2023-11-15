@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../../../css/subpage/post.css';
 import { useValidationItem } from '../../../js/api/VlidationItem';
 import CopyToClipboard from 'react-copy-to-clipboard';
@@ -325,13 +325,15 @@ const DetailPost = () => {
                                             )}
                                             {loginedUserNickname === responseData?.data?.nickname ? (
                                                 <>
-                                                    <div
-                                                        className="hover_cursor"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modal_for_post_declaration"
-                                                    >
-                                                        수정하기
-                                                    </div>{' '}
+                                                    <Link to={`/community/modify_post/${responseData?.data?.no}`}>
+                                                        <div
+                                                            className="hover_cursor"
+                                                            data-bs-dismiss="modal"
+                                                            aria-label="Close"
+                                                        >
+                                                            수정하기
+                                                        </div>{' '}
+                                                    </Link>
                                                     <hr />
                                                     <div
                                                         className="hover_cursor"
