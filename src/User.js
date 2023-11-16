@@ -59,6 +59,7 @@ function User() {
                             selectedMenu={selectedMenu}
                             selectedSideMenu={selectedSideMenu}
                             setSelectedSideMenu={setSelectedSideMenu}
+                            setSelectedUserLoginBtn={setSelectedUserLoginBtn}
                         />
                     }
                 ></Route>
@@ -71,6 +72,7 @@ function User() {
                             setSelectedSideMenu={setSelectedSideMenu}
                             previewImage={previewImage}
                             setPreviewImage={setPreviewImage}
+                            setSelectedUserLoginBtn={setSelectedUserLoginBtn}
                         />
                     }
                 ></Route>
@@ -84,6 +86,7 @@ function User() {
                             setSelectedSideMenu={setSelectedSideMenu}
                             selectedNotice={selectedNotice}
                             setSelectedNotice={setSelectedNotice}
+                            setSelectedUserLoginBtn={setSelectedUserLoginBtn}
                         />
                     }
                 ></Route>

@@ -15,11 +15,13 @@ import userInfo_config from '../../js/api/config/userInfo_config';
 import CoBuyingProceed from './co-buying/CoBuyingProceed';
 import ModifyPost from './community/ModifyPost';
 
-const Community = ({ setSelectedSideMenu, previewImage, setPreviewImage }) => {
+const Community = ({ setSelectedSideMenu, previewImage, setPreviewImage, setSelectedUserLoginBtn }) => {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [uploadText, setUploadText] = useState('');
     const [byteCount, setByteCount] = useState(0);
     const [isUpdate, setIsUpdate] = useState(false);
+
+    setSelectedUserLoginBtn(false);
 
     let data;
     const user_profile = userInfo_config.userProfile;

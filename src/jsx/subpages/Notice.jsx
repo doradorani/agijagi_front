@@ -6,7 +6,8 @@ import DetailNotice from './noticeboard/DetailNotice';
 import WriteNotice from '../Admin/subpages/noticeboard/WriteNotice';
 import { Route, Routes, useParams } from 'react-router';
 
-const Notice = ({ selectedMenu, selectedSideMenu, setSelectedSideMenu, selectedNotice, setSelectedNotice }) => {
+const Notice = ({ setSelectedSideMenu, setSelectedNotice, setSelectedUserLoginBtn }) => {
+    setSelectedUserLoginBtn(false);
     return (
         <div className="notice_wrap">
             <div>
