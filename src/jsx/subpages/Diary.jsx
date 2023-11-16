@@ -19,10 +19,12 @@ import FourCutsImg from './diary/FourCutsImg.jsx';
 import DiaryPost from './diary/DiaryPost.jsx';
 import NoteModify from './diary/NoteModify.jsx';
 
-const Diary = ({}) => {
+const Diary = ({ setSelectedUserLoginBtn }) => {
     const validationUser = useValidationItem();
     const [isLoading, setIsLoading] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
+
+    setSelectedUserLoginBtn(false);
 
     const sideMenu = <SideMenu selectedMenu={1} />;
 
