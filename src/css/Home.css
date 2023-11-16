@@ -4,6 +4,7 @@
     position: relative;
     z-index: 1; /* Header 아래에 위치 */
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .home_main_img > img {
@@ -20,12 +21,12 @@
     font-family: 'yg-jalnan';
     color: white;
     font-size: 3em;
+    display: flex;
+    align-items: center; /* Center content vertically */
+    justify-content: center;
 }
 
 .home_section1 > div {
-    /* margin: 0 auto; */
-    padding-top: 260px;
-    line-height: 100vh;
     text-align: center;
 }
 
@@ -50,23 +51,40 @@
     width: 470px;
     height: 630px;
     margin-right: 100px;
-    /* margin-left: 370px;
-    margin-top: 35px;
-    margin-bottom: 35px; */
 }
 
-.home_section2_content > div {
+.home_section2_title {
+    width: 450px;
     font-family: 'yg-jalnan';
-}
-
-.home_section2_content > div:nth-child(1) {
     height: 50px;
-    line-height: 50px;
+    font-size: 1.5em;
+    margin-bottom: 50px;
 }
 
-.home_section2_content > div:nth-child(2) {
-    height: 200px;
-    line-height: 200px;
+.home_section2_imgs {
+    width: 450px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.home_section2_imgs > img {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    object-fit: cover;
+    margin-right: 5px;
+}
+
+.home_section2_text {
+    width: 450px;
+    font-family: 'NanumSquareRound';
+    font-size: 1.1em;
+    color: #808080;
+}
+
+.home_section2_content {
+    width: 450px;
 }
 
 .home_section2_content > button {
@@ -84,37 +102,41 @@
     align-items: center;
     background-color: #fff;
     height: 600px;
+    overflow-x: hidden;
 }
 
 .home_section3 > div > img {
-    width: 650px;
-    height: 470px;
+    width: 550px;
     margin-left: 100px;
     margin-top: 35px;
     margin-bottom: 35px;
+    object-fit: cover;
 }
 
-.home_section3_content > div {
-    font-family: 'yg-jalnan';
+.home_section3_title {
+    width: 400px;
+    font-size: 1.5em;
+    margin-bottom: 80px;
 }
 
 .home_section3_content > div:nth-child(1) {
-    height: 50px;
-    line-height: 50px;
-}
-
-.home_section3_content > div:nth-child(2) {
-    height: 200px;
-    line-height: 200px;
-}
-
-.home_section3_content > button {
-    height: 30px;
-    width: 160px;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 5px;
     font-family: 'yg-jalnan';
+    height: 50px;
+}
+
+.home_section3_text {
+    width: 400px;
+    font-family: 'NanumSquareRound';
+    font-size: 1.1em;
+    color: #808080;
+}
+
+.home_section3_btn {
+    text-align: center;
+    font-family: 'yg-jalnan';
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 15px;
 }
 
 .home_section4 {
