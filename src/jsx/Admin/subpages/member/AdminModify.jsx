@@ -34,13 +34,21 @@ const AdminModify = ({ selectedMenu }) => {
                         setAdminEmail(res.data.email);
                         setAdminPhone(res.data.phone);
                     } else {
-                        alert('서버 통신 중 에러가 발생하였습니다. 다시 시도해주세요.');
+                        await Swal.fire({
+                            icon: 'error',
+                            title: '서버 에러',
+                            text: '서버 통신 중 에러가 발생하였습니다. 다시 시도해주세요.',
+                        });
                         navigate(-1);
                     }
                 }
             } catch (error) {
                 console.log('error : ' + error);
-                alert('관리자 정보가 유효하지 않습니다. 다시 로그인 해주세요.');
+                await Swal.fire({
+                    icon: 'warning',
+                    title: '로그인 필요',
+                    text: '관리자 정보가 유효하지 않습니다. 다시 로그인 해주세요.',
+                });
                 navigate(-1);
             }
         };

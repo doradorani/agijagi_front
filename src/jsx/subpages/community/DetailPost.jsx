@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import userInfo_config from '../../../js/api/config/userInfo_config';
 import DetailReplys from './DetailReplys';
 import LoadingPostCard from './LoadingPostCard';
+import SideBanner from '../SideBanner';
 
 const DetailPost = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -189,35 +190,25 @@ const DetailPost = () => {
             {isLoading ? (
                 <>
                     <LoadingPostCard />
-                    <div className="tag_for_sticky">
-                        <div>
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                        </div>
-                    </div>
+                    <SideBanner />
                 </>
             ) : responseData === undefined || responseData?.data === undefined ? (
                 <>
-                    <div className="flex" style={{ flexDirection: 'column', alignItems: 'center' }}>
-                        <img src="/test_imgs/community_imgs/sumaho.png" alt="" style={{ width: '350px' }} />
-                        <div className="nn_font" style={{ fontSize: '1.2em' }}>
+                    <div className='flex' style={{ flexDirection: 'column', alignItems: 'center' }}>
+                        <img src='/test_imgs/community_imgs/sumaho.png' alt='' style={{ width: '350px' }} />
+                        <div className='nn_font' style={{ fontSize: '1.2em' }}>
                             더 이상 이용할 수 없는 컨텐츠 입니다.
                         </div>
                     </div>
 
-                    <div className="tag_for_sticky">
-                        <div>
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                        </div>
-                    </div>
+                    <SideBanner />
                 </>
             ) : (
                 <>
-                    <div className="post_section nn_font">
-                        <div className="flex" style={{ justifyContent: 'space-between' }}>
+                    <div className='post_section nn_font'>
+                        <div className='flex' style={{ justifyContent: 'space-between' }}>
                             <div
-                                className="yg_font"
+                                className='yg_font'
                                 style={{
                                     display: 'flex',
                                     alignItems: 'flex-start',
@@ -229,11 +220,11 @@ const DetailPost = () => {
                                 &#60;&nbsp;뒤로가기
                             </div>
                         </div>
-                        <div className="flex">
-                            <div className="detail_post_wrap">
-                                <div className="flex_for_profile">
-                                    <div className="flex">
-                                        <div className="profile_img">
+                        <div className='flex'>
+                            <div className='detail_post_wrap'>
+                                <div className='flex_for_profile'>
+                                    <div className='flex'>
+                                        <div className='profile_img'>
                                             <img
                                                 src={
                                                     responseData?.data?.img === null
@@ -242,80 +233,80 @@ const DetailPost = () => {
                                                 }
                                             />
                                         </div>
-                                        <div className="profile_info">
-                                            <div className="profile_name">{responseData?.data?.nickname}</div>
-                                            <div className="update_date">
+                                        <div className='profile_info'>
+                                            <div className='profile_name'>{responseData?.data?.nickname}</div>
+                                            <div className='update_date'>
                                                 {daysAgo === 0 ? '오늘' : `${daysAgo}일 전`}
                                             </div>
                                         </div>
                                     </div>
                                     <div>
                                         <img
-                                            src="/test_imgs/png/more.png"
+                                            src='/test_imgs/png/more.png'
                                             style={{ width: '20px', height: '60px', objectFit: 'contain' }}
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal_for_post_detail"
+                                            data-bs-toggle='modal'
+                                            data-bs-target='#modal_for_post_detail'
                                         />
                                     </div>
                                 </div>
-                                <div className="text_contents_in_detail">{responseData?.data?.post_text}</div>
-                                <div className="post_main_img_in_detail">
+                                <div className='text_contents_in_detail'>{responseData?.data?.post_text}</div>
+                                <div className='post_main_img_in_detail'>
                                     {(Array.isArray(s3_img_path) ? s3_img_path : []).map((img, index) => (
                                         <img key={index} src={img} alt={`Image ${index}`} />
                                     ))}
                                 </div>
-                                <div className="emotion_btns_indetail flex">
-                                    <div className="flex">
+                                <div className='emotion_btns_indetail flex'>
+                                    <div className='flex'>
                                         <a
-                                            className="flex none_underline"
+                                            className='flex none_underline'
                                             onClick={() => emotionBtnHandler(1, responseData?.data?.no)}
                                         >
                                             <div>
-                                                <img className="emotion_btn" src="/test_imgs/png/heart.png" />
+                                                <img className='emotion_btn' src='/test_imgs/png/heart.png' />
                                             </div>
-                                            <div className="emotion_btn_cnt">{responseData?.data?.like_cnt}</div>
+                                            <div className='emotion_btn_cnt'>{responseData?.data?.like_cnt}</div>
                                         </a>
                                     </div>
-                                    <div className="flex">
-                                        <a className="flex none_underline" onClick={() => emotionBtnHandler(2)}>
+                                    <div className='flex'>
+                                        <a className='flex none_underline' onClick={() => emotionBtnHandler(2)}>
                                             <div>
-                                                <img className="emotion_btn" src="/test_imgs/png/like.png" />
+                                                <img className='emotion_btn' src='/test_imgs/png/like.png' />
                                             </div>
-                                            <div className="emotion_btn_cnt">{responseData?.data?.great_cnt}</div>
+                                            <div className='emotion_btn_cnt'>{responseData?.data?.great_cnt}</div>
                                         </a>
                                     </div>
-                                    <div className="flex">
-                                        <a className="flex none_underline" onClick={() => emotionBtnHandler(3)}>
+                                    <div className='flex'>
+                                        <a className='flex none_underline' onClick={() => emotionBtnHandler(3)}>
                                             <div>
-                                                <img className="emotion_btn" src="/test_imgs/png/sad.png" />
+                                                <img className='emotion_btn' src='/test_imgs/png/sad.png' />
                                             </div>
-                                            <div className="emotion_btn_cnt">{responseData?.data?.sad_cnt}</div>
+                                            <div className='emotion_btn_cnt'>{responseData?.data?.sad_cnt}</div>
                                         </a>
                                     </div>
                                 </div>
-                                <hr className="division_line" />
+                                <hr className='division_line' />
                                 <DetailReplys reportReason={reportReason} setReportReason={setReportReason} />
                             </div>
                             {/* 게시물 모달 START */}
                             <div
-                                className="modal fade"
-                                id="modal_for_post_detail"
-                                tabIndex="-1"
-                                aria-labelledby="exampleModalLabel"
-                                aria-hidden="true"
+                                className='modal fade'
+                                id='modal_for_post_detail'
+                                tabIndex='-1'
+                                aria-labelledby='exampleModalLabel'
+                                aria-hidden='true'
                             >
-                                <div className="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
-                                    <div className="modal-content">
+                                <div className='modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable'>
+                                    <div className='modal-content'>
                                         <div
-                                            className="modal-body mx-auto"
+                                            className='modal-body mx-auto'
                                             style={{ width: '450px', textAlign: 'center', fontWeight: 'bold' }}
                                         >
                                             {loginedUserNickname !== responseData?.data?.nickname && (
                                                 <>
                                                     <div
-                                                        className="hover_cursor"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modal_for_post_declaration"
+                                                        className='hover_cursor'
+                                                        data-bs-toggle='modal'
+                                                        data-bs-target='#modal_for_post_declaration'
                                                         style={{ color: 'red' }}
                                                     >
                                                         신고하기
@@ -327,18 +318,18 @@ const DetailPost = () => {
                                                 <>
                                                     <Link to={`/community/modify_post/${responseData?.data?.no}`}>
                                                         <div
-                                                            className="hover_cursor"
-                                                            data-bs-dismiss="modal"
-                                                            aria-label="Close"
+                                                            className='hover_cursor'
+                                                            data-bs-dismiss='modal'
+                                                            aria-label='Close'
                                                         >
                                                             수정하기
                                                         </div>{' '}
                                                     </Link>
                                                     <hr />
                                                     <div
-                                                        className="hover_cursor"
-                                                        data-bs-dismiss="modal"
-                                                        aria-label="Close"
+                                                        className='hover_cursor'
+                                                        data-bs-dismiss='modal'
+                                                        aria-label='Close'
                                                         style={{ color: 'red' }}
                                                         onClick={() => deletePostHandler(responseData?.data?.no)}
                                                     >
@@ -350,17 +341,17 @@ const DetailPost = () => {
                                                 <></>
                                             )}
                                             <a
-                                                className="hover_cursor none_underline"
+                                                className='hover_cursor none_underline'
                                                 onClick={copyPostURL}
-                                                data-bs-dismiss="modal"
-                                                aria-label="Close"
+                                                data-bs-dismiss='modal'
+                                                aria-label='Close'
                                             >
                                                 <CopyToClipboard text={`${postURL}`}>
                                                     <div>링크 복사</div>
                                                 </CopyToClipboard>
                                             </a>
                                             <hr />
-                                            <div className="hover_cursor" data-bs-dismiss="modal" aria-label="Close">
+                                            <div className='hover_cursor' data-bs-dismiss='modal' aria-label='Close'>
                                                 취소
                                             </div>
                                         </div>
@@ -368,51 +359,51 @@ const DetailPost = () => {
                                 </div>
                             </div>
                             <div
-                                className="modal fade"
-                                id="modal_for_post_declaration"
-                                tabIndex="-1"
-                                aria-labelledby="exampleModalLabel"
-                                aria-hidden="true"
+                                className='modal fade'
+                                id='modal_for_post_declaration'
+                                tabIndex='-1'
+                                aria-labelledby='exampleModalLabel'
+                                aria-hidden='true'
                             >
-                                <div className="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h1 className="modal-title fs-5 yg_font" id="exampleModalLabel">
+                                <div className='modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable'>
+                                    <div className='modal-content'>
+                                        <div className='modal-header'>
+                                            <h1 className='modal-title fs-5 yg_font' id='exampleModalLabel'>
                                                 신고사유 작성하기
                                             </h1>
                                             <button
-                                                type="button"
-                                                className="btn-close"
-                                                data-bs-dismiss="modal"
-                                                aria-label="Close"
+                                                type='button'
+                                                className='btn-close'
+                                                data-bs-dismiss='modal'
+                                                aria-label='Close'
                                             ></button>
                                         </div>
-                                        <div className="modal-body mx-auto">
+                                        <div className='modal-body mx-auto'>
                                             <textarea
-                                                className="upload_text"
-                                                placeholder="게시물의 신고사유를 작성해주세요."
+                                                className='upload_text'
+                                                placeholder='게시물의 신고사유를 작성해주세요.'
                                                 style={{ width: '400px' }}
                                                 onChange={handleTextChange}
                                                 value={reportReason}
                                             ></textarea>
                                         </div>
-                                        <sup className="byte_for_upload yg_font" style={{ marginRight: '25px' }}>
-                                            (<span id="nowByte">{byteCount}</span>/2200bytes)
+                                        <sup className='byte_for_upload yg_font' style={{ marginRight: '25px' }}>
+                                            (<span id='nowByte'>{byteCount}</span>/2200bytes)
                                         </sup>
-                                        <div className="modal-footer">
+                                        <div className='modal-footer'>
                                             <button
-                                                type="button"
-                                                className="btn btn-secondary"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modal_for_post_detail"
+                                                type='button'
+                                                className='btn btn-secondary'
+                                                data-bs-toggle='modal'
+                                                data-bs-target='#modal_for_post_detail'
                                             >
                                                 이전
                                             </button>
                                             <button
-                                                type="submit"
-                                                className="btn btn-primary"
-                                                data-bs-dismiss="modal"
-                                                aria-label="Close"
+                                                type='submit'
+                                                className='btn btn-primary'
+                                                data-bs-dismiss='modal'
+                                                aria-label='Close'
                                                 onClick={() => summitReport()}
                                             >
                                                 제출하기
@@ -424,12 +415,7 @@ const DetailPost = () => {
                             {/* 게시물 모달 END */}
                         </div>
                     </div>
-                    <div className="tag_for_sticky">
-                        <div>
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                        </div>
-                    </div>
+                    <SideBanner />
                 </>
             )}
         </>
