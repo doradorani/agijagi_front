@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import userInfo_config from '../../../js/api/config/userInfo_config';
 import DetailReplys from './DetailReplys';
 import LoadingPostCard from './LoadingPostCard';
+import SideBanner from '../SideBanner';
 
 const ModifyPost = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -95,35 +96,25 @@ const ModifyPost = () => {
             {isLoading ? (
                 <>
                     <LoadingPostCard />
-                    <div className="tag_for_sticky">
-                        <div>
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                        </div>
-                    </div>
+                    <SideBanner />
                 </>
             ) : responseData === undefined || responseData?.data === undefined ? (
                 <>
-                    <div className="flex" style={{ flexDirection: 'column', alignItems: 'center' }}>
-                        <img src="/test_imgs/community_imgs/sumaho.png" alt="" style={{ width: '350px' }} />
-                        <div className="nn_font" style={{ fontSize: '1.2em' }}>
+                    <div className='flex' style={{ flexDirection: 'column', alignItems: 'center' }}>
+                        <img src='/test_imgs/community_imgs/sumaho.png' alt='' style={{ width: '350px' }} />
+                        <div className='nn_font' style={{ fontSize: '1.2em' }}>
                             더 이상 이용할 수 없는 컨텐츠 입니다.
                         </div>
                     </div>
 
-                    <div className="tag_for_sticky">
-                        <div>
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                        </div>
-                    </div>
+                    <SideBanner />
                 </>
             ) : (
                 <>
-                    <div className="post_section nn_font">
-                        <div className="flex" style={{ justifyContent: 'space-between' }}>
+                    <div className='post_section nn_font'>
+                        <div className='flex' style={{ justifyContent: 'space-between' }}>
                             <div
-                                className="yg_font"
+                                className='yg_font'
                                 style={{
                                     display: 'flex',
                                     alignItems: 'flex-start',
@@ -135,11 +126,11 @@ const ModifyPost = () => {
                                 &#60;&nbsp;뒤로가기
                             </div>
                         </div>
-                        <div className="flex">
-                            <div className="detail_post_wrap">
-                                <div className="flex_for_profile">
-                                    <div className="flex">
-                                        <div className="profile_img">
+                        <div className='flex'>
+                            <div className='detail_post_wrap'>
+                                <div className='flex_for_profile'>
+                                    <div className='flex'>
+                                        <div className='profile_img'>
                                             <img
                                                 src={
                                                     responseData?.data?.img === null
@@ -148,22 +139,22 @@ const ModifyPost = () => {
                                                 }
                                             />
                                         </div>
-                                        <div className="profile_info" style={{ paddingTop: '0px' }}>
-                                            <div className="profile_name">{responseData?.data?.nickname}</div>
-                                            <div className="update_date">
+                                        <div className='profile_info' style={{ paddingTop: '0px' }}>
+                                            <div className='profile_name'>{responseData?.data?.nickname}</div>
+                                            <div className='update_date'>
                                                 {responseData?.data?.reg_date?.substring(5, 7)}/
                                                 {responseData?.data?.reg_date?.substring(8, 10)}
                                             </div>
 
-                                            <div className="update_date">
+                                            <div className='update_date'>
                                                 {daysAgo === 0 ? '오늘' : `${daysAgo}일 전`}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <textarea
-                                    className="text_contents_in_detail"
-                                    placeholder="수정할 내용을 입력해주세요."
+                                    className='text_contents_in_detail'
+                                    placeholder='수정할 내용을 입력해주세요.'
                                     ref={textRef}
                                     onInput={handleResizeHeight}
                                     rows={'1'}
@@ -171,19 +162,19 @@ const ModifyPost = () => {
                                     onChange={handleTextChange}
                                 ></textarea>
                                 <sup
-                                    className="byte_for_upload "
+                                    className='byte_for_upload '
                                     style={{ fontSize: '0.9em', marginRight: '30px', marginBottom: '35px' }}
                                 >
-                                    (<span id="nowByte">{byteCount}</span>/2200bytes)
+                                    (<span id='nowByte'>{byteCount}</span>/2200bytes)
                                 </sup>
 
                                 {(Array.isArray(s3_img_path) ? s3_img_path : []).map((img, index) => (
-                                    <div className="post_main_img_in_detail" style={{ position: 'relative' }}>
+                                    <div className='post_main_img_in_detail' style={{ position: 'relative' }}>
                                         <img key={index} src={img} alt={`Image ${index}`} />
-                                        <figure className="zoom_in">
+                                        <figure className='zoom_in'>
                                             <button
                                                 key={index}
-                                                className="btn btn-close"
+                                                className='btn btn-close'
                                                 style={{ position: 'absolute', top: '20px', right: '40px' }}
                                             ></button>
                                         </figure>
@@ -192,12 +183,14 @@ const ModifyPost = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="tag_for_sticky">
+                    <SideBanner />
+
+                    {/* <div className="tag_for_sticky">
                         <div>
                             <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
                             <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
                         </div>
-                    </div>
+                    </div> */}
                 </>
             )}
         </>

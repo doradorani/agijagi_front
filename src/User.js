@@ -35,25 +35,25 @@ function User() {
                 setSelectedUserLoginBtn={setSelectedUserLoginBtn}
             />
             <Routes>
-                <Route path="/" element={<Home setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}></Route>
+                <Route path='/' element={<Home setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}></Route>
                 <Route
-                    path="/user_login"
+                    path='/user_login'
                     element={<UserLogin setSelectedUserLoginBtn={setSelectedUserLoginBtn} />}
                 ></Route>
-                <Route path="/user_info" element={<UserInfo />}></Route>
-                <Route path="/user_modify_info" element={<UserModifyInfo />}></Route>
+                <Route path='/user_info' element={<UserInfo />}></Route>
+                <Route path='/user_modify_info' element={<UserModifyInfo />}></Route>
                 <Route
-                    path="/user_myFunding"
+                    path='/user_myFunding'
                     element={
                         <CoBuyingFundingList selectedMenu={selectedMenu} setSelectedSideMenu={setSelectedSideMenu} />
                     }
                 ></Route>
                 <Route
-                    path="/user_myHit"
+                    path='/user_myHit'
                     element={<CoBuyingHitList selectedMenu={selectedMenu} setSelectedSideMenu={setSelectedSideMenu} />}
                 ></Route>
                 <Route
-                    path="/diary/*"
+                    path='/diary/*'
                     element={
                         <Diary
                             selectedMenu={selectedMenu}
@@ -64,7 +64,7 @@ function User() {
                     }
                 ></Route>
                 <Route
-                    path="/community/*"
+                    path='/community/*'
                     element={
                         <Community
                             selectedMenu={selectedMenu}
@@ -76,9 +76,9 @@ function User() {
                         />
                     }
                 ></Route>
-                <Route path="/co-buying_detail" element={<CoBuyingDetail />}></Route>
+                <Route path='/co-buying_detail/:no' element={<CoBuyingDetail />}></Route>
                 <Route
-                    path="/notice/*"
+                    path='/notice/*'
                     element={
                         <Notice
                             selectedMenu={selectedMenu}

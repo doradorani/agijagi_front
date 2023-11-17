@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import '../../css/admin/member/admin_login.css';
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import token_config from "../../js/api/config/token_config";
+import token_config from '../../js/api/config/token_config';
+import Swal from 'sweetalert2';
 
 const AdminSignUp = () => {
-
     const server = token_config.server;
     const navigator = useNavigate();
 
@@ -28,103 +28,114 @@ const AdminSignUp = () => {
     const signUpSubmit = async (event) => {
         event.preventDefault();
         try {
-            // POST 요청을 보내는 부분
             const response = await axios.post(`${server}/admin/signUp`, signUpData);
 
-            if(response.data.data === 1) {
-                alert('등록에 성공하였습니다.');
+            if (response.data.data === 1) {
+                await Swal.fire({
+                    icon: 'success',
+                    title: '등록 성공',
+                    text: '등록에 성공하였습니다.',
+                });
                 navigator('/admin/sign_in');
+            } else if (response.data.data === 0) {
+                await Swal.fire({
+                    icon: 'error',
+                    title: '등록 실패',
+                    text: '이미 등록된 관리자입니다.',
+                });
             }
-            else if(response.data.data === 0) alert('이미 등록된 관리자입니다');
         } catch (error) {
-            alert('서버에 문제로 등록에 실패하였습니다.');
+            await Swal.fire({
+                icon: 'error',
+                title: '서버 문제',
+                text: '서버에 문제로 등록에 실패하였습니다.',
+            });
         }
     };
 
     return (
-        <div className="admin_login_wrap">
-            <img src="/test_imgs/baby_imgs/baby10.jpg" alt="baby" />
-            <div className="admin_login_background"></div>
-            <div className="input_admin_info_box_wrap_for_signup" style={{ marginTop: '40px' }}>
-                <div className="input_admin_info_box_for_signup">
-                    <div className="logo_wrap_admin_login yg_font">
-                        <img className="logo_img" src="/test_imgs/logo/logo.png" alt="logo" />
+        <div className='admin_login_wrap'>
+            <img src='/test_imgs/baby_imgs/baby10.jpg' alt='baby' />
+            <div className='admin_login_background'></div>
+            <div className='input_admin_info_box_wrap_for_signup' style={{ marginTop: '40px' }}>
+                <div className='input_admin_info_box_for_signup'>
+                    <div className='logo_wrap_admin_login yg_font'>
+                        <img className='logo_img' src='/test_imgs/logo/logo.png' alt='logo' />
                         <div>아기자기</div>
                     </div>
-                    <div className="admin_login_title yg_font">회원가입</div>
+                    <div className='admin_login_title yg_font'>회원가입</div>
 
                     <form onSubmit={signUpSubmit}>
-                        <div className="form-floating mb-2" >
+                        <div className='form-floating mb-2'>
                             <input
-                                type="text"
-                                name="adminAccount"
+                                type='text'
+                                name='adminAccount'
                                 defaultValue={signUpData.adminAccount}
                                 onChange={signUpHandler}
-                                className="form-control custom_floating_label"
-                                id="adminAccount"
-                                placeholder="Admin Account"
+                                className='form-control custom_floating_label'
+                                id='adminAccount'
+                                placeholder='Admin Account'
                             />
-                            <label htmlFor="adminAccount">Admin Account*</label>
+                            <label htmlFor='adminAccount'>Admin Account*</label>
                         </div>
-                        <div className="form-floating mb-2">
+                        <div className='form-floating mb-2'>
                             <input
-                                type="password"
-                                name="password"
+                                type='password'
+                                name='password'
                                 defaultValue={signUpData.password}
                                 onChange={signUpHandler}
-                                className="form-control custom_floating_label"
-                                id="password"
-                                placeholder="Password"
+                                className='form-control custom_floating_label'
+                                id='password'
+                                placeholder='Password'
                             />
-                            <label htmlFor="password">Password*</label>
+                            <label htmlFor='password'>Password*</label>
                         </div>
-                        <div className="form-floating mb-2">
+                        <div className='form-floating mb-2'>
                             <input
-                                type="text"
-                                name="name"
+                                type='text'
+                                name='name'
                                 defaultValue={signUpData.name}
                                 onChange={signUpHandler}
-                                className="form-control custom_floating_label"
-                                id="name"
-                                placeholder="Name"
+                                className='form-control custom_floating_label'
+                                id='name'
+                                placeholder='Name'
                             />
-                            <label htmlFor="name">Name*</label>
+                            <label htmlFor='name'>Name*</label>
                         </div>
-                        <div className="form-floating mb-2">
+                        <div className='form-floating mb-2'>
                             <input
-                                type="email"
-                                name="email"
+                                type='email'
+                                name='email'
                                 defaultValue={signUpData.email}
                                 onChange={signUpHandler}
-                                className="form-control custom_floating_label"
-                                id="email"
-                                placeholder="Email Address"
+                                className='form-control custom_floating_label'
+                                id='email'
+                                placeholder='Email Address'
                             />
-                            <label htmlFor="email">Email Address*</label>
+                            <label htmlFor='email'>Email Address*</label>
                         </div>
-                        <div className="form-floating mb-3">
+                        <div className='form-floating mb-3'>
                             <input
-                                type="tel"
-                                name="phoneNumber"
+                                type='tel'
+                                name='phoneNumber'
                                 defaultValue={signUpData.phoneNumber}
                                 onChange={signUpHandler}
-                                className="form-control custom_floating_label sign_up_phone"
-                                id="phoneNumber"
+                                className='form-control custom_floating_label sign_up_phone'
+                                id='phoneNumber'
                                 placeholder="Phone Number ('-'를 빼고 입력해주세요.)"
                             />
-                            <label htmlFor="phoneNumber">Phone Number*</label>
+                            <label htmlFor='phoneNumber'>Phone Number*</label>
                         </div>
-                        <div className="d-grid gap-2 mb-2">
-                            <button type="submit" className="btn btn_admin_login">
+                        <div className='d-grid gap-2 mb-2'>
+                            <button type='submit' className='btn btn_admin_login'>
                                 Sign-up
                             </button>
                         </div>
                     </form>
 
-
-                    <div className="btn_for_admin_signup yg_font">
+                    <div className='btn_for_admin_signup yg_font'>
                         이미 계정이 있으신가요? &nbsp;&nbsp;
-                        <Link to="/admin/sign_in">로그인</Link>
+                        <Link to='/admin/sign_in'>로그인</Link>
                     </div>
                 </div>
             </div>

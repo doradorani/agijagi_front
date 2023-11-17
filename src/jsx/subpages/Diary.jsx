@@ -18,6 +18,7 @@ import CalendarListVer from './diary/CalendarLocalVer.jsx';
 import FourCutsImg from './diary/FourCutsImg.jsx';
 import DiaryPost from './diary/DiaryPost.jsx';
 import NoteModify from './diary/NoteModify.jsx';
+import SideBanner from './SideBanner.jsx';
 
 const Diary = ({ setSelectedUserLoginBtn }) => {
     const validationUser = useValidationItem();
@@ -28,30 +29,22 @@ const Diary = ({ setSelectedUserLoginBtn }) => {
 
     const sideMenu = <SideMenu selectedMenu={1} />;
 
-    const adContents = (
-        <div>
-            <div>
-                <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-            </div>
-            <div>
-                <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-            </div>
-        </div>
-    );
+    const adContents = <SideBanner />;
+
     return (
         <>
-            <div className="diary_wrap">
+            <div className='diary_wrap'>
                 <div>
                     <img
-                        className="diary_main_img"
-                        src="https://s3.ap-northeast-2.amazonaws.com/agijagi-2023.10.31/agijagi_background/diary_nav_background7.png"
+                        className='diary_main_img'
+                        src='https://s3.ap-northeast-2.amazonaws.com/agijagi-2023.10.31/agijagi_background/diary_nav_background7.png'
                     />
                 </div>
-                <div className="diary_flex">
+                <div className='diary_flex'>
                     {sideMenu}
                     <Routes>
                         <Route
-                            path="/"
+                            path='/'
                             element={
                                 <DiaryBook
                                     adContents={adContents}
@@ -62,7 +55,7 @@ const Diary = ({ setSelectedUserLoginBtn }) => {
                             }
                         ></Route>
                         <Route
-                            path="/diary_book_detail/:childNo"
+                            path='/diary_book_detail/:childNo'
                             element={
                                 <DiaryBookDetail
                                     isUpdate={isUpdate}
@@ -74,7 +67,7 @@ const Diary = ({ setSelectedUserLoginBtn }) => {
                             }
                         ></Route>
                         <Route
-                            path="/modify_child_info/:childNo"
+                            path='/modify_child_info/:childNo'
                             element={
                                 <ChildrenModifyInfo
                                     adContents={adContents}
@@ -85,7 +78,7 @@ const Diary = ({ setSelectedUserLoginBtn }) => {
                             }
                         ></Route>
                         <Route
-                            path="/modify_child_info/:childNo/:diaryNo"
+                            path='/modify_child_info/:childNo/:diaryNo'
                             element={
                                 <DiaryModfiyPost
                                     adContents={adContents}
@@ -96,7 +89,7 @@ const Diary = ({ setSelectedUserLoginBtn }) => {
                             }
                         ></Route>
                         <Route
-                            path="/write_diary/:childNo"
+                            path='/write_diary/:childNo'
                             element={
                                 <DiaryPost
                                     adContents={adContents}
@@ -107,7 +100,7 @@ const Diary = ({ setSelectedUserLoginBtn }) => {
                             }
                         ></Route>
                         <Route
-                            path="/register_child"
+                            path='/register_child'
                             element={
                                 <Children
                                     adContents={adContents}
@@ -118,7 +111,7 @@ const Diary = ({ setSelectedUserLoginBtn }) => {
                             }
                         ></Route>
                         <Route
-                            path="/calendar"
+                            path='/calendar'
                             element={
                                 <CalendarForDiary
                                     isLoading={isLoading}
@@ -128,7 +121,7 @@ const Diary = ({ setSelectedUserLoginBtn }) => {
                             }
                         ></Route>
                         <Route
-                            path="/album"
+                            path='/album'
                             element={
                                 <FourCutsImg
                                     adContents={adContents}
@@ -139,7 +132,7 @@ const Diary = ({ setSelectedUserLoginBtn }) => {
                             }
                         ></Route>
                         <Route
-                            path="/children_health_list"
+                            path='/children_health_list'
                             element={
                                 <CalendarListVer
                                     adContents={adContents}
@@ -150,7 +143,7 @@ const Diary = ({ setSelectedUserLoginBtn }) => {
                             }
                         ></Route>
                         <Route
-                            path="/children_health_note/:childNo"
+                            path='/children_health_note/:childNo'
                             element={
                                 <Graph
                                     adContents={adContents}
@@ -161,7 +154,7 @@ const Diary = ({ setSelectedUserLoginBtn }) => {
                             }
                         ></Route>
                         <Route
-                            path="/register_child_health"
+                            path='/register_child_health'
                             element={
                                 <Note
                                     adContents={adContents}
@@ -172,7 +165,7 @@ const Diary = ({ setSelectedUserLoginBtn }) => {
                             }
                         ></Route>
                         <Route
-                            path="/modify_child_health/:childNo/:healthNo"
+                            path='/modify_child_health/:childNo/:healthNo'
                             element={
                                 <NoteModify
                                     adContents={adContents}

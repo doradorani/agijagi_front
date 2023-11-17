@@ -5,10 +5,25 @@ import { tokenAction } from './redux_store/slice/tokenSlice';
 import token_config from './config/token_config';
 import moment from 'moment/moment';
 import Swal from 'sweetalert2';
+import userLogin_config from './config/userLogin_config';
+import { userStateAction } from './redux_store/slice/userLoginSlice';
 
 export function useValidationItem() {
     const tokenDispatch = useDispatch();
     const navigate = useNavigate();
+
+    //만약 서버 문제로 로그아웃 되었지만, 토큰은 남은 경우
+    if (!userLogin_config.state && token_config.tokenName) {
+        tokenDispatch(tokenAction.setTokenName(''));
+        tokenDispatch(tokenAction.setTokenExpired(''));
+        Swal.fire({
+            title: '서버 문제로 로그아웃 되었습니다.',
+            text: '다시 로그인해주세요.',
+            icon: 'warning',
+            confirmButtonText: '확인',
+        });
+        return () => {};
+    }
 
     const validateUser = async (method, url, formData) => {
         try {

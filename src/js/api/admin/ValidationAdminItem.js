@@ -5,10 +5,24 @@ import adminToken_config from '../config/adminToken_config';
 import moment from 'moment/moment';
 import { adminTokenAction } from '../redux_store/slice/adminTokenSlice';
 import Swal from 'sweetalert2';
+import adminLogin_config from '../config/adminLogin_config';
 
 export function useValidationAdminItem() {
     const adminTokenDispatch = useDispatch();
     const navigate = useNavigate();
+
+    //만약 서버 문제로 로그아웃 되었지만, 토큰은 남은 경우
+    if (!adminLogin_config.state && adminToken_config.adminTokenName) {
+        adminTokenDispatch(adminTokenAction.setAdminTokenName(''));
+        adminTokenDispatch(adminTokenAction.setAdminTokenExpired(''));
+        Swal.fire({
+            title: '서버 문제로 로그아웃 되었습니다.',
+            text: '다시 로그인해주세요.',
+            icon: 'warning',
+            confirmButtonText: '확인',
+        });
+        return () => {};
+    }
 
     const validateAdmin = async (method, url, formData) => {
         try {
