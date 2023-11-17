@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import Swal from 'sweetalert2';
 import userInfo_config from '../../../js/api/config/userInfo_config';
+import SideBanner from '../SideBanner';
 
 const AllPost = ({ isUpdate, setIsUpdate }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -114,9 +115,9 @@ const AllPost = ({ isUpdate, setIsUpdate }) => {
                 <div></div>
             ) : (
                 <>
-                    <div className="post_section nn_font">
-                        <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
-                            <img src="/test_imgs/png/아기여워.png" style={{ width: '55px', marginRight: '15px' }} />
+                    <div className='post_section nn_font'>
+                        <div className=' flex yg_font' style={{ marginBottom: '30px' }}>
+                            <img src='/test_imgs/png/아기여워.png' style={{ width: '55px', marginRight: '15px' }} />
                             <div style={{ fontSize: '40px', marginRight: '15px' }}>아 ~ 기여워</div>
                             <div
                                 style={{
@@ -143,24 +144,24 @@ const AllPost = ({ isUpdate, setIsUpdate }) => {
                             ))
                         )}
                         <div
-                            className="modal fade"
-                            id="modal_for_post_detail"
-                            tabIndex="-1"
-                            aria-labelledby="exampleModalLabel"
-                            aria-hidden="true"
+                            className='modal fade'
+                            id='modal_for_post_detail'
+                            tabIndex='-1'
+                            aria-labelledby='exampleModalLabel'
+                            aria-hidden='true'
                         >
-                            <div className="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
-                                <div className="modal-content">
+                            <div className='modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable'>
+                                <div className='modal-content'>
                                     <div
-                                        className="modal-body mx-auto"
+                                        className='modal-body mx-auto'
                                         style={{ width: '450px', textAlign: 'center', fontWeight: 'bold' }}
                                     >
                                         {loginedUserNickname !== targetRow?.nickname && (
                                             <>
                                                 <div
-                                                    className="hover_cursor"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modal_for_post_declaration"
+                                                    className='hover_cursor'
+                                                    data-bs-toggle='modal'
+                                                    data-bs-target='#modal_for_post_declaration'
                                                     style={{ color: 'red' }}
                                                 >
                                                     신고
@@ -168,24 +169,24 @@ const AllPost = ({ isUpdate, setIsUpdate }) => {
                                                 <hr />
                                             </>
                                         )}
-                                        <Link to={`/community/detail_post/${postId}`} className="none_underline">
-                                            <div data-bs-dismiss="modal" aria-label="Close">
+                                        <Link to={`/community/detail_post/${postId}`} className='none_underline'>
+                                            <div data-bs-dismiss='modal' aria-label='Close'>
                                                 게시물로 이동
                                             </div>
                                         </Link>
                                         <hr />
                                         <a
-                                            className="hover_cursor none_underline"
+                                            className='hover_cursor none_underline'
                                             onClick={copyPostURL}
-                                            data-bs-dismiss="modal"
-                                            aria-label="Close"
+                                            data-bs-dismiss='modal'
+                                            aria-label='Close'
                                         >
                                             <CopyToClipboard text={`${postURL}/detail_post/${postId}`}>
                                                 <div>링크 복사</div>
                                             </CopyToClipboard>
                                         </a>
                                         <hr />
-                                        <div className="hover_cursor" data-bs-dismiss="modal" aria-label="Close">
+                                        <div className='hover_cursor' data-bs-dismiss='modal' aria-label='Close'>
                                             취소
                                         </div>
                                     </div>
@@ -198,12 +199,7 @@ const AllPost = ({ isUpdate, setIsUpdate }) => {
                         </div>
                     </div>
 
-                    <div className="tag_for_sticky">
-                        <div>
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                            <img className="adv_img_notice_right" src="/test_imgs/sns_imgs/sns1.jpg" />
-                        </div>
-                    </div>
+                    <SideBanner />
                 </>
             )}
         </>

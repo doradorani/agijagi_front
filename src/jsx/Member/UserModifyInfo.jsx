@@ -49,14 +49,31 @@ const UserModifyInfo = () => {
         axios
             .get(`${server}/user/dupNickname` + '/' + userNickname)
             .then((response) => {
-                if (response.data.data > 0) alert('이미 사용 중인 닉네임입니다.');
-                else {
-                    alert('사용 가능한 닉네임입니다.');
+                if (response.data.data > 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '중복된 닉네임',
+                        text: '이미 사용 중인 닉네임입니다.',
+                        confirmButtonText: '확인',
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '사용 가능한 닉네임',
+                        text: '사용 가능한 닉네임입니다.',
+                        confirmButtonText: '확인',
+                    });
                     setDupChkValue(userNickname);
                 }
             })
             .catch((error) => {
-                console.error('에러 발생: ' + error);
+                console.log('error : ', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: '서버 에러',
+                    text: '서버에 문제가 생겨 닉네임 확인을 실패하였습니다.',
+                    confirmButtonText: '확인',
+                });
             });
     };
 
@@ -114,24 +131,39 @@ const UserModifyInfo = () => {
                             navigate('/user_info');
                         } else {
                             // 처리에 실패한 경우에 대한 처리
-                            alert('서버에 문제가 생겨 다시 불러오기를 실패하였습니다.');
+                            Swal.fire({
+                                title: '서버 문제',
+                                text: '서버에 문제가 생겼습니다. 다시 수정해주세요.',
+                                icon: 'error',
+                                confirmButtonText: '확인',
+                            });
                             navigate('/user_info');
                         }
                     })
                     .catch((error) => {
                         console.log(error);
-                        alert('서버에 문제가 생겼습니다. 다시 수정해주세요.');
+                        Swal.fire({
+                            title: '서버 문제',
+                            text: '서버에 문제가 생겼습니다. 다시 수정해주세요.',
+                            icon: 'error',
+                            confirmButtonText: '확인',
+                        });
                         navigate('/user_info');
                     });
             } catch (error) {
                 console.log(error);
-                alert('서버에 문제가 생겼습니다. 다시 수정해주세요.');
+                Swal.fire({
+                    title: '서버 문제',
+                    text: '서버에 문제가 생겼습니다. 다시 수정해주세요.',
+                    icon: 'error',
+                    confirmButtonText: '확인',
+                });
                 navigate('/user_info');
             }
         } else {
             Swal.fire({
-                title: '별명이 중복되었습니다. ',
-                text: '다른 별명을 선택해주세요.',
+                title: '중복 체크가 되지 않았습니다.',
+                text: '중복 체크를 해주세요.',
                 icon: 'warning',
                 button: '확인',
             });

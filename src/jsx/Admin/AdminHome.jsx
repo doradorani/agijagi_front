@@ -20,6 +20,7 @@ import AdminCoBuyingDetail from './subpages/co-buying/AdminCoBuyingDetail';
 import AdminNoneAuthorization from './subpages/member/AdminNoneAuthorization';
 import UserDetail from './subpages/member/UserDetail';
 import AdminModify from './subpages/member/AdminModify';
+import ModifyProduct from './subpages/co-buying/ModifyProduct';
 
 const AdminHome = () => {
     const [adminData, setAdminData] = useState();
@@ -84,7 +85,8 @@ const AdminHome = () => {
                         ></Route>
                         <Route path='/co-buying_list' element={<AdminCoBuyingList />}></Route>
                         <Route path='/regist_product' element={<RegistProduct />}></Route>
-                        <Route path='/co-buying_detail' element={<AdminCoBuyingDetail />}></Route>
+                        <Route path='/modify_product/:no' element={<ModifyProduct />}></Route>
+                        <Route path='/co-buying_detail/:no' element={<AdminCoBuyingDetail />}></Route>
                     </Routes>
                 </div>
             </div>
