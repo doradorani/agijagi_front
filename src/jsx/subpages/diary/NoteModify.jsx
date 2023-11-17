@@ -174,7 +174,7 @@ const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => 
             <div className="post_full_section">
                 <div className="post_section">
                     <div style={{ paddingLeft: '1.7%' }}>
-                        <DiaryHeader select={'육아 수첩'} src={'/test_imgs/png/diary1.png'} />
+                        <DiaryHeader select={'건강 기록 수정'} src={'/test_imgs/png/diary1.png'} header={'육아 수첩'} />
                     </div>
                     <div className="note_wrap">
                         <div className="note_container">

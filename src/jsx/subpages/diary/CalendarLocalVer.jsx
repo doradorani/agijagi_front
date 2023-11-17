@@ -107,7 +107,7 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
             title:
                 idx.cd_name +
                 '\n' +
-                (idx.inoculation_agency == null ? '' : '병원 : ' + idx.inoculation_order) +
+                (idx.inoculation_agency == null ? '' : '병원 : ' + idx.inoculation_agency) +
                 (idx.vaccination_nm == null ? '' : ' [' + idx.vaccination_nm + '] ') +
                 (idx.inoculation_order == null ? '-' : idx.inoculation_order + '차 '),
             display:
@@ -125,12 +125,12 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
             <div className="post_full_section">
                 <div className="post_section">
                     <div style={{ paddingLeft: '1.7%' }}>
-                        <DiaryHeader select={'육아 수첩'} src={'/test_imgs/png/diary1.png'} />
+                        <DiaryHeader select={'접종 내역'} src={'/test_imgs/png/diary1.png'} header={'육아 수첩'} />
                     </div>
                     <div className="calendar_wrap">
                         <div className="calendar_section">
                             <div className="calendar_second_wrap">
-                                <div id="calendar">
+                                <div id="calendar" className="nn_font">
                                     <FullCalendar
                                         plugins={[listPlugin]}
                                         initialView={'listWeek'}

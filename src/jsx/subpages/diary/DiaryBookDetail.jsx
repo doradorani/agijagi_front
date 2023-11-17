@@ -110,38 +110,34 @@ const DiaryBookDetail = ({ isUpdate, setIsUpdate, isLoading, setIsLoading, valid
         <>
             <div className="post_full_section">
                 <div style={{ width: '1100px' }}>
-                    <DiaryHeader select={'일기'} src={'/test_imgs/png/diary3.png'} />
+                    <DiaryHeader select={'일기'} src={'/test_imgs/png/diary3.png'} header={'육아 일기'} />
                     <div className="diary_book_detail_wrap">
                         <div className="flex" style={{ justifyContent: 'space-between' }}>
                             <div className="yg_font" style={{ fontSize: '40px' }}>
                                 {}
                             </div>
-                            <div className="flex">
-                                <Link
-                                    to={writeDiaryUrl}
-                                    className="yg_font none_deco_link"
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'flex-end',
-                                        marginBottom: '10px',
-                                        cursor: 'pointer',
-                                        marginRight: '20px',
-                                    }}
-                                >
-                                    &nbsp;일기 쓰기
-                                </Link>
+                            <div
+                                className="flex"
+                                style={{ margin: '0 10px 10px 10px', justifyContent: 'space-between', width: '100%' }}
+                            >
                                 <div
                                     className="yg_font"
                                     style={{
-                                        display: 'flex',
-                                        alignItems: 'flex-end',
-                                        marginBottom: '10px',
                                         cursor: 'pointer',
                                     }}
                                     onClick={onClickBtn}
                                 >
                                     &#60;&nbsp;뒤로가기
                                 </div>
+                                <Link
+                                    to={writeDiaryUrl}
+                                    className="yg_font none_deco_link"
+                                    style={{
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    &nbsp;일기 쓰기
+                                </Link>
                             </div>
                         </div>
                         <div className="diary_diary_wrap">

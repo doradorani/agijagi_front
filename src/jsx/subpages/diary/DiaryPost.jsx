@@ -109,7 +109,7 @@ const DiaryPost = ({ adContents, validationUser }) => {
             <div className="post_full_section">
                 <div className="post_section">
                     <div style={{ paddingLeft: '1.7%' }}>
-                        <DiaryHeader select={'일기'} src={'/test_imgs/png/diary3.png'} />
+                        <DiaryHeader select={'일기'} src={'/test_imgs/png/diary3.png'} header={'육아 일기'} />
                     </div>
                     <div className="add_diary_container">
                         <div

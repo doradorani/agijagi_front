@@ -50,7 +50,7 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
             title: title,
             text: display,
             imageUrl: constraint,
-            imageWidth: 350,
+            imageWidth: 450,
             imageHeight: 350,
             showConfirmButton: true,
             showDenyButton: true,
@@ -123,7 +123,7 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
     return (
         <div className="post_full_section">
             <div style={{ width: '1100px' }}>
-                <DiaryHeader select={'달력'} src={'/test_imgs/png/diary3.png'} />
+                <DiaryHeader select={'달력'} src={'/test_imgs/png/diary3.png'} header={'육아 일기'} />
                 {diaryCalendarData == null ? (
                     <div>로딩중</div>
                 ) : (
@@ -131,7 +131,7 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
                         <div className="calendar_wrap">
                             <div className="calendar_section">
                                 <div className="calendar_second_wrap">
-                                    <div id="calendar">
+                                    <div id="calendar" className="nn_font">
                                         <FullCalendar
                                             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                                             initialView={'dayGridMonth'}

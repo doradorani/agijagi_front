@@ -144,7 +144,7 @@ const Graph = ({ adContents, isLoading, setIsLoading, validationUser }) => {
             <div className="post_full_section">
                 <div className="post_section">
                     <div style={{ paddingLeft: '1.7%' }}>
-                        <DiaryHeader select={'육아 수첩'} src={'/test_imgs/png/diary1.png'} />
+                        <DiaryHeader select={'한 눈에 보기'} src={'/test_imgs/png/diary1.png'} header={'육아 수첩'} />
                     </div>
                     <div className="diary_wrap">
                         <div className="diary_second_wrap">

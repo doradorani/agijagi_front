@@ -144,7 +144,7 @@ const DiaryModfiyPost = ({ adContents, validationUser, setIsLoading, isLoading }
     return (
         <>
             <div className="post_section">
-                <DiaryHeader select={'일기'} src={'/test_imgs/png/diary3.png'} />
+                <DiaryHeader select={'일기'} src={'/test_imgs/png/diary3.png'} header={'육아 일기'} />
                 <div className="add_diary_container">
                     <div
                         className="yg_font"
@@ -224,7 +224,7 @@ const DiaryModfiyPost = ({ adContents, validationUser, setIsLoading, isLoading }
                                         </div>
                                     </div>
                                     <div className="">
-                                        <div className="children_input_name" style={{ margin: ' 0 62px' }}>
+                                        <div className="children_input_name flex" style={{ margin: ' 0 62px' }}>
                                             <span style={{ height: '200px' }}>내용&nbsp;</span>
                                             <input
                                                 type="text"

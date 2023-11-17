@@ -66,7 +66,7 @@ const DiaryBook = ({ adContents, isLoading, setIsLoading, validationUser }) => {
             <div className="post_full_section">
                 <div className="post_section">
                     <div style={{ paddingLeft: '1.7%' }}>
-                        <DiaryHeader select={'일기'} src={'/test_imgs/png/diary3.png'} />
+                        <DiaryHeader select={'일기'} src={'/test_imgs/png/diary3.png'} header={'육아 일기'} />
                     </div>
                     <div>
                         <div className="go_to_add_child">

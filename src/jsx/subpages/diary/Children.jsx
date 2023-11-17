@@ -120,7 +120,7 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
             <div className="post_full_section">
                 <div className="post_section">
                     <div style={{ paddingLeft: '1.7%' }}>
-                        <DiaryHeader select={'우리 아이 등록'} src={'/test_imgs/png/diary3.png'} />
+                        <DiaryHeader select={'우리 아이 등록'} src={'/test_imgs/png/diary3.png'} header={'육아 일기'} />
                     </div>
                     <div>
                         <div
@@ -142,6 +142,7 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                                             <span>이름 &nbsp;</span>
                                             <input
                                                 type="text"
+                                                placeholder="아이의 이름을 입력해주세요"
                                                 onChange={(e) => setName(e.target.value)}
                                                 style={{
                                                     border: 'none',
@@ -166,6 +167,7 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                                             <div style={{ height: '200px' }}>설명 &nbsp;</div>
                                             <textarea
                                                 type="text"
+                                                placeholder="아이에 대한 사랑스러운 설명을 입력해주세요"
                                                 onChange={(e) => setChildContent(e.target.value)}
                                                 style={{
                                                     width: '500px',
