@@ -1,11 +1,13 @@
 import { event } from 'jquery';
 import React, { useEffect, useState } from 'react';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 
 const RegistProduct = () => {
+    const { no } = useParams();
+
     const [productImg, setProductImg] = useState([]);
     const [productName, setProductName] = useState('');
     const [productDescription, setProductDescription] = useState('');
@@ -15,19 +17,74 @@ const RegistProduct = () => {
     const [productEnd, setProductEnd] = useState('');
     const [productOptions, setProductOptions] = useState([]);
 
+    const [modifyCobuy, setModifyCobuy] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
     const [images, setImages] = useState([]);
     const [optionCount, setOptionCount] = useState(1);
     const optionInputs = [];
     const maxOptions = 5;
     const maxImgCount = 5;
 
-    const validateRegistProduct = useValidationAdminItem(); // 커스텀 Hook 사용
+    const validateModifyProduct = useValidationAdminItem(); // 커스텀 Hook 사용
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const modifyProduct = async () => {
+            try {
+                const response = await validateModifyProduct('get', '/coBuy/detailProduct/' + no);
+
+                if (response.code === 200) {
+                    const modifyResponse = response.data.coBuyDetailProduct;
+
+                    const imgArray = modifyResponse.img.split(',');
+                    for (let i = 0; i < imgArray.length; i++) {
+                        setImages((prevImages) => [...prevImages, imgArray[i]]);
+                        setProductImg((prevProductImg) => [...prevProductImg, imgArray[i]]);
+                    }
+
+                    setProductName(modifyResponse.name);
+                    setProductDescription(modifyResponse.content);
+                    setMinParticipants(modifyResponse.min_num);
+                    setProductPrice(modifyResponse.price);
+                    setProductStart(modifyResponse.start_date);
+                    setProductEnd(modifyResponse.end_date);
+
+                    for (let i = 1; i <= 5; i++) {
+                        const optionKey = `option${i}`;
+                        const newOption = modifyResponse[optionKey];
+
+                        if (newOption !== null) {
+                            // 이미 있는지 확인
+                            const isOptionExists = productOptions.includes(newOption);
+
+                            // 중복된 옵션이 없다면 추가
+                            if (!isOptionExists) {
+                                setProductOptions((prevOptions) => [...prevOptions, newOption]);
+                                setOptionCount(i);
+                            }
+                        }
+                    }
+
+                    setIsLoading(true);
+                } else {
+                    console.log('error');
+                }
+            } catch (error) {
+                console.error('Error Message:', error.message);
+                console.error('Status Code:', error.response.status);
+                //adminCoBuyDispatch(adminStateAction.setAdminState(false));
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        modifyProduct();
+    }, []);
 
     // 옵션 추가 버튼 handler
     const handleAddOption = () => {
         if (optionCount < maxOptions) {
-            //setProductOptions([...productOptions, '']);
+            setProductOptions([...productOptions, '']);
             setOptionCount(optionCount + 1);
         } else {
             Swal.fire({
@@ -44,7 +101,7 @@ const RegistProduct = () => {
         if (optionCount > 1) {
             const newOptions = [...productOptions];
 
-            newOptions.pop();
+            newOptions.pop(); // 마지막 옵션 제거
             setProductOptions(newOptions);
 
             setOptionCount(optionCount - 1);
@@ -162,7 +219,20 @@ const RegistProduct = () => {
                 timer: 1500,
             });
         } else {
-            const registProductInfo = {
+            let modifyProductData = new FormData();
+            let existImg = [];
+
+            for (let i = 0; i < productImg.length; i++) {
+                if (productImg[i].name === undefined || productImg[i].name === null || productImg[i].name === null) {
+                    existImg.push(productImg[i]);
+                } else {
+                    modifyProductData.append('files', productImg[i]);
+                }
+            }
+
+            const modifyProductInfo = {
+                productNo: no,
+                productImg: existImg,
                 productName: productName,
                 productDescription: productDescription,
                 minParticipants: minParticipants,
@@ -171,31 +241,27 @@ const RegistProduct = () => {
                 productEnd: productEnd,
                 productOptions: productOptions,
             };
-            let registProductData = new FormData();
 
-            for (let i = 0; i < productImg.length; i++) {
-                registProductData.append('files', productImg[i]);
-            }
-
-            registProductData.append(
+            modifyProductData.append(
                 'info',
-                new Blob([JSON.stringify(registProductInfo)], { type: 'application/json' })
+                new Blob([JSON.stringify(modifyProductInfo)], { type: 'application/json' })
             );
+            console.log(modifyProductInfo);
 
             try {
-                validateRegistProduct('post', '/coBuy/admin/register', registProductData).then((res) => {
+                validateModifyProduct('put', '/coBuy/admin/modify', modifyProductData).then((res) => {
                     if (res.success) {
                         Swal.fire({
                             icon: 'success',
-                            title: '상품 등록에 성공하였습니다.',
+                            title: '상품 수정에 성공하였습니다.',
                             showConfirmButton: false,
                             timer: 1500,
                         });
-                        navigate('/admin/co-buying_list');
+                        navigate(`/admin/co-buying_detail/${no}`);
                     } else {
                         Swal.fire({
                             icon: 'warning',
-                            title: '상품 등록 중 서버에 문제가 생겨 실패하였습니다.',
+                            title: '상품 수정 중 서버에 문제가 생겨 실패하였습니다.',
                             showConfirmButton: false,
                             timer: 1500,
                         });
@@ -205,7 +271,7 @@ const RegistProduct = () => {
                 console.log(error);
                 Swal.fire({
                     icon: 'warning',
-                    title: '상품 등록 중 서버에 문제가 생겨 실패하였습니다.',
+                    title: '상품 수정 중 서버에 문제가 생겨 실패하였습니다.',
                     showConfirmButton: false,
                     timer: 1500,
                 });
@@ -234,6 +300,7 @@ const RegistProduct = () => {
                         type='text'
                         className='form-control'
                         placeholder={`상품옵션 ${i + 1} 입력`}
+                        defaultValue={productOptions[i]}
                         aria-label={`Recipient's option ${i + 1}`}
                         aria-describedby='button-addon2'
                         onChange={(e) => handleChangeOption(i, e.target.value)}
@@ -259,7 +326,7 @@ const RegistProduct = () => {
                 <div className='admin_page_menu_title_wrap'>
                     <img src='/test_imgs/svg/shopping_cart.svg' />
                     <div className='admin_page_menu_title yg_font '>공동 구매</div>
-                    <div className='yg_font admin_page_menu_sub_title'>&#62; 제품 등록</div>
+                    <div className='yg_font admin_page_menu_sub_title'>&#62; 제품 수정</div>
                 </div>
                 <div className='flex' style={{ justifyContent: 'space-evenly' }}>
                     {/* <div style={{ borderRight: '1px solid #dadada' }}> */}
@@ -287,6 +354,7 @@ const RegistProduct = () => {
                                 <p className='mb-0'>최대 5개까지 이미지를 업로드할 수 있습니다.</p>
                                 <p>첫 번째 이미지가 프로필 이미지로 설정됩니다.</p>
                             </div>
+
                             {images.length > 0 ? (
                                 images.map((image, index) => (
                                     <div
@@ -383,6 +451,7 @@ const RegistProduct = () => {
                                 type='text'
                                 className='form-control'
                                 placeholder='상품명 입력'
+                                defaultValue={productName}
                                 aria-label='Username'
                                 aria-describedby='basic-addon1'
                                 onChange={(e) => setProductName(e.target.value)}
@@ -400,6 +469,7 @@ const RegistProduct = () => {
                             <textarea
                                 className='form-control'
                                 placeholder='제품 상세 정보 입력'
+                                defaultValue={productDescription}
                                 aria-label='With textarea'
                                 style={{ height: '200px', resize: 'none' }}
                                 onChange={(e) => setProductDescription(e.target.value)}
@@ -417,6 +487,7 @@ const RegistProduct = () => {
                                 type='text'
                                 className='form-control'
                                 placeholder='구매확정 최소인원을 입력'
+                                defaultValue={minParticipants}
                                 aria-label='Username'
                                 aria-describedby='basic-addon1'
                                 onChange={(e) => setMinParticipants(e.target.value)}
@@ -434,6 +505,7 @@ const RegistProduct = () => {
                                 type='text'
                                 className='form-control'
                                 placeholder='상품가격 입력'
+                                defaultValue={productPrice}
                                 aria-label='Username'
                                 aria-describedby='basic-addon1'
                                 onChange={(e) => setProductPrice(e.target.value)}
@@ -451,6 +523,7 @@ const RegistProduct = () => {
                             <input
                                 type='date'
                                 className='form-control'
+                                defaultValue={productStart}
                                 aria-label='Username'
                                 aria-describedby='basic-addon1'
                                 onChange={(e) => setProductStart(e.target.value)}
@@ -468,11 +541,45 @@ const RegistProduct = () => {
                             <input
                                 type='date'
                                 className='form-control'
+                                defaultValue={productEnd}
                                 aria-label='Username'
                                 aria-describedby='basic-addon1'
                                 onChange={(e) => setProductEnd(e.target.value)}
                             />
                         </div>
+
+                        {/* {productOptions.map((option, index) => (
+                            <div key={index} className='flex'>
+                                <div className='input-group mb-3 flex'>
+                                    <span
+                                        className='input-group-text'
+                                        id={`basic-addon${index + 1}`}
+                                        style={{ width: '120px', justifyContent: 'center' }}
+                                    >
+                                        {`상품 옵션 ${index + 1}`}
+                                    </span>
+                                    <input
+                                        type='text'
+                                        className='form-control'
+                                        placeholder={`상품옵션 ${index + 1} 입력`}
+                                        aria-label={`Recipient's option ${index + 1}`}
+                                        aria-describedby={`button-addon${index + 1}`}
+                                        defaultValue={option}
+                                        onChange={(e) => handleChangeOption(index, e.target.value)}
+                                    />
+                                    {index === 0 && ( // 첫 번째 옵션에 대해서만 버튼을 렌더링
+                                        <button
+                                            className='btn btn-outline-secondary'
+                                            type='button'
+                                            id={`button-addon${index + 1}`}
+                                            onClick={handleAddOption}
+                                        >
+                                            &#10010;
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        ))} */}
 
                         <div className='flex'>
                             <div className='input-group mb-3 flex'>
@@ -487,6 +594,7 @@ const RegistProduct = () => {
                                     type='text'
                                     className='form-control'
                                     placeholder='상품옵션 입력'
+                                    defaultValue={productOptions[0]}
                                     aria-label="Recipient's username"
                                     aria-describedby='button-addon2'
                                     // onChange={(e) => setProductOptions([...productOptions, e.target.value])}
@@ -510,7 +618,7 @@ const RegistProduct = () => {
                                 style={{ width: '30%', height: '50px', fontSize: '1.3em' }}
                                 onClick={uploadProductHandler}
                             >
-                                상품 등록
+                                상품 수정
                             </button>
                         </div>
                     </div>
