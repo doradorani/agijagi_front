@@ -7,11 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import DiaryHeader from './DiaryHeader';
 import Swal from 'sweetalert2';
-import { useValidationUser } from '../../../js/api/ValidationApi';
 // 자녀별로 색 다르게 => eventcolor
 
 const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }) => {
-    const validationUse = useValidationUser();
     const [healthCalendarData, setHealthCalendarData] = useState(null);
     const userLoginDispatch = useDispatch();
 
@@ -41,8 +39,15 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
         };
         getDiary();
     }, []);
+
+    if (healthCalendarData != null) {
+        console.log(healthCalendarData);
+        console.log(healthCalendarData[10].weight);
+        console.log(typeof healthCalendarData[10].weight);
+    }
+
     const eventClick = (clickInfo) => {
-        const { groupId, id, title, display } = clickInfo.event;
+        const { id, groupId, title, display } = clickInfo.event;
 
         Swal.fire({
             title: title,
@@ -67,13 +72,14 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
                 }).then((res) => {
                     if (res.isConfirmed) {
                         try {
-                            validationUser('delete', '/childHealth/childNote/' + groupId + '/' + id).then((res) => {
+                            validationUser(
+                                'delete',
+                                '/childHealth/incultaion/' + groupId + '/' + id,
+                                null,
+                                '/childHealth/inoculationNotes'
+                            ).then((res) => {
                                 if (res != undefined && res.success) {
-                                    validationUser('get', '/childHealth/inoculationNotes').then((res) => {
-                                        if (res != undefined && res.success) {
-                                            setHealthCalendarData(res.data);
-                                        }
-                                    });
+                                    setHealthCalendarData(res.data);
                                     Swal.fire({
                                         icon: 'success',
                                         title: '성공적으로 삭제되었습니다.',
@@ -106,12 +112,11 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
         listContents.push({
             title:
                 idx.cd_name +
-                '\n' +
-                (idx.inoculation_agency == null ? '' : '병원 : ' + idx.inoculation_agency) +
+                '\n\n' +
+                (idx.inoculation_agency == null ? '' : '병원 : ' + idx.inoculation_order) +
                 (idx.vaccination_nm == null ? '' : ' [' + idx.vaccination_nm + '] ') +
                 (idx.inoculation_order == null ? '-' : idx.inoculation_order + '차 '),
-            display:
-                '키: ' + idx.height + (idx.wieght == undefined ? '' : ' 몸무게: ' + idx.wieght) + ' 두위: ' + idx.head,
+            display: '키: ' + idx.height + ' 몸무게: ' + idx.weight + ' 두위: ' + idx.head,
             start: idx.reg_date,
             backgroundColor: color[idx.sequence - 1],
             allday: 1,
@@ -125,12 +130,12 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
             <div className="post_full_section">
                 <div className="post_section">
                     <div style={{ paddingLeft: '1.7%' }}>
-                        <DiaryHeader select={'접종 내역'} src={'/test_imgs/png/diary1.png'} header={'육아 수첩'} />
+                        <DiaryHeader select={'육아 수첩'} src={'/test_imgs/png/diary1.png'} />
                     </div>
                     <div className="calendar_wrap">
                         <div className="calendar_section">
                             <div className="calendar_second_wrap">
-                                <div id="calendar" className="nn_font">
+                                <div id="calendar">
                                     <FullCalendar
                                         plugins={[listPlugin]}
                                         initialView={'listWeek'}
@@ -142,6 +147,11 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
                                         eventMinWidth={'10vh'}
                                         height={'85vh'}
                                         events={listContents}
+                                        noEventsContent={() => (
+                                            <div className="nn_font bold" style={{ fontSize: '2rem' }}>
+                                                해당 주에 등록된 건강기록이 없습니다.
+                                            </div>
+                                        )}
                                         eventClick={eventClick}
                                     />
                                 </div>
