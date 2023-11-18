@@ -238,7 +238,7 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
                                                     float: 'right',
                                                 }}
                                             >
-                                                <span className="yg_font">아이 사진 등록</span>
+                                                <span className="yg_font">아이 사진 수정</span>
                                             </label>
                                             <input
                                                 type="file"
@@ -279,7 +279,7 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
                                                 <div>
                                                     <input
                                                         type="submit"
-                                                        value={'등록'}
+                                                        value={'수정'}
                                                         className="btn btn-primary"
                                                         onClick={handleSubmit}
                                                         style={{

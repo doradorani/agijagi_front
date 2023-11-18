@@ -42,12 +42,6 @@ const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => 
         }
     }, []);
 
-    if (childListData != null) {
-        let n = childListData.note_date.replace(' ', 'T');
-        console.log(new Date(childListData.note_date));
-        console.log(n);
-    }
-
     const goToGraphClick = () => {
         Swal.fire({
             icon: 'question',
