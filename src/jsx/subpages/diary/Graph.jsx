@@ -80,33 +80,33 @@ const Graph = ({ adContents, isLoading, setIsLoading, validationUser }) => {
     (graphData !== null ? graphData : []).map((idx) =>
         height.push({
             x:
-                new Date(idx.reg_date).getFullYear() +
+                new Date(idx.note_date).getFullYear() +
                 '-' +
-                (new Date(idx.reg_date).getMonth() + 1) +
+                (new Date(idx.note_date).getMonth() + 1) +
                 '-' +
-                new Date(idx.reg_date).getDate(),
+                new Date(idx.note_date).getDate(),
             y: idx.height,
         })
     );
     (graphData !== null ? graphData : []).map((idx) =>
         weight.push({
             x:
-                new Date(idx.reg_date).getFullYear() +
+                new Date(idx.note_date).getFullYear() +
                 '-' +
-                (new Date(idx.reg_date).getMonth() + 1) +
+                (new Date(idx.note_date).getMonth() + 1) +
                 '-' +
-                new Date(idx.reg_date).getDate(),
+                new Date(idx.note_date).getDate(),
             y: idx.weight,
         })
     );
     (graphData !== null ? graphData : []).map((idx) =>
         head.push({
             x:
-                new Date(idx.reg_date).getFullYear() +
+                new Date(idx.note_date).getFullYear() +
                 '-' +
-                (new Date(idx.reg_date).getMonth() + 1) +
+                (new Date(idx.note_date).getMonth() + 1) +
                 '-' +
-                new Date(idx.reg_date).getDate(),
+                new Date(idx.note_date).getDate(),
             y: idx.head,
         })
     );

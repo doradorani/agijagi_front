@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import '../../../css/subpage/children.css';
 import ReactDatePicker from 'react-datepicker';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import ScrollToTop from '../../ScrollToTop';
 import DiaryHeader from './DiaryHeader';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 
 const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoading }) => {
-    const params = useParams();
+    const { childNo } = useParams();
     const nav = useNavigate();
     const userLoginDispatch = useDispatch();
     const [selectedDate, setSelectedDate] = useState(null);
@@ -18,13 +17,14 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
     const [childImg, setChildImg] = useState(null);
     const [childContent, setChildContent] = useState(null);
     const [childModifyInfo, setChildModifyInfo] = useState(null);
+    const [childPreviewImage, setChildPreviewImage] = useState(null);
 
     useEffect(() => {
         const getDiary = async () => {
             try {
                 const validateResponse = validationUser('post', '/user/validate');
                 try {
-                    validationUser('get', '/diary/childrenDetail/' + params.childNo).then((res) => {
+                    validationUser('get', '/diary/childrenDetail/' + childNo).then((res) => {
                         if (res != undefined && res.success) {
                             setChildModifyInfo(res.data);
                         }
@@ -84,7 +84,7 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
                     })
                 );
                 try {
-                    validationUser('post', '/diary/childInfo/' + params.childNo, formData).then((res) => {
+                    validationUser('post', '/diary/childInfo/' + childNo, formData).then((res) => {
                         if (res != undefined && res.success) {
                             setChildModifyInfo(res.data);
                             Swal.fire({
@@ -121,7 +121,19 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
     };
 
     const handleChange = (e) => {
-        setChildImg(e[0]);
+        if (e.target && e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+
+            // 미리보기 이미지 업데이트
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                setChildPreviewImage(e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        }
+        setChildImg(e.target.files[0]);
     };
 
     return (
@@ -145,18 +157,21 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
                             <div className="children_wrap">
                                 <div className="children_container">
                                     <div className="children_header">
-                                        <div className="children_header_title bold">우리 아이 수정</div>
+                                        <div className="children_header_title yg_font ">우리 아이 수정</div>
                                     </div>
                                     <hr style={{ margin: '25px 0 10px 0', width: '100%' }} />
                                     <div className="children_second_wrap flex">
                                         <div className="children_input flex">
                                             <div className="children_input_name">
-                                                <span>이름 &nbsp;</span>
+                                                <span className="nn_font bold">이름 &nbsp;</span>
                                                 <input
+                                                    className="diary_input_padding nn_font"
                                                     type="text"
+                                                    placeholder="아이의 이름을 입력해주세요"
                                                     onChange={(e) => setchildName(e.target.value)}
                                                     defaultValue={childModifyInfo.name}
                                                     style={{
+                                                        minWidth: '220px',
                                                         border: 'none',
                                                         backgroundColor: '#f8f9fa',
                                                         borderRadius: '5px',
@@ -164,27 +179,90 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
                                                 />
                                             </div>
                                             <div className="children_select_birth">
-                                                <span className="children_select_title">생년월일 &nbsp;</span>
-                                                {childModifyInfo.birth_date && (
-                                                    <ReactDatePicker
-                                                        dateFormat="yyyy.MM.dd"
-                                                        shouldCloseOnSelect
-                                                        selected={new Date(childModifyInfo.birth_date)}
-                                                        onChange={(date) => setSelectedDate(date)}
-                                                    />
-                                                )}
+                                                <span className="children_select_title nn_font bold">
+                                                    생년월일 &nbsp;
+                                                </span>
+                                                <ReactDatePicker
+                                                    className="nn_font"
+                                                    dateFormat="yyyy.MM.dd"
+                                                    shouldCloseOnSelect
+                                                    // minDate={new Date()}
+
+                                                    selected={new Date(childModifyInfo.birth_date)}
+                                                    onChange={(date) => setSelectedDate(date)}
+                                                />
                                             </div>
                                         </div>
-
-                                        <div className="">
+                                        <div className="child_image" style={{ margin: '10px auto' }}>
+                                            {childModifyInfo.img != null ? (
+                                                <img
+                                                    className="child_profile_img"
+                                                    src={childPreviewImage || childModifyInfo.img}
+                                                    style={{ objectFit: 'cover', width: '138px', height: '244x' }}
+                                                />
+                                            ) : (
+                                                <div
+                                                    className="nn_font bold"
+                                                    style={{
+                                                        lineHeight: '244px',
+                                                        textAlign: 'center',
+                                                        fontSize: '1.5rem',
+                                                    }}
+                                                >
+                                                    일기의 표지로 쓰일 사진을 등록해주세요
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div
+                                            className="children_input_image flex"
+                                            style={{
+                                                margin: '15px 35px',
+                                                justifyContent: 'right',
+                                                alignItems: 'center',
+                                            }}
+                                        >
+                                            <div
+                                                className="nn_font"
+                                                style={{ marginRight: '10px', fontSize: '0.9rem' }}
+                                            >
+                                                가로, 세로의 비율은 4:7입니다
+                                            </div>
+                                            <label
+                                                htmlFor="children_input_image"
+                                                style={{
+                                                    backgroundColor: '#ff4898',
+                                                    border: '1px solid #ff4898',
+                                                    borderRadius: '5px',
+                                                    color: '#fff',
+                                                    padding: '6px 8px',
+                                                    float: 'right',
+                                                }}
+                                            >
+                                                <span className="yg_font">아이 사진 등록</span>
+                                            </label>
+                                            <input
+                                                type="file"
+                                                name="아이 사진"
+                                                id="children_input_image"
+                                                accept="image/png, image/jpeg, image/jpg"
+                                                encType="multipart/form-data"
+                                                onChange={(e) => handleChange(e)}
+                                                style={{ display: 'none' }}
+                                            />
+                                        </div>
+                                        <div>
                                             <div className="children_input_name flex" style={{ margin: ' 0 62px' }}>
-                                                <div style={{ height: '200px' }}>설명 &nbsp;</div>
+                                                <div className="nn_font bold" style={{ height: '100px' }}>
+                                                    설명 &nbsp;
+                                                </div>
                                                 <textarea
+                                                    className="diary_input_padding nn_font"
                                                     type="text"
+                                                    placeholder="아이에 대한 사랑스러운 설명을 입력해주세요"
                                                     onChange={(e) => setChildContent(e.target.value)}
                                                     style={{
-                                                        width: '500px',
-                                                        minHeight: '200px',
+                                                        width: '100%',
+                                                        minHeight: '100px',
                                                         border: 'none',
                                                         backgroundColor: '#f8f9fa',
                                                         borderRadius: '5px',
@@ -194,33 +272,24 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
                                             </div>
                                         </div>
                                         <div
-                                            className="children_submit_button"
-                                            style={{ marginTop: '30px', marginRight: '20px' }}
+                                            className="flex"
+                                            style={{ justifyContent: 'right', margin: '15px 25px 10px 0px' }}
                                         >
-                                            <div>
-                                                <input
-                                                    type="submit"
-                                                    value={'수정'}
-                                                    className="btn btn-primary"
-                                                    onClick={handleSubmit}
-                                                />
+                                            <div className="children_submit_button">
+                                                <div>
+                                                    <input
+                                                        type="submit"
+                                                        value={'등록'}
+                                                        className="btn btn-primary"
+                                                        onClick={handleSubmit}
+                                                        style={{
+                                                            backgroundColor: '#ff4898',
+                                                            border: '1px solid #ff4898',
+                                                            opacity: '0.9',
+                                                        }}
+                                                    />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div
-                                            className="children_input_image"
-                                            style={{ marginLeft: '32px', marginBottom: '15px' }}
-                                        >
-                                            {/* <button className="btn btn primary">
-                                아이 사진 등록 */}
-                                            <input
-                                                type="file"
-                                                name="아이 사진"
-                                                id="children_input_image"
-                                                accept="image/png, image/jpeg, image/jpg"
-                                                encType="multipart/form-data"
-                                                onChange={(e) => handleChange(e.target.files)}
-                                            />
-                                            {/* </button> */}
                                         </div>
                                     </div>
                                 </div>

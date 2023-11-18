@@ -14,6 +14,7 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
     const [name, setName] = useState();
     const [img, setImg] = useState(null);
     const [childContent, setChildContent] = useState(null);
+    const [previewImage, setpreviewImage] = useState(null);
     const userLoginDispatch = useDispatch();
     const nav = useNavigate();
 
@@ -112,7 +113,19 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
     };
 
     const handleChange = (e) => {
-        setImg(e[0]);
+        if (e.target && e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+
+            // 미리보기 이미지 업데이트
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                setpreviewImage(e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        }
+        setImg(e.target.files[0]);
     };
 
     return (
@@ -133,18 +146,22 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                         <div className="children_wrap">
                             <div className="children_container">
                                 <div className="children_header">
-                                    <div className="children_header_title bold">우리 아이 등록</div>
+                                    <div className="children_header_title yg_font" style={{ fontSize: '2rem' }}>
+                                        우리 아이 등록
+                                    </div>
                                 </div>
                                 <hr style={{ margin: '25px 0 10px 0', width: '100%' }} />
                                 <div className="children_second_wrap flex">
                                     <div className="children_input flex">
                                         <div className="children_input_name">
-                                            <span>이름 &nbsp;</span>
+                                            <span className="nn_font bold">이름 &nbsp;</span>
                                             <input
+                                                className="diary_input_padding nn_font"
                                                 type="text"
                                                 placeholder="아이의 이름을 입력해주세요"
                                                 onChange={(e) => setName(e.target.value)}
                                                 style={{
+                                                    minWidth: '220px',
                                                     border: 'none',
                                                     backgroundColor: '#f8f9fa',
                                                     borderRadius: '5px',
@@ -152,8 +169,9 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                                             />
                                         </div>
                                         <div className="children_select_birth">
-                                            <span className="children_select_title">생년월일 &nbsp;</span>
+                                            <span className="children_select_title nn_font bold">생년월일 &nbsp;</span>
                                             <ReactDatePicker
+                                                className="nn_font"
                                                 dateFormat="yyyy.MM.dd"
                                                 shouldCloseOnSelect
                                                 // minDate={new Date()}
@@ -162,16 +180,73 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                                             />
                                         </div>
                                     </div>
-                                    <div className="">
+                                    <div className="child_image" style={{ margin: '10px auto' }}>
+                                        {previewImage != null ? (
+                                            <img
+                                                className="child_profile_img"
+                                                src={previewImage || '/test_imgs/png/profile.png'}
+                                                style={{ objectFit: 'cover', width: '138px', height: '244px' }}
+                                            />
+                                        ) : (
+                                            <div
+                                                className="nn_font bold"
+                                                style={{
+                                                    lineHeight: '244px',
+                                                    textAlign: 'center',
+                                                    fontSize: '1.5rem',
+                                                }}
+                                            >
+                                                일기의 표지로 쓰일 사진을 등록해주세요
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div
+                                        className="children_input_image flex"
+                                        style={{
+                                            margin: '15px 35px',
+                                            justifyContent: 'right',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <div className="nn_font" style={{ marginRight: '10px', fontSize: '0.9rem' }}>
+                                            가로, 세로의 비율은 4:7입니다
+                                        </div>
+                                        <label
+                                            htmlFor="children_input_image"
+                                            style={{
+                                                backgroundColor: '#ff4898',
+                                                border: '1px solid #ff4898',
+                                                borderRadius: '5px',
+                                                color: '#fff',
+                                                padding: '6px 8px',
+                                                float: 'right',
+                                            }}
+                                        >
+                                            <span className="yg_font">아이 사진 등록</span>
+                                        </label>
+                                        <input
+                                            type="file"
+                                            name="아이 사진"
+                                            id="children_input_image"
+                                            accept="image/png, image/jpeg, image/jpg"
+                                            encType="multipart/form-data"
+                                            onChange={(e) => handleChange(e)}
+                                            style={{ display: 'none' }}
+                                        />
+                                    </div>
+                                    <div>
                                         <div className="children_input_name flex" style={{ margin: ' 0 62px' }}>
-                                            <div style={{ height: '200px' }}>설명 &nbsp;</div>
+                                            <div className="nn_font bold" style={{ height: '100px' }}>
+                                                설명 &nbsp;
+                                            </div>
                                             <textarea
+                                                className="diary_input_padding nn_font"
                                                 type="text"
                                                 placeholder="아이에 대한 사랑스러운 설명을 입력해주세요"
                                                 onChange={(e) => setChildContent(e.target.value)}
                                                 style={{
-                                                    width: '500px',
-                                                    minHeight: '200px',
+                                                    width: '100%',
+                                                    minHeight: '100px',
                                                     border: 'none',
                                                     backgroundColor: '#f8f9fa',
                                                     borderRadius: '5px',
@@ -181,34 +256,8 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                                     </div>
                                     <div
                                         className="flex"
-                                        style={{ justifyContent: 'space-between', marginTop: '25px' }}
+                                        style={{ justifyContent: 'right', margin: '15px 25px 10px 0px' }}
                                     >
-                                        <div
-                                            className="children_input_image"
-                                            style={{ marginLeft: '32px', marginBottom: '15px' }}
-                                        >
-                                            <label
-                                                htmlFor="children_input_image"
-                                                style={{
-                                                    backgroundColor: '#ff4898',
-                                                    border: '1px solid #ff4898',
-                                                    borderRadius: '5px',
-                                                    color: '#fff',
-                                                    padding: '8px',
-                                                }}
-                                            >
-                                                아이 사진 등록
-                                            </label>
-                                            <input
-                                                type="file"
-                                                name="아이 사진"
-                                                id="children_input_image"
-                                                accept="image/png, image/jpeg, image/jpg"
-                                                encType="multipart/form-data"
-                                                onChange={(e) => handleChange(e.target.files)}
-                                                style={{ display: 'none' }}
-                                            />
-                                        </div>
                                         <div className="children_submit_button">
                                             <div>
                                                 <input
@@ -216,7 +265,11 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                                                     value={'등록'}
                                                     className="btn btn-primary"
                                                     onClick={handleSubmit}
-                                                    style={{ backgroundColor: '#ff4898', border: '1px solid #ff4898' }}
+                                                    style={{
+                                                        backgroundColor: '#ff4898',
+                                                        border: '1px solid #ff4898',
+                                                        opacity: '0.9',
+                                                    }}
                                                 />
                                             </div>
                                         </div>
