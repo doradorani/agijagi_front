@@ -15,6 +15,7 @@ const DiaryPost = ({ adContents, validationUser }) => {
     const [title, setTitle] = useState('');
     const [img, setImg] = useState(null);
     const [childContent, setChildContent] = useState(null);
+    const [previewImage, setpreviewImage] = useState(null);
     const [checkbox, setCheckbok] = useState(0);
 
     const likeHandler = () => {
@@ -101,7 +102,19 @@ const DiaryPost = ({ adContents, validationUser }) => {
     };
 
     const handleChange = (e) => {
-        setImg(e[0]);
+        if (e.target && e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+
+            // 미리보기 이미지 업데이트
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                setpreviewImage(e.target.result);
+            };
+
+            reader.readAsDataURL(file);
+        }
+        setImg(e.target.files[0]);
     };
 
     return (
@@ -109,7 +122,7 @@ const DiaryPost = ({ adContents, validationUser }) => {
             <div className="post_full_section">
                 <div className="post_section">
                     <div style={{ paddingLeft: '1.7%' }}>
-                        <DiaryHeader select={'일기'} src={'/test_imgs/png/diary3.png'} />
+                        <DiaryHeader select={'일기'} src={'/test_imgs/png/diary3.png'} header={'육아 일기'} />
                     </div>
                     <div className="add_diary_container">
                         <div
@@ -122,7 +135,10 @@ const DiaryPost = ({ adContents, validationUser }) => {
                         <div className="children_wrap">
                             <div className="children_container">
                                 <div className="children_header flex">
-                                    <div className="children_header_title bold" style={{ paddingLeft: '95px' }}>
+                                    <div
+                                        className="children_header_title yg_font"
+                                        style={{ paddingLeft: '95px', fontSize: '2rem' }}
+                                    >
                                         오늘의 일기 작성
                                     </div>
                                     <div
@@ -156,11 +172,14 @@ const DiaryPost = ({ adContents, validationUser }) => {
                                 <div className="children_second_wrap flex">
                                     <div className="children_input flex">
                                         <div className="children_input_name">
-                                            <span>제목 &nbsp;</span>
+                                            <span className="nn_font bold">제목 &nbsp;</span>
                                             <input
+                                                className="diary_input_padding nn_font"
                                                 type="text"
+                                                placeholder="제목을 입력해주세요"
                                                 onChange={(e) => setTitle(e.target.value)}
                                                 style={{
+                                                    minWidth: '220px',
                                                     border: 'none',
                                                     backgroundColor: '#f8f9fa',
                                                     borderRadius: '5px',
@@ -168,25 +187,84 @@ const DiaryPost = ({ adContents, validationUser }) => {
                                             />
                                         </div>
                                         <div className="children_select_birth">
-                                            <span className="children_select_title">날짜 &nbsp;</span>
+                                            <span className="children_select_title nn_font bold">생년월일 &nbsp;</span>
                                             <ReactDatePicker
+                                                className="nn_font"
                                                 dateFormat="yyyy.MM.dd"
                                                 shouldCloseOnSelect
+                                                // minDate={new Date()}
                                                 selected={selectedDate}
                                                 onChange={(date) => setSelectedDate(date)}
-                                                readOnly
                                             />
                                         </div>
                                     </div>
-                                    <div className="">
-                                        <div className="children_input_name flex" style={{ margin: ' 0 71px' }}>
-                                            <span style={{ marginRight: '5px' }}>내용&nbsp;</span>
-                                            <input
+                                    <div className="child_image" style={{ margin: '10px auto' }}>
+                                        {previewImage != null ? (
+                                            <img
+                                                className="child_profile_img"
+                                                src={previewImage || '/test_imgs/png/profile.png'}
+                                                style={{ objectFit: 'cover', width: '450px', height: '350px' }}
+                                            />
+                                        ) : (
+                                            <div
+                                                className="nn_font bold"
+                                                style={{
+                                                    lineHeight: '350px',
+                                                    textAlign: 'center',
+                                                    fontSize: '1.5rem',
+                                                }}
+                                            >
+                                                일기에 넣을 사진을 등록해주세요
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div
+                                        className="children_input_image flex"
+                                        style={{
+                                            margin: '15px 35px',
+                                            justifyContent: 'right',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <div className="nn_font" style={{ marginRight: '10px', fontSize: '0.9rem' }}>
+                                            가로, 세로의 비율은 9:7입니다
+                                        </div>
+                                        <label
+                                            htmlFor="children_input_image"
+                                            style={{
+                                                backgroundColor: '#ff4898',
+                                                border: '1px solid #ff4898',
+                                                borderRadius: '5px',
+                                                color: '#fff',
+                                                padding: '6px 8px',
+                                                float: 'right',
+                                            }}
+                                        >
+                                            <span className="yg_font">일기 사진 등록</span>
+                                        </label>
+                                        <input
+                                            type="file"
+                                            name="일기 사진"
+                                            id="children_input_image"
+                                            accept="image/png, image/jpeg, image/jpg"
+                                            encType="multipart/form-data"
+                                            onChange={(e) => handleChange(e)}
+                                            style={{ display: 'none' }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <div className="children_input_name flex" style={{ margin: ' 0 62px' }}>
+                                            <div className="nn_font bold" style={{ height: '100px' }}>
+                                                내용 &nbsp;
+                                            </div>
+                                            <textarea
+                                                className="diary_input_padding nn_font"
                                                 type="text"
+                                                placeholder="오늘의 추억을 입력해주세요"
                                                 onChange={(e) => setChildContent(e.target.value)}
                                                 style={{
-                                                    width: '500px',
-                                                    minHeight: '200px',
+                                                    width: '100%',
+                                                    minHeight: '100px',
                                                     border: 'none',
                                                     backgroundColor: '#f8f9fa',
                                                     borderRadius: '5px',
@@ -196,34 +274,8 @@ const DiaryPost = ({ adContents, validationUser }) => {
                                     </div>
                                     <div
                                         className="flex"
-                                        style={{ justifyContent: 'space-between', marginTop: '25px' }}
+                                        style={{ justifyContent: 'right', margin: '15px 25px 10px 0px' }}
                                     >
-                                        <div
-                                            className="children_input_image"
-                                            style={{ marginLeft: '32px', marginBottom: '15px' }}
-                                        >
-                                            <label
-                                                htmlFor="children_input_image"
-                                                style={{
-                                                    backgroundColor: '#ff4898',
-                                                    border: '1px solid #ff4898',
-                                                    borderRadius: '5px',
-                                                    color: '#fff',
-                                                    padding: '8px',
-                                                }}
-                                            >
-                                                아이 사진 등록
-                                            </label>
-                                            <input
-                                                type="file"
-                                                name="아이 사진"
-                                                id="children_input_image"
-                                                accept="image/png, image/jpeg, image/jpg"
-                                                encType="multipart/form-data"
-                                                onChange={(e) => handleChange(e.target.files)}
-                                                style={{ display: 'none' }}
-                                            />
-                                        </div>
                                         <div className="children_submit_button">
                                             <div>
                                                 <input
@@ -231,7 +283,11 @@ const DiaryPost = ({ adContents, validationUser }) => {
                                                     value={'등록'}
                                                     className="btn btn-primary"
                                                     onClick={handleSubmit}
-                                                    style={{ backgroundColor: '#ff4898', border: '1px solid #ff4898' }}
+                                                    style={{
+                                                        backgroundColor: '#ff4898',
+                                                        border: '1px solid #ff4898',
+                                                        opacity: '0.9',
+                                                    }}
                                                 />
                                             </div>
                                         </div>
