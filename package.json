@@ -51,7 +51,10 @@
         "extends": [
             "react-app",
             "react-app/jest"
-        ]
+        ],
+        "env": {
+            "node": true
+        }
     },
     "browserslist": {
         "production": [

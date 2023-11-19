@@ -82,7 +82,7 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, delete
                     작성하기
                 </div>
                 <Link to="/community/co_buying_list" className="none_deco_link">
-                    <div className="side_menu_btn" style={{ marginTop: '15px' }} onClick={() => setSelectedSideMenu(3)}>
+                    <div className="side_menu_btn" style={{ marginTop: '15px' }}>
                         <img src="/test_imgs/png/bag.png" style={{ width: '45px', marginRight: '15px' }} />
                         아기자기 쇼핑하기
                     </div>
@@ -125,10 +125,7 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, delete
                     </div>
                 </Link>
 
-                <Link
-                    // to="/community"
-                    className="none_deco_link"
-                >
+                <Link to="/user_liked_post" className="none_deco_link">
                     <div className="side_menu_btn mb-2">
                         <img src="/test_imgs/png/like1.png" style={{ width: '45px', marginRight: '15px' }} />
                         좋아요한 게시물

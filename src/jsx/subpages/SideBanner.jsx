@@ -3,13 +3,9 @@ import '../../css/common/sidemenu.css';
 import '../../css/common/common.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import { useValidationItem } from '../../js/api/VlidationItem';
 import { Link } from 'react-router-dom';
 
 const SideBanner = () => {
-    // const validateBanner = useValidationItem();
-    // const [banners, setBanners] = useState([]);
-
     const [randNum, setRandNum] = useState();
 
     const randBanner = [

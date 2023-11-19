@@ -52,6 +52,10 @@ const Header = ({
         }
     };
 
+    const handleLikedPosts = () => {
+        navigate('/user_liked_post');
+    };
+
     const handleMyHit = () => {
         navigate('/user_myHit');
     };
@@ -196,7 +200,11 @@ const Header = ({
                                     </button>
                                 </li>
                                 <li>
-                                    <button className="dropdown-item profile_dropdown_menu_li" type="button">
+                                    <button
+                                        className="dropdown-item profile_dropdown_menu_li"
+                                        type="button"
+                                        onClick={handleLikedPosts}
+                                    >
                                         좋아요한 게시물
                                     </button>
                                 </li>
