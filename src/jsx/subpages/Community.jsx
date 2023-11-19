@@ -251,7 +251,7 @@ const Community = ({ setSelectedSideMenu, previewImage, setPreviewImage, setSele
                 if (registResponse.code === 200 && registResponse.data === 1) {
                     Swal.fire({
                         icon: 'success',
-                        title: '공지사항이 정상적으로 등록되었습니다.',
+                        title: '게시물이 정상적으로 등록되었습니다.',
                         showCancelButton: false,
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: '확인',

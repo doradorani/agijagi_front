@@ -91,33 +91,6 @@ const DetailNotice = () => {
         getNoticeDetail();
     }, [noticeId]);
 
-    const fileDownLoad = async (file_path, file_name) => {
-        try {
-            const response = await axios.get(file_path, { responseType: 'arraybuffer' });
-
-            const blob = new Blob([response.data], { type: 'application/octet-stream' });
-            const url = URL.createObjectURL(blob);
-
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = file_name;
-            document.body.appendChild(link);
-
-            link.click();
-
-            // 다운로드 후 링크 제거
-            document.body.removeChild(link);
-        } catch (error) {
-            console.error('파일 다운로드 중 오류 발생:', error);
-        }
-    };
-
-    // 예시 사용법
-    const file_path = 'https://s3.ap-northeast-2.amazonaws.com/agijagi-2023.10.31/f6f7d453d1b24006ab7e296d3e534a13'; // S3 버킷 및 폴더 경로
-    const file_name = 'block.png'; // 다운로드할 파일명
-
-    fileDownLoad(file_path, file_name);
-
     return (
         <div className="detail_notice_wrap nn_font">
             {isLoading ? (
@@ -162,7 +135,7 @@ const DetailNotice = () => {
                                         첨부파일
                                     </div>
                                     <div>
-                                        {/* {indexOneFileNameArray ? (
+                                        {indexOneFileNameArray ? (
                                             indexOneFileNameArray.map((file_name, index) => (
                                                 <div key={index}>
                                                     <a href="">{file_name}</a>
@@ -170,22 +143,6 @@ const DetailNotice = () => {
                                             ))
                                         ) : (
                                             <div>첨부파일이 없습니다.</div>
-                                        )} */}
-                                        {indexOneFileList && (
-                                            <div>
-                                                {/* <p>Index 1 파일 목록:</p> */}
-                                                {indexOneFileList.map((file, index) => (
-                                                    <div key={index}>
-                                                        <a
-                                                            onClick={() => fileDownLoad(file?.path, file?.name)}
-                                                            href={`path/to/files/${file.path}`}
-                                                            download
-                                                        >
-                                                            {file.name}
-                                                        </a>
-                                                    </div>
-                                                ))}
-                                            </div>
                                         )}
                                     </div>
                                 </div>
@@ -235,7 +192,7 @@ const DetailNotice = () => {
                                         첨부파일
                                     </div>
                                     <div>
-                                        {/* {indexOneFileNameArray ? (
+                                        {indexOneFileNameArray ? (
                                             indexOneFileNameArray.map((file_name, index) => (
                                                 <div key={index}>
                                                     <a href="">{file_name}</a>
@@ -243,18 +200,6 @@ const DetailNotice = () => {
                                             ))
                                         ) : (
                                             <div>첨부파일이 없습니다.</div>
-                                        )} */}
-                                        {indexOneFileList && (
-                                            <div>
-                                                {/* <p>Index 1 파일 목록:</p> */}
-                                                {indexOneFileList.map((file, index) => (
-                                                    <div key={index}>
-                                                        <a href={`path/to/files/${file.path}`} download>
-                                                            {file.name}
-                                                        </a>
-                                                    </div>
-                                                ))}
-                                            </div>
                                         )}
                                     </div>
                                 </div>

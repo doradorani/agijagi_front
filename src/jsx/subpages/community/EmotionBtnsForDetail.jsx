@@ -23,7 +23,6 @@ const EmotionBtnsForDetail = () => {
                 const post_no = postId;
                 const emotionRes = await ValidationItem('get', '/community/getEmotions/' + post_no, null);
                 if (emotionRes?.code === 200 && emotionRes?.data !== null) {
-                    console.log(emotionRes);
                     setEmotionRes(emotionRes);
                 }
             } catch (error) {
