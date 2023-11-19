@@ -29,8 +29,6 @@ const AllPost = ({ isUpdate, setIsUpdate }) => {
         });
     };
 
-    console.log(responseData);
-
     useEffect(() => {
         setIsUpdate(false);
         setPage(1);
@@ -53,7 +51,6 @@ const AllPost = ({ isUpdate, setIsUpdate }) => {
     }, [isUpdate]);
 
     useEffect(() => {
-        // console.log('useEffect for Intersection Observer is triggered!');
         const options = {
             root: null,
             rootMargin: '0px',
@@ -74,7 +71,6 @@ const AllPost = ({ isUpdate, setIsUpdate }) => {
 
     const handleIntersection = (entries) => {
         entries.forEach((entry) => {
-            // console.log('Intersection Observer Callback:', entry);
             if (entry.isIntersecting) {
                 // "test" div가 뷰포트에 들어왔을 때
                 // console.log('테스트 div가 뷰포트에 있습니다!');
@@ -86,7 +82,6 @@ const AllPost = ({ isUpdate, setIsUpdate }) => {
     };
 
     const loadMoreData = async () => {
-        // console.log('loadMoreData() CALLED!!');
         try {
             setIsLoading(true);
             if (responseData && responseData.length >= 5) {
@@ -115,9 +110,9 @@ const AllPost = ({ isUpdate, setIsUpdate }) => {
                 <div></div>
             ) : (
                 <>
-                    <div className='post_section nn_font'>
-                        <div className=' flex yg_font' style={{ marginBottom: '30px' }}>
-                            <img src='/test_imgs/png/아기여워.png' style={{ width: '55px', marginRight: '15px' }} />
+                    <div className="post_section nn_font">
+                        <div className=" flex yg_font" style={{ marginBottom: '30px' }}>
+                            <img src="/test_imgs/png/아기여워.png" style={{ width: '55px', marginRight: '15px' }} />
                             <div style={{ fontSize: '40px', marginRight: '15px' }}>아 ~ 기여워</div>
                             <div
                                 style={{
@@ -144,24 +139,24 @@ const AllPost = ({ isUpdate, setIsUpdate }) => {
                             ))
                         )}
                         <div
-                            className='modal fade'
-                            id='modal_for_post_detail'
-                            tabIndex='-1'
-                            aria-labelledby='exampleModalLabel'
-                            aria-hidden='true'
+                            className="modal fade"
+                            id="modal_for_post_detail"
+                            tabIndex="-1"
+                            aria-labelledby="exampleModalLabel"
+                            aria-hidden="true"
                         >
-                            <div className='modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable'>
-                                <div className='modal-content'>
+                            <div className="modal-dialog modal-lg modal-lg-text modal-dialog-centered modal-dialog-scrollable">
+                                <div className="modal-content">
                                     <div
-                                        className='modal-body mx-auto'
+                                        className="modal-body mx-auto"
                                         style={{ width: '450px', textAlign: 'center', fontWeight: 'bold' }}
                                     >
                                         {loginedUserNickname !== targetRow?.nickname && (
                                             <>
                                                 <div
-                                                    className='hover_cursor'
-                                                    data-bs-toggle='modal'
-                                                    data-bs-target='#modal_for_post_declaration'
+                                                    className="hover_cursor"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modal_for_post_declaration"
                                                     style={{ color: 'red' }}
                                                 >
                                                     신고
@@ -169,24 +164,24 @@ const AllPost = ({ isUpdate, setIsUpdate }) => {
                                                 <hr />
                                             </>
                                         )}
-                                        <Link to={`/community/detail_post/${postId}`} className='none_underline'>
-                                            <div data-bs-dismiss='modal' aria-label='Close'>
+                                        <Link to={`/community/detail_post/${postId}`} className="none_underline">
+                                            <div data-bs-dismiss="modal" aria-label="Close">
                                                 게시물로 이동
                                             </div>
                                         </Link>
                                         <hr />
                                         <a
-                                            className='hover_cursor none_underline'
+                                            className="hover_cursor none_underline"
                                             onClick={copyPostURL}
-                                            data-bs-dismiss='modal'
-                                            aria-label='Close'
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close"
                                         >
                                             <CopyToClipboard text={`${postURL}/detail_post/${postId}`}>
                                                 <div>링크 복사</div>
                                             </CopyToClipboard>
                                         </a>
                                         <hr />
-                                        <div className='hover_cursor' data-bs-dismiss='modal' aria-label='Close'>
+                                        <div className="hover_cursor" data-bs-dismiss="modal" aria-label="Close">
                                             취소
                                         </div>
                                     </div>

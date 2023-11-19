@@ -13,15 +13,14 @@ const SideBanner = () => {
     const [randNum, setRandNum] = useState();
 
     const randBanner = [
-        '/test_imgs/sns_imgs/sns1.jpg',
-        '/test_imgs/sns_imgs/karsten-winegeart-60GsdOMRFGc-unsplash.jpg',
-        '/test_imgs/sns_imgs/KakaoTalk_20231117_215445767.jpg',
+        '/test_imgs/banner/banner1.jpg',
+        '/test_imgs/banner/banner2.jpg',
+        '/test_imgs/banner/banner3.jpg',
     ];
 
     useEffect(() => {
         const randomIndex = Math.floor(Math.random() * randBanner.length);
         setRandNum(randomIndex);
-        console.log(randomIndex);
     }, []);
 
     // //서버용
@@ -44,7 +43,7 @@ const SideBanner = () => {
 
     return (
         <>
-            <div className='tag_for_sticky'>
+            <div className="tag_for_sticky">
                 <div>
                     {/* {banners.map((banner, index) => (
                         <Link key={banner} to={`/co-buying_detail/${banner}`}>
@@ -59,7 +58,7 @@ const SideBanner = () => {
                     {/* {banners.map((banner, index) => ( */}
 
                     <Link to={`/co-buying_detail/${randNum + 1}`}>
-                        <img className='adv_img_notice_right' src={randBanner[randNum]} alt={`Banner ${randNum}`} />
+                        <img className="adv_img_notice_right" src={randBanner[randNum]} alt={`Banner ${randNum}`} />
                     </Link>
                     {/* ))} */}
                 </div>

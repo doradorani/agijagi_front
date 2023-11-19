@@ -23,7 +23,6 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                 '/report/postReportTable/' + currentPage + '/' + perPage,
                 null
             );
-            console.log(validateAdminResponse);
             setReportTable(validateAdminResponse?.data?.postReportDtos);
             setTotalPages(validateAdminResponse?.data?.totalPages);
         } catch (error) {
@@ -72,8 +71,6 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                 null
             );
             setReportTable(null);
-
-            console.log(deleteResponse);
 
             if (deleteResponse?.code === 200 && deleteResponse?.data === 1) {
                 Swal.fire({
@@ -289,7 +286,7 @@ const PostReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                       7
                                                   )}/${report?.mod_date.substring(8, 10)}`}
                                         </td>
-                                        {report?.post_status !== 1 || console.log(report.status) ? (
+                                        {report?.post_status !== 1 ? (
                                             <td
                                                 style={{
                                                     padding: '0px',

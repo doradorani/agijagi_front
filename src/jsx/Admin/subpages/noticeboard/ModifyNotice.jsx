@@ -3,8 +3,8 @@ import '../../../../css/subpage/detailnotice.css';
 import QuillEditor from './QuillEditor';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
 import noticeIndex_config from '../../../../js/api/config/noticeIndex_config';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const ModifyNotice = () => {
     const [notice, setNotice] = useState();
@@ -39,7 +39,6 @@ const ModifyNotice = () => {
                     '/notice/noticeDetail/' + noticeIndex + '/' + modifyRequest,
                     null
                 );
-                console.log(detailResponse?.data[0]);
                 setNotice(detailResponse?.data[0]);
 
                 setNoticeNo(detailResponse?.data[0]?.no);
@@ -69,7 +68,10 @@ const ModifyNotice = () => {
     const onUploadFiles = (e) => {
         if (e.target.files) {
             if (fileNameArray.length + e.target.files.length > maxFileCount) {
-                alert('파일은 최대 5개까지 업로드 가능합니다.');
+                Swal.fire({
+                    icon: 'warning',
+                    title: `사진은 최대 ${maxFileCount}개까지\n첨부할 수 있습니다.`,
+                });
             } else {
                 const newFiles = [...uploadFile, ...e.target.files];
                 setUploadFile(newFiles);
@@ -92,9 +94,6 @@ const ModifyNotice = () => {
         const removedFilePath = newFilePaths[index]; // 삭제되는 파일의 경로 가져오기
         newFiles.splice(index, 1);
         newFilePaths.splice(index, 1);
-        // setFileNameArray(newFiles);
-        console.log(newFiles);
-        console.log(newFilePaths);
 
         // fileNameArray 해당 파일명 삭제
         setFileNameArray((prevArray) => prevArray.filter((fileName) => fileName !== removedFileName));
@@ -106,15 +105,22 @@ const ModifyNotice = () => {
         try {
             setIsLoading(true);
             if (noticeTitle === '') {
-                alert('\n제목은 필수입력 사항입니다.\n제목을 입력해주시기 바랍니다.');
+                Swal.fire({
+                    icon: 'warning',
+                    title: '제목은 필수입력 사항입니다.',
+                    text: '제목을 입력해주시기 바랍니다.',
+                });
                 document.getElementById('writeNoticeTitle').focus();
                 window.scrollTo({
                     top: document.getElementById('writeNoticeTitle').offsetTop,
                     behavior: 'smooth',
                 });
-                console.log(editorContent);
             } else if (editorContent === undefined) {
-                alert('\n공지내용은 필수입력 사항입니다.\n내용을 입력해주시기 바랍니다.');
+                Swal.fire({
+                    icon: 'warning',
+                    title: '공지내용은 필수입력 사항입니다.',
+                    text: '내용을 입력해주시기 바랍니다.',
+                });
             } else {
                 data = {
                     no: noticeNo,
@@ -142,10 +148,13 @@ const ModifyNotice = () => {
                     '/notice/modifyNotice/' + updatedFileCnt,
                     formData
                 );
-                console.log(modifyResponse);
 
                 if (modifyResponse?.code === 200 && modifyResponse?.data === 1) {
-                    alert('공지사항이 정상적으로 등록되었습니다.');
+                    Swal.fire({
+                        icon: 'success',
+                        title: '공지사항이 정상적으로 수정되었습니다.',
+                        text: '',
+                    });
                     // 공지사항 정상 등록 후 게시글 detail페이지로 이동하기 위한 notice.no값 get
                     nav('/admin/admin_notice_detail');
                 }

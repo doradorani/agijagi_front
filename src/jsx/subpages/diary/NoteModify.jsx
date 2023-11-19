@@ -2,18 +2,15 @@ import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../../css/subpage/note.css';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import DiaryHeader from './DiaryHeader';
-import { isAllOf } from '@reduxjs/toolkit';
 
 const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [byteCount, setByteCount] = useState(0);
-    const [selectedChild, setSelectedChild] = useState(null);
-    const [selectedChildNo, setSelectedChildNo] = useState();
     const [height, setHeight] = useState(null);
     const [weight, setWeight] = useState(null);
     const [head, setHead] = useState(null);
@@ -31,7 +28,6 @@ const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => 
             validationUser('get', '/childHealth/childNotes/' + params.childNo + '/' + params.healthNo).then((res) => {
                 if (res != undefined && res.success) {
                     setChildListData(res.data);
-                    console.log(res.data);
                 }
             });
             setIsLoading(true);

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../../../../css/admin/member/admin_authorization.css';
-import AdminSidbar from '../../AdminSidebar';
-import adminToken_config from '../../../../js/api/config/adminToken_config';
 import { useValidationAdminItem } from '../../../../js/api/admin/ValidationAdminItem';
 import Swal from 'sweetalert2';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import adminLogin_config from '../../../../js/api/config/adminLogin_config';
 import { adminStateAction } from '../../../../js/api/redux_store/slice/adminLoginSlice';
 import { useDispatch } from 'react-redux';
@@ -61,8 +59,6 @@ const AdminModify = ({ selectedMenu }) => {
     }, []);
 
     const handleUpdateAdminInfo = () => {
-        console.log(adminLogin_config.account);
-
         const updatedInfo = {
             id: adminId,
             pw: adminPw,
@@ -176,85 +172,85 @@ const AdminModify = ({ selectedMenu }) => {
     };
 
     return (
-        <div className='input_admin_info_box_wrap_for_signup' style={{ marginTop: '40px' }}>
-            <div className='input_admin_info_box_for_signup'>
-                <div className='admin_login_title yg_font'>관리자 수정</div>
-                <div className='form-floating mb-2'>
+        <div className="input_admin_info_box_wrap_for_signup" style={{ marginTop: '40px' }}>
+            <div className="input_admin_info_box_for_signup">
+                <div className="admin_login_title yg_font">관리자 수정</div>
+                <div className="form-floating mb-2">
                     <input
-                        type='text'
-                        name='adminAccount'
+                        type="text"
+                        name="adminAccount"
                         defaultValue={adminId}
                         onChange={(e) => setAdminId(e.target.value)}
-                        className='form-control custom_floating_label'
-                        id='adminAccount'
-                        placeholder='Admin Account'
+                        className="form-control custom_floating_label"
+                        id="adminAccount"
+                        placeholder="Admin Account"
                     />
-                    <label htmlFor='adminAccount'>Admin Account*</label>
+                    <label htmlFor="adminAccount">Admin Account*</label>
                 </div>
 
                 <div
-                    className='form-floating mb-2'
+                    className="form-floating mb-2"
                     style={{ position: 'relative', display: 'flex', alignItems: 'center' }}
                 >
                     <input
-                        type='password'
-                        name='password'
-                        defaultValue='********'
+                        type="password"
+                        name="password"
+                        defaultValue="********"
                         //onChange={signUpHandler}
-                        className='form-control custom_floating_label'
-                        id='adminPassword'
+                        className="form-control custom_floating_label"
+                        id="adminPassword"
                         disabled={true}
                         style={{ borderRadius: '8px', paddingRight: '40px' }}
                     />
                     <button
-                        type='button'
-                        className='btn btn-primary'
+                        type="button"
+                        className="btn btn-primary"
                         onClick={passwordChangeHandler}
                         style={{ position: 'absolute', top: '50%', right: '5px', transform: 'translateY(-50%)' }}
                     >
                         변경
                     </button>
-                    <label htmlFor='Password'>Password*</label>
+                    <label htmlFor="Password">Password*</label>
                 </div>
 
-                <div className='form-floating mb-2'>
+                <div className="form-floating mb-2">
                     <input
-                        type='text'
-                        name='name'
+                        type="text"
+                        name="name"
                         defaultValue={adminName}
                         onChange={(e) => setAdminName(e.target.value)}
-                        className='form-control custom_floating_label'
-                        id='name'
-                        placeholder='Name'
+                        className="form-control custom_floating_label"
+                        id="name"
+                        placeholder="Name"
                     />
-                    <label htmlFor='name'>Name*</label>
+                    <label htmlFor="name">Name*</label>
                 </div>
-                <div className='form-floating mb-2'>
+                <div className="form-floating mb-2">
                     <input
-                        type='email'
-                        name='email'
+                        type="email"
+                        name="email"
                         defaultValue={adminEmail}
                         onChange={(e) => setAdminEmail(e.target.value)}
-                        className='form-control custom_floating_label'
-                        id='email'
-                        placeholder='Email Address'
+                        className="form-control custom_floating_label"
+                        id="email"
+                        placeholder="Email Address"
                     />
-                    <label htmlFor='email'>Email Address*</label>
+                    <label htmlFor="email">Email Address*</label>
                 </div>
-                <div className='form-floating mb-3'>
+                <div className="form-floating mb-3">
                     <input
-                        type='tel'
-                        name='phoneNumber'
+                        type="tel"
+                        name="phoneNumber"
                         defaultValue={adminPhone}
                         onChange={(e) => setAdminPhone(e.target.value)}
-                        className='form-control custom_floating_label sign_up_phone'
-                        id='phoneNumber'
+                        className="form-control custom_floating_label sign_up_phone"
+                        id="phoneNumber"
                         placeholder="Phone Number ('-'를 빼고 입력해주세요.)"
                     />
-                    <label htmlFor='phoneNumber'>Phone Number*</label>
+                    <label htmlFor="phoneNumber">Phone Number*</label>
                 </div>
-                <div className='d-grid gap-2 mb-2'>
-                    <button type='submit' className='btn btn_admin_login' onClick={handleUpdateAdminInfo}>
+                <div className="d-grid gap-2 mb-2">
+                    <button type="submit" className="btn btn_admin_login" onClick={handleUpdateAdminInfo}>
                         수정하기
                     </button>
                 </div>

@@ -30,7 +30,10 @@ const WriteNotice = () => {
     const onUploadFiles = (e) => {
         if (e.target.files) {
             if (uploadFile.length + e.target.files.length > maxFileCount) {
-                alert('파일은 최대 5개까지 업로드 가능합니다.');
+                Swal.fire({
+                    icon: 'warning',
+                    title: `사진은 최대 ${maxFileCount}개까지\n첨부할 수 있습니다.`,
+                });
             } else {
                 const newFiles = [...uploadFile, ...e.target.files];
                 setUploadFile(newFiles);
@@ -42,7 +45,6 @@ const WriteNotice = () => {
         const newFiles = [...uploadFile];
         newFiles.splice(index, 1);
         setUploadFile(newFiles);
-        console.log(newFiles);
     };
 
     const registNotice = async () => {
@@ -59,7 +61,6 @@ const WriteNotice = () => {
                     top: document.getElementById('writeNoticeTitle').offsetTop,
                     behavior: 'smooth',
                 });
-                console.log(editorContent);
             } else if (editorContent === undefined || editorContent === '') {
                 Swal.fire({
                     icon: 'warning',
@@ -86,14 +87,12 @@ const WriteNotice = () => {
                 );
 
                 const registResponse = await validationAdminForRegistNotice('post', '/notice/registNotice', formData);
-                console.log(registResponse);
 
                 if (registResponse.code === 200 && registResponse.data === 1) {
                     Swal.fire({
                         icon: 'success',
                         title: '공지사항이 정상적으로 등록되었습니다.',
                     });
-                    // alert('공지사항이 정상적으로 등록되었습니다.');
                     // 공지사항 정상 등록 후 게시글 detail페이지로 이동하기 위한 notice.no값 get
                     const recentNoticeIndexResponse = await getRecentNoticeIndex('get', '/notice/recentNotice');
                     noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(recentNoticeIndexResponse.data));

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useValidationItem } from '../../../js/api/VlidationItem';
 import '../../../css/subpage/detailnotice.css';
-import noticeIndex_config from '../../../js/api/config/noticeIndex_config';
-import { noticeIndexAction } from '../../../js/api/redux_store/slice/noticeIndexSlice';
-import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
-const DetailNotice = ({ setSelectedNotice }) => {
+const DetailNotice = () => {
     const [noticeContent, setNoticeContent] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const { noticeId } = useParams();
@@ -15,7 +12,6 @@ const DetailNotice = ({ setSelectedNotice }) => {
     const [indexOneFileNameArray, setIndexOneFileNameArray] = useState([]);
 
     const validationUserNotice = useValidationItem();
-    const noticeIndexDispatch = useDispatch();
 
     useEffect(() => {
         const getNoticeDetail = async () => {
@@ -23,8 +19,6 @@ const DetailNotice = ({ setSelectedNotice }) => {
                 setIsLoading(true);
                 const detailResponse = await validationUserNotice('get', '/notice/detail/' + noticeId, null);
                 setNoticeContent(detailResponse.data);
-                console.log(detailResponse.data);
-                // console.log(detailResponse.data.data2[1] == undefined);
                 let zeroFileName = null;
                 let ZeroFileNameArray = null;
                 let oneFileName = null;
@@ -37,17 +31,11 @@ const DetailNotice = ({ setSelectedNotice }) => {
                     OneFileNameArray = oneFileName ? oneFileName.split(',') : null;
                 } else if (detailResponse.data.data2 != undefined) {
                     zeroFileName = detailResponse.data.data1.file_name;
-                    // console.log(detailResponse.data.data1);
-                    // console.log(detailResponse.data.data1.file_name);
                     ZeroFileNameArray = zeroFileName ? zeroFileName.split(',') : null;
                     oneFileName = detailResponse.data.data2[0].file_name;
-                    // console.log(detailResponse.data.data2[0]);
-                    // console.log(detailResponse.data.data2[0].file_name);
                     OneFileNameArray = oneFileName ? oneFileName.split(',') : null;
                 }
-                // console.log('-----------');
-                // console.log(noticeContent);
-                // console.log('-----------');
+
                 setIndexZeroFileNameArray(ZeroFileNameArray);
                 setIndexOneFileNameArray(OneFileNameArray);
             } catch (error) {
@@ -58,16 +46,6 @@ const DetailNotice = ({ setSelectedNotice }) => {
         };
         getNoticeDetail();
     }, [noticeId]);
-
-    const nextPageHandler = (index) => {
-        console.log('nextPageHandler() CALLED!!');
-        noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(index));
-    };
-
-    const moveToListHandler = () => {
-        console.log('moveToListHandler() CALLED!!');
-        setSelectedNotice(0);
-    };
 
     return (
         <div className="detail_notice_wrap nn_font">
@@ -210,9 +188,6 @@ const DetailNotice = ({ setSelectedNotice }) => {
                                     {noticeContent.data2 != undefined && noticeContent.data2[1] == undefined ? (
                                         <a>다음 게시물이 없습니다.</a>
                                     ) : noticeContent.data2 != undefined ? (
-                                        // <Link onClick={() => nextPageHandler(noticeContent.data2[1].no)}>
-                                        //     {noticeContent.data2[1].title}
-                                        // </Link>
                                         <Link to={`/notice/detail_notice/${noticeContent.data2[1].no}`}>
                                             {noticeContent.data2[1].title}
                                         </Link>

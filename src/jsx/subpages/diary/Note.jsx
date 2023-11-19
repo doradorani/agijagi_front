@@ -34,7 +34,6 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
             validationUser('get', '/diary/childrenInfo').then((res) => {
                 if (res != undefined && res.success) {
                     setChildListData(res.data);
-                    console.log(res.data);
                 }
             });
             setIsLoading(true);
