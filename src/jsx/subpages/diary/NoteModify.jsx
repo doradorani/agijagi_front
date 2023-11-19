@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import DiaryHeader from './DiaryHeader';
+import { isAllOf } from '@reduxjs/toolkit';
 
 const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -41,6 +42,15 @@ const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => 
             setIsLoading(false);
         }
     }, []);
+
+    let new_note_date;
+
+    if (childListData != null) {
+        if (childListData.note_date != null) {
+            let str = childListData.note_date;
+            new_note_date = str.replace(' ', 'T') + '.007Z';
+        }
+    }
 
     const goToGraphClick = () => {
         Swal.fire({
@@ -210,7 +220,9 @@ const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => 
                                                             dateFormat="yyyy.MM.dd h:mm aa"
                                                             showTimeSelect
                                                             shouldCloseOnSelect
-                                                            selected={new Date(childListData.note_date)}
+                                                            selected={
+                                                                new Date(new_note_date ? new_note_date : selectedDate)
+                                                            }
                                                             onChange={(date) => setSelectedDate(date)}
                                                             readOnly
                                                         />
