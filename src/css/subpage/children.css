@@ -8,6 +8,9 @@
     font-family: 'yg-jalnan';
     /* opacity: 0.8; */
 }
+.diary_input_padding {
+    padding-left: 10px;
+}
 
 .children_container {
     background-color: #fff;
@@ -61,4 +64,12 @@
 
 .single_btn {
     display: none;
+}
+
+.font-size-12 {
+    font-size: 1.2rem;
+}
+
+.font-size-23 {
+    font-size: 2.3rem;
 }

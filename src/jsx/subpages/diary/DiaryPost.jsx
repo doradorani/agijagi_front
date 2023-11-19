@@ -31,7 +31,7 @@ const DiaryPost = ({ adContents, validationUser }) => {
             try {
                 const validateResponse = validationUser('post', '/user/validate');
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 userLoginDispatch(userStateAction.setState(false));
             }
         };
@@ -93,8 +93,7 @@ const DiaryPost = ({ adContents, validationUser }) => {
                         }
                     });
                 } catch (error) {
-                    console.log('데이터 파싱 에러');
-                    console.log(error);
+                    console.error(error);
                     userLoginDispatch(userStateAction.setState(false));
                 }
             }
@@ -136,8 +135,8 @@ const DiaryPost = ({ adContents, validationUser }) => {
                             <div className="children_container">
                                 <div className="children_header flex">
                                     <div
-                                        className="children_header_title yg_font"
-                                        style={{ paddingLeft: '95px', fontSize: '2rem' }}
+                                        className="children_header_title yg_font font-size-23"
+                                        style={{ paddingLeft: '95px' }}
                                     >
                                         오늘의 일기 작성
                                     </div>
@@ -170,8 +169,8 @@ const DiaryPost = ({ adContents, validationUser }) => {
                                 </div>
                                 <hr style={{ margin: '10px 0', width: '100%' }} />
                                 <div className="children_second_wrap flex">
-                                    <div className="children_input flex">
-                                        <div className="children_input_name">
+                                    <div className="children_input flex font-size-12">
+                                        <div className="children_input_name ">
                                             <span className="nn_font bold">제목 &nbsp;</span>
                                             <input
                                                 className="diary_input_padding nn_font"
@@ -226,7 +225,7 @@ const DiaryPost = ({ adContents, validationUser }) => {
                                             alignItems: 'center',
                                         }}
                                     >
-                                        <div className="nn_font" style={{ marginRight: '10px', fontSize: '0.9rem' }}>
+                                        <div className="nn_font" style={{ marginRight: '10px' }}>
                                             가로, 세로의 비율은 9:7입니다
                                         </div>
                                         <label
@@ -253,7 +252,10 @@ const DiaryPost = ({ adContents, validationUser }) => {
                                         />
                                     </div>
                                     <div>
-                                        <div className="children_input_name flex" style={{ margin: ' 0 62px' }}>
+                                        <div
+                                            className="children_input_name flex font-size-12"
+                                            style={{ margin: ' 0 62px' }}
+                                        >
                                             <div className="nn_font bold" style={{ height: '100px' }}>
                                                 내용 &nbsp;
                                             </div>

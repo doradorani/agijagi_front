@@ -66,7 +66,7 @@ export function useKakaoLogin(code) {
                             userLoginDispatch(userCobuyAction.setHit(res.data.myHits));
                         });
                     } catch (error) {
-                        console.log(error);
+                        console.error(error);
                     }
 
                     Swal.fire(response.data.userNickname + '님', '어서오세요!!', 'success');

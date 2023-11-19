@@ -31,11 +31,10 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
                     });
                     setIsLoading(true);
                 } catch (error) {
-                    console.log('데이터 파싱 에러');
-                    console.log(error);
+                    console.error(error);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 userLoginDispatch(userStateAction.setState(false));
             } finally {
                 setIsLoading(false);
@@ -112,8 +111,7 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
                     });
                     setIsLoading(true);
                 } catch (error) {
-                    console.log('데이터 파싱 에러');
-                    console.log(error);
+                    console.error(error);
                     userLoginDispatch(userStateAction.setState(false));
                 }
             }
@@ -157,11 +155,11 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
                             <div className="children_wrap">
                                 <div className="children_container">
                                     <div className="children_header">
-                                        <div className="children_header_title yg_font ">우리 아이 수정</div>
+                                        <div className="children_header_title yg_font font-size-23">우리 아이 수정</div>
                                     </div>
                                     <hr style={{ margin: '25px 0 10px 0', width: '100%' }} />
                                     <div className="children_second_wrap flex">
-                                        <div className="children_input flex">
+                                        <div className="children_input flex font-size-12">
                                             <div className="children_input_name">
                                                 <span className="nn_font bold">이름 &nbsp;</span>
                                                 <input
@@ -221,10 +219,7 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
                                                 alignItems: 'center',
                                             }}
                                         >
-                                            <div
-                                                className="nn_font"
-                                                style={{ marginRight: '10px', fontSize: '0.9rem' }}
-                                            >
+                                            <div className="nn_font" style={{ marginRight: '10px' }}>
                                                 가로, 세로의 비율은 4:7입니다
                                             </div>
                                             <label
@@ -251,7 +246,10 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
                                             />
                                         </div>
                                         <div>
-                                            <div className="children_input_name flex" style={{ margin: ' 0 62px' }}>
+                                            <div
+                                                className="children_input_name flex font-size-12"
+                                                style={{ margin: ' 0 62px' }}
+                                            >
                                                 <div className="nn_font bold" style={{ height: '100px' }}>
                                                     설명 &nbsp;
                                                 </div>

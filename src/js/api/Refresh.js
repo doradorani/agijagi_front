@@ -12,7 +12,7 @@ const Refresh = async (config) => {
             const res = await axios.post(`${server}/user/newToken`);
             token_config.tokenName = res.data.accessToken;
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
     config.headers.Authorization = `Bearer ${token_config.tokenName}`;
