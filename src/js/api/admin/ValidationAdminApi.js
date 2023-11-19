@@ -31,7 +31,9 @@ export function useValidationAdmin(method, url, formData) {
 
             adminTokenDispatch(adminTokenAction.setAdminTokenName(adminToken_config.adminTokenName));
             adminTokenDispatch(
-                adminTokenAction.setAdminTokenExpired(moment().add(20, 'seconds').format('yyyy-MM-DD HH:mm:ss'))
+                adminTokenAction.setAdminTokenExpired(
+                    moment().add(4, 'minutes').add(50, 'seconds').format('yyyy-MM-DD HH:mm:ss')
+                )
             );
             return response.data; // 데이터 반환
         } catch (error) {

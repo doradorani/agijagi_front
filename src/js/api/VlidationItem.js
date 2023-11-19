@@ -43,7 +43,9 @@ export function useValidationItem() {
             }
 
             tokenDispatch(tokenAction.setTokenName(token_config.tokenName));
-            tokenDispatch(tokenAction.setTokenExpired(moment().add(2, 'hours').format('yyyy-MM-DD HH:mm:ss')));
+            tokenDispatch(
+                tokenAction.setTokenExpired(moment().add(4, 'minutes').add(50, 'seconds').format('yyyy-MM-DD HH:mm:ss'))
+            );
 
             return response.data; // 데이터 반환
         } catch (error) {
