@@ -19,9 +19,7 @@ const options = {
     elevation: 50,
     gradients: !$.isTouch,
     when: {
-        turned: function (e, page) {
-            console.log('Current view: ', $(this).turn('view'));
-        },
+        turned: function (e, page) {},
     },
 };
 
@@ -40,8 +38,6 @@ const DiaryBookDetail = ({ isUpdate, setIsUpdate, isLoading, setIsLoading, valid
                     validationUser('get', '/diary/dailyDiary/' + params.childNo).then((res) => {
                         if (res != undefined && res.success) {
                             setDiaryBookData(res.data);
-                            console.log('testsdfasdfasdf');
-                            console.log(res.data);
                         }
                     });
                     setIsLoading(true);

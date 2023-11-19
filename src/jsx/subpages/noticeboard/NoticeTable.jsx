@@ -6,7 +6,7 @@ import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlic
 import { Link, useParams } from 'react-router-dom';
 import { useValidationItem } from '../../../js/api/VlidationItem';
 
-const NoticeTable = ({ setSelectedNotice }) => {
+const NoticeTable = () => {
     const [noticeTable, setNoticeTable] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -31,8 +31,6 @@ const NoticeTable = ({ setSelectedNotice }) => {
                 );
                 setNoticeTable(validateUserResponse?.data?.noticeDtos);
                 setTotalPages(validateUserResponse?.data?.totalPages);
-
-                console.log(validateUserResponse?.data);
             } catch (error) {
                 console.error('Error fetching notices:', error);
                 userLoginDispatch(userStateAction.setState(false));
@@ -48,13 +46,6 @@ const NoticeTable = ({ setSelectedNotice }) => {
             setCurrentPage(newPage);
         }
     };
-
-    // const moveToDetail = (index) => {
-    //     console.log('moveToDetail CALLED!!');
-    //     noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(index));
-    //     console.log(noticeIndex_config.noticeIndexState);
-    //     setSelectedNotice(1);
-    // };
 
     return (
         <div className="nn_font" style={{ width: '800px' }}>
@@ -93,12 +84,7 @@ const NoticeTable = ({ setSelectedNotice }) => {
                                     {notice?.no}
                                 </td>
                                 <td style={{ textAlign: 'left' }}>
-                                    <Link
-                                        to={`/notice/detail_notice/${notice?.no}`}
-                                        // onClick={noticeIndexDispatch(noticeIndexAction.setNoticeIndexState(notice.no))}
-                                    >
-                                        {notice?.title}
-                                    </Link>
+                                    <Link to={`/notice/detail_notice/${notice?.no}`}>{notice?.title}</Link>
                                 </td>
                                 <td>{notice?.admin_id}</td>
                                 <td>{notice?.reg_date.substring(0, 10)}</td>

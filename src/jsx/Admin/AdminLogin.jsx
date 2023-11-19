@@ -6,9 +6,7 @@ import adminToken_config from '../../js/api/config/adminToken_config';
 import { useDispatch } from 'react-redux';
 import { adminTokenAction } from '../../js/api/redux_store/slice/adminTokenSlice';
 import moment from 'moment';
-import AdminTokenApi from '../../js/api/admin/AdminTokenApi';
 import { adminStateAction } from '../../js/api/redux_store/slice/adminLoginSlice';
-import { tr } from 'date-fns/locale';
 import Swal from 'sweetalert2';
 
 const AdminLogin = () => {
@@ -77,41 +75,41 @@ const AdminLogin = () => {
     };
 
     return (
-        <div className='admin_login_wrap'>
-            <img src='/test_imgs/baby_imgs/baby10.jpg ' />
-            <div className='admin_login_background'></div>
-            <div className='input_admin_info_box_wrap' style={{ marginTop: '150px' }}>
-                <div className='input_admin_info_box'>
-                    <div className='logo_wrap_admin_login yg_font'>
-                        <img className='logo_img' src='/test_imgs/logo/logo.png' />
+        <div className="admin_login_wrap">
+            <img src="/test_imgs/baby_imgs/baby10.jpg " />
+            <div className="admin_login_background"></div>
+            <div className="input_admin_info_box_wrap" style={{ marginTop: '150px' }}>
+                <div className="input_admin_info_box">
+                    <div className="logo_wrap_admin_login yg_font">
+                        <img className="logo_img" src="/test_imgs/logo/logo.png" />
                         <div>아기자기</div>
                     </div>
-                    <div className='admin_login_title yg_font'>로그인</div>
+                    <div className="admin_login_title yg_font">로그인</div>
 
                     <form onSubmit={signInSubmit}>
-                        <div className='form-floating mb-2'>
+                        <div className="form-floating mb-2">
                             <input
-                                type='text'
-                                name='adminAccount'
+                                type="text"
+                                name="adminAccount"
                                 defaultValue={signInData.adminAccount}
                                 onChange={signInHandler}
-                                className='form-control custom_floating_label'
-                                id='floatingInput'
-                                placeholder='name@example.com'
+                                className="form-control custom_floating_label"
+                                id="floatingInput"
+                                placeholder="name@example.com"
                             />
-                            <label htmlFor='floatingInput'>Admin Account*</label>
+                            <label htmlFor="floatingInput">Admin Account*</label>
                         </div>
-                        <div className='form-floating mb-4' style={{ marginBottom: '10px', paddingBottom: '0px' }}>
+                        <div className="form-floating mb-4" style={{ marginBottom: '10px', paddingBottom: '0px' }}>
                             <input
-                                type='password'
-                                name='password'
+                                type="password"
+                                name="password"
                                 defaultValue={signInData.password}
                                 onChange={signInHandler}
-                                className='form-control custom_floating_label'
-                                id='floatingPassword'
-                                placeholder='Password'
+                                className="form-control custom_floating_label"
+                                id="floatingPassword"
+                                placeholder="Password"
                             />
-                            <label htmlFor='floatingPassword'>Password*</label>
+                            <label htmlFor="floatingPassword">Password*</label>
                         </div>
                         {/* <form class="form-floating">
                         <input
@@ -123,16 +121,16 @@ const AdminLogin = () => {
                         />
                         <label for="floatingInputInvalid">Invalid input</label>
                     </form> */}
-                        <div className='d-grid gap-2 mb-3 ' style={{ marginBottom: '10px' }}>
-                            <button className='btn btn_admin_login' type='submit'>
+                        <div className="d-grid gap-2 mb-3 " style={{ marginBottom: '10px' }}>
+                            <button className="btn btn_admin_login" type="submit">
                                 Login
                             </button>
                         </div>
                     </form>
 
-                    <div className='btn_for_admin_signup yg_font' style={{ paddingBottom: '30px', paddingTop: '10px' }}>
+                    <div className="btn_for_admin_signup yg_font" style={{ paddingBottom: '30px', paddingTop: '10px' }}>
                         관리자 계정이 없으신가요? &nbsp;&nbsp;
-                        <Link to='/admin/sign_up'>회원가입</Link>
+                        <Link to="/admin/sign_up">회원가입</Link>
                     </div>
                 </div>
             </div>

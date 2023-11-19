@@ -11,10 +11,10 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, delete
     let userId = userInfo_config.userName;
     const paramsUserId = useParams().userId;
 
-    const sideMenuNoticeClickHandler = (index) => {
-        setSelectedSideMenu(index);
-        setSelectedNotice(0);
-    };
+    // const sideMenuNoticeClickHandler = (index) => {
+    //     setSelectedSideMenu(index);
+    //     setSelectedNotice(0);
+    // };
 
     if (selectedMenu === 1) {
         menuContent = (
@@ -106,7 +106,10 @@ const SideMenu = ({ selectedMenu, setSelectedSideMenu, setSelectedNotice, delete
     } else if (selectedMenu === 3) {
         menuContent = (
             <div>
-                <div className="side_menu_btn" onClick={() => sideMenuNoticeClickHandler(1)}>
+                <div
+                    className="side_menu_btn"
+                    // onClick={() => sideMenuNoticeClickHandler(1)}
+                >
                     <img src="/test_imgs/png/post-it.png" style={{ width: '45px', marginRight: '15px' }} />
                     공지사항
                 </div>

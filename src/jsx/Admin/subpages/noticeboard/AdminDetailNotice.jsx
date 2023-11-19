@@ -36,7 +36,6 @@ const AdminDetailNotice = () => {
                     null
                 );
                 setNoticeContent(detailResponse.data);
-                console.log(detailResponse.data);
                 const zeroFileName = detailResponse.data[0].file_name;
                 const ZeroFileNameArray = zeroFileName ? zeroFileName.split(',') : null;
                 const oneFileName = detailResponse.data[1].file_name;
@@ -46,12 +45,6 @@ const AdminDetailNotice = () => {
                 // const OneFilePathArray = detailResponse.data[1].attach_path.split(',');
                 setIndexZeroFileNameArray(ZeroFileNameArray);
                 setIndexOneFileNameArray(OneFileNameArray);
-                console.log(detailResponse);
-                console.log(ZeroFileNameArray);
-                console.log(OneFileNameArray);
-                console.log('--------------');
-                console.log(indexZeroFileNameArray);
-                console.log(indexOneFileNameArray);
             } catch (error) {
                 console.error('Error fetching detailNotice:', error);
             } finally {
@@ -103,8 +96,6 @@ const AdminDetailNotice = () => {
             );
             setNoticeContent(null);
 
-            console.log(deleteResponse);
-
             if (deleteResponse.code === 200 && deleteResponse.data === 1) {
                 Swal.fire({
                     icon: 'success',
@@ -119,8 +110,6 @@ const AdminDetailNotice = () => {
                     null
                 );
                 setNoticeContent(detailResponse.data);
-
-                console.log(detailResponse);
             } else {
                 Swal.fire({
                     icon: 'error',

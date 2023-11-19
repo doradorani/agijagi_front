@@ -261,3 +261,30 @@ figure.zoom_in:hover > button {
     -webkit-transform: scale(1.3);
     transform: scale(1.3);
 }
+
+div.likeBtnClicked {
+    background-color: #ffb8c7;
+    border: none;
+}
+
+div.likeBtnClicked > a > div {
+    color: #fff;
+}
+
+div.greatBtnClicked {
+    background-color: #4cc4ff;
+    border: none;
+}
+
+div.greatBtnClicked > a > div {
+    color: #fff;
+}
+
+div.sadBtnClicked {
+    background-color: #44a4ec;
+    border: none;
+}
+
+div.sadBtnClicked > a > div {
+    color: #fff;
+}

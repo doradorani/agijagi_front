@@ -93,18 +93,20 @@ const AdminNoticeList = ({ setSelectedSideMenu }) => {
             );
             setNoticeTable(null);
 
-            console.log(deleteResponse);
-
             if (deleteResponse.code === 200 && deleteResponse.data === 1) {
-                alert('정상적으로 삭제되었습니다.');
+                Swal.fire({
+                    icon: 'success',
+                    title: '정상적으로 삭제되었습니다.',
+                });
                 const validateAdminResponse = await validationAdminGetTable();
                 // 서버에서 가져온 공지사항 데이터 reRender
                 setNoticeTable(validateAdminResponse.data.noticeDtos);
                 setTotalPages(validateAdminResponse.data.totalPages);
-
-                console.log(validateAdminResponse);
             } else {
-                alert('게시물 삭제에 실패하였습니다.');
+                Swal.fire({
+                    icon: 'error',
+                    title: '게시물 삭제에 실패하였습니다.',
+                });
             }
             // setCurrentPage(currentPage);
         } catch (error) {

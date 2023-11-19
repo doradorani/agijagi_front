@@ -23,7 +23,6 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                 '/report/replyReportTable/' + currentPage + '/' + perPage,
                 null
             );
-            console.log(validateAdminResponse);
             setReportTable(validateAdminResponse?.data?.replyReportDtos);
             setTotalPages(validateAdminResponse?.data?.totalPages);
         } catch (error) {
@@ -72,8 +71,6 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                 null
             );
             setReportTable(null);
-
-            console.log(deleteResponse);
 
             if (deleteResponse?.code === 200 && deleteResponse?.data === 1) {
                 Swal.fire({
@@ -283,7 +280,7 @@ const CommentReport = ({ isSidebarCollapsed, reportIndex, setReportIndex }) => {
                                                   7
                                               )}/${report?.mod_date.substring(8, 10)}`}
                                     </td>
-                                    {report?.reply_status !== 1 || console.log(report.status) ? (
+                                    {report?.reply_status !== 1 ? (
                                         <td
                                             style={{
                                                 padding: '0px',
