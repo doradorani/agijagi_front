@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import DaumPostcode from 'react-daum-postcode';
 
 const PostCode = (props) => {
@@ -6,7 +6,6 @@ const PostCode = (props) => {
     const setAddress = props.setAddress;
 
     const onCompletePost = (data) => {
-        console.log(data.address);
         setAddress(data.address);
     };
 

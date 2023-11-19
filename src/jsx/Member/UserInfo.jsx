@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../../css/member/userModifyInfo.css';
-import DaumPostcode from 'react-daum-postcode';
-import { Link, unstable_HistoryRouter, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useValidationUser } from '../../js/api/ValidationApi';
 import { userStateAction } from '../../js/api/redux_store/slice/userLoginSlice';
 import userInfo_config from '../../js/api/config/userInfo_config';
 import { userInfoAction } from '../../js/api/redux_store/slice/userInfoSlice';

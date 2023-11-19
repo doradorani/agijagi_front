@@ -36,7 +36,6 @@ const DetailReplys = ({ reportReason, setReportReason }) => {
             setIsLoading(true);
             const replyResponse = await ValidationItem('get', '/community/getReplys/' + postId, null);
             setReplyResponseData(replyResponse);
-            console.log(replyResponse);
         } catch (error) {
             console.error('registReply() fetching error', error);
         } finally {
@@ -54,8 +53,6 @@ const DetailReplys = ({ reportReason, setReportReason }) => {
         // 함수 호출하여 바이트 수 계산
         setReportReason(text);
         fn_checkByte(text);
-
-        // console.log(postReportReason);
     };
 
     // 바이트 수 체크 함수
@@ -102,7 +99,6 @@ const DetailReplys = ({ reportReason, setReportReason }) => {
                 '/community/deleteReply/' + postId + '/' + replyIndex,
                 null
             );
-            console.log(deleteResponse);
             if (deleteResponse.code === 200 && deleteResponse.data !== 0) {
                 Swal.fire({
                     icon: 'success',
@@ -688,7 +684,6 @@ const DetailReplys = ({ reportReason, setReportReason }) => {
                             >
                                 {replyResponseData?.data.map((comment) => (
                                     <div key={comment.no}>
-                                        {/* {console.log(comment.nickname)} */}
                                         {comment.no === replyIndex ? (
                                             <>
                                                 {comment.nickname === loginedUserNickname ? (

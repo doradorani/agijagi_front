@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../../../css/subpage/cobuyinglist.css';
-import SideMenu from '../SideMenu';
-import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
-import { useValidationAdminItem } from '../../../js/api/admin/ValidationAdminItem';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
@@ -33,7 +30,6 @@ const CoBuyingProceed = () => {
     useEffect(() => {
         const listProduct = async () => {
             try {
-                console.log(status);
                 const validateListResponse = await axios.get(
                     `${server}/coBuy/list/` + status + '/' + optionList + '/' + currentPage + '/' + perPage
                 );

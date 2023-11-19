@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import CopyToClipboard from 'react-copy-to-clipboard';
 import '../../../css/subpage/post.css';
 import Swal from 'sweetalert2';
 import { useValidationItem } from '../../../js/api/VlidationItem';
-import userInfo_config from '../../../js/api/config/userInfo_config';
+import EmotionBtns from './EmotionBtns';
 
 const Post = ({ data, postId, setPostId }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -27,15 +26,11 @@ const Post = ({ data, postId, setPostId }) => {
         // 함수 호출하여 바이트 수 계산
         setReportReason(text);
         fn_checkByte(text);
-
-        console.log(reportReason);
     };
 
     const removereportReason = () => {
         console.log('removereportReason CALLED!!');
         setReportReason('');
-
-        console.log(reportReason);
     };
 
     // 바이트 수 체크 함수
@@ -53,24 +48,6 @@ const Post = ({ data, postId, setPostId }) => {
         }
         // 바이트 수 상태 업데이트
         setByteCount(totalByte);
-    };
-
-    const emotionBtnHandler = () => {
-        console.log('emotionBtnHandler() CALLED!!');
-
-        const addEmotionCnt = async () => {
-            try {
-                const res = await validationForEmotionBtn('put', `/community/updateEmotionBtn`, null);
-                if (res.success) {
-                    // setResponseData(res?.data);
-                }
-            } catch (error) {
-                console.error('게시물을 불러오는 중 오류 발생', error);
-            } finally {
-                // setIsLoading(false);
-            }
-        };
-        addEmotionCnt();
     };
 
     const summitReport = async (index) => {
@@ -122,7 +99,6 @@ const Post = ({ data, postId, setPostId }) => {
                         </div>
                         <div className="profile_info">
                             <div className="profile_name">{data?.nickname}</div>
-                            {/* <div className="update_date">{data.mod_date.substring(0, 10)}</div> */}
                             <div className="update_date">{daysAgo == 0 ? '오늘' : `${daysAgo}일 전`}</div>
                         </div>
                     </div>
@@ -134,7 +110,6 @@ const Post = ({ data, postId, setPostId }) => {
                                 data-bs-toggle="modal"
                                 data-bs-target="#modal_for_post_detail"
                                 onClick={() => {
-                                    console.log(data.no);
                                     setPostId(data.no);
                                 }}
                             />
@@ -148,32 +123,7 @@ const Post = ({ data, postId, setPostId }) => {
                 <div className="post_main_img">
                     <img src={s3_first_img_path} />
                 </div>
-                <div className="emotion_btns flex">
-                    <div className="flex">
-                        <a className="flex none_underline" onClick={() => emotionBtnHandler(1)}>
-                            <div>
-                                <img className="emotion_btn" src="/test_imgs/png/heart.png" />
-                            </div>
-                            <div className="emotion_btn_cnt">{data?.like_cnt}</div>
-                        </a>
-                    </div>
-                    <div className="flex">
-                        <a className="flex none_underline" onClick={() => emotionBtnHandler(2)}>
-                            <div>
-                                <img className="emotion_btn" src="/test_imgs/png/like.png" />
-                            </div>
-                            <div className="emotion_btn_cnt">{data?.great_cnt}</div>
-                        </a>
-                    </div>
-                    <div className="flex">
-                        <a className="flex none_underline" onClick={() => emotionBtnHandler(3)}>
-                            <div>
-                                <img className="emotion_btn" src="/test_imgs/png/sad.png" />
-                            </div>
-                            <div className="emotion_btn_cnt">{data?.sad_cnt}</div>
-                        </a>
-                    </div>
-                </div>
+                <EmotionBtns data={data} />
                 <div className="reply_cnt">
                     <Link to={`/community/detail_post/${data?.no}`} className="none_underline">
                         댓글 {data?.reply_cnt}개

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../../../css/subpage/children.css';
 import ReactDatePicker from 'react-datepicker';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import Swal from 'sweetalert2';

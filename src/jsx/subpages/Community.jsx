@@ -41,7 +41,10 @@ const Community = ({ setSelectedSideMenu, previewImage, setPreviewImage, setSele
 
             // 사진 첨부 최대 개수 설정
             if (newSelectedFiles.length >= maxFiles) {
-                alert(`사진은 최대 ${maxFiles}개까지 첨부할 수 있습니다.`);
+                Swal.fire({
+                    icon: 'warning',
+                    title: `사진은 최대 ${maxFiles}개까지\n첨부할 수 있습니다.`,
+                });
                 e.target.value = '';
                 setSelectedFiles([]);
                 // setFileInfo('');
@@ -50,7 +53,10 @@ const Community = ({ setSelectedSideMenu, previewImage, setPreviewImage, setSele
             }
             // 사진 첨부 최대 용량 설정
             if (file.size > maxFileSize) {
-                alert(`파일 크기는 ${formatBytes(maxFileSize)}를 초과할 수 없습니다.`);
+                Swal.fire({
+                    icon: 'warning',
+                    title: `파일 크기는 ${formatBytes(maxFileSize)}를\n초과할 수 없습니다.`,
+                });
                 e.target.value = '';
                 setSelectedFiles([]);
                 // setFileInfo('');
@@ -204,7 +210,6 @@ const Community = ({ setSelectedSideMenu, previewImage, setPreviewImage, setSele
     const checkForPostImg = () => {
         // let formData = new FormData();
         // setIsLoading(true);
-        console.log(selectedFiles);
         if (selectedFiles[0] == null) {
             Swal.fire({
                 icon: 'warning',
@@ -228,7 +233,6 @@ const Community = ({ setSelectedSideMenu, previewImage, setPreviewImage, setSele
             let formData = new FormData();
             try {
                 // setIsLoading(true);
-                console.log(selectedFiles);
                 data = {
                     text: uploadText,
                 };
@@ -241,13 +245,8 @@ const Community = ({ setSelectedSideMenu, previewImage, setPreviewImage, setSele
                         type: 'application/json',
                     })
                 );
-                // let entries = formData.entries();
-                // for (const pair of entries) {
-                //     console.log(pair[0] + ', ' + pair[1]);
-                // }
 
                 const registResponse = await validationItemForPost('post', '/community/uploadPost', formData);
-                console.log(registResponse);
 
                 if (registResponse.code === 200 && registResponse.data === 1) {
                     Swal.fire({
