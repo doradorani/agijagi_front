@@ -340,7 +340,7 @@ const Note = ({ adContents, isLoading, setIsLoading, validationUser }) => {
                                                     >
                                                         <input
                                                             type="submit"
-                                                            value={'수정'}
+                                                            value={'등록'}
                                                             className="btn btn-primary"
                                                             style={{
                                                                 backgroundColor: '#ff4898',
