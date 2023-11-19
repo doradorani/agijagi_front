@@ -221,6 +221,7 @@ const UserModifyInfo = () => {
 
         setUserZipcode(data.zonecode);
         setUserAddress(fullAddress);
+        setUserDetailAddress('');
     };
 
     return (
@@ -381,7 +382,7 @@ const UserModifyInfo = () => {
                             id='floatingInputAddress'
                             placeholder='주소'
                             style={{ paddingBottom: '3px' }}
-                            defaultValue={userAddress}
+                            value={userAddress}
                             onChange={(e) => setUserAddress(e.target.value)}
                         />
                         <label htmlFor='floatingInputAddress'>
@@ -397,7 +398,8 @@ const UserModifyInfo = () => {
                             className='form-control custom_floating_label sign_up_phone'
                             id='floatingInputDetailAddress'
                             placeholder='상세 주소'
-                            defaultValue={userInfo_config.userDetailAddress}
+                            // defaultValue={userInfo_config.userDetailAddress}
+                            value={userDetailAddress}
                             onChange={(e) => setUserDetailAddress(e.target.value)}
                             style={{ paddingBottom: '3px' }}
                         />
