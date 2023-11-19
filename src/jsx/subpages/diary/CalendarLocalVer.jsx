@@ -100,7 +100,7 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
             title:
                 idx.cd_name +
                 '\n\n' +
-                (idx.inoculation_agency == null ? '' : '병원 : ' + idx.inoculation_order) +
+                (idx.inoculation_agency == null ? '' : '병원 : ' + idx.inoculation_agency) +
                 (idx.vaccination_nm == null ? '' : ' [' + idx.vaccination_nm + '] ') +
                 (idx.inoculation_order == null ? '-' : idx.inoculation_order + '차 '),
             display: '키: ' + idx.height + ' 몸무게: ' + idx.weight + ' 두위: ' + idx.head,
