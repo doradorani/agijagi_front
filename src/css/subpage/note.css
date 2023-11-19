@@ -5,7 +5,6 @@
     box-shadow: 5px;
     margin: 0 10px;
     min-height: 80vh;
-    font-family: 'yg-jalnan';
     /* opacity: 0.8; */
 }
 
@@ -33,10 +32,6 @@
     padding: 10px;
 }
 
-.react-datepicker__input-container > input {
-    border: none;
-    width: 100px;
-}
 .note_input_1 > div > span,
 .note_input_2 > div > span {
     min-width: 75px;
@@ -89,4 +84,11 @@
     background-color: #ff4898;
     border: 1px solid #ff4898;
     color: #000;
+}
+
+.select_child_note_datetime input[type='text'] {
+    border: none;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    width: 180px;
 }
