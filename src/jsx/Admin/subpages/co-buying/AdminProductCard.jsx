@@ -21,8 +21,8 @@ const AdminProductCard = ({ productData }) => {
                     <div className='product_order_card_header'>
                         <div className='product_order_card_header_left'>
                             <p className='product_order_card_participants bold emerald'>
-                                {typeof productData.min_num === 'number' && typeof productData.accumulate === 'number'
-                                    ? `${((productData.accumulate / productData.min_num) * 100).toFixed(2)} %`
+                                {typeof productData.min_num === 'string' && typeof productData.accumulate === 'number'
+                                    ? `${((productData.accumulate / parseInt(productData.min_num)) * 100).toFixed(2)} %`
                                     : ''}
                             </p>
                             &nbsp;&nbsp;&nbsp;

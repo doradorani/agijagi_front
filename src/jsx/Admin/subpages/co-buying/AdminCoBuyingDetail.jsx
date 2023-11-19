@@ -30,8 +30,9 @@ const AdminCoBuyingDetail = () => {
                 );
                 const detailResponse = validateDetailProductResponse.data.coBuyDetailProduct;
 
-                const startDate = new Date(detailResponse.start_date);
-                const endDate = new Date(detailResponse.end_date);
+                const startDate = new Date(detailResponse.start_date); //Interal용
+                const endDate = new Date(detailResponse.end_date); //Interal용
+                const minNum = parseInt(detailResponse.min_num);
 
                 setDetailCobuy({
                     adminCobuyNo: detailResponse.no,
@@ -41,10 +42,11 @@ const AdminCoBuyingDetail = () => {
                     adminCobuyPrice: detailResponse.price,
                     adminCobuyImg: detailResponse.img,
                     adminCobuyStart: detailResponse.start_date,
-                    adminCobuyStart_Date: startDate,
+                    adminCobuyStart_Date: startDate, //Interal용
                     adminCobuyEnd: detailResponse.end_date,
-                    adminCobuyEnd_Date: endDate,
-                    adminCobuyMin: detailResponse.min_num,
+                    adminCobuyEnd_Date: endDate, //Interal용
+                    //adminCobuyMin: detailResponse.min_num,
+                    adminCobuyMin: minNum,
                     adminCobuyState: detailResponse.state,
                     adminCobuyHit: detailResponse.hit,
                     adminCobuyAccumulate: detailResponse.accumulate,

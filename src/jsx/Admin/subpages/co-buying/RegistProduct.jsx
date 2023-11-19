@@ -112,17 +112,17 @@ const RegistProduct = () => {
                 showConfirmButton: false,
                 timer: 1500,
             });
-        } else if (!minParticipants) {
+        } else if (!minParticipants || minParticipants == 0 || minParticipants == '0') {
             Swal.fire({
                 icon: 'warning',
-                title: '최소 인원을 기재하여야 합니다.',
+                title: '최소 인원은 1명 이상 기재하여야 합니다.',
                 showConfirmButton: false,
                 timer: 1500,
             });
-        } else if (!productPrice) {
+        } else if (!productPrice || productPrice == 0 || productPrice == '0') {
             Swal.fire({
                 icon: 'warning',
-                title: '상품 가격을 기재하여야 합니다.',
+                title: '상품 가격은 0원 이상 기재하여야 합니다.',
                 showConfirmButton: false,
                 timer: 1500,
             });

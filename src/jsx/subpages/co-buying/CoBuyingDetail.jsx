@@ -19,10 +19,11 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
     // const detailProductNo = location.state ? location.state : null;
 
     const { no } = useParams();
-    const detailProductNo = no ? no : null;
+    const detailProductNo = no ? parseInt(no, 10) : null;
 
     const server = token_config.server;
     const hitList = cobuy_config.hits;
+
     const [isChecked, setIsChecked] = useState(hitList.includes(detailProductNo));
 
     const [isLoading, setIsLoading] = useState(false);
@@ -59,8 +60,9 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                     detailResponse = validateListResponse.data.data.coBuyDetailProduct;
                 }
 
-                const startDate = new Date(detailResponse.start_date);
-                const endDate = new Date(detailResponse.end_date);
+                const startDate = new Date(detailResponse.start_date); //Interal용
+                const endDate = new Date(detailResponse.end_date); //Interal용
+                const minNum = parseInt(detailResponse.min_num);
 
                 if (today < startDate) setFundingText('펀딩 대기중');
                 else if (today > endDate) setFundingText('펀딩 마감');
@@ -75,10 +77,11 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                     cobuyPrice: detailResponse.price,
                     cobuyImg: detailResponse.img,
                     cobuyStart: detailResponse.start_date,
-                    cobuyStart_Date: startDate,
+                    cobuyStart_Date: startDate, //Interal용
                     cobuyEnd: detailResponse.end_date,
-                    cobuyEnd_Date: endDate,
-                    cobuyMin: detailResponse.min_num,
+                    cobuyEnd_Date: endDate, //Interal용
+                    //cobuyMin: detailResponse.min_num,
+                    cobuyMin: minNum,
                     cobuyState: detailResponse.state,
                     cobuyHit: detailResponse.hit,
                     cobuyAccumulate: detailResponse.accumulate,
