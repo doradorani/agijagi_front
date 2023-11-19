@@ -11,7 +11,6 @@ import AdminCoBuyingList from './subpages/co-buying/AdminCo-BuyingList';
 import ScrollToTop from '../ScrollToTop';
 import WriteNotice from './subpages/noticeboard/WriteNotice';
 import { useValidationAdmin } from '../../js/api/admin/ValidationAdminApi';
-
 import '../../css/common/adminCommon.css';
 import RegistProduct from './subpages/co-buying/RegistProduct';
 import AdminDetailNotice from './subpages/noticeboard/AdminDetailNotice';
