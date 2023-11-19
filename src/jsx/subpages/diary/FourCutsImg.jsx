@@ -18,17 +18,12 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
     useEffect(() => {
         const getDiary = async () => {
             try {
-                const validateResponse = validationUser('post', '/user/validate');
-                try {
-                    validationUser('get', '/diary/childrenPictures').then((res) => {
-                        if (res != undefined && res.success) {
-                            setForuCutsData(res.data);
-                        }
-                    });
-                    setIsLoading(true);
-                } catch (error) {
-                    console.error(error);
-                }
+                validationUser('get', '/diary/childrenPictures').then((res) => {
+                    if (res != undefined && res.success) {
+                        setForuCutsData(res.data);
+                    }
+                });
+                setIsLoading(true);
             } catch (error) {
                 console.error(error);
                 userLoginDispatch(userStateAction.setState(false));

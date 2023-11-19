@@ -260,7 +260,7 @@ const DiaryPost = ({ adContents, validationUser }) => {
                                                 내용 &nbsp;
                                             </div>
                                             <textarea
-                                                className="diary_input_padding nn_font"
+                                                className="diary_input_padding nn_font upload_text"
                                                 type="text"
                                                 placeholder="오늘의 추억을 입력해주세요"
                                                 onChange={(e) => setChildContent(e.target.value)}

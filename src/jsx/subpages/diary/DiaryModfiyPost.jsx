@@ -303,7 +303,7 @@ const DiaryModfiyPost = ({ adContents, validationUser, setIsLoading, isLoading }
                                                 내용 &nbsp;
                                             </div>
                                             <textarea
-                                                className="diary_input_padding nn_font"
+                                                className="diary_input_padding nn_font upload_text"
                                                 type="text"
                                                 placeholder="오늘의 추억을 입력해주세요"
                                                 defaultValue={diaryModifyData.content}

@@ -33,17 +33,12 @@ const DiaryBookDetail = ({ isUpdate, setIsUpdate, isLoading, setIsLoading, valid
         setDiaryBookData(null);
         const getDiary = async () => {
             try {
-                const validateResponse = validationUser('post', '/user/validate');
-                try {
-                    validationUser('get', '/diary/dailyDiary/' + params.childNo).then((res) => {
-                        if (res != undefined && res.success) {
-                            setDiaryBookData(res.data);
-                        }
-                    });
-                    setIsLoading(true);
-                } catch (error) {
-                    console.error(error);
-                }
+                validationUser('get', '/diary/dailyDiary/' + params.childNo).then((res) => {
+                    if (res != undefined && res.success) {
+                        setDiaryBookData(res.data);
+                    }
+                });
+                setIsLoading(true);
             } catch (error) {
                 console.error(error);
                 userLoginDispatch(userStateAction.setState(false));

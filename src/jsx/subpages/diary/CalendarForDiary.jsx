@@ -22,17 +22,12 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
     useEffect(() => {
         const getDiary = async () => {
             try {
-                const validateResponse = validationUser('post', '/user/validate');
-                try {
-                    validationUser('get', '/diary/dailyDiaries').then((res) => {
-                        if (res != undefined && res.success) {
-                            setDiaryCalendarData(res.data);
-                        }
-                    });
-                    setIsLoading(true);
-                } catch (error) {
-                    console.error(error);
-                }
+                validationUser('get', '/diary/dailyDiaries').then((res) => {
+                    if (res != undefined && res.success) {
+                        setDiaryCalendarData(res.data);
+                    }
+                });
+                setIsLoading(true);
             } catch (error) {
                 console.error(error);
                 userLoginDispatch(userStateAction.setState(false));

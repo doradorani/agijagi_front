@@ -247,7 +247,7 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                                                 설명 &nbsp;
                                             </div>
                                             <textarea
-                                                className="diary_input_padding nn_font"
+                                                className="diary_input_padding nn_font upload_text"
                                                 type="text"
                                                 placeholder="아이에 대한 사랑스러운 설명을 입력해주세요"
                                                 onChange={(e) => setChildContent(e.target.value)}

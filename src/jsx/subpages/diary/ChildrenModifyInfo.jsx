@@ -22,17 +22,12 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
     useEffect(() => {
         const getDiary = async () => {
             try {
-                const validateResponse = validationUser('post', '/user/validate');
-                try {
-                    validationUser('get', '/diary/childrenDetail/' + childNo).then((res) => {
-                        if (res != undefined && res.success) {
-                            setChildModifyInfo(res.data);
-                        }
-                    });
-                    setIsLoading(true);
-                } catch (error) {
-                    console.error(error);
-                }
+                validationUser('get', '/diary/childrenDetail/' + childNo).then((res) => {
+                    if (res != undefined && res.success) {
+                        setChildModifyInfo(res.data);
+                    }
+                });
+                setIsLoading(true);
             } catch (error) {
                 console.error(error);
                 userLoginDispatch(userStateAction.setState(false));
@@ -254,7 +249,7 @@ const ChildrenModifyInfo = ({ adContents, validationUser, setIsLoading, isLoadin
                                                     설명 &nbsp;
                                                 </div>
                                                 <textarea
-                                                    className="diary_input_padding nn_font"
+                                                    className="diary_input_padding nn_font upload_text"
                                                     type="text"
                                                     placeholder="아이에 대한 사랑스러운 설명을 입력해주세요"
                                                     onChange={(e) => setChildContent(e.target.value)}
