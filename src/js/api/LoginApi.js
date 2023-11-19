@@ -36,7 +36,11 @@ export function useKakaoLogin(code) {
                 }
 
                 tokenDispatch(tokenAction.setTokenName(response.data.accessToken));
-                tokenDispatch(tokenAction.setTokenExpired(moment().add(2, 'hours').format('yyyy-MM-DD HH:mm:ss')));
+                tokenDispatch(
+                    tokenAction.setTokenExpired(
+                        moment().add(4, 'minutes').add(50, 'seconds').format('yyyy-MM-DD HH:mm:ss')
+                    )
+                );
                 userLoginDispatch(userStateAction.setState(true));
 
                 userLoginDispatch(

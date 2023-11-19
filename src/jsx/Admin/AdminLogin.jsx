@@ -56,7 +56,9 @@ const AdminLogin = () => {
                 adminDispatch(adminStateAction.setAdminGrade(response.data.adminGrade));
                 adminDispatch(adminTokenAction.setAdminTokenName(response.data.accessToken));
                 adminDispatch(
-                    adminTokenAction.setAdminTokenExpired(moment().add(20, 'seconds').format('yyyy-MM-DD HH:mm:ss'))
+                    adminTokenAction.setAdminTokenExpired(
+                        moment().add(4, 'minutes').add(50, 'seconds').format('yyyy-MM-DD HH:mm:ss')
+                    )
                 );
                 adminDispatch(adminStateAction.setAdminState(true));
                 navigator('/admin');

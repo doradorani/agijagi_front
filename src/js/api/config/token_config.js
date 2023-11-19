@@ -9,7 +9,7 @@ store.subscribe(() => {
 });
 
 const token_config = {
-    server: 'http://localhost:8088',
+    server: 'https://api.agijagi.site',
     tokenName: '',
     tokenExpired: '',
 };
