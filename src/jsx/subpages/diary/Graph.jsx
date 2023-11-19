@@ -32,11 +32,10 @@ const Graph = ({ adContents, isLoading, setIsLoading, validationUser }) => {
                     });
                     setIsLoading(true);
                 } catch (error) {
-                    console.log('데이터 파싱 에러');
-                    console.log(error);
+                    console.error(error);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 userLoginDispatch(userStateAction.setState(false));
             } finally {
                 setIsLoading(false);
@@ -54,7 +53,7 @@ const Graph = ({ adContents, isLoading, setIsLoading, validationUser }) => {
             });
             setIsLoading(true);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         } finally {
             setIsLoading(false);
         }

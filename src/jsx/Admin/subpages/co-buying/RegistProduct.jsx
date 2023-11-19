@@ -197,7 +197,7 @@ const RegistProduct = () => {
                     }
                 });
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 Swal.fire({
                     icon: 'warning',
                     title: '상품 등록 중 서버에 문제가 생겨 실패하였습니다.',

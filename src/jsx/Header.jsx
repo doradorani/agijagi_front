@@ -47,7 +47,7 @@ const Header = ({
             dataDispatch(userInfoAction.setUserInfo(responseUserInfo));
             navigate('/user_info');
         } catch (error) {
-            console.log(error);
+            console.error(error);
             dataDispatch(userStateAction.setState(false));
         }
     };

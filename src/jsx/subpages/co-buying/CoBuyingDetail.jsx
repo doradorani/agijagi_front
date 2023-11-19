@@ -165,7 +165,7 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                             }
                         })
                         .catch((error) => {
-                            console.log(error);
+                            console.error(error);
                         });
                 }
             });
@@ -199,7 +199,7 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                         }
                     })
                     .catch((error) => {
-                        console.log(error);
+                        console.error(error);
                     });
             }
         });
@@ -223,7 +223,7 @@ const CoBuyingDetail = ({ setSelectedSideMenu }) => {
                 userCoBuyDispatch(userCobuyAction.setHit(hitList.filter((item) => item !== detailProductNo)));
             }
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 

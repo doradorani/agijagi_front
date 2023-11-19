@@ -12,7 +12,7 @@ const RefreshAdmin = async (config) => {
             const res = await axios.post(`${server}/admin/newToken`);
             adminToken_config.adminTokenName = res.data.accessToken;
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
 

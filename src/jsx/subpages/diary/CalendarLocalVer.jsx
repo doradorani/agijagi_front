@@ -27,11 +27,10 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
                     });
                     setIsLoading(true);
                 } catch (error) {
-                    console.log('데이터 파싱 에러');
-                    console.log(error);
+                    console.error(error);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 userLoginDispatch(userStateAction.setState(false));
             } finally {
                 setIsLoading(false);
@@ -39,12 +38,6 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
         };
         getDiary();
     }, []);
-
-    if (healthCalendarData != null) {
-        console.log(healthCalendarData);
-        console.log(healthCalendarData[10].weight);
-        console.log(typeof healthCalendarData[10].weight);
-    }
 
     const eventClick = (clickInfo) => {
         const { id, groupId, title, display } = clickInfo.event;
@@ -72,14 +65,13 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
                 }).then((res) => {
                     if (res.isConfirmed) {
                         try {
-                            validationUser(
-                                'delete',
-                                '/childHealth/incultaion/' + groupId + '/' + id,
-                                null,
-                                '/childHealth/inoculationNotes'
-                            ).then((res) => {
+                            validationUser('delete', '/childHealth/childNote/' + groupId + '/' + id).then((res) => {
                                 if (res != undefined && res.success) {
-                                    setHealthCalendarData(res.data);
+                                    validationUser('get', '/childHealth/inoculationNotes').then((res) => {
+                                        if (res != undefined && res.success) {
+                                            setHealthCalendarData(res.data);
+                                        }
+                                    });
                                     Swal.fire({
                                         icon: 'success',
                                         title: '성공적으로 삭제되었습니다.',
@@ -96,7 +88,7 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
                                 }
                             });
                         } catch (error) {
-                            console.log(error);
+                            console.error(error);
                         }
                     }
                 });

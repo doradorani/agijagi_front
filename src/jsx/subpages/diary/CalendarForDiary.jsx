@@ -31,11 +31,10 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
                     });
                     setIsLoading(true);
                 } catch (error) {
-                    console.log('데이터 파싱 에러');
-                    console.log(error);
+                    console.error(error);
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 userLoginDispatch(userStateAction.setState(false));
             } finally {
                 setIsLoading(false);
@@ -82,7 +81,6 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
                                     Swal.fire({
                                         icon: 'success',
                                         title: '성공적으로 삭제되었습니다.',
-                                        content: '*^^*',
                                         confirmButtonText: '확인',
                                     }).then();
                                 } else {
@@ -95,7 +93,7 @@ const CalendarForDiary = ({ validationUser, setIsLoading, isLoading }) => {
                                 }
                             });
                         } catch (error) {
-                            console.log(error);
+                            console.error(error);
                         }
                     }
                 });

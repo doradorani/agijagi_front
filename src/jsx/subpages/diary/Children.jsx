@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import '../../../css/subpage/children.css';
 import ReactDatePicker from 'react-datepicker';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { userStateAction } from '../../../js/api/redux_store/slice/userLoginSlice';
 import DiaryHeader from './DiaryHeader';
-import ScrollToTop from '../../ScrollToTop';
 
 const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -23,7 +22,7 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
             try {
                 const validateResponse = validationUser('post', '/user/validate');
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 userLoginDispatch(userStateAction.setState(false));
             } finally {
                 setIsLoading(false);
@@ -54,6 +53,12 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                     Swal.fire({
                         icon: 'warning',
                         title: '사진을 넣어주세요!',
+                        confirmButtonText: '확인',
+                    });
+                } else if (childContent == null) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '설명을 입력해주세요!',
                         confirmButtonText: '확인',
                     });
                 } else {
@@ -103,8 +108,7 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                         });
                         setIsLoading(true);
                     } catch (error) {
-                        console.log('데이터 파싱 에러');
-                        console.log(error);
+                        console.error(error);
                         userLoginDispatch(userStateAction.setState(false));
                     }
                 }
@@ -146,13 +150,13 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                         <div className="children_wrap">
                             <div className="children_container">
                                 <div className="children_header">
-                                    <div className="children_header_title yg_font" style={{ fontSize: '2rem' }}>
+                                    <div className="children_header_title yg_font" style={{ fontSize: '2.3rem' }}>
                                         우리 아이 등록
                                     </div>
                                 </div>
                                 <hr style={{ margin: '25px 0 10px 0', width: '100%' }} />
                                 <div className="children_second_wrap flex">
-                                    <div className="children_input flex">
+                                    <div className="children_input flex" style={{ fontSize: '1.2rem' }}>
                                         <div className="children_input_name">
                                             <span className="nn_font bold">이름 &nbsp;</span>
                                             <input
@@ -161,7 +165,7 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                                                 placeholder="아이의 이름을 입력해주세요"
                                                 onChange={(e) => setName(e.target.value)}
                                                 style={{
-                                                    minWidth: '220px',
+                                                    minWidth: '250px',
                                                     border: 'none',
                                                     backgroundColor: '#f8f9fa',
                                                     borderRadius: '5px',
@@ -208,7 +212,7 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                                             alignItems: 'center',
                                         }}
                                     >
-                                        <div className="nn_font" style={{ marginRight: '10px', fontSize: '0.9rem' }}>
+                                        <div className="nn_font" style={{ marginRight: '10px' }}>
                                             가로, 세로의 비율은 4:7입니다
                                         </div>
                                         <label
@@ -235,7 +239,10 @@ const Children = ({ adContents, validationUser, setIsLoading, isLoading }) => {
                                         />
                                     </div>
                                     <div>
-                                        <div className="children_input_name flex" style={{ margin: ' 0 62px' }}>
+                                        <div
+                                            className="children_input_name flex"
+                                            style={{ margin: ' 0 62px', fontSize: '1.2rem' }}
+                                        >
                                             <div className="nn_font bold" style={{ height: '100px' }}>
                                                 설명 &nbsp;
                                             </div>

@@ -32,7 +32,7 @@ const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => 
             });
             setIsLoading(true);
         } catch (error) {
-            console.log(error);
+            console.error(error);
             userLoginDispatch(userStateAction.useDispatch(false));
         } finally {
             setIsLoading(false);
@@ -140,7 +140,7 @@ const NoteModify = ({ adContents, isLoading, setIsLoading, validationUser }) => 
                         }
                     });
                 } catch (error) {
-                    console.log(error);
+                    console.error(error);
                 }
             }
         });

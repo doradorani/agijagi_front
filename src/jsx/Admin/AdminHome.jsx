@@ -36,7 +36,7 @@ const AdminHome = () => {
                 setAdminData(response);
             } catch (error) {
                 navigate('/admin/sign_in');
-                console.log(error);
+                console.error(error);
             }
         }
         validateAdmin();
@@ -47,22 +47,22 @@ const AdminHome = () => {
         <>
             <ScrollToTop />
             <AdminHeader />
-            <div className='admin_container'>
+            <div className="admin_container">
                 <AdminSidbar isSidebarCollapsed={isSidebarCollapsed} setisSidebarCollapsed={setisSidebarCollapsed} />
-                <div className='admin_content_section_wrap'>
+                <div className="admin_content_section_wrap">
                     <Routes>
                         {/* <Route path="/user_suspended" element={<UserSuspended selectedMenu={selectedMenu} />}></Route> */}
-                        <Route path='/user_suspended' element={<UserSuspended />}></Route>
-                        <Route path='/user_detail' element={<UserDetail />}></Route>
-                        <Route path='/admin_modify' element={<AdminModify />}></Route>
-                        <Route path='/admin_authorization' element={<AdminAuthorization />}></Route>
-                        <Route path='/admin_none_authorization' element={<AdminNoneAuthorization />}></Route>
-                        <Route path='/admin_notice' element={<AdminNoticeList />}></Route>
-                        <Route path='/admin_notice_detail' element={<AdminDetailNotice />}></Route>
-                        <Route path='/write_admin_notice' element={<WriteNotice />}></Route>
-                        <Route path='/modify_admin_notice' element={<ModifyNotice />}></Route>
+                        <Route path="/user_suspended" element={<UserSuspended />}></Route>
+                        <Route path="/user_detail" element={<UserDetail />}></Route>
+                        <Route path="/admin_modify" element={<AdminModify />}></Route>
+                        <Route path="/admin_authorization" element={<AdminAuthorization />}></Route>
+                        <Route path="/admin_none_authorization" element={<AdminNoneAuthorization />}></Route>
+                        <Route path="/admin_notice" element={<AdminNoticeList />}></Route>
+                        <Route path="/admin_notice_detail" element={<AdminDetailNotice />}></Route>
+                        <Route path="/write_admin_notice" element={<WriteNotice />}></Route>
+                        <Route path="/modify_admin_notice" element={<ModifyNotice />}></Route>
                         <Route
-                            path='/post_report'
+                            path="/post_report"
                             element={
                                 <PostReport
                                     isSidebarCollapsed={isSidebarCollapsed}
@@ -74,7 +74,7 @@ const AdminHome = () => {
                             }
                         ></Route>
                         <Route
-                            path='/comment_report'
+                            path="/comment_report"
                             element={
                                 <CommentReport
                                     isSidebarCollapsed={isSidebarCollapsed}
@@ -83,10 +83,10 @@ const AdminHome = () => {
                                 />
                             }
                         ></Route>
-                        <Route path='/co-buying_list' element={<AdminCoBuyingList />}></Route>
-                        <Route path='/regist_product' element={<RegistProduct />}></Route>
-                        <Route path='/modify_product/:no' element={<ModifyProduct />}></Route>
-                        <Route path='/co-buying_detail/:no' element={<AdminCoBuyingDetail />}></Route>
+                        <Route path="/co-buying_list" element={<AdminCoBuyingList />}></Route>
+                        <Route path="/regist_product" element={<RegistProduct />}></Route>
+                        <Route path="/modify_product/:no" element={<ModifyProduct />}></Route>
+                        <Route path="/co-buying_detail/:no" element={<AdminCoBuyingDetail />}></Route>
                     </Routes>
                 </div>
             </div>
