@@ -18,17 +18,12 @@ const CalendarListVer = ({ adContents, validationUser, setIsLoading, isLoading }
     useEffect(() => {
         const getDiary = async () => {
             try {
-                const validateResponse = validationUser('post', '/user/validate');
-                try {
-                    validationUser('get', '/childHealth/inoculationNotes').then((res) => {
-                        if (res != undefined && res.success) {
-                            setHealthCalendarData(res.data);
-                        }
-                    });
-                    setIsLoading(true);
-                } catch (error) {
-                    console.error(error);
-                }
+                validationUser('get', '/childHealth/inoculationNotes').then((res) => {
+                    if (res != undefined && res.success) {
+                        setHealthCalendarData(res.data);
+                    }
+                });
+                setIsLoading(true);
             } catch (error) {
                 console.error(error);
                 userLoginDispatch(userStateAction.setState(false));
