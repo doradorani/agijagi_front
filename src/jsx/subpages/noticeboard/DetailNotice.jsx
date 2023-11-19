@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useValidationItem } from '../../../js/api/VlidationItem';
 import '../../../css/subpage/detailnotice.css';
 import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const DetailNotice = () => {
     const [noticeContent, setNoticeContent] = useState(null);
@@ -11,6 +12,12 @@ const DetailNotice = () => {
     const [indexZeroFileNameArray, setIndexZeroFileNameArray] = useState([]);
     const [indexOneFileNameArray, setIndexOneFileNameArray] = useState([]);
 
+    const [indexZeroFilePathArray, setIndexZeroFilePathArray] = useState([]);
+    const [indexOneFilePathArray, setIndexOneFilePathArray] = useState([]);
+
+    const [indexZeroFileList, setIndexZeroFileList] = useState([]);
+    const [indexOneFileList, setIndexOneFileList] = useState([]);
+
     const validationUserNotice = useValidationItem();
 
     useEffect(() => {
@@ -18,26 +25,63 @@ const DetailNotice = () => {
             try {
                 setIsLoading(true);
                 const detailResponse = await validationUserNotice('get', '/notice/detail/' + noticeId, null);
+                console.log(detailResponse);
                 setNoticeContent(detailResponse.data);
                 let zeroFileName = null;
                 let ZeroFileNameArray = null;
                 let oneFileName = null;
                 let OneFileNameArray = null;
 
+                let zeroFilePath = null;
+                let ZeroFilePathArray = null;
+                let oneFilePath = null;
+                let OneFilePathArray = null;
+
                 if (detailResponse.data.data2 == undefined) {
-                    zeroFileName = detailResponse.data.data1[0].file_name;
+                    zeroFileName = detailResponse?.data?.data1[0].file_name;
                     ZeroFileNameArray = zeroFileName ? zeroFileName.split(',') : null;
-                    oneFileName = detailResponse.data.data1[1].file_name;
+                    oneFileName = detailResponse?.data?.data1[1].file_name;
                     OneFileNameArray = oneFileName ? oneFileName.split(',') : null;
+
+                    zeroFilePath = detailResponse?.data?.data1[0].attach_path;
+                    ZeroFilePathArray = zeroFilePath ? zeroFilePath.split(',') : null;
+                    oneFilePath = detailResponse?.data?.data1[1].attach_path;
+                    OneFilePathArray = oneFilePath ? oneFilePath.split(',') : null;
                 } else if (detailResponse.data.data2 != undefined) {
-                    zeroFileName = detailResponse.data.data1.file_name;
+                    zeroFileName = detailResponse?.data?.data1?.file_name;
                     ZeroFileNameArray = zeroFileName ? zeroFileName.split(',') : null;
-                    oneFileName = detailResponse.data.data2[0].file_name;
+                    oneFileName = detailResponse?.data?.data2[0].file_name;
                     OneFileNameArray = oneFileName ? oneFileName.split(',') : null;
+
+                    zeroFilePath = detailResponse?.data?.data1?.attach_path;
+                    ZeroFilePathArray = zeroFilePath ? zeroFilePath.split(',') : null;
+                    oneFilePath = detailResponse?.data?.data2[0].attach_path;
+                    OneFilePathArray = oneFilePath ? oneFilePath.split(',') : null;
                 }
 
-                setIndexZeroFileNameArray(ZeroFileNameArray);
-                setIndexOneFileNameArray(OneFileNameArray);
+                //     setIndexZeroFilePathArray(ZeroFilePathArray);
+                //     setIndexOneFilePathArray(OneFilePathArray);
+
+                //     setIndexZeroFileNameArray(ZeroFileNameArray);
+                //     setIndexOneFileNameArray(OneFileNameArray);
+                // } catch (error) {
+                //     console.error('Error fetching detailNotice:', error);
+                // } finally {
+                //     setIsLoading(false);
+                // }
+                // 파일 이름과 경로를 함께 저장
+                const ZeroFileList = ZeroFileNameArray?.map((name, index) => ({
+                    name,
+                    path: ZeroFilePathArray[index],
+                }));
+
+                const OneFileList = OneFileNameArray?.map((name, index) => ({
+                    name,
+                    path: OneFilePathArray[index],
+                }));
+
+                setIndexZeroFileList(ZeroFileList);
+                setIndexOneFileList(OneFileList);
             } catch (error) {
                 console.error('Error fetching detailNotice:', error);
             } finally {
@@ -46,6 +90,33 @@ const DetailNotice = () => {
         };
         getNoticeDetail();
     }, [noticeId]);
+
+    const fileDownLoad = async (file_path, file_name) => {
+        try {
+            const response = await axios.get(file_path, { responseType: 'arraybuffer' });
+
+            const blob = new Blob([response.data], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = file_name;
+            document.body.appendChild(link);
+
+            link.click();
+
+            // 다운로드 후 링크 제거
+            document.body.removeChild(link);
+        } catch (error) {
+            console.error('파일 다운로드 중 오류 발생:', error);
+        }
+    };
+
+    // 예시 사용법
+    const file_path = 'https://s3.ap-northeast-2.amazonaws.com/agijagi-2023.10.31/f6f7d453d1b24006ab7e296d3e534a13'; // S3 버킷 및 폴더 경로
+    const file_name = 'block.png'; // 다운로드할 파일명
+
+    fileDownLoad(file_path, file_name);
 
     return (
         <div className="detail_notice_wrap nn_font">
@@ -91,7 +162,7 @@ const DetailNotice = () => {
                                         첨부파일
                                     </div>
                                     <div>
-                                        {indexOneFileNameArray ? (
+                                        {/* {indexOneFileNameArray ? (
                                             indexOneFileNameArray.map((file_name, index) => (
                                                 <div key={index}>
                                                     <a href="">{file_name}</a>
@@ -99,6 +170,22 @@ const DetailNotice = () => {
                                             ))
                                         ) : (
                                             <div>첨부파일이 없습니다.</div>
+                                        )} */}
+                                        {indexOneFileList && (
+                                            <div>
+                                                {/* <p>Index 1 파일 목록:</p> */}
+                                                {indexOneFileList.map((file, index) => (
+                                                    <div key={index}>
+                                                        <a
+                                                            onClick={() => fileDownLoad(file?.path, file?.name)}
+                                                            href={`path/to/files/${file.path}`}
+                                                            download
+                                                        >
+                                                            {file.name}
+                                                        </a>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         )}
                                     </div>
                                 </div>
@@ -148,7 +235,7 @@ const DetailNotice = () => {
                                         첨부파일
                                     </div>
                                     <div>
-                                        {indexOneFileNameArray ? (
+                                        {/* {indexOneFileNameArray ? (
                                             indexOneFileNameArray.map((file_name, index) => (
                                                 <div key={index}>
                                                     <a href="">{file_name}</a>
@@ -156,6 +243,18 @@ const DetailNotice = () => {
                                             ))
                                         ) : (
                                             <div>첨부파일이 없습니다.</div>
+                                        )} */}
+                                        {indexOneFileList && (
+                                            <div>
+                                                {/* <p>Index 1 파일 목록:</p> */}
+                                                {indexOneFileList.map((file, index) => (
+                                                    <div key={index}>
+                                                        <a href={`path/to/files/${file.path}`} download>
+                                                            {file.name}
+                                                        </a>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         )}
                                     </div>
                                 </div>

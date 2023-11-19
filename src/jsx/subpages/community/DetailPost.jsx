@@ -8,13 +8,15 @@ import userInfo_config from '../../../js/api/config/userInfo_config';
 import DetailReplys from './DetailReplys';
 import LoadingPostCard from './LoadingPostCard';
 import SideBanner from '../SideBanner';
+import EmotionBtnsForDetail from './EmotionBtnsForDetail';
 
 const DetailPost = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [responseData, setResponseData] = useState();
+    const [emotionRes, setEmotionRes] = useState();
     const [byteCount, setByteCount] = useState(0);
     const [reportReason, setReportReason] = useState('');
-    const [emotionBtnData, setEmotionBtnData] = useState();
+    const [emotionBtnclickCnt, setEmotionBtnclickCnt] = useState(0);
 
     const loginedUserNickname = userInfo_config.userNickname;
     const ValidationItem = useValidationItem();
@@ -43,8 +45,14 @@ const DetailPost = () => {
             try {
                 setIsLoading(true);
                 const response = await ValidationItem('get', '/community/getDetailPost/' + postId, null);
-                if (response.code === 200 && response.data !== null) {
+                if (response?.code === 200 && response?.data !== null) {
                     setResponseData(response);
+                }
+                const post_no = postId;
+                const emotionRes = await ValidationItem('get', '/community/getEmotions/' + post_no, null);
+                if (emotionRes?.code === 200 && emotionRes?.data !== null) {
+                    console.log(emotionRes);
+                    setEmotionRes(emotionRes);
                 }
             } catch (error) {
                 console.error('Error fetching posts', error);
@@ -53,7 +61,7 @@ const DetailPost = () => {
             }
         };
         getDetaillPost();
-    }, []);
+    }, [emotionBtnclickCnt]);
 
     const copyPostURL = () => {
         Swal.fire({
@@ -166,21 +174,6 @@ const DetailPost = () => {
         }
     };
 
-    const emotionBtnHandler = async (btnIndex, post_no) => {
-        try {
-            setIsLoading(true);
-            const res = await ValidationItem('put', '/community/updateEmotionBtn' + btnIndex + '/' + post_no, null);
-            if (res.success) {
-                const result = await ValidationItem('get', '/community/getEmotionBtnCnt' + post_no, null);
-                setEmotionBtnData(result);
-            }
-        } catch (error) {
-            console.error('게시물을 불러오는 중 오류 발생', error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     return (
         <>
             {isLoading ? (
@@ -251,8 +244,8 @@ const DetailPost = () => {
                                         <img key={index} src={img} alt={`Image ${index}`} />
                                     ))}
                                 </div>
-                                <div className="emotion_btns_indetail flex">
-                                    <div className="flex">
+                                {/* <div className="emotion_btns_indetail flex">
+                                    <div className={`flex ${emotionRes?.data === 1 ? 'likeBtnClicked' : ''} `}>
                                         <a
                                             className="flex none_underline"
                                             onClick={() => emotionBtnHandler(1, responseData?.data?.no)}
@@ -263,23 +256,30 @@ const DetailPost = () => {
                                             <div className="emotion_btn_cnt">{responseData?.data?.like_cnt}</div>
                                         </a>
                                     </div>
-                                    <div className="flex">
-                                        <a className="flex none_underline" onClick={() => emotionBtnHandler(2)}>
+                                    <div className={`flex ${emotionRes?.data === 2 ? 'greatBtnClicked' : ''} `}>
+                                        <a
+                                            className="flex none_underline"
+                                            onClick={() => emotionBtnHandler(2, responseData?.data?.no)}
+                                        >
                                             <div>
                                                 <img className="emotion_btn" src="/test_imgs/png/like.png" />
                                             </div>
                                             <div className="emotion_btn_cnt">{responseData?.data?.great_cnt}</div>
                                         </a>
                                     </div>
-                                    <div className="flex">
-                                        <a className="flex none_underline" onClick={() => emotionBtnHandler(3)}>
+                                    <div className={`flex ${emotionRes?.data === 3 ? 'sadBtnClicked' : ''} `}>
+                                        <a
+                                            className="flex none_underline"
+                                            onClick={() => emotionBtnHandler(3, responseData?.data?.no)}
+                                        >
                                             <div>
                                                 <img className="emotion_btn" src="/test_imgs/png/sad.png" />
                                             </div>
                                             <div className="emotion_btn_cnt">{responseData?.data?.sad_cnt}</div>
                                         </a>
                                     </div>
-                                </div>
+                                </div> */}
+                                <EmotionBtnsForDetail responseData={responseData} />
                                 <hr className="division_line" />
                                 <DetailReplys reportReason={reportReason} setReportReason={setReportReason} />
                             </div>
