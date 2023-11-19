@@ -73,7 +73,7 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
                     <div style={{ paddingLeft: '1.7%' }}>
                         <DiaryHeader select={'인생네컷'} src={'/test_imgs/png/diary3.png'} header={'육아 일기'} />
                     </div>
-                    <div style={{ marginBottom: '10px', height: '20px' }}>
+                    {/* <div style={{ marginBottom: '10px', height: '20px' }}>
                         <button
                             className="btn btn-secondary dropdown-toggle"
                             type="button"
@@ -82,20 +82,19 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
                             aria-expanded="false"
                             style={{ float: 'right' }}
                         >
-                            {/* {selectedChild != null ? selectedChild : '아이 선택'} */}
-                            아이 선택
+                            {selectedChild != null ? selectedChild : '아이 선택'}
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            {/* {(fourCutsData !== null && Array.isArray(fourCutsData) ? fourCutsData : []).map((idx) => (
+                            {(fourCutsData !== null && Array.isArray(fourCutsData) ? fourCutsData : []).map((idx) => (
                         <li>
                             <button className="dropdown-item" type="button" onClick={() => nameClick(idx.no, idx.name)}>
                                 {idx.name}
                             </button>
                         </li>
-                    ))} */}
+                    ))}
                             <li>김란희</li>
                         </ul>
-                    </div>
+                    </div> */}
                     {fourCutsData?.length == 4 ? (
                         <div className="four_cuts_album_wrap">
                             <div className="four_cuts_photos">
@@ -136,7 +135,12 @@ const FourCutsImg = ({ adContents, isLoading, setIsLoading, validationUser }) =>
                                         </p>
                                     </div>
                                 </div>
-                                <button value="사진 저장" onClick={onFourCutCapture} className="btn primary-btn">
+                                <button
+                                    value="사진 저장"
+                                    onClick={onFourCutCapture}
+                                    className="btn primary-btn"
+                                    style={{ float: 'right' }}
+                                >
                                     사진 저장
                                 </button>
                             </div>
