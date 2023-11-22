@@ -81,7 +81,8 @@ npm start
     ![image](https://github.com/doradorani/agijagi_front/assets/96163167/f21da0ab-332c-4dcb-880c-d628d2fa86aa)
 <br/>
 -   전국 합계 출산율 통계 그래프
-    ![image](https://github.com/doradorani/agijagi_front/assets/96163167/1f1eb2ae-dd06-4707-99fa-812d47616422)
+  
+    ![image2](https://github.com/doradorani/agijagi_front/assets/96163167/1f1eb2ae-dd06-4707-99fa-812d47616422)
 
 -   많은 이유가 있겠지만 그 중에서도 결혼, 출산, 육아에 관한 **부정적인 이미지를 개선**하는 것이 가장 시급한 문제라고 판단하고 **좋은 이미지를 많이 노출**시켜 관련 주제의 이미지 개선을 할 수 있는 육아 플랫폼 서비스를 주제로 선정
     <br/>
