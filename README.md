@@ -79,7 +79,7 @@ npm start
 -   이 별명은 높은 청년이탈율과 **저출산율**에 근거한 별명이라고 판단했고 그 중에서도 낮은 출산율에 대한 문제를 심각하게 인지할 필요가 있다고 생각함.
 -   부산 합계 출산율
     ![image](https://github.com/doradorani/agijagi_front/assets/96163167/f21da0ab-332c-4dcb-880c-d628d2fa86aa)
-<br/>
+    <br/>
 -   전국 합계 출산율 통계 그래프
    ![image](https://github.com/doradorani/agijagi_front/assets/96163167/1f1eb2ae-dd06-4707-99fa-812d47616422)
 
