@@ -77,12 +77,11 @@ npm start
 
 -   부산에 있는 많은 취준생들 사이에서 부산은 **노인과 바다**라는 불명예스러운 별명을 가지고 있음.
 -   이 별명은 높은 청년이탈율과 **저출산율**에 근거한 별명이라고 판단했고 그 중에서도 낮은 출산율에 대한 문제를 심각하게 인지할 필요가 있다고 생각함.
-<br/>
 -   부산 합계 출산율
-    ![img](https://github.com/doradorani/agijagi_front/assets/96163167/24bf6161-1302-499e-9c1e-f881ce1455bd)
+    ![image](https://github.com/doradorani/agijagi_front/assets/96163167/f21da0ab-332c-4dcb-880c-d628d2fa86aa)
 <br/>
 -   전국 합계 출산율 통계 그래프
-    ![img](https://github.com/doradorani/agijagi_front/assets/96163167/c9a9b3bd-4f51-4660-bb76-882bc1af1ee1)
+    ![image](https://github.com/doradorani/agijagi_front/assets/96163167/176bfda4-e7b5-489d-a1a2-942b6e26ca89)
 
 -   많은 이유가 있겠지만 그 중에서도 결혼, 출산, 육아에 관한 **부정적인 이미지를 개선**하는 것이 가장 시급한 문제라고 판단하고 **좋은 이미지를 많이 노출**시켜 관련 주제의 이미지 개선을 할 수 있는 육아 플랫폼 서비스를 주제로 선정
     <br/>
