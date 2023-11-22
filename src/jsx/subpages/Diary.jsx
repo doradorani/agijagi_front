@@ -1,68 +1,184 @@
-import React from 'react';
-import $ from 'jquery';
-import 'turn.js';
-import Turn from '../../js/subpage/Turn.js';
+import React, { useEffect, useState } from 'react';
+// import 'turn.js';
 import '../../css/subpage/diary.css';
+import DiaryBook from './diary/DiaryBook.jsx';
+import DiaryBookDetail from './diary/DiaryBookDetail';
+import SideMenu from './SideMenu';
+import CalendarForDiary from './diary/CalendarForDiary.jsx';
+import Graph from './diary/Graph';
+import Note from './diary/Note';
+import { useValidationItem } from '../../js/api/VlidationItem.js';
+import { useDispatch } from 'react-redux';
+import { userStateAction } from '../../js/api/redux_store/slice/userLoginSlice';
+import { Link, Route, Routes } from 'react-router-dom';
+import Children from './diary/Children';
+import ChildrenModifyInfo from './diary/ChildrenModifyInfo.jsx';
+import DiaryModfiyPost from './diary/DiaryModfiyPost.jsx';
+import CalendarListVer from './diary/CalendarLocalVer.jsx';
+import FourCutsImg from './diary/FourCutsImg.jsx';
+import DiaryPost from './diary/DiaryPost.jsx';
+import NoteModify from './diary/NoteModify.jsx';
+import SideBanner from './SideBanner.jsx';
 
-const options = {
-    width: 800,
-    height: 600,
-    autoCenter: true,
-    display: 'double',
-    acceleration: true,
-    elevation: 50,
-    gradients: !$.isTouch,
-    when: {
-        turned: function (e, page) {
-            console.log('Current view: ', $(this).turn('view'));
-        },
-    },
-};
-const pages = [
-    {
-        image: '/test_imgs/diary_imgs/아기1.jpg',
-        text: 'Page 1 text goes here.',
-    },
-    {
-        image: '/test_imgs/diary_imgs/아기2.jpg',
-        text: 'Page 2 text goes here.',
-    },
-    {
-        image: '/test_imgs/diary_imgs/아기1.jpg',
-        text: 'Page 3 text goes here.',
-    },
-    {
-        image: '/test_imgs/diary_imgs/아기2.jpg',
-        text: 'Page 4 text goes here.',
-    },
-    {
-        image: '/test_imgs/diary_imgs/아기1.jpg',
-        text: 'Page 5 text goes here.',
-    },
-    {
-        image: '/test_imgs/diary_imgs/아기2.jpg',
-        text: 'Page 6 text goes here.',
-    },
-    // Add more pages with image and text
-];
+const Diary = ({ setSelectedUserLoginBtn }) => {
+    const validationUser = useValidationItem();
+    const [isLoading, setIsLoading] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
 
-const Diary = () => {
+    setSelectedUserLoginBtn(false);
+
+    const sideMenu = <SideMenu selectedMenu={1} />;
+
+    const adContents = <SideBanner />;
+
     return (
-        <div className="diary_wrap">
-            <div>
-                <img className="diary_main_img" src="/test_imgs/diary_imgs/diary5.jpg" />
+        <>
+            <div className='diary_wrap'>
+                <div>
+                    <img
+                        className='diary_main_img'
+                        src='https://s3.ap-northeast-2.amazonaws.com/agijagi-2023.10.31/agijagi_background/diary_nav_background7.png'
+                    />
+                </div>
+                <div className='diary_flex'>
+                    {sideMenu}
+                    <Routes>
+                        <Route
+                            path='/'
+                            element={
+                                <DiaryBook
+                                    adContents={adContents}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path='/diary_book_detail/:childNo'
+                            element={
+                                <DiaryBookDetail
+                                    isUpdate={isUpdate}
+                                    setIsUpdate={setIsUpdate}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path='/modify_child_info/:childNo'
+                            element={
+                                <ChildrenModifyInfo
+                                    adContents={adContents}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path='/modify_child_info/:childNo/:diaryNo'
+                            element={
+                                <DiaryModfiyPost
+                                    adContents={adContents}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path='/write_diary/:childNo'
+                            element={
+                                <DiaryPost
+                                    adContents={adContents}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path='/register_child'
+                            element={
+                                <Children
+                                    adContents={adContents}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path='/calendar'
+                            element={
+                                <CalendarForDiary
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path='/album'
+                            element={
+                                <FourCutsImg
+                                    adContents={adContents}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path='/children_health_list'
+                            element={
+                                <CalendarListVer
+                                    adContents={adContents}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path='/children_health_note/:childNo'
+                            element={
+                                <Graph
+                                    adContents={adContents}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path='/register_child_health'
+                            element={
+                                <Note
+                                    adContents={adContents}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                        <Route
+                            path='/modify_child_health/:childNo/:healthNo'
+                            element={
+                                <NoteModify
+                                    adContents={adContents}
+                                    isLoading={isLoading}
+                                    setIsLoading={setIsLoading}
+                                    validationUser={validationUser}
+                                />
+                            }
+                        ></Route>
+                    </Routes>
+                </div>
             </div>
-            <div className="area_for_diary_detail">
-                <Turn options={options} className="magazine">
-                    {pages.map((page, index) => (
-                        <div key={index} className="page">
-                            <img className="diary_img_in_page" src={page.image} alt="" />
-                            <p>{page.text}</p>
-                        </div>
-                    ))}
-                </Turn>
-            </div>
-        </div>
+        </>
     );
 };
 export default Diary;

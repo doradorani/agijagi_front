@@ -1,13 +1,14 @@
 .notice_main_img {
     width: 100%;
-    max-height: 500px;
+    max-height: 400px;
     object-fit: cover;
 }
 
 .notice_flex {
+    width: 1370px;
     display: flex;
     justify-content: space-between;
-    margin: 50px 100px 0px 100px;
+    margin: 50px auto;
 }
 
 .notice_flex > div {
@@ -15,3 +16,6 @@
     margin-left: 10px;
 }
 
+.pagination_btn:focus {
+    box-shadow: none;
+}

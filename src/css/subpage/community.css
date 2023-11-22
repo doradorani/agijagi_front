@@ -1,7 +1,11 @@
-.community_main_img {
+div.community_main_img {
     width: 100%;
-    max-height: 500px;
-    object-fit: cover;
+    max-height: 400px;
+}
+img.community_main_img {
+    /* width: 100%; */
+    max-height: 400px;
+    object-fit: contain;
 }
 
 .flex {
@@ -9,9 +13,10 @@
 }
 
 .community_flex {
+    width: 1370px;
     display: flex;
     justify-content: space-between;
-    margin: 50px 100px 0px 100px;
+    margin: 50px auto;
 }
 
 .community_flex > div {
@@ -53,46 +58,47 @@
     max-width: 450px;
 }
 
-.upload_img_btn figure img {
-    -webkit-transition: .5s ease-in-out;
-	transition: .5s ease-in-out;
-}
-
-.upload_img_btn figure:hover img {
-	margin-top: -160px;
-	-webkit-transition: .5s ease-in-out;
-	transition: .5s ease-in-out;
-}
-
-.upload_img_btn figure:hover > p {
-    opacity:1
-}
-
-/* .upload_img_parents {
+.upload_img_btn figure {
     position: relative;
-} */
-
-.upload_img_btn figure > img {
-    /* display:block;  */
-    position: absolute;
-    bottom: 80px;
-    right: 20px;
-    background:gray; 
-    width:20px; 
-    /* transition:0.5s all */
+    top: 30px;
 }
 
-.upload_img_btn figure > p {
-    display:block; 
-    position: absolute;
-    bottom: 80px;
-    right: 20px;
-    font-size:18px;
-    color:#fff; 
-    background:gray; 
-    width:20px; 
-    opacity:0; 
-    transition:0.5s all
+.upload_img_btn:hover figure {
+    position: relative;
+    top: 0px;
+    background-color: #ffd9df;
+    -webkit-transition: 0.5s ease-in-out;
+    transition: 0.3s ease-in-out;
+}
+
+.upload_img_btn:hover p {
+    opacity: 1;
+}
+
+.upload_img_btn figure {
+    position: relative;
+    background: #fff;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload_img_btn p {
+    position: relative;
+    top: 0px;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    background: #fe7a89;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    opacity: 0;
+    transition: 0.5s all;
+    border-radius: 15px;
 }
 
 .deleteBtn {
@@ -152,4 +158,22 @@
     justify-content: flex-end;
     margin-right: 70px;
     margin-bottom: 10px;
+}
+
+.tag_for_sticky {
+    position: sticky;
+    width: 15%;
+    height: 650px;
+    position: sticky;
+    top: 100px;
+}
+
+.post_section {
+    width: 800px;
+    margin-bottom: 45px;
+}
+
+.upload_img_label:hover,
+.upload_img_btn:hover {
+    cursor: pointer;
 }

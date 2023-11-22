@@ -1,29 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './jsx/Header';
-import Home from './jsx/Home';
-import Diary from './jsx/subpages/Diary';
-import Community from './jsx/subpages/Community';
-import Notice from './jsx/subpages/Notice';
-import Footer from './jsx/Footer';
-import Calendar from './jsx/subpages/Calender';
-import DetailPost from './jsx/subpages/community/DetailPost';
+import User from './User';
+import { useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ScrollToTop from './jsx/ScrollToTop';
+import NoMatch from './NoMatch';
+import AdminLogin from './jsx/Admin/AdminLogin';
+import AdminSignUp from './jsx/Admin/AdminSingUp';
+import AdminHome from './jsx/Admin/AdminHome';
+import UserAuth from './jsx/Member/UserAuth';
 
 function App() {
+    const [isAdmin, setIsAdmin] = useState(false);
     return (
         <>
             <BrowserRouter>
-                <Header />
+                <ScrollToTop />
                 <Routes>
-                    <Route path="/" element={<Home />}></Route>
-                    <Route path="/diary" element={<Diary />}></Route>
-                    <Route path="/detail" element={<DetailPost />}></Route>
-                    <Route path="/calendar" element={<Calendar />}></Route>
-                    <Route path="/community" element={<Community />}></Route>
-                    <Route path="/notice" element={<Notice />}></Route>
+                    <Route path="/*" element={<User />}></Route>
+                    <Route path="/admin/*" element={<AdminHome />}></Route>
+                    <Route path="/admin/sign_in" element={<AdminLogin />}></Route>
+                    <Route path="/admin/sign_up" element={<AdminSignUp />}></Route>
+                    <Route path="*" element={<NoMatch />}></Route>
+
+                    <Route path="/login/oauth2/callback/kakao" element={<UserAuth />} />
                 </Routes>
-                <Footer />
             </BrowserRouter>
         </>
     );
