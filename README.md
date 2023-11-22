@@ -131,7 +131,7 @@ npm start
 
 ---
 
-![팀원 역할](https://github.com/doradorani/agijagi_front/assets/96163167/393fc9a7-f298-488a-be72-9b98ef9fb39a)
+![팀원 역할](https://github.com/doradorani/agijagi_front/assets/96163167/fd8b20eb-7f5c-44c6-a879-16bbd7a9e868)
 
 | 이름                                    | 담당 직무                                      |
 | --------------------------------------- | ---------------------------------------------- |
