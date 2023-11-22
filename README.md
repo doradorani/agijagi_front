@@ -131,7 +131,7 @@ npm start
 
 ---
 
-![프로젝트 소개](https://github.com/jisooAhn/front-end-pjt/assets/96163167/76d1da56-56b5-4d80-ac94-f7fcfa25e863)
+![팀원 역할](https://github.com/doradorani/agijagi_front/assets/96163167/393fc9a7-f298-488a-be72-9b98ef9fb39a)
 
 | 이름                                    | 담당 직무                                      |
 | --------------------------------------- | ---------------------------------------------- |
