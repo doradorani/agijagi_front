@@ -28,12 +28,16 @@
     -   [ERD](#ERD)
     -   [Infra Architecture](#Infra-Architecture)
     -   [API 명세서](#API-명세서)
--   [환경 및 버전](#4-환경-및-버전)
+-   [JWT](#4-JWT)
+    -   [JWT](#JWT)
+    -   [Flow Chart](#Flow-Chart)
+-   [환경 및 버전](#5-환경-및-버전)
     -   [Environment](#environment)
-    -   [React](#react)
--   [팀원 역할](#5.팀원-역할)
--   [시연 영상](#6.시연-영상)
--   [PPT](#7-ppt)
+    -   [Dependency](#Dependency)
+    -   [Java](#Java)
+-   [팀원 역할](#6.팀원-역할)
+-   [시연 영상](#7.시연-영상)
+-   [PPT](#8-ppt)
     <br/>
     <br/>
 
@@ -112,22 +116,50 @@ npm start
 
 API 명세서(Swagger): https://drive.google.com/file/d/1UzdPXteyF15Cmijuztx27BxKCEROs80U/view?usp=sharing
 
-# 4. 환경 및 버전
+# 4. JWT
+
+---
+
+## JWT
+
+-   구조
+      - 헤더(HS256) + 페이로드(Json - Key/Value) + 서명(BASE64) => 대칭키 (※ RSA를 활용하여 비대칭키로 보안 강화 가능)
+-   사용
+      - 사용자 토큰 인증(401)과 권한(403)을 확인
+-   구조
+      - 카카오 소셜 로그인을 통한 OAuth2.0 기반의 보안 기능 강화 로그인 방식
+      - AccessToken - 5분, RefreshToken - 1시간, Axios Interceptor timeout - 10초
+      - Redux와 Redux-persist를 활용한 클라이언트 토큰 관리 방식 사용
+      - 다중 로그인 방지를 위한 이메일과 토큰의 Key/Value 형식 검증(추후 IP 검증 기능을 추가하여 RefreshToken 탈취에 대한 보안 강화 예정)
+      - Axios Interceptor를 활용한 프론트와 서버간의 통신 최소화 및 서버 부하 분산화
+
+## Flow Chart
+
+![image](https://github.com/doradorani/agijagi_back/assets/96163167/4c7dcd75-35c0-4f57-95e4-06fbac1ca434)
+
+![image](https://github.com/doradorani/agijagi_back/assets/96163167/2ee88b38-5bbc-43da-b1ea-664d46291cb7)
+
+
+# 5. 환경 및 버전
 
 ---
 
 ### Environment
 
--   Node.js
+-   Spring boot 2.7.17
 
-### React
+### Dependency
 
--   React 18.2.0
+-   Spring dependency-management 1.0.15
+
+### Java
+
+-   Java 17
 
 <br/>
 <br/>
 
-# 5. 팀원 역할
+# 6. 팀원 역할
 
 ---
 
@@ -142,7 +174,7 @@ API 명세서(Swagger): https://drive.google.com/file/d/1UzdPXteyF15Cmijuztx27Bx
 <br/>
 <br/>
 
-# 6. 시연 영상
+# 7. 시연 영상
 
 ---
 
@@ -150,7 +182,7 @@ API 명세서(Swagger): https://drive.google.com/file/d/1UzdPXteyF15Cmijuztx27Bx
 <br/>
 <br/>
 
-# 7. PPT
+# 8. PPT
 
 ---
 
